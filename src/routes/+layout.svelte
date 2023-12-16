@@ -2,6 +2,7 @@
 	import '../style.css';
 	import { invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
+	import Header from '$lib/components/Header.svelte';
 
 	export let data;
 
@@ -22,7 +23,7 @@
 <svelte:head>
 	<title>User Management</title>
 </svelte:head>
-
+<Header />
 <div class="container" style="padding: 50px 0 100px 0">
 	<slot />
 </div>

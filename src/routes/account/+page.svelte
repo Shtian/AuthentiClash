@@ -13,8 +13,6 @@
 	let loading = false;
 	let fullName: string = profile?.full_name ?? '';
 	let username: string = profile?.username ?? '';
-	let website: string = profile?.website ?? '';
-	let avatarUrl: string = profile?.avatar_url ?? '';
 
 	const handleSubmit: SubmitFunction = () => {
 		loading = true;
@@ -56,17 +54,7 @@
 		</div>
 
 		<div>
-			<label for="website">Website</label>
-			<input id="website" name="website" type="url" value={form?.website ?? website} />
-		</div>
-
-		<div>
-			<input
-				type="submit"
-				class="button block primary"
-				value={loading ? 'Loading...' : 'Update'}
-				disabled={loading}
-			/>
+			<input type="submit" class="" value={loading ? 'Loading...' : 'Update'} disabled={loading} />
 		</div>
 	</form>
 
