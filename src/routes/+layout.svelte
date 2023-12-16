@@ -1,5 +1,5 @@
 <script lang="ts">
-	import '../style.css';
+	import '../app.css';
 	import { invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import Header from '$lib/components/Header.svelte';
