@@ -33,5 +33,11 @@
 		"vite": "^5.0.3",
 		"vitest": "^0.32.2"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"@supabase/auth-helpers-sveltekit": "^0.10.7",
+		"@supabase/auth-ui-shared": "^0.1.8",
+		"@supabase/auth-ui-svelte": "^0.2.8",
+		"@supabase/supabase-js": "^2.39.0"
+	}
 }
