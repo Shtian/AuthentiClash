@@ -1,0 +1,28 @@
+erDiagram
+    Profiles ||--o{ Game : "creates"
+    Profiles {
+        uuid id PK
+        string username
+        string full_name
+        string avatar_url
+        string website
+        check username_length
+    }
+
+    Game ||--o{ Participation : "has"
+    Game {
+        int GameID PK
+        string Name
+        uuid CreatorProfileID FK
+        string UniqueCode
+        boolean IsActive
+    }
+
+    Profiles ||--o{ Participation : "participates"
+    Participation {
+        int ParticipationID PK
+        uuid ProfileID FK
+        int GameID FK
+        int Score
+        datetime Timestamp
+    }

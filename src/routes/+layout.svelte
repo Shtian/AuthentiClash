@@ -21,9 +21,9 @@
 </script>
 
 <svelte:head>
-	<title>User Management</title>
+	<title>AuthentiClash</title>
 </svelte:head>
 <Header />
-<div class="min-h-full" style="padding: 50px 0 100px 0">
+<div class="min-h-full bg-slate-800">
 	<slot />
 </div>

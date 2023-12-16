@@ -1,36 +1,226 @@
 <script lang="ts">
+	import { fade, scale, slide } from 'svelte/transition';
+	import { quintOut } from 'svelte/easing';
 	import { page } from '$app/stores';
-	const links = [
-		{ name: 'Games', href: '/games' },
-		{ name: 'Account', href: '/account' }
-	];
+	import type { Session } from '@supabase/supabase-js';
+
+	export let session: Session | null = null;
+
+	const links = [{ name: 'Games', href: '/games' }];
+	let isMainMenuOpen = false;
+	let isUserMenuOpen = false;
+	let isLoggedIn = !!session?.user;
+	async function sha256(message: string) {
+		const msgBuffer = new TextEncoder().encode(message.trim().toLocaleLowerCase());
+
+		const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+
+		const hashArray = Array.from(new Uint8Array(hashBuffer));
+
+		const hashHex = hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
+		return hashHex;
+	}
 </script>
 
-<header class="bg-white">
-	<nav
-		class="mx-auto flex flex-row items-center gap-x-8 justify-between p-6 lg:px-8 max-w-7xl"
-		aria-label="Global"
-	>
-		<a href="/"><img src="https://placehold.co/64" alt="logo" /></a>
-		<div class="flex gap-x-12">
-			{#each links as link}
-				<a
-					href={link.href}
-					class="text-base font-medium text-gray-500 hover:text-gray-900"
-					class:active={$page.url.pathname.includes(link.href)}
+<header>
+	<nav class="bg-gray-800">
+		<div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+			<div class="relative flex h-16 items-center justify-between">
+				<div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+					<!-- Mobile menu button-->
+					<button
+						type="button"
+						class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+						aria-controls="mobile-menu"
+						aria-expanded="false"
+						on:click={() => (isMainMenuOpen = !isMainMenuOpen)}
+					>
+						<span class="absolute -inset-0.5"></span>
+						<span class="sr-only">Open main menu</span>
+
+						{#if isMainMenuOpen}
+							<svg
+								class="block h-6 w-6"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke-width="1.5"
+								stroke="currentColor"
+								aria-hidden="true"
+							>
+								<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+							</svg>
+						{:else}
+							<svg
+								class="block h-6 w-6"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke-width="1.5"
+								stroke="currentColor"
+								aria-hidden="true"
+							>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+								/>
+							</svg>
+						{/if}
+					</button>
+				</div>
+				<div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+					<div class="flex flex-shrink-0 items-center">
+						<img
+							class="h-8 w-auto"
+							src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+							alt="Your Company"
+						/>
+					</div>
+					<div class="hidden sm:ml-6 sm:block">
+						{#if isLoggedIn}
+							<div class="flex space-x-4">
+								{#each links as link}
+									{#if $page.url.pathname.includes(link.href)}
+										<a
+											href={link.href}
+											class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
+											aria-current="page">{link.name}</a
+										>
+									{:else}
+										<a
+											href={link.href}
+											class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+											>{link.name}</a
+										>
+									{/if}
+								{/each}
+							</div>
+						{/if}
+					</div>
+				</div>
+				<div
+					class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
 				>
-					{link.name}
-				</a>
-			{/each}
+					<!-- Profile dropdown -->
+					<div class="relative ml-3">
+						<div>
+							<button
+								type="button"
+								class="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+								id="user-menu-button"
+								aria-expanded="false"
+								aria-haspopup="true"
+								on:click={() => (isUserMenuOpen = !isUserMenuOpen)}
+							>
+								<span class="absolute -inset-1.5"></span>
+								<span class="sr-only">Open user menu</span>
+								<div class="relative h-8 w-8">
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										fill="none"
+										viewBox="0 0 24 24"
+										stroke-width="1.5"
+										stroke="currentColor"
+										class="absolute inset-0 h-8 w-8 text-gray-400"
+									>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
+										/>
+									</svg>
+									{#if session?.user?.email}
+										{#await sha256(session?.user?.email) then hash}
+											<img
+												in:fade={{ duration: 300, easing: quintOut }}
+												class="absolute top-0 left-0 h-8 w-8 rounded-full"
+												width="32"
+												height="32"
+												src={`https://gravatar.com/avatar/${hash}`}
+												alt=""
+											/>
+										{/await}
+									{/if}
+								</div>
+							</button>
+						</div>
+
+						<!--
+            Dropdown menu, show/hide based on menu state.
+
+            Entering: "transition ease-out duration-100"
+              From: "transform opacity-0 scale-95"
+              To: "transform opacity-100 scale-100"
+            Leaving: "transition ease-in duration-75"
+              From: "transform opacity-100 scale-100"
+              To: "transform opacity-0 scale-95"
+          -->
+						{#if isUserMenuOpen}
+							<div
+								in:scale={{ duration: 200, easing: quintOut, start: 0.95, opacity: 0 }}
+								out:scale={{ duration: 150, easing: quintOut, start: 1, opacity: 0 }}
+								class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+								role="menu"
+								aria-orientation="vertical"
+								aria-labelledby="user-menu-button"
+								tabindex="-1"
+							>
+								{#if isLoggedIn}
+									<a
+										href="/account"
+										class="block px-4 py-2 text-sm text-gray-700"
+										role="menuitem"
+										tabindex="-1">Account</a
+									>
+									<a
+										href="/account"
+										class="block px-4 py-2 text-sm text-gray-700"
+										role="menuitem"
+										tabindex="-1">Sign out</a
+									>
+								{:else}
+									<a
+										href="/auth/login"
+										class="block px-4 py-2 text-sm text-gray-700"
+										role="menuitem"
+										tabindex="-1">Login</a
+									>
+								{/if}
+							</div>
+						{/if}
+					</div>
+				</div>
+			</div>
 		</div>
-		<button>Sign In</button>
+
+		<!-- Mobile menu, show/hide based on menu state. -->
+		{#if isMainMenuOpen}
+			<div
+				transition:slide={{ duration: 300, easing: quintOut, axis: 'y' }}
+				class="sm:hidden"
+				id="mobile-menu"
+			>
+				<div class="space-y-1 px-2 pb-3 pt-2">
+					{#if isLoggedIn}
+						<div class="flex space-x-4">
+							{#each links as link}
+								{#if $page.url.pathname.includes(link.href)}
+									<a
+										href={link.href}
+										class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium"
+										aria-current="page">{link.name}</a
+									>
+								{:else}
+									<a
+										href={link.href}
+										class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
+										>{link.name}</a
+									>
+								{/if}
+							{/each}
+						</div>
+					{/if}
+				</div>
+			</div>
+		{/if}
 	</nav>
 </header>
-
-<style lang="postcss">
-	.active {
-		box-shadow: inset 0 -2px 0 0 #1aa42e;
-		cursor: default;
-		color: #000;
-	}
-</style>
