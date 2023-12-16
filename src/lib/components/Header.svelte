@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	const links = [
-		{ name: 'Home', href: '/' },
-		{ name: 'About', href: '/about' },
-		{ name: 'Contact', href: '/contact' }
+		{ name: 'Games', href: '/games' },
+		{ name: 'Account', href: '/account' }
 	];
 </script>
 
