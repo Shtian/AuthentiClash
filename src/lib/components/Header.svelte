@@ -23,7 +23,7 @@
 </script>
 
 <header>
-	<nav class="bg-gray-800">
+	<nav class="">
 		<div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
 			<div class="relative flex h-16 items-center justify-between">
 				<div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -105,7 +105,7 @@
 						<div>
 							<button
 								type="button"
-								class="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+								class="relative flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
 								id="user-menu-button"
 								aria-expanded="false"
 								aria-haspopup="true"
@@ -143,17 +143,6 @@
 								</div>
 							</button>
 						</div>
-
-						<!--
-            Dropdown menu, show/hide based on menu state.
-
-            Entering: "transition ease-out duration-100"
-              From: "transform opacity-0 scale-95"
-              To: "transform opacity-100 scale-100"
-            Leaving: "transition ease-in duration-75"
-              From: "transform opacity-100 scale-100"
-              To: "transform opacity-0 scale-95"
-          -->
 						{#if isUserMenuOpen}
 							<div
 								in:scale={{ duration: 200, easing: quintOut, start: 0.95, opacity: 0 }}
@@ -169,12 +158,15 @@
 										href="/account"
 										class="block px-4 py-2 text-sm text-gray-700"
 										role="menuitem"
+										on:click={() => (isUserMenuOpen = false)}
 										tabindex="-1">Account</a
 									>
 									<a
-										href="/account"
+										data-sveltekit-reload
+										href="/auth/logout"
 										class="block px-4 py-2 text-sm text-gray-700"
 										role="menuitem"
+										on:click={() => (isUserMenuOpen = false)}
 										tabindex="-1">Sign out</a
 									>
 								{:else}
@@ -182,6 +174,7 @@
 										href="/auth/login"
 										class="block px-4 py-2 text-sm text-gray-700"
 										role="menuitem"
+										on:click={() => (isUserMenuOpen = false)}
 										tabindex="-1">Login</a
 									>
 								{/if}

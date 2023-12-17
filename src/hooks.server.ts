@@ -4,12 +4,15 @@ import { createSupabaseServerClient } from '@supabase/auth-helpers-sveltekit';
 import type { Handle } from '@sveltejs/kit';
 
 export const handle: Handle = async ({ event, resolve }) => {
-	event.locals.supabase = createSupabaseServerClient({
+	const supabase = createSupabaseServerClient({
 		supabaseUrl: PUBLIC_SUPABASE_URL,
 		supabaseKey: PUBLIC_SUPABASE_ANON_KEY,
 		event
 	});
 
+	event.locals.supabase = supabase;
+
+	event.locals.user = await supabase.auth.getUser();
 	/**
 	 * A convenience helper so we can just call await getSession() instead const { data: { session } } = await supabase.auth.getSession()
 	 */
