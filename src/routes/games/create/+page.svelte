@@ -1,18 +1,52 @@
-<script>
-	import { enhance } from '$app/forms';
+<script lang="ts">
+	import { applyAction, enhance } from '$app/forms';
+	import { Calendar as CalendarIcon } from 'lucide-svelte';
+	import {
+		type DateValue,
+		DateFormatter,
+		getLocalTimeZone,
+		today,
+		parseDate
+	} from '@internationalized/date';
+	import { cn } from '$lib/utils';
+	import { Button } from '$lib/components/ui/button';
+	import { Calendar } from '$lib/components/ui/calendar';
+	import * as Popover from '$lib/components/ui/popover';
+	import type { SubmitFunction } from '@sveltejs/kit';
+	import { goto } from '$app/navigation';
+
+	const df = new DateFormatter('en-US', {
+		dateStyle: 'long'
+	});
+	export let form;
 
 	let name = '';
-	let endTime = '';
+	console.log(form);
+	let endDate: DateValue | undefined = form?.endDate
+		? parseDate(form.endDate.toString())
+		: today(getLocalTimeZone());
+
+	let endTime: string = form?.endTime?.toString() ?? '12:00';
 	let loading = false;
 
-	function handleSubmit() {
-		// Handle form submission here
-		console.log('Name:', name);
-		console.log('End Time:', endTime);
-	}
+	const handleSubmit: SubmitFunction = () => {
+		loading = true;
+		return async ({ result }) => {
+			loading = false;
+			if (result.type === 'redirect') {
+				goto(result.location);
+			} else {
+				await applyAction(result);
+			}
+		};
+	};
 </script>
 
-<form method="post" action="?/update" use:enhance={handleSubmit}>
+{#if form?.success}
+	Game created! Share this code with your friends: <pre>{form?.game.code}</pre>
+{/if}
+
+<form method="POST" action="?/create" use:enhance={handleSubmit}>
 	<div class="space-y-12">
 		<div class="border-b border-white/10 pb-12">
 			<h2 class="text-base font-semibold leading-7 text-white">Create an AuthentiClash!</h2>
@@ -21,7 +55,7 @@
 			</p>
 
 			<div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-				<div class="sm:col-span-4">
+				<div class="sm:col-span-6">
 					<label for="game-name" class="block text-sm font-medium leading-6 text-white"
 						>Game name</label
 					>
@@ -35,28 +69,55 @@
 								id="game-name"
 								autocomplete="name"
 								value={name}
+								required
+								minlength="3"
 								class="flex-1 border-0 bg-transparent py-1.5 pl-1 text-white focus:ring-0 sm:text-sm sm:leading-6"
 							/>
 						</div>
 					</div>
 				</div>
-				<div class="sm:col-span-4">
-					<label for="username" class="block text-sm font-medium leading-6 text-white"
-						>Username</label
+
+				<div class="sm:col-span-3">
+					<label for="end-date" class="block text-sm font-medium leading-6 text-white"
+						>End date</label
+					>
+					<div class="mt-2">
+						<input type="hidden" name="end-date" id="end-date" bind:value={endDate} />
+						<Popover.Root>
+							<Popover.Trigger asChild let:builder>
+								<Button
+									variant="outline"
+									class={cn(
+										'w-[280px] justify-start text-left font-normal',
+										!endDate && 'text-muted-foreground'
+									)}
+									builders={[builder]}
+								>
+									<CalendarIcon class="mr-2 h-4 w-4" />
+									{endDate ? df.format(endDate.toDate(getLocalTimeZone())) : 'Pick a date'}
+								</Button>
+							</Popover.Trigger>
+							<Popover.Content class="w-auto p-0">
+								<Calendar bind:value={endDate} />
+							</Popover.Content>
+						</Popover.Root>
+					</div>
+				</div>
+				<div class="sm:col-span-1">
+					<label for="game-name" class="block text-sm font-medium leading-6 text-white"
+						>End time</label
 					>
 					<div class="mt-2">
 						<div
 							class="flex rounded-md bg-white/5 ring-1 ring-inset ring-white/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500"
 						>
 							<input
-								type="text"
-								name="username"
-								id="username"
-								autocomplete="username"
+								type="time"
+								name="end-time"
+								id="end-time"
 								value={endTime}
-								class="flex-1 border-0 bg-transparent py-1.5 pl-1 text-white focus:ring-0 sm:text-sm sm:leading-6"
-								minlength="3"
 								required
+								class="flex-1 border-0 bg-transparent py-1.5 pl-1 text-white focus:ring-0 sm:text-sm sm:leading-6"
 							/>
 						</div>
 					</div>
