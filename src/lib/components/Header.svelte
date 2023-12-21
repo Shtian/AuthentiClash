@@ -3,6 +3,7 @@
 	import { quintOut } from 'svelte/easing';
 	import { page } from '$app/stores';
 	import type { Session } from '@supabase/supabase-js';
+	import { clickOutside } from '$lib/utils/clickOutside';
 
 	export let session: Session | null = null;
 
@@ -33,7 +34,10 @@
 						class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
 						aria-controls="mobile-menu"
 						aria-expanded="false"
-						on:click={() => (isMainMenuOpen = !isMainMenuOpen)}
+						on:click={(e) => {
+							isMainMenuOpen = !isMainMenuOpen;
+							e.stopPropagation();
+						}}
 					>
 						<span class="absolute -inset-0.5"></span>
 						<span class="sr-only">Open main menu</span>
@@ -109,7 +113,10 @@
 								id="user-menu-button"
 								aria-expanded="false"
 								aria-haspopup="true"
-								on:click={() => (isUserMenuOpen = !isUserMenuOpen)}
+								on:click={(e) => {
+									isUserMenuOpen = !isUserMenuOpen;
+									e.stopPropagation();
+								}}
 							>
 								<span class="absolute -inset-1.5"></span>
 								<span class="sr-only">Open user menu</span>
@@ -152,6 +159,7 @@
 								aria-orientation="vertical"
 								aria-labelledby="user-menu-button"
 								tabindex="-1"
+								use:clickOutside={() => (isUserMenuOpen = false)}
 							>
 								{#if isLoggedIn}
 									<a
@@ -191,6 +199,9 @@
 				transition:slide={{ duration: 300, easing: quintOut, axis: 'y' }}
 				class="sm:hidden"
 				id="mobile-menu"
+				use:clickOutside={() => {
+					isMainMenuOpen = false;
+				}}
 			>
 				<div class="space-y-1 px-2 pb-3 pt-2">
 					{#if isLoggedIn}
