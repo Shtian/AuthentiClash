@@ -1,5 +1,5 @@
 import { generateUniqueSentence } from '$lib/utils/word-generator/generator.js';
-import { fail } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 
 export const actions = {
 	create: async ({ request, locals: { supabase, user } }) => {
@@ -37,9 +37,8 @@ export const actions = {
 			});
 		}
 
-		return {
-			game: data[0],
-			success: true
-		};
+		const [gameData] = data;
+		const { code } = gameData;
+		redirect(303, `/games/${code}`);
 	}
 };
