@@ -9,12 +9,13 @@
 	export let newScore: number | null = null;
 	export let recentRefresh = false;
 
-	const players = data.game.participation.map((player) => {
+	const players = data.game.participation.map((participation) => {
 		return {
-			uuid: player.profile_id,
-			nickname: player.nickname,
-			score: player.score,
-			maxScore: Math.max(player.score)
+			id: participation.id,
+			uuid: participation.profile_id,
+			nickname: participation.nickname,
+			score: participation.score,
+			maxScore: Math.max(participation.score)
 		};
 	});
 
@@ -27,7 +28,7 @@
 			recentRefresh = false;
 		}, 1000);
 		const newNickname = generateNickName();
-		newNickname.split('').forEach((letter, i) => {
+		newNickname.split('').forEach((_, i) => {
 			setTimeout(() => {
 				nickname = newNickname.slice(0, i + 1);
 			}, i * 25);
@@ -45,7 +46,8 @@
 	<p class="mt-10">
 		{isParticipating ? 'Register new 2FA Code' : 'Register new 2FA Code and join this game'}
 	</p>
-	<form>
+	<form method="post" action="?/updateScore">
+		<input type="hidden" name="is-participating" id="is-participating" value={isParticipating} />
 		<div class="mt-4 grid gap-x-6 gap-y-8 grid-cols-3">
 			{#if !isParticipating}
 				<div class="col-span-3">
@@ -80,6 +82,8 @@
 									stroke="currentColor"
 									class="w-6 h-6 origin-center [animation-duration:0.2s] [animation-iteration-count:1]"
 									class:animate-spin={recentRefresh}
+									aria-hidden="true"
+									focusable="false"
 								>
 									<path
 										stroke-linecap="round"
