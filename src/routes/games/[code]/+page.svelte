@@ -25,8 +25,13 @@
 		recentRefresh = true;
 		setTimeout(() => {
 			recentRefresh = false;
-			nickname = generateNickName();
-		}, 200);
+		}, 1000);
+		const newNickname = generateNickName();
+		newNickname.split('').forEach((letter, i) => {
+			setTimeout(() => {
+				nickname = newNickname.slice(0, i + 1);
+			}, i * 25);
+		});
 	};
 </script>
 
@@ -59,11 +64,10 @@
 								value={nickname}
 								required
 								minlength="3"
-								class="flex-1 border-0 bg-transparent py-1.5 pl-1 text-white focus:ring-0 sm:text-sm sm:leading-6 transition-all duration-200"
-								class:[transform:rotateX(2turn)]={recentRefresh}
+								class="flex-1 border-0 bg-transparent py-1.5 pl-1 text-white focus:ring-0 sm:text-sm sm:leading-6"
 							/>
 							<button
-								class="absolute right-2 top-1/2 transform -translate-y-1/2"
+								class="absolute right-2 top-1/2 -translate-y-1/2"
 								type="button"
 								on:click={handleNicknameRefresh}
 							>
@@ -74,7 +78,8 @@
 									viewBox="0 0 24 24"
 									stroke-width="1.5"
 									stroke="currentColor"
-									class="w-6 h-6"
+									class="w-6 h-6 origin-center [animation-duration:0.2s] [animation-iteration-count:1]"
+									class:animate-spin={recentRefresh}
 								>
 									<path
 										stroke-linecap="round"
