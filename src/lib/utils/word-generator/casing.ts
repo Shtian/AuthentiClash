@@ -12,7 +12,7 @@ const Casing = {
 
 export type CasingType = (typeof Casing)[keyof typeof Casing];
 
-export function toCorrectCasing(type: CasingType, str: string) {
+export function toCasing(type: CasingType, str: string) {
 	switch (type) {
 		case 'lower':
 			return str.toLowerCase();
