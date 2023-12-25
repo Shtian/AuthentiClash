@@ -1,4 +1,4 @@
-import { toCasing } from './casing';
+import { pascalCase, toCasing } from './casing';
 import { describe, it, expect } from 'vitest';
 
 describe('toCorrectCasing', () => {
@@ -61,5 +61,18 @@ describe('toCorrectCasing', () => {
 		const str = 'This is a long sentence';
 		const result = toCasing('camel', str);
 		expect(result).toBe('thisIsALongSentence');
+	});
+});
+
+describe('Tagged templates', () => {
+	it('should convert string to pascal case', () => {
+		const result = pascalCase`This is a long sentence`;
+		expect(result).toBe('ThisIsALongSentence');
+	});
+
+	it('should convert string to pascal case and support interpolation', () => {
+		const word = 'long';
+		const result = pascalCase`This is a ${word} sentence`;
+		expect(result).toBe('ThisIsALongSentence');
 	});
 });

@@ -53,3 +53,20 @@ export function toCasing(type: CasingType, str: string) {
 			return str;
 	}
 }
+
+function createCasingFunction(type: CasingType) {
+	return function (strings: TemplateStringsArray, ...values: unknown[]): string {
+		const result = strings.map((str, i) => str + (values[i] || '')).join('');
+		return toCasing(type, result);
+	};
+}
+
+export const pascalCase = createCasingFunction('pascal');
+export const kebabCase = createCasingFunction('kebab');
+export const snakeCase = createCasingFunction('snake');
+export const camelCase = createCasingFunction('camel');
+export const clapCase = createCasingFunction('clap');
+export const capitalize = createCasingFunction('capitalize');
+export const capitalizeAll = createCasingFunction('capitalize-all');
+export const lowerCase = createCasingFunction('lower');
+export const upperCase = createCasingFunction('upper');
