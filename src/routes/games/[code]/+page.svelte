@@ -2,10 +2,11 @@
 	import InlineMessage from '$lib/components/InlineMessage.svelte';
 	import { page } from '$app/stores';
 	import { generateNickName } from '$lib/utils/word-generator/generator.js';
+	import { capitalize } from '$lib/utils/casing.js';
 
 	export let data;
 
-	export let nickname = generateNickName();
+	export let nickname = capitalize`${generateNickName()}`;
 	export let newScore: number | null = null;
 	export let recentRefresh = false;
 
@@ -27,7 +28,7 @@
 		setTimeout(() => {
 			recentRefresh = false;
 		}, 1000);
-		const newNickname = generateNickName();
+		const newNickname = capitalize`${generateNickName()}`;
 		newNickname.split('').forEach((_, i) => {
 			setTimeout(() => {
 				nickname = newNickname.slice(0, i + 1);

@@ -1,3 +1,4 @@
+import { kebabCase } from '$lib/utils/casing.js';
 import { generateUniqueSentence } from '$lib/utils/word-generator/generator.js';
 import { fail, redirect } from '@sveltejs/kit';
 
@@ -16,7 +17,8 @@ export const actions = {
 				endTime
 			});
 		}
-		const generatedId = generateUniqueSentence();
+
+		const generatedId = kebabCase`${generateUniqueSentence()}`;
 		const game = {
 			name,
 			end_at: endDate,

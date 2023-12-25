@@ -1,13 +1,12 @@
-import { type CasingType, toCasing } from './casing';
 import animals from './creatures.json';
 import encouragingWords from './encouraging-words.json';
 import verbs from './verbs.json';
 
-export const generateNickName = (type: CasingType = 'capitalize-all') => {
+export const generateNickName = () => {
 	const randomAnimal = animals[Math.floor(rnd() * animals.length)];
 	const randomVerb = verbs[Math.floor(rnd() * verbs.length)];
 	const nickname = `${randomVerb} ${randomAnimal}`;
-	return toCasing(type, nickname);
+	return nickname;
 };
 
 export const generateUniqueSentence = () => {
@@ -15,8 +14,7 @@ export const generateUniqueSentence = () => {
 	const randomAnimal = animals[Math.floor(rnd() * animals.length)];
 	const randomVerb = verbs[Math.floor(rnd() * verbs.length)];
 	const randomInt = Math.floor(rnd() * 1000 + 1);
-	const sentence = `${randomEncouragingWord} ${randomVerb} ${randomAnimal} ${randomInt}`;
-	return toCasing('kebab', sentence);
+	return `${randomEncouragingWord} ${randomVerb} ${randomAnimal} ${randomInt}`;
 };
 
 const rnd = () => {
