@@ -41,10 +41,6 @@
 	};
 </script>
 
-{#if form?.success}
-	Game created! Share this code with your friends: <pre>{form?.game.code}</pre>
-{/if}
-
 <form method="POST" action="?/create" use:enhance={handleSubmit}>
 	<div class="space-y-12">
 		<div class="border-b border-white/10 pb-12">
