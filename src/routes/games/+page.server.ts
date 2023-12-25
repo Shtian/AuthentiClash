@@ -9,12 +9,13 @@ export const load: PageServerLoad = async ({ locals: { getSession, supabase, use
 
 	const { data: games, error } = await supabase
 		.from('games')
-		.select('id, creator, code, participation ( profile_id, score, nickname )');
+		.select('id, creator, code, end_at, name, participation ( profile_id, score, nickname )');
 	if (error) {
+		console.log(error);
 		return fail(500, { message: error });
 	}
 
-	const participatingGames = games.filter(
+	const participatingGames = (games || []).filter(
 		(game) =>
 			game.creator === user.data.user?.id ||
 			game.participation.some((participation) => participation.profile_id === user.data.user?.id)
