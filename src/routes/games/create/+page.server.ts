@@ -10,7 +10,6 @@ export const actions = {
 		const endTime = formData.get('end-time');
 
 		if (!user.data.user?.id) {
-			console.log('no user id');
 			return fail(401, {
 				name,
 				endDate,

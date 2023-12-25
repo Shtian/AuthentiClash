@@ -21,7 +21,6 @@
 	export let form;
 
 	let name = '';
-	console.log(form);
 	let endDate: DateValue | undefined = form?.endDate
 		? parseDate(form.endDate.toString())
 		: today(getLocalTimeZone());
