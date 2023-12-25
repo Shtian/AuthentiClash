@@ -70,6 +70,7 @@ export const actions = {
 			const { data: existingParticipation, error: existingParticipationError } = await supabase
 				.from('participation')
 				.select('id, score')
+				.eq('game_id', game_id)
 				.eq('profile_id', user.data.user.id)
 				.single();
 
@@ -79,7 +80,7 @@ export const actions = {
 			const newScore = [...existingParticipation.score, score];
 			const { data, error } = await supabase
 				.from('participation')
-				.update({ score: newScore })
+				.update({ score: newScore, updated_at: new Date() })
 				.eq('id', existingParticipation.id)
 				.single();
 
