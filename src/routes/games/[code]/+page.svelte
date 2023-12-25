@@ -16,7 +16,7 @@
 			uuid: participation.profile_id,
 			nickname: participation.nickname,
 			score: participation.score,
-			maxScore: Math.max(participation.score)
+			maxScore: Math.max(...participation.score)
 		};
 	});
 
@@ -49,6 +49,7 @@
 	</p>
 	<form method="post" action="?/updateScore">
 		<input type="hidden" name="is-participating" id="is-participating" value={isParticipating} />
+		<input type="hidden" name="game-id" id="game-id" value={data.game.id} />
 		<div class="mt-4 grid gap-x-6 gap-y-8 grid-cols-3">
 			{#if !isParticipating}
 				<div class="col-span-3">
