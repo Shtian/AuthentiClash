@@ -11,7 +11,6 @@ export const load: PageServerLoad = async ({ locals: { getSession, supabase, use
 		.from('games')
 		.select('id, creator, code, end_at, name, participation ( profile_id, score, nickname )');
 	if (error) {
-		console.log(error);
 		return fail(500, { message: error });
 	}
 
@@ -22,6 +21,7 @@ export const load: PageServerLoad = async ({ locals: { getSession, supabase, use
 	);
 
 	return {
-		participatingGames
+		participatingGames,
+		profileId: user.data.user?.id
 	};
 };

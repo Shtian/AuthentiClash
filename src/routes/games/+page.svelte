@@ -1,21 +1,117 @@
 <script lang="ts">
+	import Badge from '$lib/components/Badge.svelte';
 	import { DateFormatter } from '@internationalized/date';
 	export let data;
-	const games = data.participatingGames || [];
 	const df = new DateFormatter('en-US', {
-		dateStyle: 'long'
+		dateStyle: 'short',
+		timeStyle: 'short',
+		hour12: false
+	});
+	const games = data.participatingGames || [];
+	const gamesWithParticipation = games.map((game) => {
+		const sortedParticipations = game.participation?.toSorted((a, b) => {
+			const aScore = a.score || [0];
+			const bScore = b.score || [0];
+			const aMaxScore = Math.max(...aScore);
+			const bMaxScore = Math.max(...bScore);
+			return aMaxScore - bMaxScore;
+		});
+		const userRankIndex = sortedParticipations.findIndex((p) => p.profile_id === data.profileId);
+		const userRank = userRankIndex === -1 ? 0 : userRankIndex + 1;
+		const participation = game.participation.find((p) => p.profile_id === data.profileId);
+		const userScore = participation?.score || [0];
+		const userMaxScore = Math.max(...userScore);
+		return {
+			id: game.id,
+			name: game.name,
+			code: game.code,
+			userMaxScore,
+			userRank,
+			endAtString: df.format(new Date(game.end_at)),
+			endAtDate: new Date(game.end_at),
+			timeToEnd: new Date(game.end_at).getTime() - Date.now()
+		};
 	});
 </script>
 
-<header>
-	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-		<h1 class="text-3xl font-bold leading-tight tracking-tigh text-white">Games</h1>
-	</div>
-</header>
 <main>
 	<div class="mx-auto max-w-7xl sm:px-6 lg:px-8 py-10">
+		<header>
+			<div class="sm:flex sm:items-center">
+				<div class="sm:flex-auto">
+					<h1 class="text-base font-semibold leading-6 text-white">Games</h1>
+					<p class="mt-2 text-sm text-gray-300">All games you are or have been participating in</p>
+				</div>
+				<div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+					<a
+						href="/games/create"
+						class="block rounded-md bg-indigo-500 px-3 py-2 text-center text-sm font-semibold text-white hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+						>New game</a
+					>
+				</div>
+			</div>
+		</header>
 		{#if games.length > 0}
-			<ul class="flex flex-col gap-y-4">
+			<div class="mt-8 flow-root">
+				<div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+					<div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+						<table class="min-w-full divide-y divide-gray-700">
+							<thead>
+								<tr>
+									<th
+										scope="col"
+										class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0"
+									>
+										Game
+									</th>
+									<th scope="col" class="pr-3 py-3.5 text-left text-sm font-semibold text-white">
+										Your Rank
+									</th>
+									<th scope="col" class="pr-3 py-3.5 text-left text-sm font-semibold text-white">
+										Status
+									</th>
+									<th scope="col" class="pr-3 py-3.5 text-left text-sm font-semibold text-white">
+									</th>
+								</tr>
+							</thead>
+							<tbody class="divide-y divide-gray-800">
+								{#each gamesWithParticipation as game (game.id)}
+									<tr>
+										<td
+											class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0"
+										>
+											{game.name}
+										</td>
+										<td
+											class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0"
+											>{game.userRank === 0
+												? 'No entries'
+												: `#${game.userRank} (${game.userMaxScore})`}</td
+										>
+										<td
+											class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0"
+										>
+											<Badge
+												title={game.endAtString}
+												text={game.endAtDate < new Date() ? 'Ended' : 'In Progress'}
+												color={game.endAtDate < new Date() ? 'red' : 'green'}
+											/>
+										</td>
+										<td class="whitespace-nowrap text-end px-3 py-4 text-sm text-gray-300"
+											><a
+												href={`/games/${game.code}`}
+												class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+												>View</a
+											></td
+										>
+									</tr>
+								{/each}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<!-- <ul class="flex flex-col gap-y-4">
 				{#each games as game}
 					<li class="flex justify-between">
 						{game.name}
@@ -26,7 +122,7 @@
 						>
 					</li>
 				{/each}
-			</ul>
+			</ul> -->
 		{:else}
 			<div class="text-center">
 				<svg
