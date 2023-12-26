@@ -2,7 +2,7 @@
 	export let color: 'gray' | 'red' | 'yellow' | 'green' | 'blue' | 'indigo' | 'purple' | 'pink' =
 		'green';
 	export let text = '';
-
+	export let title = '';
 	const getColorClass = () => {
 		switch (color) {
 			case 'gray':
@@ -27,6 +27,7 @@
 </script>
 
 <span
+	{title}
 	class={`inline-flex items-center rounded-md px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset ${getColorClass()}`}
 	>{text}</span
 >
