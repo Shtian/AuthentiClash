@@ -4,6 +4,7 @@
 	import { page } from '$app/stores';
 	import type { Session } from '@supabase/supabase-js';
 	import { clickOutside } from '$lib/utils/clickOutside';
+	import logo from '$lib/assets/authenticlash_logo.svg';
 
 	export let session: Session | null = null;
 
@@ -73,11 +74,7 @@
 				</div>
 				<div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
 					<div class="flex flex-shrink-0 items-center">
-						<img
-							class="h-8 w-auto"
-							src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-							alt="Your Company"
-						/>
+						<img class="h-8 w-auto" src={logo} alt="Your Company" />
 					</div>
 					<div class="hidden sm:ml-6 sm:block">
 						{#if isLoggedIn}

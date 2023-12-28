@@ -2,10 +2,11 @@
 	import { applyAction, enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import type { ActionData } from './$types.js';
-	import { fade, fly } from 'svelte/transition';
+	import { fly } from 'svelte/transition';
 	import { quadIn, quadOut } from 'svelte/easing';
 	import { goto } from '$app/navigation';
 	import InlineMessage from '$lib/components/InlineMessage.svelte';
+	import logo from '$lib/assets/authenticlash_logo.svg';
 
 	export let form: ActionData;
 	$: ({ error, success, registeredEmail } = form ?? {
@@ -41,11 +42,7 @@
 
 <div class="flex min-h-full flex-col justify-center">
 	<div class="sm:mx-auto sm:w-full sm:max-w-sm">
-		<img
-			class="mx-auto h-10 w-auto"
-			src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-			alt="Your Company"
-		/>
+		<img class="mx-auto h-10 w-auto" src={logo} alt="AuthentiClash logo" />
 		<h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white">
 			{showRegister ? 'Create your account' : 'Sign in to your account'}
 		</h2>
