@@ -30,14 +30,14 @@ export const load: PageServerLoad = async ({ params, locals: { getSession, supab
 };
 
 export const actions = {
-	updateScore: async ({ request, locals: { supabase, user } }) => {
+	updateScore: async ({ request, locals: { supabase, getSession } }) => {
 		const formData = await request.formData();
 		const nickname = formData.get('nickname');
 		const score = formData.get('2fa-score');
 		const isParticipating = formData.get('is-participating') === 'true';
 		const game_id = formData.get('game-id');
-
-		if (!user.data.user?.id) {
+		const session = await getSession();
+		if (!session) {
 			return fail(401, {
 				nickname,
 				score
@@ -48,7 +48,7 @@ export const actions = {
 			const participation = {
 				nickname,
 				score: [score],
-				profile_id: user.data.user.id,
+				profile_id: session.user.id,
 				game_id,
 				created_at: new Date(),
 				updated_at: new Date()
@@ -71,7 +71,7 @@ export const actions = {
 				.from('participation')
 				.select('id, score')
 				.eq('game_id', game_id)
-				.eq('profile_id', user.data.user.id)
+				.eq('profile_id', session.user.id)
 				.single();
 
 			if (existingParticipationError || !existingParticipation)

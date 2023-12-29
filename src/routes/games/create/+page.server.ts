@@ -3,13 +3,13 @@ import { generateUniqueSentence } from '$lib/utils/word-generator/generator.js';
 import { fail, redirect } from '@sveltejs/kit';
 
 export const actions = {
-	create: async ({ request, locals: { supabase, user } }) => {
+	create: async ({ request, locals: { supabase, getSession } }) => {
 		const formData = await request.formData();
 		const name = formData.get('game-name');
 		const endDate = formData.get('end-date');
 		const endTime = formData.get('end-time');
-
-		if (!user.data.user?.id) {
+		const session = await getSession();
+		if (!session) {
 			return fail(401, {
 				name,
 				endDate,
@@ -22,7 +22,7 @@ export const actions = {
 			name,
 			end_at: endDate,
 			code: generatedId,
-			creator: user.data.user?.id,
+			creator: session.user.id,
 			is_active: true,
 			created_at: new Date(),
 			updated_at: new Date()
