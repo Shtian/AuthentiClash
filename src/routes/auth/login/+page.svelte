@@ -85,7 +85,7 @@
 							autocomplete="email"
 							bind:value={email}
 							required
-							class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+							class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-clash-500 sm:text-sm sm:leading-6"
 						/>
 					</div>
 				</div>
@@ -98,7 +98,7 @@
 						<div class="text-sm">
 							<a
 								href={`/auth/forgot${getEmailParam(email)}`}
-								class="font-semibold text-indigo-400 hover:text-indigo-300">Forgot password?</a
+								class="font-semibold text-clash-400 hover:text-clash-300">Forgot password?</a
 							>
 						</div>
 					</div>
@@ -110,7 +110,7 @@
 							autocomplete="current-password"
 							bind:value={password}
 							required
-							class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+							class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-clash-500 sm:text-sm sm:leading-6"
 						/>
 					</div>
 				</div>
@@ -119,7 +119,7 @@
 					<button
 						type="submit"
 						disabled={loading}
-						class="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+						class="flex w-full justify-center rounded-md bg-clash-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-clash-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500"
 						>{loading ? 'Signing in...' : 'Sign in'}</button
 					>
 				</div>
@@ -127,7 +127,7 @@
 			<p class="mt-10 text-center text-sm text-gray-400">
 				Not a member?
 				<button
-					class="font-semibold leading-6 text-indigo-400 hover:text-indigo-300"
+					class="font-semibold leading-6 text-clash-400 hover:text-clash-300"
 					on:click={() => {
 						showRegister = true;
 						error = '';
@@ -158,7 +158,7 @@
 							autocomplete="email"
 							bind:value={email}
 							required
-							class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+							class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-clash-500 sm:text-sm sm:leading-6"
 						/>
 					</div>
 				</div>
@@ -178,7 +178,7 @@
 							bind:value={password}
 							required
 							minlength="6"
-							class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+							class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-clash-500 sm:text-sm sm:leading-6"
 						/>
 					</div>
 				</div>
@@ -187,7 +187,7 @@
 					<button
 						type="submit"
 						disabled={loading}
-						class="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+						class="flex w-full justify-center rounded-md bg-clash-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-clash-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500"
 						>{loading ? 'Signing up...' : 'Sign up'}</button
 					>
 				</div>
@@ -195,7 +195,7 @@
 			<p class="mt-10 text-center text-sm text-gray-400">
 				Already a member?
 				<button
-					class="font-semibold leading-6 text-indigo-400 hover:text-indigo-300"
+					class="font-semibold leading-6 text-clash-400 hover:text-clash-300"
 					on:click={() => {
 						showRegister = false;
 						error = '';

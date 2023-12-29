@@ -15,6 +15,19 @@ const config = {
 		},
 		extend: {
 			colors: {
+				clash: {
+					50: '#DFF0FB',
+					100: '#C4E3F8',
+					200: '#85C5EF',
+					300: '#4AA9E8',
+					400: '#1B87D0',
+					500: '#136195',
+					600: '#0F4D76',
+					700: '#0C3B5A',
+					800: '#07263B',
+					900: '#041520',
+					950: '#02090E'
+				},
 				border: 'hsl(var(--border) / <alpha-value>)',
 				input: 'hsl(var(--input) / <alpha-value>)',
 				ring: 'hsl(var(--ring) / <alpha-value>)',

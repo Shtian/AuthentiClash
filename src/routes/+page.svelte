@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { fade, fly, slide } from 'svelte/transition';
+	import { fly } from 'svelte/transition';
 	let visible = false;
 	onMount(() => {
 		visible = true;
@@ -10,7 +10,7 @@
 <heading class="mx-auto text-center flex flex-col justify-center">
 	{#if visible}
 		<h1
-			class="text-7xl bg-clip-text text-transparent bg-gradient-to-br from-white to-violet-300"
+			class="text-7xl bg-clip-text text-transparent bg-gradient-to-br from-white to-clash-200"
 			in:fly={{ y: -20, duration: 2000 }}
 		>
 			AuthentiClash
@@ -21,7 +21,7 @@
 		<a
 			in:fly={{ x: -10, duration: 300, delay: 2000, opacity: 0 }}
 			href="/games"
-			class="self-center mt-6 inline-flex items-center gap-x-3 px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-violet-600 hover:bg-violet-700"
+			class="mt-8 inline-flex gap-x-2 items-center self-center rounded-md bg-clash-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-clash-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500"
 		>
 			Play Now
 			<svg
