@@ -4,7 +4,7 @@
 	export let msgType: 'success' | 'error' = 'success';
 </script>
 
-{#if msgType === 'success'}
+{#if msgType === 'error'}
 	<div
 		in:fade
 		class="mt-10 sm:mx-auto sm-w-full sm:max-w-sm text-white ring-1 rounded-md px-4 py-2 ring-red-300 flex items-center gap-x-2"
@@ -25,7 +25,7 @@
 		</svg>
 		<slot />
 	</div>
-{:else if msgType === 'error'}
+{:else if msgType === 'success'}
 	<div
 		in:fade
 		class="mt-10 sm:mx-auto sm-w-full sm:max-w-sm text-white ring-1 rounded-md px-4 py-2 ring-green-300 flex items-center gap-x-2"

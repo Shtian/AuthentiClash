@@ -9,9 +9,11 @@
 	export let session: Session | null = null;
 
 	const links = [{ name: 'Games', href: '/games' }];
+
 	let isMainMenuOpen = false;
 	let isUserMenuOpen = false;
 	let isLoggedIn = !!session?.user;
+
 	async function sha256(message: string) {
 		const msgBuffer = new TextEncoder().encode(message.trim().toLocaleLowerCase());
 
