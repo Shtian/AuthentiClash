@@ -18,7 +18,8 @@
 			score: participation.score,
 			maxScore: Math.max(...participation.score)
 		};
-	});
+	})
+	.sort((a, b) => b.maxScore - a.maxScore);
 
 	const isParticipating =
 		players.findIndex((player) => player.uuid === data.session?.user.id) !== -1;
