@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { fly } from 'svelte/transition';
+	import logo from '$lib/assets/authenticlash_logo.svg';
 	let visible = false;
 	onMount(() => {
 		visible = true;
@@ -39,5 +40,7 @@
 				/>
 			</svg>
 		</a>
+		<img 
+		in:fly={{ x: -10, duration: 300, delay: 2000, opacity: 0 }} class="mx-auto h-80 w-auto mt-16" src={logo} alt="AuthentiClash logo" />
 	{/if}
 </heading>
