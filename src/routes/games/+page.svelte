@@ -31,7 +31,7 @@
 			endAtDate: new Date(game.end_at),
 			timeToEnd: new Date(game.end_at).getTime() - Date.now()
 		};
-	});
+	}).sort((a, b) => b.timeToEnd - a.timeToEnd);
 </script>
 
 <main>
