@@ -8,30 +8,32 @@
 		hour12: false
 	});
 	const games = data.participatingGames || [];
-	const gamesWithParticipation = games.map((game) => {
-		const sortedParticipations = game.participation?.toSorted((a, b) => {
-			const aScore = a.score || [0];
-			const bScore = b.score || [0];
-			const aMaxScore = Math.max(...aScore);
-			const bMaxScore = Math.max(...bScore);
-			return bMaxScore - aMaxScore;
-		});
-		const userRankIndex = sortedParticipations.findIndex((p) => p.profile_id === data.profileId);
-		const userRank = userRankIndex === -1 ? 0 : userRankIndex + 1;
-		const participation = game.participation.find((p) => p.profile_id === data.profileId);
-		const userScore = participation?.score || [0];
-		const userMaxScore = Math.max(...userScore);
-		return {
-			id: game.id,
-			name: game.name,
-			code: game.code,
-			userMaxScore,
-			userRank,
-			endAtString: df.format(new Date(game.end_at)),
-			endAtDate: new Date(game.end_at),
-			timeToEnd: new Date(game.end_at).getTime() - Date.now()
-		};
-	}).sort((a, b) => b.timeToEnd - a.timeToEnd);
+	const gamesWithParticipation = games
+		.map((game) => {
+			const sortedParticipations = game.participation?.toSorted((a, b) => {
+				const aScore = a.score || [0];
+				const bScore = b.score || [0];
+				const aMaxScore = Math.max(...aScore);
+				const bMaxScore = Math.max(...bScore);
+				return bMaxScore - aMaxScore;
+			});
+			const userRankIndex = sortedParticipations.findIndex((p) => p.profile_id === data.profileId);
+			const userRank = userRankIndex === -1 ? 0 : userRankIndex + 1;
+			const participation = game.participation.find((p) => p.profile_id === data.profileId);
+			const userScore = participation?.score || [0];
+			const userMaxScore = Math.max(...userScore);
+			return {
+				id: game.id,
+				name: game.name,
+				code: game.code,
+				userMaxScore,
+				userRank,
+				endAtString: df.format(new Date(game.end_at)),
+				endAtDate: new Date(game.end_at),
+				timeToEnd: new Date(game.end_at).getTime() - Date.now()
+			};
+		})
+		.sort((a, b) => b.timeToEnd - a.timeToEnd);
 </script>
 
 <main>
