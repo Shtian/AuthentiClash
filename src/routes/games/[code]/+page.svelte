@@ -55,7 +55,7 @@
 
 {#if data.game}
 	<header>
-		<div class="flex flex-row justify-between mx-auto max-w-7xl sm:px-6 lg:px-8">
+		<div class="flex flex-row flex-wrap justify-between gap-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
 			<h1 class="text-3xl font-bold leading-tight tracking-tigh text-white">{data.game.name}</h1>
 			<div class="relative">
 				<button
