@@ -14,7 +14,7 @@
 			const bScore = b.score || [0];
 			const aMaxScore = Math.max(...aScore);
 			const bMaxScore = Math.max(...bScore);
-			return aMaxScore - bMaxScore;
+			return bMaxScore - aMaxScore;
 		});
 		const userRankIndex = sortedParticipations.findIndex((p) => p.profile_id === data.profileId);
 		const userRank = userRankIndex === -1 ? 0 : userRankIndex + 1;
