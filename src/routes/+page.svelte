@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { fly } from 'svelte/transition';
+	import { fly, scale } from 'svelte/transition';
 	import logo from '$lib/assets/authenticlash_logo.svg';
 	let visible = false;
 	onMount(() => {
@@ -11,12 +11,12 @@
 <heading class="mx-auto text-center flex flex-col justify-center">
 	{#if visible}
 		<h1
-			class="text-7xl bg-clip-text text-transparent bg-gradient-to-br from-white to-clash-200"
+			class="text-5xl md:text-7xl bg-clip-text text-transparent bg-gradient-to-br from-white to-clash-200"
 			in:fly={{ y: -20, duration: 2000 }}
 		>
 			AuthentiClash
 		</h1>
-		<p class="text-lg mt-4" in:fly={{ y: -10, duration: 1500, delay: 700, opacity: 0 }}>
+		<p class="text-md md:text-lg mt-4" in:fly={{ y: -10, duration: 1500, delay: 700, opacity: 0 }}>
 			Get Ready for the Most Average Adventure of Your Life!
 		</p>
 		<a
@@ -41,6 +41,6 @@
 			</svg>
 		</a>
 		<img 
-		in:fly={{ x: -10, duration: 300, delay: 2000, opacity: 0 }} class="mx-auto h-80 w-auto mt-16" src={logo} alt="AuthentiClash logo" />
+		in:scale={{ start: 0, duration: 200, delay: 2000, opacity: 0 }} class="mx-auto h-80 w-auto mt-16" src={logo} alt="AuthentiClash logo" />
 	{/if}
 </heading>

@@ -35,7 +35,7 @@
 </script>
 
 <main>
-	<div class="mx-auto max-w-7xl sm:px-6 lg:px-8 py-10">
+	<div class="mx-auto max-w-7xl sm:px-6 lg:px-8 lg:py-10">
 		<header>
 			<div class="sm:flex sm:items-center">
 				<div class="sm:flex-auto">

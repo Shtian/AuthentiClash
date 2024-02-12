@@ -26,7 +26,7 @@
 
 <Header {session} />
 
-<div class="min-h-full mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8">
+<div class="min-h-full mx-auto max-w-7xl px-4 py-8 lg:py-24 sm:px-6 sm:py-32 lg:px-8">
 	<div class="mx-auto max-w-2xl">
 		<slot />
 	</div>
