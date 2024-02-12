@@ -89,7 +89,7 @@
 	<main>
 		<div class="mx-auto max-w-7xl sm:px-6 lg:px-8 py-10">
 			<p class="mt-10">
-				{isParticipating ? 'Register new 2FA Code' : 'Register new 2FA Code and join this game'}
+				{isParticipating ? 'Register new 2FA Code' : 'Choose your nickname and enter your 2FA code to join the game!'}
 			</p>
 			<form method="post" action="?/updateScore">
 				<input
