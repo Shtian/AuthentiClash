@@ -3,6 +3,7 @@
 	import { page } from '$app/stores';
 	import { generateNickName } from '$lib/utils/word-generator/generator.js';
 	import { capitalize } from '$lib/utils/casing.js';
+	import { fade } from 'svelte/transition';
 
 	export let data;
 
@@ -37,6 +38,15 @@
 			}, i * 25);
 		});
 	};
+
+	let urlIsRecentlyCopied = false;
+	const copyUrl = () => {
+		navigator.clipboard.writeText(window.location.href);
+		urlIsRecentlyCopied = true;
+		window.setTimeout(() => {
+			urlIsRecentlyCopied = false;
+		}, 3000);
+	};
 </script>
 
 {#if $page.error}
@@ -45,8 +55,35 @@
 
 {#if data.game}
 	<header>
-		<div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+		<div class="flex flex-row justify-between mx-auto max-w-7xl sm:px-6 lg:px-8">
 			<h1 class="text-3xl font-bold leading-tight tracking-tigh text-white">{data.game.name}</h1>
+			<div class="relative">
+				<button
+					type="submit"
+					class="inline-flex gap-x-2 items-center self-center rounded-md bg-clash-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-clash-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500"
+					on:click={copyUrl}
+				>
+					Copy URL
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						class="lucide lucide-copy"
+						><rect width="14" height="14" x="8" y="8" rx="2" ry="2" /><path
+							d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
+						/></svg
+					>
+				</button>
+				{#if urlIsRecentlyCopied}
+					<p class="absolute -bottom-6" in:fade out:fade>URL Copied!</p>
+				{/if}
+			</div>
 		</div>
 	</header>
 	<main>
