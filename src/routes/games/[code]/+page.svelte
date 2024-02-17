@@ -70,7 +70,7 @@
 
 {#if data.game}
 	<header>
-		<div class="flex flex-col gap-y-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+		<div class="flex flex-col gap-y-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
 			<div class="flex flex-row gap-2">
 				<h1 class="text-3xl font-bold leading-tight tracking-tigh text-white">{data.game.name}</h1>
 				<button
@@ -100,16 +100,14 @@
 					{/if}
 				</button>
 			</div>
-			<div>
-				<p class="text-sm text-gray-300 text-pretty" title={data.game.end_at}>
-					Time remaining: {timeLeftText}
-				</p>
-			</div>
+			<p class="text-sm text-gray-300 text-pretty" title={data.game.end_at}>
+				Time remaining: {timeLeftText}
+			</p>
 		</div>
 	</header>
 	<main>
-		<div class="mx-auto max-w-7xl sm:px-6 lg:px-8 py-10">
-			<p class="mt-10">
+		<div class="mx-auto max-w-7xl sm:px-6 lg:px-8 py-5 mt-5">
+			<p>
 				{isParticipating
 					? 'Register new 2FA Code'
 					: 'Choose your nickname and enter your 2FA code to join the game!'}
