@@ -39,6 +39,7 @@
 	},
 	"dependencies": {
 		"@internationalized/date": "^3.5.1",
+		"@sentry/sveltekit": "^7.101.1",
 		"@supabase/auth-helpers-sveltekit": "^0.10.7",
 		"@supabase/auth-ui-shared": "^0.1.8",
 		"@supabase/auth-ui-svelte": "^0.2.8",
