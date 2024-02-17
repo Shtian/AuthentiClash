@@ -4,6 +4,7 @@
 	import { generateNickName } from '$lib/utils/word-generator/generator.js';
 	import { capitalize } from '$lib/utils/casing.js';
 	import { fade } from 'svelte/transition';
+	import { formatTimeDelta } from '$lib/utils/dateUtils.js';
 
 	export let data;
 
@@ -47,6 +48,20 @@
 			urlIsRecentlyCopied = false;
 		}, 3000);
 	};
+
+	const millisecondsToEnd = new Date(data.game.end_at).getTime();
+	let millisecondsNow = new Date().getTime();
+	let timeLeftText = formatTimeDelta(millisecondsToEnd - millisecondsNow);
+	const timer = setInterval(() => {
+		millisecondsNow = new Date().getTime();
+		const timeLeft = millisecondsToEnd - millisecondsNow;
+		if (timeLeft <= 0) {
+			clearInterval(timer);
+			timeLeftText = 'Game has ended';
+		} else {
+			timeLeftText = formatTimeDelta(timeLeft);
+		}
+	}, 1000);
 </script>
 
 {#if $page.error}
@@ -55,9 +70,9 @@
 
 {#if data.game}
 	<header>
-		<div class="flex flex-row flex-wrap justify-between gap-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
-			<h1 class="text-3xl font-bold leading-tight tracking-tigh text-white">{data.game.name}</h1>
-			<div class="relative">
+		<div class="flex flex-col gap-y-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+			<div class="flex flex-row flex-wrap justify-between gap-2">
+				<h1 class="text-3xl font-bold leading-tight tracking-tigh text-white">{data.game.name}</h1>
 				<button
 					type="submit"
 					class="inline-flex gap-x-2 items-center self-center rounded-md bg-clash-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-clash-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500 disabled:bg-gray-600 disabled:cursor-not-allowed transition-colors"
@@ -65,9 +80,9 @@
 					on:click={copyUrl}
 				>
 					{#if urlIsRecentlyCopied}
-					<span in:fade>URL Copied</span>
+						<span in:fade>URL Copied</span>
 					{:else}
-					<span in:fade>Copy URL</span>
+						<span in:fade>Copy URL</span>
 					{/if}
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -86,12 +101,17 @@
 					>
 				</button>
 			</div>
+			<div>
+				<p class="text-sm text-gray-300" title={data.game.end_at}>Time remaining: {timeLeftText}</p>
+			</div>
 		</div>
 	</header>
 	<main>
 		<div class="mx-auto max-w-7xl sm:px-6 lg:px-8 py-10">
 			<p class="mt-10">
-				{isParticipating ? 'Register new 2FA Code' : 'Choose your nickname and enter your 2FA code to join the game!'}
+				{isParticipating
+					? 'Register new 2FA Code'
+					: 'Choose your nickname and enter your 2FA code to join the game!'}
 			</p>
 			<form method="post" action="?/updateScore">
 				<input
