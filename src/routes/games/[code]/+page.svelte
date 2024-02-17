@@ -207,7 +207,7 @@
 			{:else}
 				<p class="text-white">Final scores:</p>
 			{/if}
-			<GameHighScore {players} />
+			<GameHighScore {players} currentPlayerId={data.session?.user.id} />
 		</div>
 	</main>
 {/if}

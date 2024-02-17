@@ -113,18 +113,6 @@
 					</div>
 				</div>
 			</div>
-			<!-- <ul class="flex flex-col gap-y-4">
-				{#each games as game}
-					<li class="flex justify-between">
-						{game.name}
-						<a
-							href={`/games/${game.code}`}
-							class="inline-flex items-center rounded-md bg-clash-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-clash-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-600"
-							>View</a
-						>
-					</li>
-				{/each}
-			</ul> -->
 		{:else}
 			<div class="text-center">
 				<svg
