@@ -71,19 +71,13 @@
 {#if data.game}
 	<header>
 		<div class="flex flex-col gap-y-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-			<div class="flex flex-row flex-wrap justify-between gap-2">
+			<div class="flex flex-row gap-2">
 				<h1 class="text-3xl font-bold leading-tight tracking-tigh text-white">{data.game.name}</h1>
 				<button
 					type="submit"
-					class="inline-flex gap-x-2 items-center self-center rounded-md bg-clash-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-clash-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500 disabled:bg-gray-600 disabled:cursor-not-allowed transition-colors"
-					disabled={urlIsRecentlyCopied}
+					class="relative inline-flex gap-x-2 items-center self-center rounded-md bg-transparent px-2 py-2 text-sm font-semibold text-white hover:text-clash-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500 transition-colors"
 					on:click={copyUrl}
 				>
-					{#if urlIsRecentlyCopied}
-						<span in:fade>URL Copied</span>
-					{:else}
-						<span in:fade>Copy URL</span>
-					{/if}
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="24"
@@ -99,10 +93,17 @@
 							d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
 						/></svg
 					>
+					{#if urlIsRecentlyCopied}
+						<span class="absolute -bottom-[0.875rem] text-sm text-white" in:fade out:fade
+							>Copied!</span
+						>
+					{/if}
 				</button>
 			</div>
 			<div>
-				<p class="text-sm text-gray-300" title={data.game.end_at}>Time remaining: {timeLeftText}</p>
+				<p class="text-sm text-gray-300 text-pretty" title={data.game.end_at}>
+					Time remaining: {timeLeftText}
+				</p>
 			</div>
 		</div>
 	</header>
@@ -171,7 +172,7 @@
 					{/if}
 					<div class="col-span-2">
 						<label for="2fa-score" class="block text-sm font-medium leading-6 text-white"
-							>New 2FA value</label
+							>2FA value</label
 						>
 						<div class="mt-2">
 							<div
@@ -196,7 +197,7 @@
 							type="submit"
 							class="w-full rounded-md bg-clash-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-clash-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500"
 						>
-							Add Score
+							{isParticipating ? 'Add Score' : 'Join Game'}
 						</button>
 					</div>
 				</div>
@@ -236,7 +237,18 @@
 											>{player.maxScore}</td
 										>
 									</tr>
-								{/each}
+								{:else}
+									<tr>
+										<td
+											class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0"
+										>
+											-
+										</td>
+										<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">-</td>
+										<td class="whitespace">
+											<span class="text-sm text-gray-300">No scores yet</span>
+										</td>
+									</tr>{/each}
 							</tbody>
 						</table>
 					</div>
