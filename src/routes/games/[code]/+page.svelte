@@ -60,10 +60,15 @@
 			<div class="relative">
 				<button
 					type="submit"
-					class="inline-flex gap-x-2 items-center self-center rounded-md bg-clash-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-clash-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500"
+					class="inline-flex gap-x-2 items-center self-center rounded-md bg-clash-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-clash-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500 disabled:bg-gray-600 disabled:cursor-not-allowed transition-colors"
+					disabled={urlIsRecentlyCopied}
 					on:click={copyUrl}
 				>
-					Copy URL
+					{#if urlIsRecentlyCopied}
+					<span in:fade>URL Copied</span>
+					{:else}
+					<span in:fade>Copy URL</span>
+					{/if}
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="24"
@@ -80,9 +85,6 @@
 						/></svg
 					>
 				</button>
-				{#if urlIsRecentlyCopied}
-					<p class="absolute -bottom-6" in:fade out:fade>URL Copied!</p>
-				{/if}
 			</div>
 		</div>
 	</header>
