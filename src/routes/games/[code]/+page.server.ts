@@ -11,7 +11,7 @@ export const load: PageServerLoad = async ({ params, locals: { getSession, supab
 	const { data, error: err } = await supabase
 		.from('games')
 		.select(
-			'id, code, creator, end_at, is_active, name, participation ( id, score, profile_id, updated_at, nickname )'
+			'id, code, creator, end_at, is_active, name, cooldown_hours, participation ( id, score, profile_id, updated_at, nickname )'
 		)
 		.eq('code', code)
 		.single();
