@@ -30,6 +30,7 @@ export const actions = {
 			code: generatedId,
 			creator: session.user.id,
 			is_active: true,
+			cooldown_hours: cooldown,
 			created_at: new Date(),
 			updated_at: new Date()
 		};
