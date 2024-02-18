@@ -3,7 +3,7 @@
 	import { DateFormatter } from '@internationalized/date';
 	export let data;
 	const df = new DateFormatter('en-US', {
-		dateStyle: 'short',
+		dateStyle: 'medium',
 		timeStyle: 'short',
 		hour12: false
 	});
