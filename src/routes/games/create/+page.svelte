@@ -152,7 +152,7 @@
 		<button
 			type="submit"
 			class="rounded-md bg-clash-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-clash-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500"
-			disabled={loading}>{loading ? 'Saving...' : 'Save'}</button
+			disabled={loading}>{loading ? 'Creating...' : 'Create'}</button
 		>
 	</div>
 </form>
