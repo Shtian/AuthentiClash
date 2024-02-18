@@ -1,5 +1,4 @@
 <script lang="ts">
-	import Badge from '$lib/components/Badge.svelte';
 	import { DateFormatter } from '@internationalized/date';
 	import { RocketIcon } from 'lucide-svelte';
 	import GameList from './GameList.svelte';
