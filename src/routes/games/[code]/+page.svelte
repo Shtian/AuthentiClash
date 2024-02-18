@@ -159,7 +159,6 @@
 										type="number"
 										name="2fa-score"
 										id="2fa-score"
-										autocomplete="name"
 										value={newScore}
 										required
 										min="1"

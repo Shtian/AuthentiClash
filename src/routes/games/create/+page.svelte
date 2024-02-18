@@ -23,9 +23,10 @@
 	let name = '';
 	let endDate: DateValue | undefined = form?.endDate
 		? parseDate(form.endDate.toString())
-		: today(getLocalTimeZone());
+		: today(getLocalTimeZone()).add({ days: 1 });
 
 	let endTime: string = form?.endTime?.toString() ?? '12:00';
+	let cooldown: string = form?.cooldown?.toString() ?? '4';
 	let loading = false;
 
 	const handleSubmit: SubmitFunction = () => {
@@ -72,6 +73,28 @@
 					</div>
 				</div>
 
+				<div class="sm:col-span-6">
+					<label for="2fa-cooldown" class="block text-sm font-medium leading-6 text-white"
+						>2FA Entry Cooldown (0-24h)</label
+					>
+					<div class="mt-2 max-w-12">
+						<div
+							class="flex rounded-md bg-white/5 ring-1 ring-inset ring-white/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-clash-500"
+						>
+							<input
+								type="number"
+								name="2fa-cooldown"
+								id="2fa-cooldown"
+								value={cooldown}
+								required
+								min="0"
+								max="24"
+								class="flex-1 border-0 bg-transparent py-1.5 pl-1 text-white focus:ring-0 sm:text-sm sm:leading-6"
+							/>
+						</div>
+					</div>
+				</div>
+
 				<div class="sm:col-span-3">
 					<label for="end-date" class="block text-sm font-medium leading-6 text-white"
 						>End date</label
@@ -93,7 +116,11 @@
 								</Button>
 							</Popover.Trigger>
 							<Popover.Content class="w-auto p-0">
-								<Calendar bind:value={endDate} />
+								<Calendar
+									bind:value={endDate}
+									weekStartsOn={1}
+									minValue={today(getLocalTimeZone())}
+								/>
 							</Popover.Content>
 						</Popover.Root>
 					</div>
