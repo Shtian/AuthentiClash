@@ -67,7 +67,7 @@
 								value={name}
 								required
 								minlength="3"
-								class="flex-1 border-0 bg-transparent py-1.5 pl-1 text-white focus:ring-0 sm:text-sm sm:leading-6"
+								class="flex-1 border-0 bg-transparent py-1.5 pl-2 text-white focus:ring-0 sm:text-sm sm:leading-6"
 							/>
 						</div>
 					</div>
@@ -89,7 +89,7 @@
 								required
 								min="0"
 								max="24"
-								class="flex-1 border-0 bg-transparent py-1.5 pl-1 text-white focus:ring-0 sm:text-sm sm:leading-6"
+								class="flex-1 border-0 bg-transparent py-1.5 pl-2 text-white focus:ring-0 sm:text-sm sm:leading-6"
 							/>
 						</div>
 					</div>
@@ -139,7 +139,7 @@
 								id="end-time"
 								value={endTime}
 								required
-								class="flex-1 border-0 bg-transparent py-1.5 pl-1 text-white focus:ring-0 sm:text-sm sm:leading-6"
+								class="flex-1 border-0 bg-transparent py-1.5 pl-2 text-white focus:ring-0 sm:text-sm sm:leading-6"
 							/>
 						</div>
 					</div>
