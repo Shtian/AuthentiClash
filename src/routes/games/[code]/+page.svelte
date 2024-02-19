@@ -4,9 +4,12 @@
 	import { generateNickName } from '$lib/utils/word-generator/generator.js';
 	import { capitalize } from '$lib/utils/casing.js';
 	import { fade } from 'svelte/transition';
-	import { formatTimeDelta } from '$lib/utils/dateUtils.js';
+	import { formatTimeDelta, timeUntilCooldownEnds } from '$lib/utils/dateUtils.js';
 	import GameHighScore from './GameHighScore.svelte';
-	import { Copy, RefreshCw } from 'lucide-svelte';
+	import { Clock, Copy, RefreshCw } from 'lucide-svelte';
+	import Cooldown from './Cooldown.svelte';
+	import Button from '$lib/components/Button.svelte';
+	import { onDestroy } from 'svelte';
 
 	export let data;
 
@@ -21,13 +24,17 @@
 				uuid: participation.profile_id,
 				nickname: participation.nickname,
 				score: participation.score,
-				maxScore: Math.max(...participation.score)
+				maxScore: Math.max(...participation.score),
+				updatedAt: participation.updated_at
 			};
 		})
 		.sort((a, b) => b.maxScore - a.maxScore);
 
-	const isParticipating =
-		players.findIndex((player) => player.uuid === data.session?.user.id) !== -1;
+	const playerParticipation = players.find((player) => player.uuid === data.session?.user.id);
+	const cooldownRemaining = timeUntilCooldownEnds(
+		playerParticipation?.updatedAt,
+		data.game.cooldown_hours
+	);
 
 	const handleNicknameRefresh = () => {
 		recentRefresh = true;
@@ -66,6 +73,10 @@
 			timeLeftText = formatTimeDelta(timeLeft);
 		}
 	}, 1000);
+
+	onDestroy(() => {
+		clearInterval(timer);
+	});
 </script>
 
 {#if $page.error}
@@ -100,7 +111,7 @@
 			{#if timeLeft > 0}
 				<form method="post" action="?/updateScore">
 					<p>
-						{isParticipating
+						{!!playerParticipation
 							? 'Register new 2FA Code'
 							: 'Choose your nickname and enter your 2FA code to join the game!'}
 					</p>
@@ -108,11 +119,11 @@
 						type="hidden"
 						name="is-participating"
 						id="is-participating"
-						value={isParticipating}
+						value={!!playerParticipation}
 					/>
 					<input type="hidden" name="game-id" id="game-id" value={data.game.id} />
 					<div class="mt-4 grid gap-x-6 gap-y-8 grid-cols-3">
-						{#if !isParticipating}
+						{#if !playerParticipation}
 							<div class="col-span-3">
 								<label for="nickname" class="block text-sm font-medium leading-6 text-white"
 									>Nickname</label
@@ -169,12 +180,16 @@
 							</div>
 						</div>
 						<div class="col-span-1 self-end">
-							<button
-								type="submit"
-								class="w-full rounded-md bg-clash-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-clash-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500"
-							>
-								{isParticipating ? 'Add Score' : 'Join Game'}
-							</button>
+							{#if cooldownRemaining <= 0}
+								<Button type="submit">
+									{playerParticipation ? 'Add Score' : 'Join Game'}
+								</Button>
+							{:else}
+								<Button type="submit" disabled>
+									<Clock class="flex-shrink-0 mr-2 h-4 w-4" />
+									<Cooldown delta={cooldownRemaining}></Cooldown>
+								</Button>
+							{/if}
 						</div>
 					</div>
 				</form>
