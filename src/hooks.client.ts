@@ -1,20 +1,14 @@
-import { handleErrorWithSentry, replayIntegration } from "@sentry/sveltekit";
+import { PUBLIC_ENV, PUBLIC_SENTRY_DNS } from '$env/static/public';
+import { handleErrorWithSentry, replayIntegration } from '@sentry/sveltekit';
 import * as Sentry from '@sentry/sveltekit';
 
 Sentry.init({
-  dsn: 'https://e3619164ee187231b7ee10d1eabfed75@o4506763794972672.ingest.sentry.io/4506763796938752',
-  tracesSampleRate: 1.0,
-
-  // This sets the sample rate to be 10%. You may want this to be 100% while
-  // in development and sample at a lower rate in production
-  replaysSessionSampleRate: 0.1,
-
-  // If the entire session is not sampled, use the below sample rate to sample
-  // sessions when an error occurs.
-  replaysOnErrorSampleRate: 1.0,
-  
-  // If you don't want to use Session Replay, just remove the line below:
-  integrations: [replayIntegration()],
+	dsn: PUBLIC_SENTRY_DNS,
+	tracesSampleRate: 1.0,
+	replaysSessionSampleRate: PUBLIC_ENV === 'production' ? 0.1 : 1.0,
+	replaysOnErrorSampleRate: 1.0,
+	integrations: [replayIntegration()],
+	environment: PUBLIC_ENV
 });
 
 // If you have a custom error handler, pass it to `handleErrorWithSentry`
