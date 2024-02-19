@@ -63,7 +63,7 @@
 								id="full-name"
 								autocomplete="name"
 								value={form?.fullName ?? fullName}
-								class="flex-1 border-0 bg-transparent py-1.5 pl-1 text-white focus:ring-0 sm:text-sm sm:leading-6"
+								class="flex-1 border-0 bg-transparent py-1.5 pl-2 text-white focus:ring-0 sm:text-sm sm:leading-6"
 							/>
 						</div>
 					</div>
@@ -82,7 +82,7 @@
 								id="username"
 								autocomplete="username"
 								value={form?.username ?? username}
-								class="flex-1 border-0 bg-transparent py-1.5 pl-1 text-white focus:ring-0 sm:text-sm sm:leading-6"
+								class="flex-1 border-0 bg-transparent py-1.5 pl-2 text-white focus:ring-0 sm:text-sm sm:leading-6"
 								minlength="3"
 								required
 							/>

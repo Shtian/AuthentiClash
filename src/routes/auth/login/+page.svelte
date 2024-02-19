@@ -85,7 +85,7 @@
 							autocomplete="email"
 							bind:value={email}
 							required
-							class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-clash-500 sm:text-sm sm:leading-6"
+							class="block w-full rounded-md border-0 bg-white/5 py-1.5 pl-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-clash-500 sm:text-sm sm:leading-6"
 						/>
 					</div>
 				</div>
@@ -110,7 +110,7 @@
 							autocomplete="current-password"
 							bind:value={password}
 							required
-							class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-clash-500 sm:text-sm sm:leading-6"
+							class="block w-full rounded-md border-0 bg-white/5 py-1.5 pl-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-clash-500 sm:text-sm sm:leading-6"
 						/>
 					</div>
 				</div>
@@ -158,7 +158,7 @@
 							autocomplete="email"
 							bind:value={email}
 							required
-							class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-clash-500 sm:text-sm sm:leading-6"
+							class="block w-full rounded-md border-0 bg-white/5 py-1.5 pl-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-clash-500 sm:text-sm sm:leading-6"
 						/>
 					</div>
 				</div>
@@ -178,7 +178,7 @@
 							bind:value={password}
 							required
 							minlength="6"
-							class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-clash-500 sm:text-sm sm:leading-6"
+							class="block w-full rounded-md border-0 bg-white/5 py-1.5 pl-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-clash-500 sm:text-sm sm:leading-6"
 						/>
 					</div>
 				</div>

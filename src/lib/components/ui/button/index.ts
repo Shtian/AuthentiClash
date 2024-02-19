@@ -1,4 +1,4 @@
-import Root from './button.svelte';
+import Root from './button-shadcn.svelte';
 import { tv, type VariantProps } from 'tailwind-variants';
 import type { Button as ButtonPrimitive } from 'bits-ui';
 

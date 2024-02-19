@@ -4,11 +4,16 @@
 	import { generateNickName } from '$lib/utils/word-generator/generator.js';
 	import { capitalize } from '$lib/utils/casing.js';
 	import { fade } from 'svelte/transition';
-	import { formatTimeDelta } from '$lib/utils/dateUtils.js';
+	import { formatTimeDelta, timeUntilCooldownEnds } from '$lib/utils/dateUtils.js';
 	import GameHighScore from './GameHighScore.svelte';
+	import { Clock, Copy, RefreshCw } from 'lucide-svelte';
+	import Cooldown from './Cooldown.svelte';
+	import Button from '$lib/components/Button.svelte';
+	import { onDestroy } from 'svelte';
+	import type { ActionData } from '../$types';
 
 	export let data;
-
+	export let form: ActionData;
 	export let nickname = capitalize`${generateNickName()}`;
 	export let newScore: number | null = null;
 	export let recentRefresh = false;
@@ -20,13 +25,17 @@
 				uuid: participation.profile_id,
 				nickname: participation.nickname,
 				score: participation.score,
-				maxScore: Math.max(...participation.score)
+				maxScore: Math.max(...participation.score),
+				totalScore: participation.total_score,
+				updatedAt: participation.updated_at
 			};
 		})
-		.sort((a, b) => b.maxScore - a.maxScore);
-
-	const isParticipating =
-		players.findIndex((player) => player.uuid === data.session?.user.id) !== -1;
+		.sort((a, b) => b.totalScore - a.totalScore);
+	const playerParticipation = players.find((player) => player.uuid === data.session?.user.id);
+	const cooldownRemaining = timeUntilCooldownEnds(
+		playerParticipation?.updatedAt,
+		data.game.cooldown_hours
+	);
 
 	const handleNicknameRefresh = () => {
 		recentRefresh = true;
@@ -65,6 +74,10 @@
 			timeLeftText = formatTimeDelta(timeLeft);
 		}
 	}, 1000);
+
+	onDestroy(() => {
+		clearInterval(timer);
+	});
 </script>
 
 {#if $page.error}
@@ -81,21 +94,7 @@
 					class="relative inline-flex gap-x-2 items-center self-center rounded-md bg-transparent px-2 py-2 text-sm font-semibold text-white hover:text-clash-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500 transition-colors"
 					on:click={copyUrl}
 				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="24"
-						height="24"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						class="lucide lucide-copy"
-						><rect width="14" height="14" x="8" y="8" rx="2" ry="2" /><path
-							d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
-						/></svg
-					>
+					<Copy />
 					{#if urlIsRecentlyCopied}
 						<span class="absolute -bottom-[0.875rem] text-sm text-white" in:fade out:fade
 							>Copied!</span
@@ -113,7 +112,7 @@
 			{#if timeLeft > 0}
 				<form method="post" action="?/updateScore">
 					<p>
-						{isParticipating
+						{!!playerParticipation
 							? 'Register new 2FA Code'
 							: 'Choose your nickname and enter your 2FA code to join the game!'}
 					</p>
@@ -121,11 +120,11 @@
 						type="hidden"
 						name="is-participating"
 						id="is-participating"
-						value={isParticipating}
+						value={!!playerParticipation}
 					/>
 					<input type="hidden" name="game-id" id="game-id" value={data.game.id} />
 					<div class="mt-4 grid gap-x-6 gap-y-8 grid-cols-3">
-						{#if !isParticipating}
+						{#if !playerParticipation}
 							<div class="col-span-3">
 								<label for="nickname" class="block text-sm font-medium leading-6 text-white"
 									>Nickname</label
@@ -142,7 +141,7 @@
 											value={nickname}
 											required
 											minlength="3"
-											class="flex-1 border-0 bg-transparent py-1.5 pl-1 text-white focus:ring-0 sm:text-sm sm:leading-6"
+											class="flex-1 border-0 bg-transparent py-1.5 pl-2 text-white focus:ring-0 sm:text-sm sm:leading-6"
 										/>
 										<button
 											class="absolute right-2 top-1/2 -translate-y-1/2"
@@ -150,23 +149,11 @@
 											on:click={handleNicknameRefresh}
 										>
 											<span class="sr-only">Generate new nickname suggestion</span>
-											<svg
-												xmlns="http://www.w3.org/2000/svg"
-												fill="none"
-												viewBox="0 0 24 24"
-												stroke-width="1.5"
-												stroke="currentColor"
-												class="w-6 h-6 origin-center [animation-duration:0.2s] [animation-iteration-count:1]"
-												class:animate-spin={recentRefresh}
-												aria-hidden="true"
-												focusable="false"
-											>
-												<path
-													stroke-linecap="round"
-													stroke-linejoin="round"
-													d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
-												/>
-											</svg>
+											<RefreshCw
+												class="w-6 h-6 origin-center [animation-duration:0.2s] [animation-iteration-count:1] {recentRefresh
+													? 'animate-spin'
+													: null}"
+											/>
 										</button>
 									</div>
 								</div>
@@ -184,28 +171,34 @@
 										type="number"
 										name="2fa-score"
 										id="2fa-score"
-										autocomplete="name"
 										value={newScore}
 										required
 										min="1"
 										max="99"
-										class="flex-1 border-0 bg-transparent py-1.5 pl-1 text-white focus:ring-0 sm:text-sm sm:leading-6"
+										class="flex-1 border-0 bg-transparent py-1.5 pl-2 text-white focus:ring-0 sm:text-sm sm:leading-6"
 									/>
 								</div>
 							</div>
 						</div>
 						<div class="col-span-1 self-end">
-							<button
-								type="submit"
-								class="w-full rounded-md bg-clash-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-clash-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500"
-							>
-								{isParticipating ? 'Add Score' : 'Join Game'}
-							</button>
+							{#if cooldownRemaining <= 0}
+								<Button type="submit">
+									{playerParticipation ? 'Add Score' : 'Join Game'}
+								</Button>
+							{:else}
+								<Button type="submit" disabled>
+									<Clock class="flex-shrink-0 mr-2 h-4 w-4" />
+									<Cooldown delta={cooldownRemaining}></Cooldown>
+								</Button>
+							{/if}
 						</div>
 					</div>
 				</form>
 			{:else}
 				<p class="text-white">Final scores:</p>
+			{/if}
+			{#if form?.message}
+				<InlineMessage msgType={form.success ? 'success' : 'error'}>{form.message}</InlineMessage>
 			{/if}
 			<GameHighScore {players} currentPlayerId={data.session?.user.id} />
 		</div>

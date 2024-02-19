@@ -6,18 +6,20 @@ export const actions = {
 	create: async ({ request, locals: { supabase, getSession } }) => {
 		const formData = await request.formData();
 		const name = formData.get('game-name');
+		const cooldown = formData.get('2fa-cooldown');
 
-		const endDate = formData.get('end-date'); console.log(endDate);
-		const endTime = formData.get('end-time'); console.log(endTime);
+		const endDate = formData.get('end-date');
+		const endTime = formData.get('end-time');
 		const endAt = new Date(`${endDate}T${endTime}:00Z`);
-		
+
 		const session = await getSession();
-		
+
 		if (!session) {
 			return fail(401, {
 				name,
 				endDate,
-				endTime
+				endTime,
+				cooldown
 			});
 		}
 
@@ -28,6 +30,7 @@ export const actions = {
 			code: generatedId,
 			creator: session.user.id,
 			is_active: true,
+			cooldown_hours: cooldown,
 			created_at: new Date(),
 			updated_at: new Date()
 		};
@@ -38,7 +41,8 @@ export const actions = {
 			return fail(500, {
 				name,
 				endDate,
-				endTime
+				endTime,
+				cooldown
 			});
 		}
 
