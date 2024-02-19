@@ -9,6 +9,7 @@
 		endAtString: string;
 		endAtDate: Date;
 		code: string;
+		totalScore: number;
 	}[] = [];
 </script>
 
@@ -40,9 +41,7 @@
 								{game.name}
 							</td>
 							<td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0"
-								>{game.userRank === 0
-									? 'No entries'
-									: `#${game.userRank} (${game.userMaxScore})`}</td
+								>{game.userRank === 0 ? 'No entries' : `#${game.userRank} (${game.totalScore})`}</td
 							>
 							<td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">
 								<Badge

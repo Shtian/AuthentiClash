@@ -9,7 +9,9 @@ export const load: PageServerLoad = async ({ locals: { getSession, supabase } })
 
 	const { data: games, error } = await supabase
 		.from('games')
-		.select('id, creator, code, end_at, name, participation ( profile_id, score, nickname )');
+		.select(
+			'id, creator, code, end_at, name, participation ( profile_id, score, total_score, nickname )'
+		);
 
 	if (error) {
 		return fail(500, { message: error });

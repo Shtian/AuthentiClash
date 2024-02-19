@@ -12,11 +12,9 @@
 	const gamesWithParticipation = games
 		.map((game) => {
 			const sortedParticipations = game.participation?.toSorted((a, b) => {
-				const aScore = a.score || [0];
-				const bScore = b.score || [0];
-				const aMaxScore = Math.max(...aScore);
-				const bMaxScore = Math.max(...bScore);
-				return bMaxScore - aMaxScore;
+				const aScore = a.total_score || [0];
+				const bScore = b.total_score || [0];
+				return bScore - aScore;
 			});
 			const userRankIndex = sortedParticipations.findIndex((p) => p.profile_id === data.profileId);
 			const userRank = userRankIndex === -1 ? 0 : userRankIndex + 1;
@@ -28,6 +26,7 @@
 				name: game.name,
 				code: game.code,
 				userMaxScore,
+				totalScore: participation?.total_score || 0,
 				userRank,
 				endAtString: df.format(new Date(game.end_at)),
 				endAtDate: new Date(game.end_at),
