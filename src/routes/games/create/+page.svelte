@@ -51,7 +51,7 @@
 			</p>
 
 			<div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-				<div class="sm:col-span-6">
+				<div class="col-span-4 sm:col-span-6">
 					<label for="game-name" class="block text-sm font-medium leading-6 text-white"
 						>Game name</label
 					>
@@ -73,7 +73,7 @@
 					</div>
 				</div>
 
-				<div class="sm:col-span-6">
+				<div class="col-span-6">
 					<label for="2fa-cooldown" class="block text-sm font-medium leading-6 text-white"
 						>2FA Entry Cooldown (0-24h)</label
 					>
@@ -94,19 +94,18 @@
 						</div>
 					</div>
 				</div>
-
-				<div class="sm:col-span-3">
+				<div class="col-span-4 sm:col-span-3">
 					<label for="end-date" class="block text-sm font-medium leading-6 text-white"
 						>End date</label
 					>
-					<div class="mt-2">
+					<div class="mt-2 w-fu">
 						<input type="hidden" name="end-date" id="end-date" bind:value={endDate} />
 						<Popover.Root>
 							<Popover.Trigger asChild let:builder>
 								<Button
 									variant="outline"
 									class={cn(
-										'w-[280px] justify-start text-left font-normal',
+										'w-full justify-start text-left font-normal',
 										!endDate && 'text-muted-foreground'
 									)}
 									builders={[builder]}
@@ -125,9 +124,9 @@
 						</Popover.Root>
 					</div>
 				</div>
-				<div class="sm:col-span-1">
+				<div class="col-span-4 sm:col-span-3">
 					<label for="game-name" class="block text-sm font-medium leading-6 text-white"
-						>End time</label
+						>End time (UTC)</label
 					>
 					<div class="mt-2">
 						<div
