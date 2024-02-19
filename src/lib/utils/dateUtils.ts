@@ -45,11 +45,10 @@ function timeLeft(deltaMilliseconds: number): [number, number, number, number] {
 	return [days, hours, minutes, seconds];
 }
 
-export function timeUntilCooldownEnds(lastUpdatedISO: string, cooldownHours: number) {
+export function timeUntilCooldownEnds(lastUpdatedISO: string | null, cooldownHours: number) {
 	if (!lastUpdatedISO) return 0;
 	const now = new Date();
 	const lastUpdated = new Date(lastUpdatedISO);
-	console.log(lastUpdated);
 
 	// Calculate the time difference in milliseconds
 	const timeDifferenceMillis = now.getTime() - lastUpdated.getTime();
