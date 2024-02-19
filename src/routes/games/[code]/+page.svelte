@@ -10,9 +10,10 @@
 	import Cooldown from './Cooldown.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import { onDestroy } from 'svelte';
+	import type { ActionData } from '../$types';
 
 	export let data;
-
+	export let form: ActionData;
 	export let nickname = capitalize`${generateNickName()}`;
 	export let newScore: number | null = null;
 	export let recentRefresh = false;
@@ -25,11 +26,11 @@
 				nickname: participation.nickname,
 				score: participation.score,
 				maxScore: Math.max(...participation.score),
+				totalScore: participation.total_score,
 				updatedAt: participation.updated_at
 			};
 		})
-		.sort((a, b) => b.maxScore - a.maxScore);
-
+		.sort((a, b) => b.totalScore - a.totalScore);
 	const playerParticipation = players.find((player) => player.uuid === data.session?.user.id);
 	const cooldownRemaining = timeUntilCooldownEnds(
 		playerParticipation?.updatedAt,
@@ -195,6 +196,9 @@
 				</form>
 			{:else}
 				<p class="text-white">Final scores:</p>
+			{/if}
+			{#if form?.message}
+				<InlineMessage msgType={form.success ? 'success' : 'error'}>{form.message}</InlineMessage>
 			{/if}
 			<GameHighScore {players} currentPlayerId={data.session?.user.id} />
 		</div>

@@ -1,5 +1,11 @@
 <script lang="ts">
-	export let players: { nickname: string; maxScore: number; uuid: string }[] = [];
+	export let players: {
+		nickname: string;
+		maxScore: number;
+		uuid: string;
+		totalScore: number;
+		score: number[];
+	}[] = [];
 	export let currentPlayerId = '';
 </script>
 
@@ -30,7 +36,10 @@
 								#{i + 1}
 							</td>
 							<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">{player.nickname}</td>
-							<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">{player.maxScore}</td>
+							<td
+								class="whitespace-nowrap px-3 py-4 text-sm text-gray-300"
+								title={player.score.join(' → ')}>{player.totalScore}</td
+							>
 						</tr>
 					{:else}
 						<tr>
@@ -41,7 +50,8 @@
 							<td class="whitespace">
 								<span class="text-sm text-gray-300">No scores yet</span>
 							</td>
-						</tr>{/each}
+						</tr>
+					{/each}
 				</tbody>
 			</table>
 		</div>
