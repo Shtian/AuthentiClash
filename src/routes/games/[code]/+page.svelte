@@ -10,10 +10,9 @@
 	import Cooldown from './Cooldown.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import { onDestroy } from 'svelte';
-	import type { ActionData } from '../$types';
 
 	export let data;
-	export let form: ActionData;
+	export let form;
 	export let nickname = capitalize`${generateNickName()}`;
 	export let newScore: number | null = null;
 	export let recentRefresh = false;
@@ -110,7 +109,7 @@
 	<main>
 		<div class="mx-auto max-w-7xl sm:px-6 lg:px-8 py-5 mt-5">
 			{#if timeLeft > 0}
-				<form method="post" action="?/updateScore">
+				<form method="POST" action="?/updateScore">
 					<p>
 						{!!playerParticipation
 							? 'Register new 2FA Code'

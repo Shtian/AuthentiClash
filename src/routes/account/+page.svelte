@@ -22,7 +22,7 @@
 	};
 </script>
 
-<form method="post" action="?/update" use:enhance={handleSubmit} bind:this={profileForm}>
+<form method="POST" action="?/update" use:enhance={handleSubmit} bind:this={profileForm}>
 	<div class="space-y-12">
 		<div class="border-b border-white/10 pb-12">
 			<h2 class="text-base font-semibold leading-7 text-white">Profile</h2>
