@@ -1,10 +1,7 @@
 <script lang="ts">
-	import { applyAction, enhance } from '$app/forms';
-	import type { SubmitFunction } from '@sveltejs/kit';
 	import type { ActionData } from './$types.js';
 	import { fly } from 'svelte/transition';
 	import { quadIn, quadOut } from 'svelte/easing';
-	import { goto } from '$app/navigation';
 	import InlineMessage from '$lib/components/InlineMessage.svelte';
 	import logo from '$lib/assets/authenticlash_logo.svg';
 
@@ -25,18 +22,8 @@
 		return email ? `?email=${encodeURIComponent(email)}` : '';
 	}
 
-	const handleSubmit: SubmitFunction = () => {
+	const setLoadingState = () => {
 		loading = true;
-		return async ({ result }) => {
-			loading = false;
-			password = '';
-			showRegister = false;
-			if (result.type === 'redirect') {
-				goto(result.location);
-			} else {
-				await applyAction(result);
-			}
-		};
 	};
 </script>
 
@@ -72,7 +59,7 @@
 				easing: quadOut
 			}}
 		>
-			<form class="space-y-6" use:enhance={handleSubmit} method="POST" action="?/signIn">
+			<form class="space-y-6" method="POST" action="?/signIn" on:submit={setLoadingState}>
 				<div>
 					<label for="email" class="block text-sm font-medium leading-6 text-white"
 						>Email address</label
@@ -145,7 +132,7 @@
 				x: 400
 			}}
 		>
-			<form class="space-y-6" use:enhance={handleSubmit} method="POST" action="?/signUp">
+			<form class="space-y-6" method="POST" action="?/signUp" on:submit={setLoadingState}>
 				<div>
 					<label for="email" class="block text-sm font-medium leading-6 text-white"
 						>Email address</label
