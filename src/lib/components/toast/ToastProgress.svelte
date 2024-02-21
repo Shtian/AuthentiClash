@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onDestroy } from 'svelte';
 	import { tweened } from 'svelte/motion';
 	export let duration: number;
 	const progress = tweened(0, {
@@ -6,6 +7,10 @@
 	});
 
 	progress.set(100);
+
+	onDestroy(() => {
+		progress.set(100);
+	});
 </script>
 
 <div class="absolute bottom-0 w-full h-1.5 rounded-b-sm overflow-hidden right-0 left-0">

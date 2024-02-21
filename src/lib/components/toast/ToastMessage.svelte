@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { toast } from '$lib/stores/ToastStore';
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import { tweened } from 'svelte/motion';
 
 	export let message = '';
@@ -12,6 +12,10 @@
 	onMount(async () => {
 		await progress.set(100);
 		toast.remove();
+	});
+
+	onDestroy(() => {
+		progress.set(100);
 	});
 </script>
 
