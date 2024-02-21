@@ -19,7 +19,10 @@
 	export let recentRefresh = false;
 
 	if (form?.message) {
-		toast.send({ message: form.message, type: form.success ? 'success' : 'error' });
+		toast.send({
+			message: form.message,
+			type: form.success ? 'success' : 'error'
+		});
 	}
 
 	const players = data.game.participation
