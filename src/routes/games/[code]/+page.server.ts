@@ -1,5 +1,10 @@
 import { error, fail, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
+import {
+	addParticipation,
+	getParticipation,
+	updateParticipation
+} from '$lib/supabase/participation';
 
 export const load: PageServerLoad = async ({ params, locals: { getSession, supabase } }) => {
 	const session = await getSession();
@@ -36,39 +41,40 @@ export const load: PageServerLoad = async ({ params, locals: { getSession, supab
 };
 
 export const actions = {
-	updateScore: async ({ request, locals: { supabase, getSession } }) => {
+	updateScore: async ({ request, locals: { getSession } }) => {
 		const formData = await request.formData();
 		const nickname = formData.get('nickname');
-		const score = formData.get('2fa-score');
+		const scoreInput = formData.get('2fa-score');
 		const isParticipating = formData.get('is-participating') === 'true';
 		const game_id = formData.get('game-id');
 		const session = await getSession();
+
 		if (!session) {
 			return fail(401, {
 				nickname,
-				score,
+				score: scoreInput,
 				message: 'No login session found. Please login and try again.'
 			});
 		}
 
-		if (!isParticipating) {
-			const participation = {
+		if (!scoreInput) {
+			return fail(400, {
 				nickname,
-				score: [parseInt(score?.toString() || '0', 10)],
-				total_score: score,
-				profile_id: session.user.id,
-				game_id,
-				created_at: new Date(),
-				updated_at: new Date()
-			};
+				score: scoreInput,
+				message: 'Invalid score value. Please try again.'
+			});
+		}
+		const score = parseInt(scoreInput.toString(), 10);
 
-			const { data, error } = await supabase
-				.from('participation')
-				.insert(participation)
-				.select()
-				.single();
-
-			if (error) {
+		if (!isParticipating) {
+			const addParticipationRes = await addParticipation(
+				game_id!.toString(),
+				session.user.id,
+				nickname!.toString(),
+				score
+			);
+			console.log('addParticipationRes', addParticipationRes);
+			if (addParticipationRes.type === 'error') {
 				return fail(500, {
 					nickname,
 					score,
@@ -77,39 +83,23 @@ export const actions = {
 			}
 
 			return {
-				participation: data,
-				message: 'Game joined successfully! Good luck! ⚔️'
+				message: createSuccessMessage(score)
 			};
 		} else {
-			const { data: existingParticipation, error: existingParticipationError } = await supabase
-				.from('participation')
-				.select('id, score, total_score, updated_at')
-				.eq('game_id', game_id)
-				.eq('profile_id', session.user.id)
-				.single();
-
-			if (existingParticipationError || !existingParticipation) {
-				console.error(
-					'Error getting existing participation',
-					JSON.stringify(existingParticipationError)
-				);
+			const res = await getParticipation(session.user.id, game_id!.toString());
+			if (res.type === 'error') {
+				console.error('Error getting existing participation', JSON.stringify(res.error));
 				return fail(500, {
 					nickname,
 					score,
 					message: 'Oh no, something went wrong. Please try again. 🙏'
 				});
 			}
+			const { data: participation } = res;
 
-			const newScore = [...existingParticipation.score, score].map((s) => parseInt(s, 10));
-			const newTotalScore = newScore.reduce((acc, curr) => acc + curr, 0);
-			const { data, error } = await supabase
-				.from('participation')
-				.update({ score: newScore, total_score: newTotalScore, updated_at: new Date() })
-				.eq('id', existingParticipation.id)
-				.select()
-				.single();
+			const updateParticipationRes = await updateParticipation(score, participation);
 
-			if (error) {
+			if (updateParticipationRes.type === 'error') {
 				console.error('Error updating score', JSON.stringify(error));
 				return fail(500, {
 					nickname,
@@ -119,8 +109,7 @@ export const actions = {
 			}
 
 			return {
-				participation: data,
-				message: createSuccessMessage(parseInt(score!.toString(), 10))
+				message: createSuccessMessage(score)
 			};
 		}
 	}
@@ -212,6 +201,8 @@ const worstScore = [
 const createSuccessMessage = (score: number) => {
 	if (score >= 99) return topScore[Math.floor(Math.random() * topScore.length)];
 	if (score >= 80) return extremlyGoodScore[Math.floor(Math.random() * extremlyGoodScore.length)];
+	if (score === 69)
+		return '👀 A mysterious number appears, leaving you with a knowing smile. Nice.';
 	if (score >= 60) return goodScore[Math.floor(Math.random() * goodScore.length)];
 	if (score >= 40) return middleScore[Math.floor(Math.random() * middleScore.length)];
 	if (score >= 20) return badScore[Math.floor(Math.random() * badScore.length)];

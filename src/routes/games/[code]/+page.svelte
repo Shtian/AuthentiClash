@@ -87,7 +87,6 @@
 			await update();
 		};
 	};
-	// TODO Move db calls to separate file with types
 </script>
 
 {#if $page.error}
