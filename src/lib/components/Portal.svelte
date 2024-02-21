@@ -1,7 +1,7 @@
 <script lang="ts">
 	function portal(node: HTMLElement) {
 		let target: HTMLBodyElement | null;
-		console.log('portal node', node);
+
 		function update() {
 			target = document.querySelector('body');
 			target?.appendChild(node);
