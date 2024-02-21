@@ -1,10 +1,12 @@
 <script lang="ts">
+	import { flip } from 'svelte/animate';
 	export let players: {
-		nickname: string;
-		maxScore: number;
-		uuid: string;
-		totalScore: number;
-		score: number[];
+		id: any;
+		score: any;
+		total_score: any;
+		profile_id: any;
+		updated_at: any;
+		nickname: any;
 	}[] = [];
 	export let currentPlayerId = '';
 </script>
@@ -30,15 +32,18 @@
 					</tr>
 				</thead>
 				<tbody class="divide-y divide-gray-800">
-					{#each players as player, i (player.uuid)}
-						<tr class:bg-clash-800={player.uuid === currentPlayerId}>
+					{#each players.sort((a, b) => b.total_score - a.total_score) as player, i (player.profile_id)}
+						<tr
+							class:bg-clash-800={player.profile_id === currentPlayerId}
+							animate:flip={{ duration: 300 }}
+						>
 							<td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-2">
 								#{i + 1}
 							</td>
 							<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">{player.nickname}</td>
 							<td
 								class="whitespace-nowrap px-3 py-4 text-sm text-gray-300"
-								title={player.score.join(' → ')}>{player.totalScore}</td
+								title={player.score.join(' → ')}>{player.total_score}</td
 							>
 						</tr>
 					{:else}

@@ -24,8 +24,14 @@ export const load: PageServerLoad = async ({ params, locals: { getSession, supab
 		error(500, { message: err });
 	}
 
+	const currentPlayer = data.participation.find((p) => p.profile_id === session.user.id);
 	return {
-		game: data
+		endsAt: data.end_at,
+		gameId: data.id,
+		gameName: data.name,
+		cooldownHours: data.cooldown_hours,
+		players: data.participation,
+		currentPlayer
 	};
 };
 
