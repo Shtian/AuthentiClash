@@ -8,11 +8,13 @@ import {
 } from '$env/static/public';
 import { createSupabaseServerClient } from '@supabase/auth-helpers-sveltekit';
 import type { Handle } from '@sveltejs/kit';
+import { consoleIntegration } from '@sentry/sveltekit';
 
 Sentry.init({
 	dsn: PUBLIC_SENTRY_DNS,
 	tracesSampleRate: 1,
-	environment: PUBLIC_ENV
+	environment: PUBLIC_ENV,
+	integrations: [consoleIntegration()]
 });
 
 export const handle: Handle = sequence(Sentry.sentryHandle(), async ({ event, resolve }) => {
