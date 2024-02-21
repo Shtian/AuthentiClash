@@ -6,7 +6,7 @@
 	import { fade } from 'svelte/transition';
 	import { formatTimeDelta, timeUntilCooldownEnds } from '$lib/utils/dateUtils.js';
 	import GameHighScore from './GameHighScore.svelte';
-	import { Clock, Copy, RefreshCw } from 'lucide-svelte';
+	import { Clock, Copy, LucideLoader, LucideLoader2, RefreshCw } from 'lucide-svelte';
 	import Cooldown from './Cooldown.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import { onDestroy } from 'svelte';
@@ -18,6 +18,7 @@
 	export let newScore: number | null = null;
 	export let recentRefresh = false;
 	let nickname = capitalize`${generateNickName()}`;
+	let isLoading = false;
 
 	$: players = data.players;
 
@@ -69,6 +70,7 @@
 	});
 
 	const handleNewScore: SubmitFunction = () => {
+		isLoading = true;
 		return async ({ result, update }) => {
 			if (result.type === 'success') {
 				toast.send({
@@ -83,7 +85,7 @@
 					type: 'error'
 				});
 			}
-
+			isLoading = false;
 			await update();
 		};
 	};
@@ -190,8 +192,12 @@
 					</div>
 					<div class="col-span-1 self-end">
 						{#if cooldownRemaining <= 0}
-							<Button type="submit">
-								{data.currentPlayer ? 'Add Score' : 'Join Game'}
+							<Button type="submit" disabled={isLoading}>
+								{#if isLoading}
+									<LucideLoader2 class="h-6 w-6 animate-spin" />
+								{:else}
+									{data.currentPlayer ? 'Add Score' : 'Join Game'}
+								{/if}
 							</Button>
 						{:else}
 							<Button type="submit" disabled>
