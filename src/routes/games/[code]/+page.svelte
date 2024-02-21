@@ -12,19 +12,13 @@
 	import { onDestroy } from 'svelte';
 	import { toast } from '$lib/stores/ToastStore';
 	import { enhance } from '$app/forms';
+	import type { SubmitFunction } from '@sveltejs/kit';
 
 	export let data;
-	export let form;
-	export let nickname = capitalize`${generateNickName()}`;
 	export let newScore: number | null = null;
 	export let recentRefresh = false;
+	let nickname = capitalize`${generateNickName()}`;
 
-	if (form?.message) {
-		toast.send({
-			message: form.message,
-			type: form.success ? 'success' : 'error'
-		});
-	}
 	$: players = data.players;
 
 	const cooldownRemaining = timeUntilCooldownEnds(
@@ -74,7 +68,25 @@
 		clearInterval(timer);
 	});
 
-	// TODO add toast on successful score submission
+	const handleNewScore: SubmitFunction = () => {
+		return async ({ result, update }) => {
+			if (result.type === 'success') {
+				toast.send({
+					message: result.data?.message,
+					type: 'success',
+					duration: 15000
+				});
+			}
+			if (result.type === 'failure') {
+				toast.send({
+					message: result.data?.message,
+					type: 'error'
+				});
+			}
+
+			await update();
+		};
+	};
 	// TODO Move db calls to separate file with types
 </script>
 
@@ -107,7 +119,7 @@
 <main>
 	<div class="mx-auto max-w-7xl sm:px-6 lg:px-8 py-5 mt-5">
 		{#if timeLeft > 0}
-			<form method="POST" action="?/updateScore" use:enhance>
+			<form method="POST" action="?/updateScore" use:enhance={handleNewScore}>
 				<p>
 					{!!data.currentPlayer
 						? 'Register new 2FA Code'
@@ -158,7 +170,7 @@
 					{/if}
 					<div class="col-span-2">
 						<label for="2fa-score" class="block text-sm font-medium leading-6 text-white"
-							>2FA value</label
+							>2FA value (1-99)</label
 						>
 						<div class="mt-2">
 							<div
