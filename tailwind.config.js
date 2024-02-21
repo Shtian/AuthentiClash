@@ -69,6 +69,9 @@ const config = {
 			},
 			fontFamily: {
 				sans: [...fontFamily.sans]
+			},
+			zIndex: {
+				toast: 9999
 			}
 		}
 	}
