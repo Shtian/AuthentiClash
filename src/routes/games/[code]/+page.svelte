@@ -10,12 +10,17 @@
 	import Cooldown from './Cooldown.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import { onDestroy } from 'svelte';
+	import { toast } from '$lib/stores/ToastStore';
 
 	export let data;
 	export let form;
 	export let nickname = capitalize`${generateNickName()}`;
 	export let newScore: number | null = null;
 	export let recentRefresh = false;
+
+	if (form?.message) {
+		toast.send({ message: form.message, type: form.success ? 'success' : 'error' });
+	}
 
 	const players = data.game.participation
 		.map((participation) => {
@@ -195,9 +200,6 @@
 				</form>
 			{:else}
 				<p class="text-white">Final scores:</p>
-			{/if}
-			{#if form?.message}
-				<InlineMessage msgType={form.success ? 'success' : 'error'}>{form.message}</InlineMessage>
 			{/if}
 			<GameHighScore {players} currentPlayerId={data.session?.user.id} />
 		</div>
