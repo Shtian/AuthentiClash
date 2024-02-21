@@ -9,6 +9,14 @@
 	import ToastProgress from '$lib/components/toast/ToastProgress.svelte';
 </script>
 
+<svelte:window
+	on:keydown={(e) => {
+		if (e.key === 'Escape') {
+			toast.remove();
+		}
+	}}
+/>
+
 <Portal>
 	<div class="fixed top-5 left-1/2 z-toast -translate-x-1/2">
 		{#each $toast as toastContent (toastContent.id)}
