@@ -22,10 +22,7 @@
 
 	$: players = data.players;
 
-	const cooldownRemaining = timeUntilCooldownEnds(
-		data.currentPlayer?.updated_at,
-		data.cooldownHours
-	);
+	let cooldownRemaining = timeUntilCooldownEnds(data.currentPlayer?.updated_at, data.cooldownHours);
 
 	const handleNicknameRefresh = () => {
 		recentRefresh = true;
@@ -78,6 +75,9 @@
 					type: 'success',
 					duration: 15000
 				});
+				if (result.data) {
+					cooldownRemaining = timeUntilCooldownEnds(new Date().toISOString(), data.cooldownHours);
+				}
 			}
 			if (result.type === 'failure') {
 				toast.send({

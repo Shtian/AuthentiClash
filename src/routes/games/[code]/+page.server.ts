@@ -73,7 +73,7 @@ export const actions = {
 				nickname!.toString(),
 				score
 			);
-			console.log('addParticipationRes', addParticipationRes);
+
 			if (addParticipationRes.type === 'error') {
 				return fail(500, {
 					nickname,
