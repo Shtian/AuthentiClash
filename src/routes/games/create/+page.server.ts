@@ -1,6 +1,13 @@
 import { kebabCase } from '$lib/utils/casing.js';
 import { generateUniqueSentence } from '$lib/utils/word-generator/generator.js';
 import { fail, redirect } from '@sveltejs/kit';
+import type { PageServerLoad } from '../$types';
+
+export const load: PageServerLoad = async function get() {
+	return {
+		title: 'Create game'
+	};
+};
 
 export const actions = {
 	create: async ({ request, locals: { supabase, getSession } }) => {

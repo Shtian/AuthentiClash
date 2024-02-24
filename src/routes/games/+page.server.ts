@@ -28,6 +28,7 @@ export const load: PageServerLoad = async ({ locals: { getSession, supabase } })
 
 	return {
 		participatingGames,
-		profileId: userId
+		profileId: userId,
+		title: 'Games'
 	};
 };

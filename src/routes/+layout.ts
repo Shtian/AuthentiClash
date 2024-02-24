@@ -23,5 +23,5 @@ export const load = async ({ fetch, data, depends }) => {
 		data: { session }
 	} = await supabase.auth.getSession();
 
-	return { supabase, session };
+	return { supabase, session, title: '', image: '/assets/authenticlash_og.png' };
 };

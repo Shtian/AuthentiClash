@@ -36,7 +36,9 @@ export const load: PageServerLoad = async ({ params, locals: { getSession, supab
 		gameName: data.name,
 		cooldownHours: data.cooldown_hours,
 		players: data.participation,
-		currentPlayer
+		currentPlayer,
+		title: data.name,
+		description: 'A new game has begun! Enter your score and see what happens'
 	};
 };
 

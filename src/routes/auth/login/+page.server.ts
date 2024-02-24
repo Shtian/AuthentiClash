@@ -8,6 +8,10 @@ export const load: PageServerLoad = async ({ locals: { getSession } }) => {
 	if (session) {
 		redirect(303, '/games');
 	}
+
+	return {
+		title: 'Login'
+	};
 };
 
 export const actions = {
