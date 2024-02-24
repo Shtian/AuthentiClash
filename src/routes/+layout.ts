@@ -3,7 +3,7 @@ import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/publi
 import { createSupabaseLoadClient } from '@supabase/auth-helpers-sveltekit';
 import { inject } from '@vercel/analytics';
 import { injectSpeedInsights } from '@vercel/speed-insights';
-
+import ogImage from '$lib/assets/authenticlash_og.png';
 // Inject Vercel Analytics
 inject({ mode: dev ? 'development' : 'production' });
 // Inject Vercel Speed Insights
@@ -23,5 +23,5 @@ export const load = async ({ fetch, data, depends }) => {
 		data: { session }
 	} = await supabase.auth.getSession();
 
-	return { supabase, session, title: '', image: '/assets/authenticlash_og.png' };
+	return { supabase, session, title: '', image: ogImage };
 };
