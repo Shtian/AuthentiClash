@@ -43,7 +43,7 @@
 		content={$page.data.description || 'Get Ready for the Most Average Adventure of Your Life!'}
 	/>
 	{#if $page.data.image}
-		<meta property="og:image" content={baseUrl + $page.data.image} />
+		<meta property="og:image" content={$page.data.image} />
 		<meta property="og:image:width" content="1200" />
 		<meta property="og:image:height" content="630" />
 	{/if}
