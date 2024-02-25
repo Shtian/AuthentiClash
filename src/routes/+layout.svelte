@@ -13,6 +13,8 @@
 
 	$: title = $page.data.title;
 
+	const baseUrl = 'https://www.authenticlash.app';
+
 	onMount(() => {
 		const { data } = supabase.auth.onAuthStateChange((event, _session) => {
 			if (_session?.expires_at !== session?.expires_at) {
@@ -30,10 +32,10 @@
 		name="description"
 		content={$page.data.description || 'Get Ready for the Most Average Adventure of Your Life!'}
 	/>
-	<link rel="canonical" href={`https://www.authenticlash.app${$page.url.pathname}`} />
+	<link rel="canonical" href={baseUrl + $page.url.pathname} />
 	<meta property="og:site_name" content="AuthentiClash" />
 	<meta property="og:locale" content="en" />
-	<meta property="og:url" content={`https://www.authenticlash.app${$page.url.pathname}`} />
+	<meta property="og:url" content={baseUrl + $page.url.pathname} />
 	<meta property="og:type" content="website" />
 	<meta property="og:title" content="{title ? `${title} - ` : ''}AuthentiClash" />
 	<meta
@@ -41,7 +43,7 @@
 		content={$page.data.description || 'Get Ready for the Most Average Adventure of Your Life!'}
 	/>
 	{#if $page.data.image}
-		<meta property="og:image" content={$page.data.image} />
+		<meta property="og:image" content={baseUrl + $page.data.image} />
 		<meta property="og:image:width" content="1200" />
 		<meta property="og:image:height" content="630" />
 	{/if}
