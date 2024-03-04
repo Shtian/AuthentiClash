@@ -9,6 +9,7 @@ type Participation = {
 	updatedAt: string;
 	score: number[];
 	totalScore: number;
+	nicknameImageUrl: string;
 };
 
 export const getParticipation = async (
@@ -17,7 +18,9 @@ export const getParticipation = async (
 ): Promise<SupabaseResponse<Participation>> => {
 	const { data, error } = await supabase
 		.from('participation')
-		.select('id, score, total_score, updated_at, profile_id, game_id, nickname, created_at')
+		.select(
+			'id, score, total_score, updated_at, profile_id, game_id, nickname, created_at, nickname_image_url'
+		)
 		.eq('game_id', gameId)
 		.eq('profile_id', userId)
 		.single();
@@ -27,16 +30,7 @@ export const getParticipation = async (
 		return r;
 	}
 
-	const participation: Participation = {
-		id: data.id,
-		score: data.score,
-		totalScore: data.total_score,
-		updatedAt: data.updated_at,
-		profileId: data.game_id,
-		gameId: data.game_id,
-		nickname: data.nickname,
-		createdAt: data.created_at
-	};
+	const participation = mapToParticipation(data);
 
 	const successResponse: SupabaseResponse<Participation> = {
 		type: 'sucess',
@@ -46,7 +40,7 @@ export const getParticipation = async (
 	return successResponse;
 };
 
-export const updateParticipation = async (
+export const updateParticipationScore = async (
 	score: number,
 	existingParticipation: Partial<Participation>
 ): Promise<SupabaseResponse<Participation>> => {
@@ -65,16 +59,34 @@ export const updateParticipation = async (
 		return r;
 	}
 
-	const participation: Participation = {
-		id: data.id,
-		score: data.score,
-		totalScore: data.total_score,
-		updatedAt: data.updated_at,
-		profileId: data.game_id,
-		gameId: data.game_id,
-		nickname: data.nickname,
-		createdAt: data.created_at
+	const participation = mapToParticipation(data);
+
+	const successResponse: SupabaseResponse<Participation> = {
+		type: 'sucess',
+		data: participation,
+		error: null
 	};
+
+	return successResponse;
+};
+
+export const updateParticipationNicknameImage = async (
+	nicknameImageUrl: string,
+	participationId: string
+): Promise<SupabaseResponse<Participation>> => {
+	const { data, error } = await supabase
+		.from('participation')
+		.update({ nickname_image_url: nicknameImageUrl, updated_at: new Date() })
+		.eq('id', participationId)
+		.select()
+		.single();
+
+	if (error !== null) {
+		const r: SupabaseResponse<Participation> = { type: 'error', data: null, error };
+		return r;
+	}
+
+	const participation = mapToParticipation(data);
 
 	const successResponse: SupabaseResponse<Participation> = {
 		type: 'sucess',
@@ -111,16 +123,7 @@ export const addParticipation = async (
 		return r;
 	}
 
-	const participation: Participation = {
-		id: data.id,
-		score: data.score,
-		totalScore: data.total_score,
-		updatedAt: data.updated_at,
-		profileId: data.game_id,
-		gameId: data.game_id,
-		nickname: data.nickname,
-		createdAt: data.created_at
-	};
+	const participation = mapToParticipation(data);
 
 	const successResponse: SupabaseResponse<Participation> = {
 		type: 'sucess',
@@ -129,4 +132,20 @@ export const addParticipation = async (
 	};
 
 	return successResponse;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const mapToParticipation = (data: any) => {
+	const participation: Participation = {
+		id: data.id,
+		score: data.score,
+		totalScore: data.total_score,
+		updatedAt: data.updated_at,
+		profileId: data.game_id,
+		gameId: data.game_id,
+		nickname: data.nickname,
+		createdAt: data.created_at,
+		nicknameImageUrl: data.nickname_image_url
+	};
+	return participation;
 };
