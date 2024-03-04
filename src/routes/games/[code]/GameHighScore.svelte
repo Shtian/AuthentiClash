@@ -1,4 +1,8 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
+	import { toast } from '$lib/stores/ToastStore';
+	import type { SubmitFunction } from '@sveltejs/kit';
+	import { Image, Loader2 } from 'lucide-svelte';
 	import { flip } from 'svelte/animate';
 	export let players: {
 		id: any;
@@ -7,8 +11,32 @@
 		profile_id: any;
 		updated_at: any;
 		nickname: any;
+		nickname_image_url: any;
 	}[] = [];
+	console.log(players);
 	export let currentPlayerId = '';
+
+	let isLoading = false;
+
+	const handleGenerateImage: SubmitFunction = () => {
+		isLoading = true;
+		return async ({ result, update }) => {
+			if (result.type === 'success') {
+				toast.send({
+					message: result.data?.message,
+					type: 'success'
+				});
+			}
+			if (result.type === 'failure') {
+				toast.send({
+					message: result.data?.message,
+					type: 'error'
+				});
+			}
+			isLoading = false;
+			await update();
+		};
+	};
 </script>
 
 <div class="mt-8 flow-root">
@@ -23,6 +51,7 @@
 						>
 							Rank
 						</th>
+						<th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-white"> </th>
 						<th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-white">
 							Name
 						</th>
@@ -39,6 +68,35 @@
 						>
 							<td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-2">
 								#{i + 1}
+							</td>
+							<td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-2">
+								{#if player.nickname_image_url}
+									<img
+										src={player.nickname_image_url}
+										alt={player.nickname}
+										class="size-6 rounded-full"
+									/>
+								{:else if isLoading}
+									<Loader2 class="size-6 text-gray-300 animate-spin"></Loader2>
+								{:else}
+									<form
+										method="post"
+										action="?/generateParticipantImage"
+										use:enhance={handleGenerateImage}
+										class="flex items-center"
+									>
+										<input type="hidden" name="participation-id" value={player.id} />
+										<input type="hidden" name="nickname" value={player.nickname} />
+										<button
+											type="submit"
+											title="Generate participant image "
+											class="text-gray-300 hover:text-white transition-colors"
+										>
+											<span class="sr-only">Generate participant image</span>
+											<Image class="size-6" />
+										</button>
+									</form>
+								{/if}
 							</td>
 							<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">{player.nickname}</td>
 							<td
