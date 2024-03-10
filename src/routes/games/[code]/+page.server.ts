@@ -8,6 +8,7 @@ import {
 } from '$lib/supabase/participation';
 import { generateImage } from '$lib/ai/image-generator';
 import { createSuccessMessage } from '$lib/utils/event-message-generator';
+import { PARTICIPANT_AVATARS_BUCKET, uploadParticipantImage } from '$lib/supabase/storage';
 
 export const load: PageServerLoad = async ({ params, locals: { getSession, supabase } }) => {
 	const session = await getSession();
@@ -19,7 +20,7 @@ export const load: PageServerLoad = async ({ params, locals: { getSession, supab
 	const { data, error: err } = await supabase
 		.from('games')
 		.select(
-			'id, code, creator, end_at, is_active, name, cooldown_hours, participation ( id, score, total_score, profile_id, updated_at, nickname_image_url, nickname )'
+			'id, code, creator, end_at, is_active, name, cooldown_hours, ai_enabled, participation ( id, score, total_score, profile_id, updated_at, nickname_image_url, nickname )'
 		)
 		.eq('code', code)
 		.single();
@@ -41,6 +42,7 @@ export const load: PageServerLoad = async ({ params, locals: { getSession, supab
 		players: data.participation,
 		currentPlayer,
 		title: data.name,
+		aiEnabled: data.ai_enabled,
 		description: 'A new game has begun! Enter your score and see what happens'
 	};
 };
@@ -118,7 +120,7 @@ export const actions = {
 			};
 		}
 	},
-	generateParticipantImage: async ({ request, locals: { getSession } }) => {
+	generateParticipantImage: async ({ request, locals: { getSession, supabase } }) => {
 		const session = await getSession();
 		if (!session) {
 			return fail(401, {
@@ -142,7 +144,23 @@ export const actions = {
 			});
 		}
 
-		const res = await updateParticipationNicknameImage(imageUrl, participationId.toString());
+		const uploadRes = await uploadParticipantImage(
+			imageUrl,
+			session.user.id,
+			participationId.toString()
+		);
+
+		if (uploadRes.type === 'error' || !uploadRes.data?.fullPath) {
+			return fail(500, {
+				message: 'Oh no, your image could not be uploaded. Please try again. 🙏'
+			});
+		}
+
+		const { data } = supabase.storage
+			.from(PARTICIPANT_AVATARS_BUCKET)
+			.getPublicUrl(uploadRes.data.fullPath);
+		const res = await updateParticipationNicknameImage(data.publicUrl, participationId.toString());
+
 		if (res.type === 'error') {
 			return fail(500, {
 				message: 'Oh no, your image could not be updated. Please try again. 🙏'
