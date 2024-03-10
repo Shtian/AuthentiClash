@@ -23,7 +23,7 @@
 	const handleGenerateImage: SubmitFunction = () => {
 		isLoading = true;
 		toast.send({
-			message: 'Generating participant image, this may take a while ⏳',
+			message: 'Generating your avatar, this may take a while ⏳',
 			type: 'info'
 		});
 		return async ({ result, update }) => {
