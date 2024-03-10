@@ -6,6 +6,7 @@ const openaiClient = new OpenAI({ apiKey: OPENAI_API_KEY });
 export async function generateImage(username: string): Promise<string | undefined> {
 	try {
 		const nameStrippedOfParentheses = username.replace(/\(.*\)/, '').trim();
+		console.debug('Generating image with prompt: ', nameStrippedOfParentheses);
 		const image = await openaiClient.images.generate({
 			quality: 'standard',
 			model: 'dall-e-3',
@@ -17,7 +18,7 @@ export async function generateImage(username: string): Promise<string | undefine
 
 		return image.data[0].url;
 	} catch (error) {
-		console.error('Error generating image', error);
+		console.error('Error generating image: ', error);
 		return undefined;
 	}
 }
