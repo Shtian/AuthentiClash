@@ -82,6 +82,7 @@ export const updateParticipationNicknameImage = async (
 		.single();
 
 	if (error !== null) {
+		console.error('Error updating nickname image:', error.message);
 		const r: SupabaseResponse<Participation> = { type: 'error', data: null, error };
 		return r;
 	}
