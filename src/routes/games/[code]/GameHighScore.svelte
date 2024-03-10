@@ -1,5 +1,11 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
+	import { toast } from '$lib/stores/ToastStore';
+	import type { SubmitFunction } from '@sveltejs/kit';
+	import { Loader2, Sparkles } from 'lucide-svelte';
 	import { flip } from 'svelte/animate';
+	import * as Popover from '$lib/components/ui/popover';
+
 	export let players: {
 		id: any;
 		score: any;
@@ -7,12 +13,40 @@
 		profile_id: any;
 		updated_at: any;
 		nickname: any;
+		nickname_image_url: any;
 	}[] = [];
+	export let aiEnabled = false;
 	export let currentPlayerId = '';
+
+	let isLoading = false;
+
+	const handleGenerateImage: SubmitFunction = () => {
+		isLoading = true;
+		toast.send({
+			message: 'Generating participant image, this may take a while ⏳',
+			type: 'info'
+		});
+		return async ({ result, update }) => {
+			if (result.type === 'success') {
+				toast.send({
+					message: result.data?.message,
+					type: 'success'
+				});
+			}
+			if (result.type === 'failure') {
+				toast.send({
+					message: result.data?.message,
+					type: 'error'
+				});
+			}
+			isLoading = false;
+			await update();
+		};
+	};
 </script>
 
 <div class="mt-8 flow-root">
-	<div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+	<div class="-mx-4 -my-2 sm:-mx-6 lg:-mx-8">
 		<div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
 			<table class="min-w-full divide-y divide-gray-700">
 				<thead>
@@ -40,7 +74,51 @@
 							<td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-2">
 								#{i + 1}
 							</td>
-							<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">{player.nickname}</td>
+							<td
+								class="flex items-center gap-x-2 whitespace-nowrap px-3 py-4 text-sm text-gray-300"
+								>{#if player.nickname_image_url}
+									<Popover.Root>
+										<Popover.Trigger
+											><img
+												src={`${player.nickname_image_url.replace('.webp', '-128.webp')}`}
+												alt={player.nickname}
+												class="size-6 rounded-full"
+											/></Popover.Trigger
+										>
+										<Popover.Content
+											><a href={player.nickname_image_url} class="underline hover:no-underline mt-6"
+												><img
+													src={`${player.nickname_image_url.replace('.webp', '-512.webp')}`}
+													width={256}
+													height={256}
+													alt={player.nickname}
+													class="size-64"
+												/></a
+											></Popover.Content
+										>
+									</Popover.Root>
+								{:else if isLoading}
+									<Loader2 class="size-6 text-gray-300 animate-spin"></Loader2>
+								{:else if aiEnabled && player.profile_id === currentPlayerId}
+									<form
+										method="post"
+										action="?/generateParticipantImage"
+										use:enhance={handleGenerateImage}
+										class="flex items-center"
+									>
+										<input type="hidden" name="participation-id" value={player.id} />
+										<input type="hidden" name="nickname" value={player.nickname} />
+										<button
+											type="submit"
+											title="Generate participant image "
+											class="text-gray-300 hover:text-white transition-colors"
+										>
+											<span class="sr-only">Generate participant image</span>
+											<Sparkles class="size-6" />
+										</button>
+									</form>
+								{/if}{player.nickname}</td
+							>
 							<td
 								class="whitespace-nowrap px-3 py-4 text-sm text-gray-300"
 								title={player.score.join(' → ')}>{player.total_score}</td

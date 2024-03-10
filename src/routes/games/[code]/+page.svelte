@@ -6,13 +6,14 @@
 	import { fade } from 'svelte/transition';
 	import { formatTimeDelta, timeUntilCooldownEnds } from '$lib/utils/dateUtils.js';
 	import GameHighScore from './GameHighScore.svelte';
-	import { Clock, Copy, LucideLoader, LucideLoader2, RefreshCw } from 'lucide-svelte';
+	import { Clock, Copy, LucideLoader2, RefreshCw, Sparkles } from 'lucide-svelte';
 	import Cooldown from './Cooldown.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import { onDestroy } from 'svelte';
 	import { toast } from '$lib/stores/ToastStore';
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import * as Popover from '$lib/components/ui/popover';
 
 	export let data;
 	export let newScore: number | null = null;
@@ -115,6 +116,21 @@
 		<p class="text-sm text-gray-300 text-pretty" title={data.endsAt}>
 			Time remaining: {timeLeftText}
 		</p>
+		{#if data.aiEnabled}
+			<Popover.Root>
+				<Popover.Trigger class="w-max">
+					<div class="rounded-md px-1.5 py-0.5 text-xs font-medium ring-1">
+						<Sparkles class="size-4 inline" /> AI enabled
+					</div>
+				</Popover.Trigger>
+				<Popover.Content class="text-sm text-pretty">
+					AI features have been enabled for this game:
+					<ul class="list-disc ml-4">
+						<li>Click the sparkles on your row to generate an epic avatar!</li>
+					</ul>
+				</Popover.Content>
+			</Popover.Root>
+		{/if}
 	</div>
 </header>
 <main>
@@ -211,6 +227,6 @@
 		{:else}
 			<p class="text-white">Final scores:</p>
 		{/if}
-		<GameHighScore {players} currentPlayerId={data.session?.user.id} />
+		<GameHighScore {players} currentPlayerId={data.session?.user.id} aiEnabled={data.aiEnabled} />
 	</div>
 </main>
