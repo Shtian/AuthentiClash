@@ -97,7 +97,7 @@
 											></Popover.Content
 										>
 									</Popover.Root>
-								{:else if isLoading}
+								{:else if isLoading && player.profile_id === currentPlayerId}
 									<Loader2 class="size-6 text-gray-300 animate-spin"></Loader2>
 								{:else if aiEnabled && player.profile_id === currentPlayerId}
 									<form
