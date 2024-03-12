@@ -76,7 +76,7 @@ export const updateParticipationNicknameImage = async (
 ): Promise<SupabaseResponse<Participation>> => {
 	const { data, error } = await supabase
 		.from('participation')
-		.update({ nickname_image_url: nicknameImageUrl, updated_at: new Date() })
+		.update({ nickname_image_url: nicknameImageUrl })
 		.eq('id', participationId)
 		.select()
 		.single();
