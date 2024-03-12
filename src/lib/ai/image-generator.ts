@@ -5,15 +5,15 @@ const openaiClient = new OpenAI({ apiKey: OPENAI_API_KEY });
 
 export async function generateImage(username: string): Promise<string | undefined> {
 	try {
-		const nameStrippedOfParentheses = username.replace(/\(.*\)/, '').trim();
-		console.debug('Generating image with prompt: ', nameStrippedOfParentheses);
+		const prompt = createImagePrompt(username);
+		console.debug('Generating image with prompt: ', prompt);
 		const image = await openaiClient.images.generate({
 			quality: 'standard',
 			model: 'dall-e-3',
 			size: '1024x1024',
 			n: 1,
 			response_format: 'url',
-			prompt: `Epic portrait of a ${nameStrippedOfParentheses}`
+			prompt
 		});
 
 		return image.data[0].url;
@@ -21,4 +21,10 @@ export async function generateImage(username: string): Promise<string | undefine
 		console.error('Error generating image: ', error);
 		return undefined;
 	}
+}
+
+function createImagePrompt(username: string) {
+	const nameStrippedOfParentheses = username.replace(/\(.*\)/, '').trim();
+	const [descriptor, creature = nameStrippedOfParentheses] = nameStrippedOfParentheses.split(' ');
+	return `Create an epic image of a ${descriptor} ${creature} set in a fantastical game world. This ${creature} stands prominently in a scene that captures the essence of ${descriptor}, embodying both the physical and emotional characteristics associated with the word. The backdrop is a vividly detailed landscape that enhances the ${descriptor} nature of the ${creature}, whether it be a mystical forest, a desolate wasteland, or a bustling magical city. The lighting, atmosphere, and surrounding elements should all work together to highlight the ${creature}'s unique features and the ${descriptor} mood, making it a powerful and memorable part of the game's universe`;
 }
