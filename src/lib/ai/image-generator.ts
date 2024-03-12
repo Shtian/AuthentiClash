@@ -15,6 +15,7 @@ export async function generateImage(username: string): Promise<string | undefine
 			response_format: 'url',
 			prompt
 		});
+		console.debug('Revised image prompt: ', image.data[0]?.revised_prompt);
 
 		return image.data[0].url;
 	} catch (error) {
