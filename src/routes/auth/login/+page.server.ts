@@ -25,7 +25,6 @@ export const actions = {
 		if (error) {
 			return fail(400, { error: error.message, email });
 		}
-
 		redirect(303, '/games');
 	},
 	signUp: async ({ request, locals: { supabase } }) => {

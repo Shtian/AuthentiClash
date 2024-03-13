@@ -8,7 +8,10 @@
 
 	export let session: Session | null = null;
 
-	const links = [{ name: 'Games', href: '/games' }];
+	const links = [
+		{ name: 'Games', href: '/games' },
+		{ name: 'Gallery', href: '/gallery' }
+	];
 
 	let isMainMenuOpen = false;
 	let isUserMenuOpen = false;
