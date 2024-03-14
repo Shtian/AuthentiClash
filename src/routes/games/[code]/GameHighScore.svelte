@@ -2,9 +2,10 @@
 	import { enhance } from '$app/forms';
 	import { toast } from '$lib/stores/ToastStore';
 	import type { SubmitFunction } from '@sveltejs/kit';
-	import { Loader2, Sparkles } from 'lucide-svelte';
+	import { LineChart, Loader2, Sparkles } from 'lucide-svelte';
 	import { flip } from 'svelte/animate';
 	import * as Popover from '$lib/components/ui/popover';
+	import ScoreGraph from '$lib/components/ScoreGraph.svelte';
 
 	export let players: {
 		id: any;
@@ -63,6 +64,7 @@
 						<th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-white">
 							Score
 						</th>
+						<th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-white"> </th>
 					</tr>
 				</thead>
 				<tbody class="divide-y divide-gray-800">
@@ -121,8 +123,20 @@
 							>
 							<td
 								class="whitespace-nowrap px-3 py-4 text-sm text-gray-300"
-								title={player.score.join(' → ')}>{player.total_score}</td
-							>
+								title={player.score.join(' → ')}
+								>{player.total_score}
+							</td>
+							<td class="whitespace-nowrap text-sm text-gray-300">
+								<Popover.Root>
+									<Popover.Trigger
+										><span class="sr-only">Show scores</span><LineChart class="size-6 text-gray-300"
+										></LineChart></Popover.Trigger
+									>
+									<Popover.Content
+										><ScoreGraph scores={player.score} width={250} height={130} /></Popover.Content
+									>
+								</Popover.Root>
+							</td>
 						</tr>
 					{:else}
 						<tr>

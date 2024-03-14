@@ -20,7 +20,6 @@ export const load: PageServerLoad = async ({ locals: { getSession, supabase } })
 	if (error) {
 		return fail(500, { message: error });
 	}
-	console.log(games);
 
 	return {
 		games: games || [],
