@@ -14,6 +14,7 @@
 	import * as Popover from '$lib/components/ui/popover';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { goto } from '$app/navigation';
+	import { toast } from '$lib/stores/ToastStore.js';
 
 	const df = new DateFormatter('en-US', {
 		dateStyle: 'long'
@@ -27,17 +28,22 @@
 
 	let endTime: string = form?.endTime?.toString() ?? '12:00';
 	let cooldown: string = form?.cooldown?.toString() ?? '4';
-	let loading = false;
+	let isLoading = false;
 
 	const handleSubmit: SubmitFunction = () => {
-		loading = true;
+		isLoading = true;
 		return async ({ result }) => {
-			loading = false;
 			if (result.type === 'redirect') {
 				goto(result.location);
-			} else {
-				await applyAction(result);
 			}
+			if (result.type === 'failure') {
+				toast.send({
+					message: result.data?.message,
+					type: 'error'
+				});
+			}
+			isLoading = false;
+			await applyAction(result);
 		};
 	};
 </script>
@@ -151,7 +157,7 @@
 		<button
 			type="submit"
 			class="rounded-md bg-clash-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-clash-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500"
-			disabled={loading}>{loading ? 'Creating...' : 'Create'}</button
+			disabled={isLoading}>{isLoading ? 'Creating...' : 'Create'}</button
 		>
 	</div>
 </form>

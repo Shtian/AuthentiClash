@@ -26,7 +26,8 @@ export const actions = {
 				name,
 				endDate,
 				endTime,
-				cooldown
+				cooldown,
+				message: 'Could not find an active session, please try logging in again. 🙏'
 			});
 		}
 
@@ -45,11 +46,13 @@ export const actions = {
 		const { data, error } = await supabase.from('games').insert(game).select();
 
 		if (error) {
+			console.error(error.message);
 			return fail(500, {
 				name,
 				endDate,
 				endTime,
-				cooldown
+				cooldown,
+				message: 'Error creating game. Please try again. 🙏'
 			});
 		}
 
