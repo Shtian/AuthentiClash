@@ -8,6 +8,7 @@ env:
   PUBLIC_SUPABASE_URL: https://public-supabase-url.com
   PUBLIC_SUPABASE_ANON_KEY: some-public-supabase-anon-key
   SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+  OPENAI_API_KEY: some-openai-api-key
 jobs:
   build:
     runs-on: ubuntu-latest
