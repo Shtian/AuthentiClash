@@ -1,5 +1,15 @@
 # authenticlash
 
+## 0.1.0
+
+### Minor Changes
+
+- [#21](https://github.com/Shtian/AuthentiClash/pull/21) [`fb3ea32`](https://github.com/Shtian/AuthentiClash/commit/fb3ea321f3c76659119b0034e9a85505dc75b74b) Thanks [@Shtian](https://github.com/Shtian)! - Adds a footer with github links
+
+### Patch Changes
+
+- [`12dc5b4`](https://github.com/Shtian/AuthentiClash/commit/12dc5b46e10bd7e87dbea7ad3ece67c074391b67) Thanks [@Shtian](https://github.com/Shtian)! - Add changeset for handling versioning and vercel deployments triggered from version tags
+
 ## 0.0.2
 
 ### Patch Changes
