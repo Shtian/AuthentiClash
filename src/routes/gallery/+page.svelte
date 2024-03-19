@@ -21,10 +21,8 @@
 <div class="lg:py-10">
 	<div class="mx-auto max-w-7xl px-6 lg:px-8">
 		<div class="mx-auto max-w-2xl lg:mx-0">
-			<h2 class="text-3xl font-bold tracking-tight text-gray-300 sm:text-4xl">
-				Gallery of Legends
-			</h2>
-			<p class="mt-6 text-lg leading-8 text-gray-300">
+			<h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">Gallery of Legends</h2>
+			<p class="mt-6 text-lg leading-8 text-white">
 				Your previous achievements are eternalized in the Gallery of Legends. Gaze upon your scores
 				and marvel at your own greatness.
 			</p>
@@ -66,7 +64,7 @@
 				{/each}
 			</ul>
 		{:else}
-			<div class="mx-auto max-w-7xl sm:px-6 lg:px-8 lg:py-10 text-center">
+			<div class="mx-auto max-w-7xl sm:px-6 py-6 lg:px-8 lg:py-10 text-center">
 				<RocketIcon class="mx-auto h-12 w-12 text-gray-400" />
 				<h3 class="mt-2 text-sm font-semibold text-white">No past games found</h3>
 				<p class="mt-1 text-sm text-white">Get started by creating a new AuthentiClash session.</p>
