@@ -6,7 +6,9 @@ on:
       - main
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
-
+env:
+  CI: true
+  PNPM_CACHE_FOLDER: .pnpm-store
 jobs:
   release:
     name: Release
@@ -19,6 +21,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 20
+
+      - name: Install pnpm
+        run: npm i pnpm@latest -g
+
+      - name: Setup pnpm config
+        run: pnpm config set store-dir $PNPM_CACHE_FOLDER
 
       - name: Install Dependencies
         run: pnpm i
