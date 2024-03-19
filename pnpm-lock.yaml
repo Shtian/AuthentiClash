@@ -48,8 +48,8 @@ dependencies:
     specifier: ^7.9.0
     version: 7.9.0
   lucide-svelte:
-    specifier: ^0.299.0
-    version: 0.299.0(svelte@4.2.8)
+    specifier: ^0.359.0
+    version: 0.359.0(svelte@4.2.8)
   openai:
     specifier: ^4.28.4
     version: 4.28.4
@@ -4453,10 +4453,10 @@ packages:
     dependencies:
       yallist: 4.0.0
 
-  /lucide-svelte@0.299.0(svelte@4.2.8):
-    resolution: {integrity: sha512-M32F7fjTufSzZgD/afyCTjr58Au7ZzWOxCgwMbRZUz1R0D/GFDOcc7tdbk0SBMyEWbf34UCpAhqvYxZpXRV8XA==}
+  /lucide-svelte@0.359.0(svelte@4.2.8):
+    resolution: {integrity: sha512-75CzrB26QbMSmXywosx8Yt6XvvN+OSmLG5TaVOAEaEwkZ4kBcT1yLBzbBPe2aXMu9fFi/HwOiOYCkavKaEKujQ==}
     peerDependencies:
-      svelte: '>=3 <5'
+      svelte: ^3 || ^4 || ^5.0.0-next.42
     dependencies:
       svelte: 4.2.8
     dev: false
