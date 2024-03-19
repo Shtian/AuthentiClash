@@ -5,6 +5,8 @@
 	import Header from '$lib/components/Header.svelte';
 	import Toast from '$lib/components/toast/Toast.svelte';
 	import { page } from '$app/stores';
+	import { NotebookText } from 'lucide-svelte';
+	import Footer from '$lib/components/Footer.svelte';
 
 	export let data;
 
@@ -56,3 +58,4 @@
 		<slot />
 	</div>
 </div>
+<Footer />
