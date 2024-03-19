@@ -4,6 +4,11 @@
 	import { quadIn, quadOut } from 'svelte/easing';
 	import InlineMessage from '$lib/components/InlineMessage.svelte';
 	import logo from '$lib/assets/authenticlash_logo.svg';
+	import AuthProviders from './AuthProviders.svelte';
+
+	export let data;
+	let { supabase } = data;
+	$: ({ supabase } = data);
 
 	export let form: ActionData;
 	$: ({ error, success, registeredEmail } = form ?? {
@@ -111,6 +116,8 @@
 					>
 				</div>
 			</form>
+			<hr class="my-4" />
+			<AuthProviders {supabase} />
 			<p class="mt-10 text-center text-sm text-gray-400">
 				Not a member?
 				<button
