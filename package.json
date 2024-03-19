@@ -14,7 +14,7 @@
 		"format": "prettier --write .",
 		"test:integration": "playwright test",
 		"test:unit": "vitest",
-		"release": "pnpm build && changeset publish"
+		"release": "changeset publish"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.28.1",
