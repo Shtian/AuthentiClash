@@ -5,6 +5,7 @@
 	import googleLogo from '$lib/assets/google_logo.svg';
 	import githubLogo from '$lib/assets/github_logo.svg';
 
+	/* eslint-disable  @typescript-eslint/no-explicit-any */
 	export let supabase: SupabaseClient<any, 'public', any>;
 
 	type OAuthProvider = 'github' | 'discord' | 'google';
@@ -20,7 +21,7 @@
 					}
 				: {};
 
-		const { data, error } = await supabase.auth.signInWithOAuth({ provider, options });
+		const { error } = await supabase.auth.signInWithOAuth({ provider, options });
 		if (error) {
 			toast.send({ message: `Error logging in with ${provider}: ${error.message}`, type: 'error' });
 		}

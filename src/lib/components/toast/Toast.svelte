@@ -2,7 +2,7 @@
 	import Portal from '../Portal.svelte';
 	import { toast } from '$lib/stores/ToastStore';
 	import VisuallyHidden from '../VisuallyHidden.svelte';
-	import { AlertTriangle, CheckCircle2, Info, MessageCircleWarning, X } from 'lucide-svelte';
+	import { AlertTriangle, CheckCircle2, Info, X } from 'lucide-svelte';
 	import { fly, fade } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
 	import ToastMessage from '$lib/components/toast/ToastMessage.svelte';

@@ -138,7 +138,7 @@
 		{#if timeLeft > 0}
 			<form method="POST" action="?/updateScore" use:enhance={handleNewScore}>
 				<p>
-					{!!data.currentPlayer
+					{data.currentPlayer
 						? 'Register new 2FA Code'
 						: 'Choose your nickname and enter your 2FA code to join the game!'}
 				</p>

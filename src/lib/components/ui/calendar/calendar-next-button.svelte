@@ -5,7 +5,6 @@
 	import { cn } from '$lib/utils';
 
 	type $$Props = CalendarPrimitive.NextButtonProps;
-	type $$Events = CalendarPrimitive.NextButtonEvents;
 
 	let className: $$Props['class'] = undefined;
 	export { className as class };

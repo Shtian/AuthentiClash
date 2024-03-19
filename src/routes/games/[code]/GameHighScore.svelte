@@ -6,7 +6,7 @@
 	import { flip } from 'svelte/animate';
 	import * as Popover from '$lib/components/ui/popover';
 	import ScoreGraph from '$lib/components/ScoreGraph.svelte';
-
+	/* eslint-disable  @typescript-eslint/no-explicit-any */
 	export let players: {
 		id: any;
 		score: any;
