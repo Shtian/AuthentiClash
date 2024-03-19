@@ -5,6 +5,9 @@ on:
       - '**'
 env:
   CI: true
+  PUBLIC_SUPABASE_URL: https://public-supabase-url.com
+  PUBLIC_SUPABASE_ANON_KEY: some-public-supabase-anon-key
+  SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 jobs:
   build:
     runs-on: ubuntu-latest
