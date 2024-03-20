@@ -1,5 +1,11 @@
 # authenticlash
 
+## 0.2.2
+
+### Patch Changes
+
+- [`bab55c0`](https://github.com/Shtian/AuthentiClash/commit/bab55c0b0782c6ce19da1d762e10a48e57cd7c44) Thanks [@Shtian](https://github.com/Shtian)! - CI: add pnpm to vercel workflows
+
 ## 0.2.1
 
 ### Patch Changes
