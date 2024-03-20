@@ -1,5 +1,11 @@
 # authenticlash
 
+## 0.2.0
+
+### Minor Changes
+
+- [#22](https://github.com/Shtian/AuthentiClash/pull/22) [`05e38bc`](https://github.com/Shtian/AuthentiClash/commit/05e38bc2210b83bf994ee14c61c82f4c62fc651b) Thanks [@Shtian](https://github.com/Shtian)! - Generate version number during release and print it in the footer
+
 ## 0.1.0
 
 ### Minor Changes
