@@ -8,41 +8,36 @@ on:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
-permissions:
-  contents: write
-  pull-requests: write
-
-env:
-  CI: true
-  PNPM_CACHE_FOLDER: .pnpm-store
+permissions: {}
 
 jobs:
   release:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    # only run after successful CI build and avoid running on forks
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.repository == 'shtian/authenticlash' }}
+    permissions:
+      contents: write # let changeset create releases
+      pull-requests: write # let changeset create PRs
     name: Release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js 20
-        uses: actions/setup-node@v3
+        uses: actions/checkout@v4
         with:
-          node-version: 20
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v3.0.0
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: pnpm
 
-      - name: Install pnpm
-        run: npm i pnpm@latest -g
-
-      - name: Setup pnpm config
-        run: pnpm config set store-dir $PNPM_CACHE_FOLDER
-
-      - name: Install Dependencies
-        run: pnpm i
+      - run: pnpm install --frozen-lockfile
 
       - name: Create Release Pull Request
+        id: changesets
         uses: changesets/action@v1
         with:
-          publish: pnpm release
+          publish: pnpm changeset:release
           version: pnpm changeset:version
         env:
           GITHUB_TOKEN: ${{ secrets.CUSTOM_GH_PAT }}
