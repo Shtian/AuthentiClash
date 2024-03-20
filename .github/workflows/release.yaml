@@ -42,6 +42,7 @@ jobs:
       - name: Create Release Pull Request
         uses: changesets/action@v1
         with:
-          publish: pnpm run release
+          publish: pnpm release
+          version: pnpm changeset:version
         env:
           GITHUB_TOKEN: ${{ secrets.CUSTOM_GH_PAT }}
