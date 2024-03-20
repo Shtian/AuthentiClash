@@ -1,5 +1,11 @@
 # authenticlash
 
+## 0.2.3
+
+### Patch Changes
+
+- [`e1ff457`](https://github.com/Shtian/AuthentiClash/commit/e1ff457815700abdce07626d55a7cdf0bc753a13) Thanks [@Shtian](https://github.com/Shtian)! - CI: use correct pnpm action
+
 ## 0.2.2
 
 ### Patch Changes
