@@ -1,5 +1,11 @@
 # authenticlash
 
+## 0.2.4
+
+### Patch Changes
+
+- [`6caef22`](https://github.com/Shtian/AuthentiClash/commit/6caef2226e751a08f36190c50765657fb8b716ea) Thanks [@Shtian](https://github.com/Shtian)! - CI: install pnpm and use correct cache key
+
 ## 0.2.3
 
 ### Patch Changes
