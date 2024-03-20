@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { NotebookText } from 'lucide-svelte';
+	import { VERSION } from '../../version';
 </script>
 
 <footer aria-labelledby="footer-heading">
@@ -26,7 +27,7 @@
 				</a>
 			</div>
 			<p class="mt-8 text-xs leading-5 text-gray-400 md:order-1 md:mt-0">
-				&copy; {new Date().getFullYear()}
+				&copy; {new Date().getFullYear()}, v{VERSION}
 			</p>
 		</div>
 	</div>

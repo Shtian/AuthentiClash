@@ -14,7 +14,9 @@
 		"format": "prettier --write .",
 		"test:integration": "playwright test",
 		"test:unit": "vitest",
-		"release": "changeset publish"
+		"release": "changeset publish",
+		"changeset:version": "pnpm generate:version && git add --all",
+		"generate:version": "node scripts/generate-version.js"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.28.1",
