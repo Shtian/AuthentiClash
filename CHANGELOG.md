@@ -1,5 +1,11 @@
 # authenticlash
 
+## 0.2.1
+
+### Patch Changes
+
+- [`747c673`](https://github.com/Shtian/AuthentiClash/commit/747c6734ec9c742e2e1aabf5e13cd00badffe161) Thanks [@Shtian](https://github.com/Shtian)! - Update release workflows to allow triggering another workflow
+
 ## 0.2.0
 
 ### Minor Changes
