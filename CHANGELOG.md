@@ -1,5 +1,11 @@
 # authenticlash
 
+## 0.2.5
+
+### Patch Changes
+
+- [#16](https://github.com/Shtian/AuthentiClash/pull/16) [`d8bd278`](https://github.com/Shtian/AuthentiClash/commit/d8bd2787f6af20fc0b20b9b020fe6607b71748a1) Thanks [@jostein-skaar](https://github.com/jostein-skaar)! - Enable submit button when cooldown is finished
+
 ## 0.2.4
 
 ### Patch Changes
