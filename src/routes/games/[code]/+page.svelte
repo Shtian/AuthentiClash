@@ -218,7 +218,7 @@
 						{:else}
 							<Button type="submit" disabled>
 								<Clock class="flex-shrink-0 mr-2 h-4 w-4" />
-								<Cooldown delta={cooldownRemaining}></Cooldown>
+								<Cooldown bind:delta={cooldownRemaining}></Cooldown>
 							</Button>
 						{/if}
 					</div>

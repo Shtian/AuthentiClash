@@ -7,7 +7,7 @@
 	let timeLeftString = delta <= 0 ? '00:00:00' : formatTimeDeltaShort(delta);
 
 	const timer = setInterval(() => {
-		let delta = cooldownFinished - new Date().getTime();
+		delta = cooldownFinished - new Date().getTime();
 		if (delta <= 0) {
 			clearInterval(timer);
 			timeLeftString = '00:00:00';
