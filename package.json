@@ -16,7 +16,8 @@
 		"test:unit": "vitest",
 		"changeset:version": "changeset version && pnpm generate:version && git add --all",
 		"changeset:release": "changeset publish",
-		"generate:version": "node scripts/generate-version.js"
+		"generate:version": "node scripts/generate-version.js",
+		"supabase:seed": "supabase db reset && node --env-file=.env ./supabase/seed-participations.js"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.28.1",
