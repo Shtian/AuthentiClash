@@ -70,3 +70,36 @@ SET username = 'user ' || SUBSTRING(id::text FROM 1 FOR 8),
     avatar_url = 'https://api.dicebear.com/8.x/pixel-art/svg?seed=' || SUBSTRING(id::text FROM 1 FOR 8),
     updated_at = current_timestamp
 WHERE id IN (SELECT id FROM auth.users);
+
+-- Add games
+INSERT INTO
+    public.games (
+        created_at,
+        name,
+        code,
+        is_active,
+        creator,
+        end_at,
+        updated_at,
+        cooldown_hours,
+        ai_enabled
+    ) (
+        select
+            current_timestamp,
+            'Game ' || (ROW_NUMBER() OVER ()),
+            'game-' || SUBSTRING((uuid_generate_v4 ())::text FROM 1 FOR 8) || '-' || SUBSTRING((uuid_generate_v4 ())::text FROM 1 FOR 8),
+            CASE 
+                WHEN (ROW_NUMBER() OVER ()) <= 5 THEN true
+                ELSE false
+            END,
+            id,
+            CASE 
+                WHEN (ROW_NUMBER() OVER ()) <= 5 THEN current_timestamp + interval '5 days'
+                ELSE current_timestamp - interval '1 day'
+            END,
+            current_timestamp,
+            (ROW_NUMBER() OVER ()) % 2,
+            false
+        from
+            auth.users
+    );
