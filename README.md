@@ -38,6 +38,16 @@ pnpm dev
 open http://localhost:5173
 ```
 
+### Seed Data
+
+If you want a seed data to play around with, or just an easily restorable state, you can run the following command:
+
+```bash
+pnpm supabase:seed
+```
+
+This will create 10 users with email logins as well as 10 games with a random amount of players and scores. Five games with a future end date and 5 games with a past end date. The seed data can be found in `supabase/seed.sql` which is run first with `supabase db reset` and then participation data is added with a javascript, to control the random data and tune it more easily.
+
 ### Troubleshooting
 
 If you run into issues with foreign key constraints on profile_id, you can try going to the profile page of a logged in user and hitting save first, then try creating a game again.
