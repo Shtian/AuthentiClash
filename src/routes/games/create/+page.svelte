@@ -83,6 +83,7 @@
 					<label for="2fa-cooldown" class="block text-sm font-medium leading-6 text-white"
 						>2FA Entry Cooldown (0-24h)</label
 					>
+					<div class="text-xs text-gray-300">Limit how often players can enter 2FA values</div>
 					<div class="mt-2 max-w-12">
 						<div
 							class="flex rounded-md bg-white/5 ring-1 ring-inset ring-white/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-clash-500"
@@ -104,7 +105,7 @@
 					<label for="end-date" class="block text-sm font-medium leading-6 text-white"
 						>End date</label
 					>
-					<div class="mt-2 w-fu">
+					<div class="w-fu mt-2">
 						<input type="hidden" name="end-date" id="end-date" bind:value={endDate} />
 						<Popover.Root>
 							<Popover.Trigger asChild let:builder>
