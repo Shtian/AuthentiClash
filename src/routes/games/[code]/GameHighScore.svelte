@@ -88,7 +88,7 @@
 											/></Popover.Trigger
 										>
 										<Popover.Content
-											><a href={player.nickname_image_url} class="underline hover:no-underline mt-6"
+											><a href={player.nickname_image_url} class="mt-6 underline hover:no-underline"
 												><img
 													src={`${player.nickname_image_url.replace('.webp', '-512.webp')}`}
 													width={256}
@@ -100,7 +100,7 @@
 										>
 									</Popover.Root>
 								{:else if isLoading && player.profile_id === currentPlayerId}
-									<Loader2 class="size-6 text-gray-300 animate-spin"></Loader2>
+									<Loader2 class="size-6 animate-spin text-gray-300"></Loader2>
 								{:else if aiEnabled && player.profile_id === currentPlayerId}
 									<form
 										method="post"
@@ -113,7 +113,7 @@
 										<button
 											type="submit"
 											title="Generate participant image "
-											class="text-gray-300 hover:text-white transition-colors"
+											class="text-gray-300 transition-colors hover:text-white"
 										>
 											<span class="sr-only">Generate participant image</span>
 											<Sparkles class="size-6" />

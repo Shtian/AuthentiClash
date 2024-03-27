@@ -29,10 +29,10 @@
 </script>
 
 <button
-	class="flex w-full justify-center rounded-md bg-clash-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-clash-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500 mt-1"
+	class="mt-1 flex w-full justify-center rounded-md bg-clash-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-clash-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500"
 	on:click={() => oAuthLogin('google')}
 	><img
-		class="size-6 mr-3"
+		class="mr-3 size-6"
 		width="24"
 		height="24"
 		src={googleLogo}
@@ -40,10 +40,10 @@
 	/>Google</button
 >
 <button
-	class="flex w-full justify-center rounded-md bg-clash-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-clash-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500 mt-2"
+	class="mt-2 flex w-full justify-center rounded-md bg-clash-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-clash-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500"
 	on:click={() => oAuthLogin('github')}
 	><img
-		class="size-6 mr-3"
+		class="mr-3 size-6"
 		width="24"
 		height="24"
 		src={githubLogo}
@@ -51,10 +51,10 @@
 	/>GitHub</button
 >
 <button
-	class="flex w-full justify-center rounded-md bg-clash-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-clash-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500 mt-2"
+	class="mt-2 flex w-full justify-center rounded-md bg-clash-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-clash-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500"
 	on:click={() => oAuthLogin('discord')}
 	><img
-		class="size-6 mr-3"
+		class="mr-3 size-6"
 		width="24"
 		height="24"
 		src={discordLogo}

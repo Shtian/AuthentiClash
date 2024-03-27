@@ -25,13 +25,13 @@
 						>
 							Game
 						</th>
-						<th scope="col" class="pr-3 py-3.5 text-left text-sm font-semibold text-white">
+						<th scope="col" class="py-3.5 pr-3 text-left text-sm font-semibold text-white">
 							Your Rank
 						</th>
-						<th scope="col" class="pr-3 py-3.5 text-left text-sm font-semibold text-white">
+						<th scope="col" class="py-3.5 pr-3 text-left text-sm font-semibold text-white">
 							Status
 						</th>
-						<th scope="col" class="pr-3 py-3.5 text-left text-sm font-semibold text-white"> </th>
+						<th scope="col" class="py-3.5 pr-3 text-left text-sm font-semibold text-white"> </th>
 					</tr>
 				</thead>
 				<tbody class="divide-y divide-gray-800">
@@ -50,7 +50,7 @@
 									color={game.endAtDate < new Date() ? 'red' : 'green'}
 								/>
 							</td>
-							<td class="whitespace-nowrap text-end px-3 py-4 text-sm text-gray-300"
+							<td class="whitespace-nowrap px-3 py-4 text-end text-sm text-gray-300"
 								><a
 									href={`/games/${game.code}`}
 									class="inline-flex items-center rounded-md bg-clash-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-clash-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-600"
