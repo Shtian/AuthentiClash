@@ -1,5 +1,21 @@
 # authenticlash
 
+## 0.3.0
+
+### Minor Changes
+
+- [#34](https://github.com/Shtian/AuthentiClash/pull/34) [`c059191`](https://github.com/Shtian/AuthentiClash/commit/c0591914d21505734f00719f514e2ffd67ac105b) Thanks [@Shtian](https://github.com/Shtian)! - Add stats page
+
+- [#32](https://github.com/Shtian/AuthentiClash/pull/32) [`5856f25`](https://github.com/Shtian/AuthentiClash/commit/5856f25875a146abc2edce58ee0ebed1ed8b98cf) Thanks [@Shtian](https://github.com/Shtian)! - Add view transitions
+
+- [#35](https://github.com/Shtian/AuthentiClash/pull/35) [`c7997e3`](https://github.com/Shtian/AuthentiClash/commit/c7997e3cba02978f5ba48b58523587b4f36e64a3) Thanks [@Shtian](https://github.com/Shtian)! - Add emojis for first, second and third place, as well as default avatars
+
+- [#33](https://github.com/Shtian/AuthentiClash/pull/33) [`a526e42`](https://github.com/Shtian/AuthentiClash/commit/a526e4233704fdc012cdd499e8459fbd86d5abfa) Thanks [@Shtian](https://github.com/Shtian)! - Make table rows on game overview page clickable
+
+### Patch Changes
+
+- [#30](https://github.com/Shtian/AuthentiClash/pull/30) [`8f24601`](https://github.com/Shtian/AuthentiClash/commit/8f246018a1f7ed0854fd309017c419aa719f808d) Thanks [@Shtian](https://github.com/Shtian)! - Add subtext to 2fa cooldown input
+
 ## 0.2.5
 
 ### Patch Changes
