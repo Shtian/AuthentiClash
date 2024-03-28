@@ -52,10 +52,7 @@
 			<table class="min-w-full divide-y divide-gray-700">
 				<thead>
 					<tr>
-						<th
-							scope="col"
-							class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0"
-						>
+						<th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white">
 							Rank
 						</th>
 						<th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-white">
@@ -73,7 +70,7 @@
 							class:bg-clash-800={player.profile_id === currentPlayerId}
 							animate:flip={{ duration: 300 }}
 						>
-							<td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-2">
+							<td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white">
 								#{i + 1}
 							</td>
 							<td
