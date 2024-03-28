@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import Badge from '$lib/components/Badge.svelte';
 
 	export let gamesWithParticipation: {
@@ -19,10 +20,7 @@
 			<table class="min-w-full divide-y divide-gray-700">
 				<thead>
 					<tr>
-						<th
-							scope="col"
-							class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0"
-						>
+						<th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white">
 							Game
 						</th>
 						<th scope="col" class="py-3.5 pr-3 text-left text-sm font-semibold text-white">
@@ -31,13 +29,19 @@
 						<th scope="col" class="py-3.5 pr-3 text-left text-sm font-semibold text-white">
 							Status
 						</th>
-						<th scope="col" class="py-3.5 pr-3 text-left text-sm font-semibold text-white"> </th>
 					</tr>
 				</thead>
 				<tbody class="divide-y divide-gray-800">
 					{#each gamesWithParticipation as game (game.id)}
-						<tr>
-							<td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">
+						<tr
+							on:click={() => {
+								goto(`/games/${game.code}`);
+							}}
+							class="group cursor-pointer transition-colors hover:bg-gray-800"
+						>
+							<td
+								class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white group-hover:underline"
+							>
 								{game.name}
 							</td>
 							<td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0"
@@ -50,13 +54,6 @@
 									color={game.endAtDate < new Date() ? 'red' : 'green'}
 								/>
 							</td>
-							<td class="whitespace-nowrap px-3 py-4 text-end text-sm text-gray-300"
-								><a
-									href={`/games/${game.code}`}
-									class="inline-flex items-center rounded-md bg-clash-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-clash-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-600"
-									>View</a
-								></td
-							>
 						</tr>
 					{/each}
 				</tbody>
