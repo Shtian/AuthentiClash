@@ -57,10 +57,6 @@
 				return `#${rank}`;
 		}
 	}
-
-	function getDefaultPortrait(nickname: string): string | null | undefined {
-		return `https://api.dicebear.com/8.x/pixel-art/svg?seed=${encodeURIComponent(nickname)}`;
-	}
 </script>
 
 <div class="mt-8 flow-root">
