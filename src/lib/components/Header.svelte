@@ -10,7 +10,8 @@
 
 	const links = [
 		{ name: 'Games', href: '/games' },
-		{ name: 'Gallery', href: '/gallery' }
+		{ name: 'Gallery', href: '/gallery' },
+		{ name: 'Stats', href: '/stats' }
 	];
 
 	let isMainMenuOpen = false;
