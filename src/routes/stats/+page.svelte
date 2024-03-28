@@ -5,50 +5,52 @@
 	import ScoreGraph from '$lib/components/ScoreGraph.svelte';
 
 	export let data;
-	const games =
-		data.games
-			?.filter((game) => game.participation.length > 0)
-			.sort((a, b) => {
-				return new Date(b.end_at).getTime() - new Date(a.end_at).getTime();
-			})
-			.map((game) => {
-				const [participation] = game.participation;
-				return {
-					code: game.code,
-					participation
-				};
-			}) || [];
-	const averageGameScore =
-		games.reduce((acc, game) => acc + game.participation.total_score, 0) / games.length;
-	const allScores = games.flatMap((game) => game.participation.score);
-	const average2FAValue = allScores.reduce((acc, score) => acc + score, 0) / allScores.length;
+	const {
+		numberOfGames,
+		allScores,
+		totalScoreAcrossGames,
+		average2FAScore,
+		averageTotalScore,
+		median2FAscore,
+		wins
+	} = data.stats;
 </script>
 
 <div class="mx-auto max-w-[1200px] px-6 lg:px-8 lg:py-10">
-	{#if games.length}
+	{#if numberOfGames}
 		<div class="grid grid-cols-12 gap-4">
 			<StatsCard title="Number of Games">
 				<p class="text-center text-4xl font-bold">
-					<StatsNumber value={games.length} />
+					<StatsNumber value={numberOfGames} />
 				</p>
 			</StatsCard>
 			<StatsCard title="Number of Wins">
 				<p class="text-center text-4xl font-bold">
-					<StatsNumber value={0} />
+					<StatsNumber value={wins} />
 				</p>
 			</StatsCard>
-			<StatsCard title="Average Game Score">
+			<StatsCard title="Average Total Score">
 				<p class="text-center text-4xl font-bold">
-					<StatsNumber value={averageGameScore} decimals={2} />
+					<StatsNumber value={averageTotalScore} decimals={2} />
 				</p>
 			</StatsCard>
-			<StatsCard title="Average 2FA Value">
+			<StatsCard title="Total accumulated score">
 				<p class="text-center text-4xl font-bold">
-					<StatsNumber value={average2FAValue} decimals={2} />
+					<StatsNumber value={totalScoreAcrossGames} />
 				</p>
 			</StatsCard>
 			<StatsCard title="2FA value history" cols="full">
 				<ScoreGraph scores={allScores} height={300} />
+			</StatsCard>
+			<StatsCard title="Median 2FA Value">
+				<p class="text-center text-4xl font-bold">
+					<StatsNumber value={median2FAscore} />
+				</p>
+			</StatsCard>
+			<StatsCard title="Average 2FA Value">
+				<p class="text-center text-4xl font-bold">
+					<StatsNumber value={average2FAScore} decimals={2} />
+				</p>
 			</StatsCard>
 		</div>
 	{:else}
