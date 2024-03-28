@@ -22,7 +22,7 @@ export const load: PageServerLoad = async ({ locals: { getSession, supabase } })
 
 	const participatedGames = games
 		.filter((game) => game.participation.some((p) => p.profile_id === userId))
-		.sort((a, b) => new Date(b.end_at).getTime() - new Date(a.end_at).getTime());
+		.toSorted((a, b) => new Date(b.end_at).getTime() - new Date(a.end_at).getTime());
 
 	const allParticipations = participatedGames.flatMap((game) =>
 		game.participation.filter((p) => p.profile_id === userId)
@@ -37,11 +37,11 @@ export const load: PageServerLoad = async ({ locals: { getSession, supabase } })
 	const averageTotalScore =
 		allParticipations.reduce((acc, p) => acc + p.total_score, 0) / allParticipations.length;
 
-	const median2FAscore = allScores.sort((a, b) => a - b)[Math.floor(allScores.length / 2)];
+	const median2FAscore = allScores.toSorted((a, b) => a - b)[Math.floor(allScores.length / 2)];
 
 	const wins = participatedGames
 		.map((game) => {
-			const highscoreList = game.participation.sort((a, b) => b.total_score - a.total_score);
+			const highscoreList = game.participation.toSorted((a, b) => b.total_score - a.total_score);
 			return highscoreList[0].profile_id === userId;
 		})
 		.filter(Boolean).length;
