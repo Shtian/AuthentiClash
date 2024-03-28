@@ -21,7 +21,12 @@ export const load: PageServerLoad = async ({ locals: { getSession, supabase } })
 	}
 
 	const participatedGames = games
-		.filter((game) => game.participation.some((p) => p.profile_id === userId))
+		.filter(
+			(game) =>
+				game.participation.length > 1 && // Only games with more than 1 player
+				new Date(game.end_at).getTime() < new Date().getTime() && // Only games that have ended
+				game.participation.some((p) => p.profile_id === userId) // Only games that the user participated in
+		)
 		.toSorted((a, b) => new Date(b.end_at).getTime() - new Date(a.end_at).getTime());
 
 	const allParticipations = participatedGames.flatMap((game) =>
