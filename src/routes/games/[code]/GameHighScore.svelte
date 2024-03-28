@@ -44,6 +44,19 @@
 			await update();
 		};
 	};
+
+	function getRankEmoji(rank: number) {
+		switch (rank) {
+			case 1:
+				return '🥇';
+			case 2:
+				return '🥈';
+			case 3:
+				return '🥉';
+			default:
+				return `#${rank}`;
+		}
+	}
 </script>
 
 <div class="mt-8 flow-root">
@@ -71,30 +84,30 @@
 							animate:flip={{ duration: 300 }}
 						>
 							<td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white">
-								#{i + 1}
+								{getRankEmoji(i + 1)}
 							</td>
 							<td
 								class="flex items-center gap-x-2 whitespace-nowrap px-3 py-4 text-sm text-gray-300"
 								>{#if player.nickname_image_url}
 									<Popover.Root>
-										<Popover.Trigger
-											><img
+										<Popover.Trigger>
+											<img
 												src={`${player.nickname_image_url.replace('.webp', '-128.webp')}`}
 												alt={player.nickname}
 												class="size-6 rounded-full"
-											/></Popover.Trigger
-										>
-										<Popover.Content
-											><a href={player.nickname_image_url} class="mt-6 underline hover:no-underline"
-												><img
+											/>
+										</Popover.Trigger>
+										<Popover.Content>
+											<a href={player.nickname_image_url} class="mt-6 underline hover:no-underline">
+												<img
 													src={`${player.nickname_image_url.replace('.webp', '-512.webp')}`}
 													width={256}
 													height={256}
 													alt={player.nickname}
 													class="size-64"
-												/></a
-											></Popover.Content
-										>
+												/>
+											</a>
+										</Popover.Content>
 									</Popover.Root>
 								{:else if isLoading && player.profile_id === currentPlayerId}
 									<Loader2 class="size-6 animate-spin text-gray-300"></Loader2>
@@ -116,6 +129,29 @@
 											<Sparkles class="size-6" />
 										</button>
 									</form>
+								{:else}
+									<Popover.Root>
+										<Popover.Trigger>
+											<img
+												src={`https://api.dicebear.com/8.x/adventurer/svg?size=256&seed=${encodeURIComponent(
+													player.nickname
+												)}`}
+												alt={player.nickname}
+												class="size-6 rounded-full"
+											/>
+										</Popover.Trigger>
+										<Popover.Content
+											><img
+												src={`https://api.dicebear.com/8.x/adventurer/svg?size=256&seed=${encodeURIComponent(
+													player.nickname
+												)}`}
+												width={256}
+												height={256}
+												alt={player.nickname}
+												class="size-48 w-full"
+											/>
+										</Popover.Content>
+									</Popover.Root>
 								{/if}{player.nickname}</td
 							>
 							<td
