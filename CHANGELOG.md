@@ -1,5 +1,11 @@
 # authenticlash
 
+## 0.3.1
+
+### Patch Changes
+
+- [#36](https://github.com/Shtian/AuthentiClash/pull/36) [`8708eea`](https://github.com/Shtian/AuthentiClash/commit/8708eea5485195f761da69bd11c5969ebcf82468) Thanks [@Shtian](https://github.com/Shtian)! - Avoid mutating the arrays when sorting and fix some minor UI tweaks
+
 ## 0.3.0
 
 ### Minor Changes
