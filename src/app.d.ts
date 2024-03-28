@@ -13,6 +13,18 @@ declare global {
 			description?: string;
 		}
 	}
+
+	// View transition types
+	interface ViewTransition {
+		updateCallbackDone: Promise<void>;
+		ready: Promise<void>;
+		finished: Promise<void>;
+		skipTransition: () => void;
+	}
+
+	interface Document {
+		startViewTransition(updateCallback: () => Promise<void>): ViewTransition;
+	}
 }
 
 export {};
