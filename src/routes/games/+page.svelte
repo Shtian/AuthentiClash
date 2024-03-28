@@ -38,24 +38,20 @@
 
 <main>
 	<div class="mx-auto max-w-7xl sm:px-6 lg:px-8 lg:py-10">
+		<div class="mx-auto mb-8 max-w-2xl lg:mx-0">
+			<div class="flex place-content-between items-center">
+				<h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">Games</h2>
+				<a
+					href="/games/create"
+					class="block rounded-md bg-clash-500 px-3 py-2 text-center text-sm font-semibold text-white hover:bg-clash-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500"
+					>New game</a
+				>
+			</div>
+			<p class="mt-6 text-lg leading-8 text-white">
+				All games you are or have been participating in.
+			</p>
+		</div>
 		{#if games.length > 0}
-			<header>
-				<div class="sm:flex sm:items-center">
-					<div class="sm:flex-auto">
-						<h1 class="text-base font-semibold leading-6 text-white">Games</h1>
-						<p class="mt-2 text-sm text-gray-300">
-							All games you are or have been participating in
-						</p>
-					</div>
-					<div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-						<a
-							href="/games/create"
-							class="block rounded-md bg-clash-500 px-3 py-2 text-center text-sm font-semibold text-white hover:bg-clash-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500"
-							>New game</a
-						>
-					</div>
-				</div>
-			</header>
 			<GameList {gamesWithParticipation} />
 		{:else}
 			<div class="text-center">

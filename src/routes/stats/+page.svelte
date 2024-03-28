@@ -17,6 +17,12 @@
 </script>
 
 <div class="mx-auto max-w-[1200px] px-6 lg:px-8 lg:py-10">
+	<div class="mx-auto mb-8 max-w-2xl lg:mx-0">
+		<h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">Stats</h2>
+		<p class="mt-6 text-lg leading-8 text-white">
+			Only counts games that are finished and have more than one player participating.
+		</p>
+	</div>
 	{#if numberOfGames}
 		<div class="grid grid-cols-12 gap-4">
 			<StatsCard title="Number of Games">
