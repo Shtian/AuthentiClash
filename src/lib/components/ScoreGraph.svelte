@@ -44,7 +44,7 @@
 			{/if}
 			<!-- Y-Axis Tick Labels -->
 			<text
-				class="text-gray-600 text-sm"
+				class="text-sm text-gray-600"
 				fill="currentColor"
 				text-anchor="end"
 				dominant-baseline="middle"
@@ -73,7 +73,7 @@
 				fill="#136195"
 			/>
 			<text
-				class="text-gray-400 text-sm cursor-default transition-opacity opacity-0 group-hover:opacity-100"
+				class="cursor-default text-sm text-gray-400 opacity-0 transition-opacity group-hover:opacity-100"
 				fill="currentColor"
 				text-anchor="middle"
 				x={xScale(i + 1)}

@@ -88,13 +88,13 @@
 									{#if $page.url.pathname.includes(link.href)}
 										<a
 											href={link.href}
-											class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
+											class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
 											aria-current="page">{link.name}</a
 										>
 									{:else}
 										<a
 											href={link.href}
-											class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+											class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
 											>{link.name}</a
 										>
 									{/if}
@@ -141,7 +141,7 @@
 										{#await sha256(session?.user?.email) then hash}
 											<img
 												in:fade={{ duration: 300, easing: quintOut }}
-												class="absolute top-0 left-0 h-8 w-8 rounded-full"
+												class="absolute left-0 top-0 h-8 w-8 rounded-full"
 												width="32"
 												height="32"
 												src={`https://gravatar.com/avatar/${hash}`}
@@ -212,13 +212,13 @@
 								{#if $page.url.pathname.includes(link.href)}
 									<a
 										href={link.href}
-										class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium"
+										class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white"
 										aria-current="page">{link.name}</a
 									>
 								{:else}
 									<a
 										href={link.href}
-										class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
+										class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
 										>{link.name}</a
 									>
 								{/if}

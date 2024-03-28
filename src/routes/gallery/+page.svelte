@@ -56,7 +56,7 @@
 									Score: {game.participation.total_score}
 								</p>
 							</Popover.Trigger>
-							<Popover.Content class="text-sm text-pretty w-max">
+							<Popover.Content class="w-max text-pretty text-sm">
 								<p>{game.participation.score.join(' → ')}</p>
 							</Popover.Content>
 						</Popover.Root>
@@ -64,7 +64,7 @@
 				{/each}
 			</ul>
 		{:else}
-			<div class="mx-auto max-w-7xl sm:px-6 py-6 lg:px-8 lg:py-10 text-center">
+			<div class="mx-auto max-w-7xl py-6 text-center sm:px-6 lg:px-8 lg:py-10">
 				<RocketIcon class="mx-auto h-12 w-12 text-gray-400" />
 				<h3 class="mt-2 text-sm font-semibold text-white">No past games found</h3>
 				<p class="mt-1 text-sm text-white">Get started by creating a new AuthentiClash session.</p>

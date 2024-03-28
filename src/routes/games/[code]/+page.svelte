@@ -97,12 +97,12 @@
 {/if}
 
 <header>
-	<div class="flex flex-col gap-y-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
+	<div class="mx-auto flex max-w-7xl flex-col gap-y-2 sm:px-6 lg:px-8">
 		<div class="flex flex-row gap-2">
-			<h1 class="text-3xl font-bold leading-tight tracking-tigh text-white">{data.gameName}</h1>
+			<h1 class="tracking-tigh text-3xl font-bold leading-tight text-white">{data.gameName}</h1>
 			<button
 				type="submit"
-				class="relative inline-flex gap-x-2 items-center self-center rounded-md bg-transparent px-2 py-2 text-sm font-semibold text-white hover:text-clash-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500 transition-colors"
+				class="relative inline-flex items-center gap-x-2 self-center rounded-md bg-transparent px-2 py-2 text-sm font-semibold text-white transition-colors hover:text-clash-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500"
 				on:click={copyUrl}
 			>
 				<Copy />
@@ -113,19 +113,19 @@
 				{/if}
 			</button>
 		</div>
-		<p class="text-sm text-gray-300 text-pretty" title={data.endsAt}>
+		<p class="text-pretty text-sm text-gray-300" title={data.endsAt}>
 			Time remaining: {timeLeftText}
 		</p>
 		{#if data.aiEnabled}
 			<Popover.Root>
 				<Popover.Trigger class="w-max">
 					<div class="rounded-md px-1.5 py-0.5 text-xs font-medium ring-1">
-						<Sparkles class="size-4 inline" /> AI enabled
+						<Sparkles class="inline size-4" /> AI enabled
 					</div>
 				</Popover.Trigger>
-				<Popover.Content class="text-sm text-pretty">
+				<Popover.Content class="text-pretty text-sm">
 					AI features have been enabled for this game:
-					<ul class="list-disc ml-4">
+					<ul class="ml-4 list-disc">
 						<li>Click the sparkles on your row to generate an epic avatar!</li>
 					</ul>
 				</Popover.Content>
@@ -134,7 +134,7 @@
 	</div>
 </header>
 <main>
-	<div class="mx-auto max-w-7xl sm:px-6 lg:px-8 py-5 mt-5">
+	<div class="mx-auto mt-5 max-w-7xl py-5 sm:px-6 lg:px-8">
 		{#if timeLeft > 0}
 			<form method="POST" action="?/updateScore" use:enhance={handleNewScore}>
 				<p>
@@ -149,7 +149,7 @@
 					value={!!data.currentPlayer}
 				/>
 				<input type="hidden" name="game-id" id="game-id" value={data.gameId} />
-				<div class="mt-4 grid gap-x-6 gap-y-8 grid-cols-3">
+				<div class="mt-4 grid grid-cols-3 gap-x-6 gap-y-8">
 					{#if !data.currentPlayer}
 						<div class="col-span-3">
 							<label for="nickname" class="block text-sm font-medium leading-6 text-white"
@@ -176,7 +176,7 @@
 									>
 										<span class="sr-only">Generate new nickname suggestion</span>
 										<RefreshCw
-											class="w-6 h-6 origin-center [animation-duration:0.2s] [animation-iteration-count:1] {recentRefresh
+											class="h-6 w-6 origin-center [animation-duration:0.2s] [animation-iteration-count:1] {recentRefresh
 												? 'animate-spin'
 												: null}"
 										/>
@@ -217,7 +217,7 @@
 							</Button>
 						{:else}
 							<Button type="submit" disabled>
-								<Clock class="flex-shrink-0 mr-2 h-4 w-4" />
+								<Clock class="mr-2 h-4 w-4 flex-shrink-0" />
 								<Cooldown bind:delta={cooldownRemaining}></Cooldown>
 							</Button>
 						{/if}
