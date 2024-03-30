@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { TrophyIcon } from 'lucide-svelte';
+	import type { PageServerData } from '../badges/$types';
 
-	export let data;
-	const { badges } = data;
+	export let data: PageServerData;
+	const badges = data.badges || [];
 </script>
 
 <div class="mx-auto max-w-[1200px] px-6 lg:px-8 lg:py-10">
@@ -33,7 +33,7 @@
 						<img
 							class={badge.unlocked ? '' : 'opacity-50 grayscale'}
 							src={`https://api.dicebear.com/8.x/shapes/svg?seed=${encodeURIComponent(badge.name)}`}
-							alt={`A image for the badge "${badge.name}"`}
+							alt={`An image for the badge "${badge.name}"`}
 						/>
 					{/if}
 				</div>
@@ -46,9 +46,14 @@
 							? 'Veiled in secrecy, this trophy beckons to be unveiled by the worthy.'
 							: badge.description}
 					</p>
+					{#if badge.unlocked}
+						<p class="absolute right-4 top-4 text-xs text-gray-300">
+							<em>{badge.awarded_on?.toISOString().substring(0, 10)}</em>
+						</p>
+					{/if}
 				</div>
 				{#if badge.isNew}
-					<span class="absolute -right-1 -top-1 rounded bg-clash-400 px-2 py-1 text-xs text-white"
+					<span class="absolute -left-2 -top-2 rounded bg-clash-400 px-2 py-1 text-xs text-white"
 						>NEW</span
 					>
 				{/if}
