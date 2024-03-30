@@ -19,7 +19,9 @@
 				<div class=" inline-flex size-16 flex-shrink-0 items-center overflow-hidden rounded-full">
 					{#if badge.image && !badge.secret}
 						<img
-							class={badge.unlocked ? '' : 'opacity-50 grayscale'}
+							class={badge.unlocked
+								? 'transition-transform group-hover:scale-125'
+								: 'opacity-50 grayscale'}
 							src={badge.image}
 							alt={`A image for the badge "${badge.name}"`}
 						/>
@@ -39,7 +41,13 @@
 				</div>
 				<div>
 					<h2 class="text-balance sm:text-lg md:text-xl">
-						{badge.secret && !badge.unlocked ? 'Secret badge' : badge.name}
+						{#if badge.unlocked}
+							{badge.secret ? badge.name + ' (secret)' : badge.name}
+						{:else if badge.secret}
+							Secret badge
+						{:else}
+							{badge.name}
+						{/if}
 					</h2>
 					<p class="text-xs text-gray-300">
 						{badge.secret && !badge.unlocked

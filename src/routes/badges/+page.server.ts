@@ -62,7 +62,7 @@ export const load: PageServerLoad = async ({ locals: { getSession, supabase } })
 		};
 	});
 
-	// sort badges by secret, then alphabetically by name
+	// sort badges by secret (not secret -> secret), then alphabetically by name
 	badges.sort((a: UserBadge, b: UserBadge) => {
 		if (a.secret && !b.secret) return 1;
 		if (!a.secret && b.secret) return -1;
