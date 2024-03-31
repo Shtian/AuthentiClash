@@ -9,6 +9,7 @@ import {
 import { generateImage } from '$lib/ai/image-generator';
 import { createSuccessMessage } from '$lib/utils/event-message-generator';
 import { PARTICIPANT_AVATARS_BUCKET, uploadParticipantImage } from '$lib/supabase/storage';
+import { checkForValueEntryBadge } from '$lib/badges/valueEntryBadges';
 
 export const load: PageServerLoad = async ({ params, locals: { getSession, supabase } }) => {
 	const session = await getSession();
@@ -89,8 +90,11 @@ export const actions = {
 				});
 			}
 
+			const badgeRes = await checkForValueEntryBadge(score, session.user.id);
+
 			return {
-				message: createSuccessMessage(score)
+				message: createSuccessMessage(score),
+				unlockBadgeStatus: badgeRes
 			};
 		} else {
 			const res = await getParticipation(session.user.id, game_id!.toString());
@@ -115,8 +119,11 @@ export const actions = {
 				});
 			}
 
+			const badgeRes = await checkForValueEntryBadge(score, session.user.id);
+
 			return {
-				message: createSuccessMessage(score)
+				message: createSuccessMessage(score),
+				unlockBadgeStatus: badgeRes
 			};
 		}
 	},
