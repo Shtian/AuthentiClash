@@ -1,5 +1,6 @@
 import { fail, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
+import { supabaseServerClient } from '$lib/supabase/supabaseClient';
 
 type Badge = {
 	awarded_on?: Date;
@@ -15,7 +16,7 @@ export type UserBadge = Badge & {
 	isNew: boolean;
 };
 
-export const load: PageServerLoad = async ({ locals: { getSession, supabase } }) => {
+export const load: PageServerLoad = async ({ locals: { getSession } }) => {
 	const session = await getSession();
 	if (!session) {
 		redirect(303, '/auth/login');
@@ -24,7 +25,7 @@ export const load: PageServerLoad = async ({ locals: { getSession, supabase } })
 	const userId = session.user.id;
 	if (!userId) return fail(401, { message: 'User not found' });
 
-	const { data: allBadges, error: badgesError } = await supabase
+	const { data: allBadges, error: badgesError } = await supabaseServerClient
 		.from('badges')
 		.select('name, description, image, secret, enabled, slug, id')
 		.is('enabled', true);
@@ -40,7 +41,7 @@ export const load: PageServerLoad = async ({ locals: { getSession, supabase } })
 		};
 	}
 
-	const { data: unlockedBadges, error: unlockedBadgesError } = await supabase
+	const { data: unlockedBadges, error: unlockedBadgesError } = await supabaseServerClient
 		.from('player_badges')
 		.select('player_id, badge_id, awarded_on')
 		.eq('player_id', session.user.id);
@@ -50,6 +51,7 @@ export const load: PageServerLoad = async ({ locals: { getSession, supabase } })
 	}
 
 	const badges: Array<UserBadge> = allBadges.map((badge) => {
+		console.log('console.log', unlockedBadges);
 		const unlockedBadge = unlockedBadges.find((ub) => ub.badge_id === badge.id);
 		const awardedOn = unlockedBadge?.awarded_on ? new Date(unlockedBadge.awarded_on) : undefined;
 		const fiveDays = 1000 * 60 * 60 * 24 * 5;
