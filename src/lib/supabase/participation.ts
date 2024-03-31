@@ -33,7 +33,7 @@ export const getParticipation = async (
 	const participation = mapToParticipation(data);
 
 	const successResponse: SupabaseResponse<Participation> = {
-		type: 'sucess',
+		type: 'success',
 		data: participation,
 		error: null
 	};
@@ -62,7 +62,7 @@ export const updateParticipationScore = async (
 	const participation = mapToParticipation(data);
 
 	const successResponse: SupabaseResponse<Participation> = {
-		type: 'sucess',
+		type: 'success',
 		data: participation,
 		error: null
 	};
@@ -90,7 +90,7 @@ export const updateParticipationNicknameImage = async (
 	const participation = mapToParticipation(data);
 
 	const successResponse: SupabaseResponse<Participation> = {
-		type: 'sucess',
+		type: 'success',
 		data: participation,
 		error: null
 	};
@@ -127,7 +127,7 @@ export const addParticipation = async (
 	const participation = mapToParticipation(data);
 
 	const successResponse: SupabaseResponse<Participation> = {
-		type: 'sucess',
+		type: 'success',
 		data: participation,
 		error: null
 	};

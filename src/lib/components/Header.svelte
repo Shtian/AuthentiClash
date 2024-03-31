@@ -11,7 +11,8 @@
 	const links = [
 		{ name: 'Games', href: '/games' },
 		{ name: 'Gallery', href: '/gallery' },
-		{ name: 'Stats', href: '/stats' }
+		{ name: 'Stats', href: '/stats' },
+		{ name: 'Badges', href: '/badges' }
 	];
 
 	let isMainMenuOpen = false;
