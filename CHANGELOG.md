@@ -1,5 +1,11 @@
 # authenticlash
 
+## 0.4.0
+
+### Minor Changes
+
+- [#38](https://github.com/Shtian/AuthentiClash/pull/38) [`42de60d`](https://github.com/Shtian/AuthentiClash/commit/42de60da65c37e2970aabcb94b2fff8a1c738de8) Thanks [@Shtian](https://github.com/Shtian)! - Add initial badge support for value entries!
+
 ## 0.3.1
 
 ### Patch Changes
