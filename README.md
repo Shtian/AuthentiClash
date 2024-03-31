@@ -21,6 +21,7 @@ To get started, you need to run supabase locally. Install the Supabase CLI and r
 ```bash
 PUBLIC_SUPABASE_URL={API URL from "supabase status"}
 PUBLIC_SUPABASE_ANON_KEY={anon key from "supabase status"}
+SUPABASE_SERVICE_KEY={service key from "supabase status"}
 PUBLIC_ENV=local
 ```
 

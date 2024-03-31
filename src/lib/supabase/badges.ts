@@ -1,5 +1,5 @@
 import type { BadgeSlug } from '$lib/badges/badgeSlugs';
-import { supabase, type SupabaseResponse } from '$lib/supabase/supabaseClient';
+import { supabaseServerClient, type SupabaseResponse } from '$lib/supabase/supabaseClient';
 
 type BadgeDTO = {
 	id: number;
@@ -25,8 +25,8 @@ type PlayerBadgesInsertDTO = {
 export type UnlockPlayerBadgeResponse = 'unlocked' | 'exists' | 'not unlocked';
 
 export const getAllEnabledBadges = async (): Promise<SupabaseResponse<BadgeDTO[]>> => {
-	const { data, error } = await supabase
-		.from('badge')
+	const { data, error } = await supabaseServerClient
+		.from('badges')
 		.select('id, name, description, image, slug, enabled, secret')
 		.eq('enabled', true);
 
@@ -48,8 +48,8 @@ export const getAllEnabledBadges = async (): Promise<SupabaseResponse<BadgeDTO[]
 };
 
 export const getBadgeBySlug = async (slug: string): Promise<SupabaseResponse<BadgeDTO>> => {
-	const { data, error } = await supabase
-		.from('badge')
+	const { data, error } = await supabaseServerClient
+		.from('badges')
 		.select('id, name, description, image, slug, enabled, secret')
 		.eq('slug', slug)
 		.single();
@@ -74,7 +74,7 @@ export const getBadgeBySlug = async (slug: string): Promise<SupabaseResponse<Bad
 export const getBadgesByUserId = async (
 	userId: string
 ): Promise<SupabaseResponse<PlayerBadgesDTO[]>> => {
-	const { data, error } = await supabase
+	const { data, error } = await supabaseServerClient
 		.from('player_badges')
 		.select('player_id, badge_id, awarded_on')
 		.eq('player_id', userId);
@@ -127,7 +127,7 @@ export const tryUnlockBadge = async (
 		badge_id: badge.id
 	};
 
-	const { error } = await supabase.from('player_badges').insert(playerBadgeData);
+	const { error } = await supabaseServerClient.from('player_badges').insert(playerBadgeData);
 
 	if (error) {
 		console.error('Error awarding badge:', error.message);
@@ -138,6 +138,7 @@ export const tryUnlockBadge = async (
 		};
 	}
 
+	console.debug(`Badge ${badgeSlug} awarded to user ${userId}`);
 	return {
 		type: 'success',
 		data: 'unlocked',
