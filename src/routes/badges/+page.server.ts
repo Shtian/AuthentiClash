@@ -10,7 +10,7 @@ type Badge = {
 	secret: boolean;
 };
 
-type UserBadge = Badge & {
+export type UserBadge = Badge & {
 	unlocked: boolean;
 	isNew: boolean;
 };
