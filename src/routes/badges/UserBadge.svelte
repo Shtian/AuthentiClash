@@ -1,12 +1,15 @@
 <script lang="ts">
 	import type { UserBadge } from './+page.server';
-
 	export let badge: UserBadge;
+
+	// Only show custom image if its NOT a secret badge or if the secret badge is unlocked
+	const showBadgeCustomImage =
+		(badge.image && !badge.secret) || (badge.image && badge.unlocked && badge.secret);
 </script>
 
 <li class="group relative flex gap-x-4 rounded-lg border-[1px] p-4">
 	<div class=" inline-flex size-16 flex-shrink-0 items-center overflow-hidden rounded-full">
-		{#if badge.image && !badge.secret}
+		{#if showBadgeCustomImage}
 			<img
 				class={badge.unlocked
 					? 'transition-transform group-hover:scale-125'
