@@ -1,5 +1,11 @@
 # authenticlash
 
+## 0.4.1
+
+### Patch Changes
+
+- [`a3c5187`](https://github.com/Shtian/AuthentiClash/commit/a3c5187f5dfab3630a17a5393b9dbb02103f3158) Thanks [@Shtian](https://github.com/Shtian)! - ci: add supabase service key env var
+
 ## 0.4.0
 
 ### Minor Changes
