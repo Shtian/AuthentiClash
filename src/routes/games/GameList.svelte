@@ -6,7 +6,6 @@
 		id: string;
 		name: string;
 		userRank: number;
-		userMaxScore: number;
 		endAtString: string;
 		endAtDate: Date;
 		code: string;

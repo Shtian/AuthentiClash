@@ -19,13 +19,10 @@
 			const userRankIndex = sortedParticipations.findIndex((p) => p.profile_id === data.profileId);
 			const userRank = userRankIndex === -1 ? 0 : userRankIndex + 1;
 			const participation = game.participation.find((p) => p.profile_id === data.profileId);
-			const userScore = participation?.score || [0];
-			const userMaxScore = Math.max(...userScore);
 			return {
 				id: game.id,
 				name: game.name,
 				code: game.code,
-				userMaxScore,
 				totalScore: participation?.total_score || 0,
 				userRank,
 				endAtString: df.format(new Date(game.end_at)),
