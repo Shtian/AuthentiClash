@@ -9,16 +9,17 @@ export async function GET() {
 		return error(500, { message: endedActiveGamesRes.error.message });
 	}
 	const endedActiveGames = endedActiveGamesRes.data;
-	// for each ended game, get all players
+
+	// Get all players that have participated
 	const players = endedActiveGames.flatMap((game) => game.participation);
 	const uniquePlayers = [...new Set(players)];
 
-	// for each player, run badge check
+	// Run a badge check for each player
 	for (const player of uniquePlayers) {
 		await checkForRankingBadge(player);
 	}
 
-	// set game active state to false'
+	// Set game active state to false
 	for (const game of endedActiveGames) {
 		await deactivateGame(game.id);
 	}
