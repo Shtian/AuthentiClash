@@ -107,13 +107,13 @@ INSERT INTO
 
 -- Add badges
 INSERT INTO badges (id, created_at, name, description, enabled, secret, slug, image) VALUES
-(1, NOW(), 'First Blood', 'Granted after securing your initial victory, marking the beginning of your ascent in AuthentiClash.', TRUE, FALSE, 'first-blood', NULL),
-(2, NOW(), 'High Five', 'Awarded for reaching the landmark of 5 wins, showcasing your burgeoning prowess.', TRUE, FALSE, 'high-five', NULL),
-(3, NOW(), 'The Fellowship of the Win', 'Bestowed for achieving 10 wins, proving your worth in the face of challenge.', TRUE, FALSE, 'fellowship-of-the-win', NULL),
-(4, NOW(), '20/20 Victory Vision', 'Conferred upon reaching 20 wins, a testament to your clarity of vision and unmatched skill.', TRUE, FALSE, '20-20-victory-vision', NULL),
-(5, NOW(), 'AuthentiChampion', 'The ultimate accolade for surpassing 50 wins, crowning you as a champion of AuthentiClash.', TRUE, FALSE, 'authentichampion', NULL),
-(6, NOW(), 'Rite of Passage', 'Granted after your first encounter with defeat, marking a crucial rite of passage in AuthentiClash.', TRUE, FALSE, 'rite-of-passage', NULL),
-(7, NOW(), 'Echoes From the Abyss', 'Awarded to those who''ve experienced the shadow of last place in a total of 5 games, honoring your journey and perseverance.', TRUE, FALSE, 'echoes-from-the-abyss', NULL),
+(1, NOW(), 'First Blood', 'Granted after securing your initial victory, marking the beginning of your ascent in AuthentiClash.', TRUE, FALSE, 'first-blood', 'https://mzuhtoiuhpkczppcdwza.supabase.co/storage/v1/object/public/badges/first-blood.webp'),
+(2, NOW(), 'High Five', 'Awarded for reaching the landmark of 5 wins, showcasing your burgeoning prowess.', TRUE, FALSE, 'high-five', 'https://mzuhtoiuhpkczppcdwza.supabase.co/storage/v1/object/public/badges/high-five.webp'),
+(3, NOW(), 'The Fellowship of the Win', 'Bestowed for achieving 10 wins, proving your worth in the face of challenge.', TRUE, FALSE, 'fellowship-of-the-win', 'https://mzuhtoiuhpkczppcdwza.supabase.co/storage/v1/object/public/badges/fellowship-of-the-win.webp'),
+(4, NOW(), '20/20 Victory Vision', 'Conferred upon reaching 20 wins, a testament to your clarity of vision and unmatched skill.', TRUE, FALSE, '20-20-victory-vision', 'https://mzuhtoiuhpkczppcdwza.supabase.co/storage/v1/object/public/badges/20-20-victory-vision.webp'),
+(5, NOW(), 'AuthentiChampion', 'The ultimate accolade for surpassing 50 wins, crowning you as a champion of AuthentiClash.', TRUE, FALSE, 'authentichampion', 'https://mzuhtoiuhpkczppcdwza.supabase.co/storage/v1/object/public/badges/authentichampion.webp'),
+(6, NOW(), 'Rite of Passage', 'Granted after your first encounter with defeat, marking a crucial rite of passage in AuthentiClash.', TRUE, FALSE, 'rite-of-passage', "https://mzuhtoiuhpkczppcdwza.supabase.co/storage/v1/object/public/badges/rite-of-passage.webp"),
+(7, NOW(), 'Echoes From the Abyss', 'Awarded to those who''ve experienced the shadow of last place in a total of 5 games, honoring your journey and perseverance.', TRUE, FALSE, 'echoes-from-the-abyss', "https://mzuhtoiuhpkczppcdwza.supabase.co/storage/v1/object/public/badges/echoes-from-the-abyss.webp"),
 (8, NOW(), 'What Are the Odds', 'Bestowed for the serendipitous entry of a 2FA code that matches the current hour, minute or seconds, celebrating a rare moment of cosmic alignment.', TRUE, TRUE, 'what-are-the-odds', 'https://mzuhtoiuhpkczppcdwza.supabase.co/storage/v1/object/public/badges/what-are-the-odds.webp'),
 (9, NOW(), 'Luck''s Fickle Finger', 'For when fate hands you the number 1, a badge recognizing the whims of chance and your resilience.', TRUE, FALSE, 'lucks-fickle-finger', 'https://mzuhtoiuhpkczppcdwza.supabase.co/storage/v1/object/public/badges/lucks-fickle-finger.webp'),
 (10, NOW(), 'Cloud 99', 'Reserved for those touched by serendipity, this marks a moment of extraordinary luck, as elusive and uplifting as the rarest stratus in the highest heavens.', TRUE, FALSE, 'cloud-99', 'https://mzuhtoiuhpkczppcdwza.supabase.co/storage/v1/object/public/badges/cloud-99.webp'),
