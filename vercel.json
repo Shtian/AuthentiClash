@@ -3,5 +3,11 @@
 		"deploymentEnabled": {
 			"main": false
 		}
-	}
+	},
+	"crons": [
+		{
+			"path": "/api/badge-check",
+			"schedule": "0 0 * * *"
+		}
+	]
 }
