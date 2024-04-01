@@ -99,7 +99,6 @@ export const tryUnlockBadge = async (
 	userId: string
 ): Promise<SupabaseResponse<UnlockPlayerBadgeResponse>> => {
 	const badgeRes = await getBadgeBySlug(badgeSlug);
-	const userBadges = await getBadgesByUserId(userId);
 
 	if (badgeRes.type === 'error') {
 		return {
@@ -108,6 +107,8 @@ export const tryUnlockBadge = async (
 			error: badgeRes.error
 		};
 	}
+
+	const userBadges = await getBadgesByUserId(userId);
 
 	if (userBadges.type === 'error') {
 		return {

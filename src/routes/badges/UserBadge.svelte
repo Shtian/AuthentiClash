@@ -65,7 +65,7 @@
 				{badge.name}
 			{/if}
 		</h2>
-		<p class="text-xs text-gray-300">
+		<p class="text-pretty text-xs text-gray-300">
 			{badge.secret && !badge.unlocked
 				? 'Veiled in secrecy, this trophy beckons to be unveiled by the worthy.'
 				: badge.description}
