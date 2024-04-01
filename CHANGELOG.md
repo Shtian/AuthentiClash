@@ -1,5 +1,11 @@
 # authenticlash
 
+## 0.5.1
+
+### Patch Changes
+
+- [`a3e0279`](https://github.com/Shtian/AuthentiClash/commit/a3e0279ad8c3653f6da999a3d2d40a516df83f9e) Thanks [@Shtian](https://github.com/Shtian)! - Add timings and minor tweaks to badge checks
+
 ## 0.5.0
 
 ### Minor Changes
