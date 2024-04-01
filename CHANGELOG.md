@@ -1,5 +1,13 @@
 # authenticlash
 
+## 0.5.0
+
+### Minor Changes
+
+- [#41](https://github.com/Shtian/AuthentiClash/pull/41) [`61d4bf9`](https://github.com/Shtian/AuthentiClash/commit/61d4bf9d69c8ad8aace5da2689f2cf6877b0b2b8) Thanks [@Shtian](https://github.com/Shtian)! - Remove new badge when hovered and store status in local storage
+
+- [#43](https://github.com/Shtian/AuthentiClash/pull/43) [`8ae7fd0`](https://github.com/Shtian/AuthentiClash/commit/8ae7fd0b8dac8e7260b1fb570f4c2156f3b788fe) Thanks [@Shtian](https://github.com/Shtian)! - Add game ranking badges
+
 ## 0.4.1
 
 ### Patch Changes
