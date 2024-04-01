@@ -1,6 +1,6 @@
 import { supabase, type SupabaseResponse } from './supabaseClient';
 
-type Participation = {
+export type Participation = {
 	id: string;
 	profileId: string;
 	gameId: string;
