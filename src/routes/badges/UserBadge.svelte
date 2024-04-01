@@ -1,13 +1,37 @@
 <script lang="ts">
 	import type { UserBadge } from './+page.server';
+	import { seenBadges } from '$lib/stores/SeenBadgesStore';
+	import { onMount } from 'svelte';
+	import { fade } from 'svelte/transition';
 	export let badge: UserBadge;
 
 	// Only show custom image if its NOT a secret badge or if the secret badge is unlocked
 	const showBadgeCustomImage =
 		(badge.image && !badge.secret) || (badge.image && badge.unlocked && badge.secret);
+
+	$: showBadge = false;
+
+	onMount(() => {
+		showBadge = !$seenBadges.includes(badge.slug);
+	});
+
+	function markBadgeAsSeen() {
+		if (!badge.unlocked) return;
+		seenBadges.update((badges) => {
+			if (!badges.includes(badge.slug)) {
+				showBadge = false;
+				return [...badges, badge.slug];
+			}
+			return badges;
+		});
+	}
 </script>
 
-<li class="group relative flex gap-x-4 rounded-lg border-[1px] p-4">
+<li
+	class="group relative flex gap-x-4 rounded-lg border-[1px] p-4"
+	on:mouseover={() => markBadgeAsSeen()}
+	on:focus={() => markBadgeAsSeen()}
+>
 	<div class=" inline-flex size-16 flex-shrink-0 items-center overflow-hidden rounded-full">
 		{#if showBadgeCustomImage}
 			<img
@@ -52,9 +76,11 @@
 			</p>
 		{/if}
 	</div>
-	{#if badge.isNew}
-		<span class="absolute -left-2 -top-2 rounded bg-clash-400 px-2 py-1 text-xs text-white"
-			>NEW</span
+	{#if badge.isNew && showBadge}
+		<span
+			in:fade={{ duration: 150 }}
+			out:fade={{ duration: 150 }}
+			class="absolute -left-2 -top-2 rounded bg-clash-400 px-2 py-1 text-xs text-white">NEW</span
 		>
 	{/if}
 </li>

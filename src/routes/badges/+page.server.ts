@@ -51,7 +51,6 @@ export const load: PageServerLoad = async ({ locals: { getSession } }) => {
 	}
 
 	const badges: Array<UserBadge> = allBadges.map((badge) => {
-		console.log('console.log', unlockedBadges);
 		const unlockedBadge = unlockedBadges.find((ub) => ub.badge_id === badge.id);
 		const awardedOn = unlockedBadge?.awarded_on ? new Date(unlockedBadge.awarded_on) : undefined;
 		const fiveDays = 1000 * 60 * 60 * 24 * 5;
