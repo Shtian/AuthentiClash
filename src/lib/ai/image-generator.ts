@@ -1,7 +1,7 @@
 import { OPENAI_API_KEY } from '$env/static/private';
 import OpenAI from 'openai';
 
-const openaiClient = new OpenAI({ apiKey: OPENAI_API_KEY });
+const openaiClient = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || OPENAI_API_KEY });
 
 export async function generateImage(username: string): Promise<string | undefined> {
 	try {
