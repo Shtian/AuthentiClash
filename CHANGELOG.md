@@ -1,5 +1,11 @@
 # authenticlash
 
+## 0.5.2
+
+### Patch Changes
+
+- [`ab6c102`](https://github.com/Shtian/AuthentiClash/commit/ab6c102d8e629927ce41c6e917e82c59c740cdb1) Thanks [@Shtian](https://github.com/Shtian)! - Set vercel maxDuration to 60
+
 ## 0.5.1
 
 ### Patch Changes
