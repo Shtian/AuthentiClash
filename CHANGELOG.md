@@ -1,5 +1,11 @@
 # authenticlash
 
+## 0.5.3
+
+### Patch Changes
+
+- [`4a41fc8`](https://github.com/Shtian/AuthentiClash/commit/4a41fc85b8f172669f192586a1094194dbc57179) Thanks [@Shtian](https://github.com/Shtian)! - Fix spelling of a few verbs
+
 ## 0.5.2
 
 ### Patch Changes
