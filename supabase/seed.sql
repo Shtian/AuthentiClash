@@ -115,3 +115,4 @@ INSERT INTO badges (id, created_at, name, description, enabled, secret, slug, im
 (9, NOW(), 'Luck''s Fickle Finger', 'For when fate hands you the number 1, a badge recognizing the whims of chance and your resilience.', TRUE, FALSE, 'lucks-fickle-finger', 'https://mzuhtoiuhpkczppcdwza.supabase.co/storage/v1/object/public/badges/lucks-fickle-finger.webp'),
 (10, NOW(), 'Cloud 99', 'Reserved for those touched by serendipity, this marks a moment of extraordinary luck, as elusive and uplifting as the rarest stratus in the highest heavens.', TRUE, FALSE, 'cloud-99', 'https://mzuhtoiuhpkczppcdwza.supabase.co/storage/v1/object/public/badges/cloud-99.webp'),
 (11, NOW(), 'Nice', '', TRUE, TRUE, 'nice', 'https://mzuhtoiuhpkczppcdwza.supabase.co/storage/v1/object/public/badges/nice.webp');
+(12, NOW(), 'Triskaidekaphilia', '', TRUE, FALSE, 'triskaidekaphilia', 'https://mzuhtoiuhpkczppcdwza.supabase.co/storage/v1/object/public/badges/triskaidekaphilia.webp');
