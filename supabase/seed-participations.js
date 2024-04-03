@@ -63,7 +63,14 @@ for (const game of games) {
 	const creator = users.find((user) => user.id === game.creator);
 	const scoresPerPlayer = Math.floor(Math.random() * 5) + 1;
 	const scores = createSetOfScores(scoresPerPlayer);
-	addParticipation(game.id, creator.id, creator.username, scores, creator.avatar_url, game.end_at);
+	await addParticipation(
+		game.id,
+		creator.id,
+		creator.username,
+		scores,
+		creator.avatar_url,
+		game.end_at
+	);
 
 	// Add participation for other players
 	const otherPlayers = users.filter((user) => user.id !== creator.id);
@@ -83,7 +90,14 @@ for (const game of games) {
 	// Add participation for all other players
 	for (const player of selectedPlayers) {
 		const scores = createSetOfScores(scoresPerPlayer);
-		addParticipation(game.id, player.id, player.username, scores, player.avatar_url, game.end_at);
+		await addParticipation(
+			game.id,
+			player.id,
+			player.username,
+			scores,
+			player.avatar_url,
+			game.end_at
+		);
 	}
 
 	console.log(

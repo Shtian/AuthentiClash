@@ -27,6 +27,20 @@ export const checkForValueEntryBadge = async (
 		return 'not unlocked';
 	}
 
+	// Triskaidekaphilia
+	if (value === 13) {
+		const res = await tryUnlockBadge('triskaidekaphilia', userId);
+		if (res.type === 'success') return res.data;
+		return 'not unlocked';
+	}
+
+	// The Answer
+	if (value === 42) {
+		const res = await tryUnlockBadge('the-answer', userId);
+		if (res.type === 'success') return res.data;
+		return 'not unlocked';
+	}
+
 	// What Are The Odds
 	if (checkForWhatAreTheOddsBadge(value)) {
 		const res = await tryUnlockBadge('what-are-the-odds', userId);
