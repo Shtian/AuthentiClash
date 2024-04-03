@@ -1,5 +1,11 @@
 # authenticlash
 
+## 0.6.0
+
+### Minor Changes
+
+- [#47](https://github.com/Shtian/AuthentiClash/pull/47) [`98e4567`](https://github.com/Shtian/AuthentiClash/commit/98e456778b5815f3b53618dc696844ca6e5fc025) Thanks [@Shtian](https://github.com/Shtian)! - Add two new badges
+
 ## 0.5.3
 
 ### Patch Changes
