@@ -9,4 +9,6 @@ export type BadgeSlug =
 	| '20-20-victory-vision'
 	| 'authentichampion'
 	| 'rite-of-passage'
-	| 'echoes-from-the-abyss';
+	| 'echoes-from-the-abyss'
+	| 'triskaidekaphilia'
+	| 'the-answer';
