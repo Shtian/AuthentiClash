@@ -3,7 +3,7 @@ import { createClient } from '@supabase/supabase-js';
 const seedParticipations = async () => {
 	if (!process.env.PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_KEY) {
 		console.error(
-			'❌ Missing SUPABASE env variables PUBLIC_SUPABASE_URL or . Please check your .env file'
+			'❌ Missing SUPABASE env variables PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_KEY. Please check your .env file'
 		);
 		process.exit(1);
 	}

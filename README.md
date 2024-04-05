@@ -41,13 +41,13 @@ open http://localhost:5173
 
 ### Seed Data
 
-If you want a seed data to play around with, or just an easily restorable state, you can run the following command:
+If you want example data to play around with, or just an easily restorable state, you can run the following command:
 
 ```bash
-pnpm supabase:seed
+pnpm supabase:reset
 ```
 
-This will create 10 users with email logins as well as 10 games with a random amount of players and scores. Five games with a future end date and 5 games with a past end date. The seed data can be found in `supabase/seed.sql` which is run first with `supabase db reset` and then participation data is added with a javascript, to control the random data and tune it more easily.
+This will create 10 users with email logins as well as 10 games with a random amount of players, scores and all badges. Five games with a future end date and 5 games with a past end date. The seed data can be found in `supabase/seed.sql` which is run first with `supabase db reset` and then participation data is added with a javascript, to control the random data and tune it more easily.
 
 ### Troubleshooting
 
