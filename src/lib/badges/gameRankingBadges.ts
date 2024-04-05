@@ -31,7 +31,7 @@ export const checkForRankingBadge = async (userId: string): Promise<void> => {
 			const userRank = userRankIndex === -1 ? 0 : userRankIndex + 1;
 			const userTotalScore = sortedParticipations.at(userRankIndex)?.total_score ?? 0;
 			const qualifiesForTwinzies = sortedParticipations.some(
-				(p) => p.profile_id !== userId && p.total_score === userTotalScore
+				(p) => p.profile_id !== userId && userTotalScore > 0 && p.total_score === userTotalScore
 			);
 			return {
 				rank: userRank,
