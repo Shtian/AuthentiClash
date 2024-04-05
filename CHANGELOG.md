@@ -1,5 +1,11 @@
 # authenticlash
 
+## 0.7.1
+
+### Patch Changes
+
+- [`a9df106`](https://github.com/Shtian/AuthentiClash/commit/a9df106c602aac7ce74f6f773bf3861ee047349f) Thanks [@Shtian](https://github.com/Shtian)! - Only award twinzies of score is greater than zero
+
 ## 0.7.0
 
 ### Minor Changes
