@@ -119,3 +119,6 @@ INSERT INTO badges (id, created_at, name, description, enabled, secret, slug, im
 (13, NOW(), 'The Answer', '“''The Answer to the Great Question... Of Life, the Universe and Everything... Is... Forty-two,'' said Deep Thought, with infinite majesty and calm.”', TRUE, TRUE, 'the-answer', 'https://mzuhtoiuhpkczppcdwza.supabase.co/storage/v1/object/public/badges/the-answer.webp'),
 (14, NOW(), 'Comeback Kid', 'For those who turn the tide, snatching victory from the jaws of defeat.', TRUE, FALSE, 'comeback-kid', NULL),
 (15, NOW(), 'Free fall!', 'For those who have experienced the thrill of free falling from the top of the leaderboard to the bottom.', TRUE, FALSE, 'free-fall', NULL);,
+(16, NOW(), 'Humble Begginings', 'Milestone: 1000 Points Accumulated', TRUE, FALSE, 'humble-beginnings', NULL);
+(17, NOW(), 'Hoarder', 'Milestone: 5000 Points Accumulated', TRUE, FALSE, 'hoarder', NULL),
+(18, NOW(), 'It''s Over 9000!', 'Milestone: 9001 Points Accumulated', TRUE, FALSE, 'its-over-9000', NULL);

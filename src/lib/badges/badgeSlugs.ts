@@ -13,4 +13,7 @@ export type BadgeSlug =
 	| 'triskaidekaphilia'
 	| 'the-answer'
 	| 'comeback-kid'
-	| 'free-fall';
+	| 'free-fall'
+	| 'humble-beginnings'
+	| 'hoarder'
+	| 'its-over-9000';

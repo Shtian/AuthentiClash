@@ -6,6 +6,7 @@ type GameWithRankings = {
 	loss: boolean;
 	date: string;
 	players: number;
+	total_score: number;
 };
 export const checkForRankingBadge = async (userId: string): Promise<void> => {
 	const gamesRes = await getAllGamesByUserId(userId);
@@ -32,7 +33,8 @@ export const checkForRankingBadge = async (userId: string): Promise<void> => {
 				win: userRank === 1,
 				loss: userRank == sortedParticipations.length,
 				date: game.end_at,
-				players: sortedParticipations.length
+				players: sortedParticipations.length,
+				total_score: sortedParticipations.at(userRankIndex)?.total_score ?? 0
 			};
 		});
 
@@ -45,6 +47,7 @@ export const checkForRankingBadge = async (userId: string): Promise<void> => {
 	await awardWinAfterLoss(userId, gamesWithRankings);
 	await awardLossAfterWin(userId, gamesWithRankings);
 
+	await awardTotalScore(userId, gamesWithRankings);
 };
 
 const awardWins = async (userId: string, wins: number) => {
@@ -103,3 +106,15 @@ const awardLossAfterWin = async (userId: string, gamesWithRankings: Array<GameWi
 	}
 };
 
+const awardTotalScore = async (userId: string, gamesWithRankings: Array<GameWithRankings>) => {
+	const totalScore = gamesWithRankings.reduce((acc, game) => acc + game.total_score, 0);
+	if (totalScore >= 1000) {
+		await tryUnlockBadge('humble-beginnings', userId);
+	}
+	if (totalScore >= 5000) {
+		await tryUnlockBadge('hoarder', userId);
+	}
+	if (totalScore > 9000) {
+		await tryUnlockBadge('its-over-9000', userId);
+	}
+};
