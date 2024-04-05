@@ -1,22 +1,18 @@
 import { createClient } from '@supabase/supabase-js';
 
-if (!process.env.PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_KEY) {
-	console.error(
-		'❌ Missing SUPABASE env variables PUBLIC_SUPABASE_URL or . Please check your .env file'
-	);
-	process.exit(1);
-}
-
-if (process.env.PUBLIC_SUPABASE_URL.includes('supabase.io')) {
-	console.error('❌ You are trying to seed data into a production database?! Aborting.');
-	process.exit(1);
-}
-
-await seedParticipations();
-
-console.log('✅ Done!');
-
 const seedParticipations = async () => {
+	if (!process.env.PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_KEY) {
+		console.error(
+			'❌ Missing SUPABASE env variables PUBLIC_SUPABASE_URL or . Please check your .env file'
+		);
+		process.exit(1);
+	}
+
+	if (process.env.PUBLIC_SUPABASE_URL.includes('supabase.io')) {
+		console.error('❌ You are trying to seed data into a production database?! Aborting.');
+		process.exit(1);
+	}
+
 	console.log('⚙️ Seeding participations...');
 
 	const supabase = createClient(process.env.PUBLIC_SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
@@ -133,3 +129,7 @@ const seedParticipations = async () => {
 		`login with the following credentials: user{1-${users.length}}@example.com / password123`
 	);
 };
+
+await seedParticipations();
+
+console.log('✅ Done!');
