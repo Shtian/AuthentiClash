@@ -12,4 +12,5 @@ export type BadgeSlug =
 	| 'echoes-from-the-abyss'
 	| 'triskaidekaphilia'
 	| 'the-answer'
-	| 'comeback-kid';
+	| 'comeback-kid'
+	| 'free-fall';

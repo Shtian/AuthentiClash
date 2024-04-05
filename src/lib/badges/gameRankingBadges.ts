@@ -42,8 +42,9 @@ export const checkForRankingBadge = async (userId: string): Promise<void> => {
 	const losses = gamesWithRankings.filter((g) => g.loss).length;
 	await awardLosses(userId, losses);
 
-	// Check if a user has won a game following a loss
 	await awardWinAfterLoss(userId, gamesWithRankings);
+	await awardLossAfterWin(userId, gamesWithRankings);
+
 };
 
 const awardWins = async (userId: string, wins: number) => {
@@ -89,3 +90,16 @@ const awardWinAfterLoss = async (userId: string, gamesWithRankings: Array<GameWi
 		}
 	}
 };
+
+const awardLossAfterWin = async (userId: string, gamesWithRankings: Array<GameWithRankings>) => {
+	if (gamesWithRankings.length < 2) return;
+	for (let i = 0; i < gamesWithRankings.length - 1; i++) {
+		const currentGame = gamesWithRankings[i];
+		const nextGame = gamesWithRankings[i + 1];
+		if (currentGame.win && nextGame.loss) {
+			await tryUnlockBadge('free-fall', userId);
+			break;
+		}
+	}
+};
+
