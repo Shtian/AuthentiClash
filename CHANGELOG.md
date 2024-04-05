@@ -1,5 +1,15 @@
 # authenticlash
 
+## 0.7.0
+
+### Minor Changes
+
+- [#52](https://github.com/Shtian/AuthentiClash/pull/52) [`6708a72`](https://github.com/Shtian/AuthentiClash/commit/6708a726c41d75528587112fceeb2fa99aa8035e) Thanks [@Shtian](https://github.com/Shtian)! - Add total badge progress bar
+
+- [#52](https://github.com/Shtian/AuthentiClash/pull/52) [`6708a72`](https://github.com/Shtian/AuthentiClash/commit/6708a726c41d75528587112fceeb2fa99aa8035e) Thanks [@Shtian](https://github.com/Shtian)! - Add badge order customization
+
+- [#50](https://github.com/Shtian/AuthentiClash/pull/50) [`46a8ef0`](https://github.com/Shtian/AuthentiClash/commit/46a8ef02795d61ee2375de5fe2ba2068a5ae37e0) Thanks [@Shtian](https://github.com/Shtian)! - Add 6 new badges!
+
 ## 0.6.0
 
 ### Minor Changes
