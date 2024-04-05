@@ -11,4 +11,10 @@ export type BadgeSlug =
 	| 'rite-of-passage'
 	| 'echoes-from-the-abyss'
 	| 'triskaidekaphilia'
-	| 'the-answer';
+	| 'the-answer'
+	| 'comeback-kid'
+	| 'free-fall'
+	| 'humble-beginnings'
+	| 'hoarder'
+	| 'its-over-9000'
+	| 'twinzies';
