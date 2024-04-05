@@ -117,9 +117,9 @@ INSERT INTO badges (id, created_at, name, description, enabled, secret, slug, im
 (11, NOW(), 'Nice', '', TRUE, TRUE, 'nice', 'https://mzuhtoiuhpkczppcdwza.supabase.co/storage/v1/object/public/badges/nice.webp'),
 (12, NOW(), 'Triskaidekaphilia', 'A badge of honor for those who delight in the mystical and challenge the notion of luck, turning the tide of superstition into a symbol of fearless exploration.', TRUE, TRUE, 'triskaidekaphilia', 'https://mzuhtoiuhpkczppcdwza.supabase.co/storage/v1/object/public/badges/triskaidekaphilia.webp'),
 (13, NOW(), 'The Answer', '“''The Answer to the Great Question... Of Life, the Universe and Everything... Is... Forty-two,'' said Deep Thought, with infinite majesty and calm.”', TRUE, TRUE, 'the-answer', 'https://mzuhtoiuhpkczppcdwza.supabase.co/storage/v1/object/public/badges/the-answer.webp'),
-(14, NOW(), 'Comeback Kid', 'For those who turn the tide, snatching victory from the jaws of defeat.', TRUE, FALSE, 'comeback-kid', NULL),
-(15, NOW(), 'Free fall!', 'For those who have experienced the thrill of free falling from the top of the leaderboard to the bottom.', TRUE, FALSE, 'free-fall', NULL);,
-(16, NOW(), 'Humble Begginings', 'Milestone: 1000 Points Accumulated', TRUE, FALSE, 'humble-beginnings', NULL);
-(17, NOW(), 'Hoarder', 'Milestone: 5000 Points Accumulated', TRUE, FALSE, 'hoarder', NULL),
-(18, NOW(), 'It''s Over 9000!', 'Milestone: 9001 Points Accumulated', TRUE, FALSE, 'its-over-9000', NULL),
-(19, NOW(), 'Twinzies', 'Awarded when fate aligns and you finish with the exact same total score as another player.', TRUE, FALSE, 'twinzies', NULL);
+(14, NOW(), 'Comeback Kid', 'For those who turn the tide, snatching victory from the jaws of defeat.', TRUE, FALSE, 'comeback-kid', 'https://mzuhtoiuhpkczppcdwza.supabase.co/storage/v1/object/public/badges/comeback-kid.webp'),
+(15, NOW(), 'Free fall!', 'For those who have experienced the thrill of free falling from the top of the leaderboard to the bottom.', TRUE, FALSE, 'free-fall', 'https://mzuhtoiuhpkczppcdwza.supabase.co/storage/v1/object/public/badges/free-fall.webp'),
+(16, NOW(), 'Humble Begginings', 'Milestone: 1000 Points Accumulated', TRUE, FALSE, 'humble-beginnings', 'https://mzuhtoiuhpkczppcdwza.supabase.co/storage/v1/object/public/badges/humble-beginnings.webp'),
+(17, NOW(), 'Hoarder', 'Milestone: 5000 Points Accumulated', TRUE, FALSE, 'hoarder', 'https://mzuhtoiuhpkczppcdwza.supabase.co/storage/v1/object/public/badges/hoarder.webp'),
+(18, NOW(), 'It''s Over 9000!', 'Milestone: 9001 Points Accumulated', TRUE, FALSE, 'its-over-9000', 'https://mzuhtoiuhpkczppcdwza.supabase.co/storage/v1/object/public/badges/its-over-9000.webp'),
+(19, NOW(), 'Twinzies', 'Awarded when fate aligns and you finish with the exact same total score as another player.', TRUE, FALSE, 'twinzies', 'https://mzuhtoiuhpkczppcdwza.supabase.co/storage/v1/object/public/badges/twinzies.webp');
