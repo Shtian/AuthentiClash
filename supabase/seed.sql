@@ -121,4 +121,5 @@ INSERT INTO badges (id, created_at, name, description, enabled, secret, slug, im
 (15, NOW(), 'Free fall!', 'For those who have experienced the thrill of free falling from the top of the leaderboard to the bottom.', TRUE, FALSE, 'free-fall', NULL);,
 (16, NOW(), 'Humble Begginings', 'Milestone: 1000 Points Accumulated', TRUE, FALSE, 'humble-beginnings', NULL);
 (17, NOW(), 'Hoarder', 'Milestone: 5000 Points Accumulated', TRUE, FALSE, 'hoarder', NULL),
-(18, NOW(), 'It''s Over 9000!', 'Milestone: 9001 Points Accumulated', TRUE, FALSE, 'its-over-9000', NULL);
+(18, NOW(), 'It''s Over 9000!', 'Milestone: 9001 Points Accumulated', TRUE, FALSE, 'its-over-9000', NULL),
+(19, NOW(), 'Twinzies', 'Awarded when fate aligns and you finish with the exact same total score as another player.', TRUE, FALSE, 'twinzies', NULL);
