@@ -7,7 +7,7 @@ if (!process.env.PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_KEY) {
 	process.exit(1);
 }
 
-if (process.env.PUBLIC_SUPABASE_URL.contains('supabase.io')) {
+if (process.env.PUBLIC_SUPABASE_URL.includes('supabase.io')) {
 	console.error('❌ You are trying to seed data into a production database?! Aborting.');
 	process.exit(1);
 }
