@@ -6,6 +6,7 @@ type GameWithRankings = {
 	loss: boolean;
 	date: string;
 	players: number;
+	userTotalScore: number;
 	qualifiesForTwinzies: boolean;
 };
 export const checkForRankingBadge = async (userId: string): Promise<void> => {
@@ -38,6 +39,7 @@ export const checkForRankingBadge = async (userId: string): Promise<void> => {
 				loss: userRank == sortedParticipations.length,
 				date: game.end_at,
 				players: sortedParticipations.length,
+				userTotalScore,
 				qualifiesForTwinzies
 			};
 		});
@@ -52,14 +54,7 @@ export const checkForRankingBadge = async (userId: string): Promise<void> => {
 
 	await awardLossAfterWin(userId, gamesWithRankings);
 
-	const totalScore = games
-		.filter((g) => g.participation.length > 1)
-		.reduce(
-			(acc, game) =>
-				acc + (game.participation.find((p) => p.profile_id === userId)?.total_score ?? 0),
-			0
-		);
-	await awardTotalScore(userId, totalScore);
+	await awardTotalScore(userId, gamesWithRankings);
 
 	await awardTwinziesScore(userId, gamesWithRankings);
 };
@@ -120,7 +115,8 @@ const awardLossAfterWin = async (userId: string, gamesWithRankings: Array<GameWi
 	}
 };
 
-const awardTotalScore = async (userId: string, totalScore: number) => {
+const awardTotalScore = async (userId: string, gamesWithRankings: Array<GameWithRankings>) => {
+	const totalScore = gamesWithRankings.reduce((acc, game) => acc + game.userTotalScore, 0);
 	if (totalScore >= 1000) {
 		await tryUnlockBadge('humble-beginnings', userId);
 	}
