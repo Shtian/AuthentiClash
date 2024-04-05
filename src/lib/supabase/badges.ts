@@ -9,6 +9,7 @@ type BadgeDTO = {
 	slug: string;
 	enabled: boolean;
 	secret: boolean;
+	sort_order: number;
 };
 
 type PlayerBadgesDTO = {
@@ -27,7 +28,7 @@ export type UnlockPlayerBadgeResponse = 'unlocked' | 'exists' | 'not unlocked';
 export const getAllEnabledBadges = async (): Promise<SupabaseResponse<BadgeDTO[]>> => {
 	const { data, error } = await supabaseServerClient
 		.from('badges')
-		.select('id, name, description, image, slug, enabled, secret')
+		.select('id, name, description, image, slug, enabled, secret, sort_order')
 		.eq('enabled', true);
 
 	if (error !== null) {

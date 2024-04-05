@@ -1,6 +1,7 @@
 import { fail, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { supabaseServerClient } from '$lib/supabase/supabaseClient';
+import { getAllEnabledBadges } from '$lib/supabase/badges';
 
 type Badge = {
 	awarded_on?: Date;
@@ -9,6 +10,7 @@ type Badge = {
 	name: string;
 	slug: string;
 	secret: boolean;
+	sortOrder: number;
 };
 
 export type UserBadge = Badge & {
@@ -25,16 +27,14 @@ export const load: PageServerLoad = async ({ locals: { getSession } }) => {
 	const userId = session.user.id;
 	if (!userId) return fail(401, { message: 'User not found' });
 
-	const { data: allBadges, error: badgesError } = await supabaseServerClient
-		.from('badges')
-		.select('name, description, image, secret, enabled, slug, id')
-		.is('enabled', true);
+	const enabledBadgesRes = await getAllEnabledBadges();
 
-	if (badgesError) {
-		return fail(500, { message: badgesError });
+	if (enabledBadgesRes.type === 'error') {
+		console.log('Error getting enabled badges:', enabledBadgesRes.error);
+		return fail(500, { message: 'Error retrieving badges' });
 	}
 
-	if (!allBadges?.length) {
+	if (!enabledBadgesRes.data?.length) {
 		return {
 			badges: [],
 			title: 'Badges'
@@ -50,7 +50,7 @@ export const load: PageServerLoad = async ({ locals: { getSession } }) => {
 		return fail(500, { message: unlockedBadgesError });
 	}
 
-	const badges: Array<UserBadge> = allBadges.map((badge) => {
+	const badges: Array<UserBadge> = enabledBadgesRes.data.map((badge) => {
 		const unlockedBadge = unlockedBadges.find((ub) => ub.badge_id === badge.id);
 		const awardedOn = unlockedBadge?.awarded_on ? new Date(unlockedBadge.awarded_on) : undefined;
 		const fiveDays = 1000 * 60 * 60 * 24 * 5;
@@ -59,17 +59,17 @@ export const load: PageServerLoad = async ({ locals: { getSession } }) => {
 			...badge,
 			unlocked: !!unlockedBadge,
 			awarded_on: awardedOn,
-			isNew
+			isNew,
+			sortOrder: badge.sort_order
 		};
 	});
 
-	// sort badges by secret (not secret -> secret), then alphabetically by name
-	badges.sort((a: UserBadge, b: UserBadge) => {
-		if (a.secret && !b.secret) return 1;
-		if (!a.secret && b.secret) return -1;
-		if (a.name < b.name) return -1;
-		if (a.name > b.name) return 1;
-		return 0;
+	// sort badges by secret (not secret -> secret), then by sort order
+	badges.sort((a, b) => {
+		if (a.secret === b.secret) {
+			return a.sortOrder - b.sortOrder;
+		}
+		return a.secret ? 1 : -1;
 	});
 
 	return {
