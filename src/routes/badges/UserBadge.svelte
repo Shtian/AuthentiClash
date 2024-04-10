@@ -33,12 +33,13 @@
 	on:focus={() => markBadgeAsSeen()}
 >
 	<div class="group relative flex gap-x-4">
-		<div class=" inline-flex size-16 flex-shrink-0 items-center overflow-hidden rounded-full">
+		<div class=" inline-flex size-16 flex-shrink-0 items-center rounded-full">
 			{#if showBadgeCustomImage}
 				<img
 					class={badge.unlocked
-						? 'transition-transform group-hover:scale-125'
-						: 'opacity-50 grayscale'}
+						? 'rounded-full transition-transform group-hover:scale-125'
+						: 'rounded-full opacity-50 grayscale'}
+					class:image-glow={badge.unlocked && badge.globalUnlockPercentage <= 10}
 					src={badge.image}
 					alt={`A image for the badge "${badge.name}"`}
 				/>
@@ -91,3 +92,21 @@
 		{/if}
 	</footer>
 </li>
+
+<style>
+	@keyframes glow {
+		0% {
+			box-shadow: 0 0 8px 2px rgba(255, 215, 0, 0.3);
+		}
+		50% {
+			box-shadow: 0 0 10px 3px rgba(255, 215, 0, 0.4);
+		}
+		100% {
+			box-shadow: 0 0 8px 2px rgba(255, 215, 0, 0.3);
+		}
+	}
+
+	.image-glow {
+		animation: glow 2s infinite alternate ease-in-out; /* Adjust the duration and animation type as needed */
+	}
+</style>
