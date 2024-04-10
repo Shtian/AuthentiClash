@@ -4,7 +4,7 @@
 
 ### Minor Changes
 
-- [#54](https://github.com/Shtian/AuthentiClash/pull/54) [`198cad5`](https://github.com/Shtian/AuthentiClash/commit/198cad58169d8d62280c7ee9fe668c266ab4a9c4) Thanks [@Shtian](https://github.com/Shtian)! - Show global unloc rate
+- [#54](https://github.com/Shtian/AuthentiClash/pull/54) [`198cad5`](https://github.com/Shtian/AuthentiClash/commit/198cad58169d8d62280c7ee9fe668c266ab4a9c4) Thanks [@Shtian](https://github.com/Shtian)! - Show global unlock rate
 
 ## 0.7.1
 
