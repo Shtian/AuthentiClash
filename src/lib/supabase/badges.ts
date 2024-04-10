@@ -72,6 +72,43 @@ export const getBadgeBySlug = async (slug: string): Promise<SupabaseResponse<Bad
 	return successResponse;
 };
 
+export const getGlobalBadgeUnlockStats = async (): Promise<
+	SupabaseResponse<{
+		[key: number]: number;
+	}>
+> => {
+	const { data: badgeUnlocks, error: badgeUnlocksError } = await supabaseServerClient
+		.from('player_badges')
+		.select('badge_id');
+
+	if (badgeUnlocksError !== null) {
+		console.error('Error getting global badge unlock stats:', badgeUnlocksError.message);
+		const r: SupabaseResponse<{
+			[key: number]: number;
+		}> = { type: 'error', data: null, error: badgeUnlocksError };
+		return r;
+	}
+
+	// group by badge_id and count
+	const badgeUnlocksCount: { [key: number]: number } = badgeUnlocks.reduce(
+		(acc, curr) => {
+			acc[curr.badge_id as number] = acc[curr.badge_id] ? acc[curr.badge_id] + 1 : 1;
+			return acc;
+		},
+		{} as { [key: number]: number }
+	);
+
+	const successResponse: SupabaseResponse<{
+		[key: number]: number;
+	}> = {
+		type: 'success',
+		data: badgeUnlocksCount,
+		error: null
+	};
+
+	return successResponse;
+};
+
 export const getBadgesByUserId = async (
 	userId: string
 ): Promise<SupabaseResponse<PlayerBadgesDTO[]>> => {
@@ -157,7 +194,8 @@ const mapToBadge = (data: any) => {
 		image: data.image,
 		slug: data.slug,
 		enabled: data.enabled,
-		secret: data.secret
+		secret: data.secret,
+		sort_order: data.sort_order
 	};
 
 	return badgeDTO;
