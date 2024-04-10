@@ -1,5 +1,13 @@
 # authenticlash
 
+## 0.8.1
+
+### Patch Changes
+
+- [`40aabda`](https://github.com/Shtian/AuthentiClash/commit/40aabda5565f67b9da71ab329cdf409d8b8a4083) Thanks [@Shtian](https://github.com/Shtian)! - Fix rounding of secret badge images
+
+- [`40aabda`](https://github.com/Shtian/AuthentiClash/commit/40aabda5565f67b9da71ab329cdf409d8b8a4083) Thanks [@Shtian](https://github.com/Shtian)! - Fix spelling for some verbs
+
 ## 0.8.0
 
 ### Minor Changes
