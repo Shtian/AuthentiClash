@@ -1,7 +1,8 @@
 import { fail, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { supabaseServerClient } from '$lib/supabase/supabaseClient';
-import { getAllEnabledBadges } from '$lib/supabase/badges';
+import { getAllEnabledBadges, getGlobalBadgeUnlockStats } from '$lib/supabase/badges';
+import { getTotalNumberOfPlayers } from '$lib/supabase/profiles';
 
 type Badge = {
 	awarded_on?: Date;
@@ -16,6 +17,7 @@ type Badge = {
 export type UserBadge = Badge & {
 	unlocked: boolean;
 	isNew: boolean;
+	globalUnlockPercentage: number;
 };
 
 export const load: PageServerLoad = async ({ locals: { getSession } }) => {
@@ -27,6 +29,17 @@ export const load: PageServerLoad = async ({ locals: { getSession } }) => {
 	const userId = session.user.id;
 	if (!userId) return fail(401, { message: 'User not found' });
 
+	const badgeUnlockCount = await getGlobalBadgeUnlockStats();
+	if (badgeUnlockCount.type === 'error') {
+		console.error('Error getting global badge unlock stats:', badgeUnlockCount.error.message);
+		return fail(500, { message: 'Error retrieving badge stats' });
+	}
+
+	const totalNumberOfPlayers = await getTotalNumberOfPlayers();
+	if (totalNumberOfPlayers.type === 'error') {
+		console.error('Error getting global badge unlock stats:', totalNumberOfPlayers.error.message);
+		return fail(500, { message: 'Error retrieving badge stats' });
+	}
 	const enabledBadgesRes = await getAllEnabledBadges();
 
 	if (enabledBadgesRes.type === 'error') {
@@ -60,7 +73,12 @@ export const load: PageServerLoad = async ({ locals: { getSession } }) => {
 			unlocked: !!unlockedBadge,
 			awarded_on: awardedOn,
 			isNew,
-			sortOrder: badge.sort_order
+			sortOrder: badge.sort_order,
+			globalUnlockPercentage: calculateGlobalUnlockPercentage(
+				badgeUnlockCount.data,
+				badge.id,
+				totalNumberOfPlayers.data
+			)
 		};
 	});
 
@@ -77,3 +95,13 @@ export const load: PageServerLoad = async ({ locals: { getSession } }) => {
 		title: 'Badges'
 	};
 };
+
+function calculateGlobalUnlockPercentage(
+	data: { [key: number]: number },
+	id: number,
+	totalPlayers: number
+) {
+	const badgeCount = data[id] || 0;
+	if (totalPlayers === 0 || badgeCount === 0) return 0;
+	return (badgeCount / totalPlayers) * 100;
+}

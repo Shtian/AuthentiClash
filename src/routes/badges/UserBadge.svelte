@@ -28,59 +28,85 @@
 </script>
 
 <li
-	class="group relative flex gap-x-4 rounded-lg border-[1px] p-4"
+	class="flex flex-col gap-y-4 rounded-lg border-[1px] p-4"
 	on:mouseover={() => markBadgeAsSeen()}
 	on:focus={() => markBadgeAsSeen()}
 >
-	<div class=" inline-flex size-16 flex-shrink-0 items-center overflow-hidden rounded-full">
-		{#if showBadgeCustomImage}
-			<img
-				class={badge.unlocked
-					? 'transition-transform group-hover:scale-125'
-					: 'opacity-50 grayscale'}
-				src={badge.image}
-				alt={`A image for the badge "${badge.name}"`}
-			/>
-		{:else if badge.secret}
-			<img
-				class="transition-transform group-hover:scale-150"
-				src="https://mzuhtoiuhpkczppcdwza.supabase.co/storage/v1/object/public/badges/secret-trophy.webp"
-				alt="Questionmark ensrouded in fog"
-			/>
-		{:else}
-			<img
-				class={badge.unlocked ? '' : 'opacity-50 grayscale'}
-				src={`https://api.dicebear.com/8.x/shapes/svg?seed=${encodeURIComponent(badge.name)}`}
-				alt={`An image for the badge "${badge.name}"`}
-			/>
+	<div class="group relative flex gap-x-4">
+		<div class=" inline-flex size-16 flex-shrink-0 items-center rounded-full">
+			{#if showBadgeCustomImage}
+				<img
+					class={badge.unlocked
+						? 'rounded-full transition-transform group-hover:scale-125'
+						: 'rounded-full opacity-50 grayscale'}
+					class:image-glow={badge.unlocked && badge.globalUnlockPercentage <= 10}
+					src={badge.image}
+					alt={`A image for the badge "${badge.name}"`}
+				/>
+			{:else if badge.secret}
+				<img
+					class="transition-transform group-hover:scale-150"
+					src="https://mzuhtoiuhpkczppcdwza.supabase.co/storage/v1/object/public/badges/secret-trophy.webp"
+					alt="Questionmark ensrouded in fog"
+				/>
+			{:else}
+				<img
+					class={badge.unlocked ? '' : 'opacity-50 grayscale'}
+					src={`https://api.dicebear.com/8.x/shapes/svg?seed=${encodeURIComponent(badge.name)}`}
+					alt={`An image for the badge "${badge.name}"`}
+				/>
+			{/if}
+		</div>
+		<div>
+			<h2 class="text-balance sm:text-lg md:text-xl">
+				{#if badge.unlocked}
+					{badge.secret ? badge.name + ' (secret)' : badge.name}
+				{:else if badge.secret}
+					Secret badge
+				{:else}
+					{badge.name}
+				{/if}
+			</h2>
+			<p class="text-pretty text-xs text-gray-300">
+				{badge.secret && !badge.unlocked
+					? 'Veiled in secrecy, this trophy beckons to be unveiled by the worthy.'
+					: badge.description}
+			</p>
+		</div>
+		{#if badge.isNew && showBadge}
+			<span
+				in:fade={{ duration: 150 }}
+				out:fade={{ duration: 150 }}
+				class="absolute -left-2 -top-2 rounded bg-clash-400 px-2 py-1 text-xs text-white">NEW</span
+			>
 		{/if}
 	</div>
-	<div>
-		<h2 class="text-balance sm:text-lg md:text-xl">
-			{#if badge.unlocked}
-				{badge.secret ? badge.name + ' (secret)' : badge.name}
-			{:else if badge.secret}
-				Secret badge
-			{:else}
-				{badge.name}
-			{/if}
-		</h2>
-		<p class="text-pretty text-xs text-gray-300">
-			{badge.secret && !badge.unlocked
-				? 'Veiled in secrecy, this trophy beckons to be unveiled by the worthy.'
-				: badge.description}
+	<footer class="flex justify-between">
+		<p class="text-xs text-gray-300">
+			{badge.globalUnlockPercentage.toFixed(1)}% global unlock rate
 		</p>
 		{#if badge.unlocked}
-			<p class="absolute right-4 top-4 text-xs text-gray-300">
+			<p class="text-xs text-gray-300">
 				<em>{badge.awarded_on?.toISOString().substring(0, 10)}</em>
 			</p>
 		{/if}
-	</div>
-	{#if badge.isNew && showBadge}
-		<span
-			in:fade={{ duration: 150 }}
-			out:fade={{ duration: 150 }}
-			class="absolute -left-2 -top-2 rounded bg-clash-400 px-2 py-1 text-xs text-white">NEW</span
-		>
-	{/if}
+	</footer>
 </li>
+
+<style>
+	@keyframes glow {
+		0% {
+			box-shadow: 0 0 8px 2px rgba(255, 215, 0, 0.3);
+		}
+		50% {
+			box-shadow: 0 0 10px 3px rgba(255, 215, 0, 0.4);
+		}
+		100% {
+			box-shadow: 0 0 8px 2px rgba(255, 215, 0, 0.3);
+		}
+	}
+
+	.image-glow {
+		animation: glow 2s infinite alternate ease-in-out; /* Adjust the duration and animation type as needed */
+	}
+</style>
