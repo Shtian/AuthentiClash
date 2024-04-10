@@ -99,17 +99,17 @@
 <style>
 	@keyframes glow {
 		0% {
-			box-shadow: 0 0 8px 2px rgba(255, 215, 0, 0.3);
+			box-shadow: 0 0 12px 1px rgba(255, 215, 0, 0.4);
 		}
 		50% {
-			box-shadow: 0 0 10px 3px rgba(255, 215, 0, 0.4);
+			box-shadow: 0 0 12px 4px rgba(255, 215, 0, 0.6);
 		}
 		100% {
-			box-shadow: 0 0 8px 2px rgba(255, 215, 0, 0.3);
+			box-shadow: 0 0 12px 1px rgba(255, 215, 0, 0.4);
 		}
 	}
 
 	.image-glow {
-		animation: glow 2s infinite alternate ease-in-out; /* Adjust the duration and animation type as needed */
+		animation: glow 3s infinite alternate ease-in-out; /* Adjust the duration and animation type as needed */
 	}
 </style>
