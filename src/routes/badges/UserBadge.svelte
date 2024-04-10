@@ -37,15 +37,15 @@
 			{#if showBadgeCustomImage}
 				<img
 					class={badge.unlocked
-						? 'rounded-full transition-transform group-hover:scale-125'
+						? 'rounded-full transition-transform group-hover:scale-110'
 						: 'rounded-full opacity-50 grayscale'}
 					class:image-glow={badge.unlocked && badge.globalUnlockPercentage <= 10}
 					src={badge.image}
-					alt={`A image for the badge "${badge.name}"`}
+					alt={`An image for the badge "${badge.name}"`}
 				/>
 			{:else if badge.secret}
 				<img
-					class="transition-transform group-hover:scale-150"
+					class="rounded-full"
 					src="https://mzuhtoiuhpkczppcdwza.supabase.co/storage/v1/object/public/badges/secret-trophy.webp"
 					alt="Questionmark ensrouded in fog"
 				/>
@@ -86,7 +86,10 @@
 			{badge.globalUnlockPercentage.toFixed(1)}% global unlock rate
 		</p>
 		{#if badge.unlocked}
-			<p class="text-xs text-gray-300">
+			<p
+				class="text-xs text-gray-300"
+				title={`Awarded to you on ${badge.awarded_on?.toDateString()}`}
+			>
 				<em>{badge.awarded_on?.toISOString().substring(0, 10)}</em>
 			</p>
 		{/if}
