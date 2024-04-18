@@ -14,7 +14,6 @@
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import * as Popover from '$lib/components/ui/popover';
-	import type { UnlockPlayerBadgeResponse } from '$lib/supabase/badges';
 
 	export let data;
 	export let newScore: number | null = null;
@@ -72,9 +71,13 @@
 		isLoading = true;
 		return async ({ result, update }) => {
 			if (result.type === 'success') {
-				if ((result.data?.unlockBadgeStatus as UnlockPlayerBadgeResponse) === 'unlocked') {
+				if (result.data?.unlockBadgeStatus > 0) {
+					const msg =
+						result.data?.unlockBadgeStatus === 1
+							? "You've unlocked a new badge! 🏆"
+							: `You've unlocked ${result.data?.unlockBadgeStatus} new badges! 🏆`;
 					toast.send({
-						message: "You've unlocked a new badge! 🏆",
+						message: msg,
 						type: 'success'
 					});
 				}

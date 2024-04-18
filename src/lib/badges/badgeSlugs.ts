@@ -17,4 +17,6 @@ export type BadgeSlug =
 	| 'humble-beginnings'
 	| 'hoarder'
 	| 'its-over-9000'
-	| 'twinzies';
+	| 'twinzies'
+	| 'early-bird'
+	| 'night-owl';
