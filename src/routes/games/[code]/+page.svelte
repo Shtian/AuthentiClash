@@ -14,7 +14,6 @@
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import * as Popover from '$lib/components/ui/popover';
-	import type { UnlockPlayerBadgeResponse } from '$lib/supabase/badges';
 
 	export let data;
 	export let newScore: number | null = null;
