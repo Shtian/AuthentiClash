@@ -1,5 +1,11 @@
 # authenticlash
 
+## 0.9.0
+
+### Minor Changes
+
+- [#59](https://github.com/Shtian/AuthentiClash/pull/59) [`8ab6fc1`](https://github.com/Shtian/AuthentiClash/commit/8ab6fc178f3f1219bb0b3b0233185f9e088bb8f3) Thanks [@Shtian](https://github.com/Shtian)! - Adds two new secret badges 🤫
+
 ## 0.8.1
 
 ### Patch Changes
