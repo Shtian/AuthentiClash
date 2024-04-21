@@ -19,4 +19,10 @@ export type BadgeSlug =
 	| 'its-over-9000'
 	| 'twinzies'
 	| 'early-bird'
-	| 'night-owl';
+	| 'night-owl'
+	| 'participation-award'
+	| 'aggressively-average'
+	| 'lean-mean-authenticlash-machine'
+	| 'wouldnt-stick-out-in-a-crowd-of-one'
+	| 'lucky-in-love'
+	| 'literally-cant-believe-it';

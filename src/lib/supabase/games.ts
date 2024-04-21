@@ -8,7 +8,7 @@ type Game = {
 
 type Participation = {
 	profile_id: string;
-	score: number;
+	score: Array<number>;
 	total_score: number;
 };
 

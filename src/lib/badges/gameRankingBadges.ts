@@ -1,5 +1,6 @@
 import { tryUnlockBadge } from '$lib/supabase/badges';
 import { getAllGamesByUserId } from '$lib/supabase/games';
+
 type GameWithRankings = {
 	rank: number;
 	win: boolean;
@@ -8,7 +9,10 @@ type GameWithRankings = {
 	players: number;
 	userTotalScore: number;
 	qualifiesForTwinzies: boolean;
+	qualifiesForLiterallyCantBelieveIt: boolean;
+	qualifiesForLuckyInLove: boolean;
 };
+
 export const checkForRankingBadge = async (userId: string): Promise<void> => {
 	const gamesRes = await getAllGamesByUserId(userId);
 	if (gamesRes.type === 'error') {
@@ -27,12 +31,18 @@ export const checkForRankingBadge = async (userId: string): Promise<void> => {
 				const bScore = b.total_score;
 				return bScore - aScore;
 			});
+
 			const userRankIndex = sortedParticipations.findIndex((p) => p.profile_id === userId);
 			const userRank = userRankIndex === -1 ? 0 : userRankIndex + 1;
 			const userTotalScore = sortedParticipations.at(userRankIndex)?.total_score ?? 0;
+			const userScore = sortedParticipations.at(userRankIndex)?.score ?? [];
+
 			const qualifiesForTwinzies = sortedParticipations.some(
 				(p) => p.profile_id !== userId && userTotalScore > 0 && p.total_score === userTotalScore
 			);
+			const qualifiesForLiterallyCantBelieveIt = checkQualifiesForLiterallyCantBelieveIt(userScore);
+			const qualifiesForLuckyInLove = checkForQualifiesForLuckyInLove(userScore);
+
 			return {
 				rank: userRank,
 				win: userRank === 1,
@@ -40,7 +50,9 @@ export const checkForRankingBadge = async (userId: string): Promise<void> => {
 				date: game.end_at,
 				players: sortedParticipations.length,
 				userTotalScore,
-				qualifiesForTwinzies
+				qualifiesForTwinzies,
+				qualifiesForLiterallyCantBelieveIt,
+				qualifiesForLuckyInLove
 			};
 		});
 
@@ -50,6 +62,9 @@ export const checkForRankingBadge = async (userId: string): Promise<void> => {
 	const losses = gamesWithRankings.filter((g) => g.loss).length;
 	await awardLosses(userId, losses);
 
+	const participatedGames = gamesWithRankings.filter((g) => !g.win && !g.loss).length;
+	await awardParticipation(userId, participatedGames);
+
 	await awardWinAfterLoss(userId, gamesWithRankings);
 
 	await awardLossAfterWin(userId, gamesWithRankings);
@@ -57,6 +72,10 @@ export const checkForRankingBadge = async (userId: string): Promise<void> => {
 	await awardTotalScore(userId, gamesWithRankings);
 
 	await awardTwinziesScore(userId, gamesWithRankings);
+
+	await awardLiterallyCantBelieveIt(userId, gamesWithRankings);
+
+	await awardLuckyInLove(userId, gamesWithRankings);
 };
 
 const awardWins = async (userId: string, wins: number) => {
@@ -88,6 +107,24 @@ const awardLosses = async (userId: string, losses: number) => {
 
 	if (losses >= 5) {
 		await tryUnlockBadge('echoes-from-the-abyss', userId);
+	}
+};
+
+const awardParticipation = async (userId: string, participatedGames: number) => {
+	if (participatedGames >= 5) {
+		await tryUnlockBadge('participation-award', userId);
+	}
+
+	if (participatedGames >= 10) {
+		await tryUnlockBadge('aggressively-average', userId);
+	}
+
+	if (participatedGames >= 20) {
+		await tryUnlockBadge('lean-mean-authenticlash-machine', userId);
+	}
+
+	if (participatedGames >= 50) {
+		await tryUnlockBadge('wouldnt-stick-out-in-a-crowd-of-one', userId);
 	}
 };
 
@@ -132,4 +169,29 @@ const awardTwinziesScore = async (userId: string, gamesWithRankings: Array<GameW
 	if (gamesWithRankings.some((game) => game.qualifiesForTwinzies)) {
 		await tryUnlockBadge('twinzies', userId);
 	}
+};
+
+const awardLiterallyCantBelieveIt = async (
+	userId: string,
+	gamesWithRankings: Array<GameWithRankings>
+) => {
+	if (gamesWithRankings.some((game) => game.qualifiesForLiterallyCantBelieveIt)) {
+		await tryUnlockBadge('literally-cant-believe-it', userId);
+	}
+};
+
+const awardLuckyInLove = async (userId: string, gamesWithRankings: Array<GameWithRankings>) => {
+	if (gamesWithRankings.some((game) => game.qualifiesForLuckyInLove)) {
+		await tryUnlockBadge('lucky-in-love', userId);
+	}
+};
+
+const checkQualifiesForLiterallyCantBelieveIt = (score: number[]): boolean => {
+	if (score.length < 4) return false;
+	return score.every((score) => score >= 50);
+};
+
+const checkForQualifiesForLuckyInLove = (score: number[]): boolean => {
+	if (score.length < 4) return false;
+	return score.every((score) => score <= 50);
 };
