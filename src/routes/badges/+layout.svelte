@@ -11,7 +11,6 @@
 	function tabSelected(e: Event) {
 		const eventTarget: HTMLSelectElement = e.target as HTMLSelectElement;
 		const tabname = eventTarget.value as TabName;
-		console.log(tabname);
 		if (!($page.url.pathname === tabs[tabname])) goto(tabs[tabname]);
 	}
 </script>

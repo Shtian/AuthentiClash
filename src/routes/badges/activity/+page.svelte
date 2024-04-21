@@ -1,13 +1,23 @@
 <script lang="ts">
-	import type { BadgeActivity } from '$lib/supabase/badges';
+	import { page } from '$app/stores';
 
 	export let data;
+	let pageSize = 10;
+
+	$: badgeActivity = data.badgeActivity || [];
+	$: totalItems = data.totalEntries || 0;
+	$: totalPages = Math.ceil(totalItems / pageSize);
+	$: currentPage = (Number($page.url.searchParams.get('skip')) || 0) / pageSize;
+	$: startIndex = currentPage * pageSize + 1;
+	$: endIndex = Math.min(startIndex + pageSize - 1, totalItems);
+
 	const dateFormatter = Intl.DateTimeFormat('en-US', {
-		year: 'numeric',
-		month: 'long',
-		day: 'numeric'
+		month: 'short',
+		day: 'numeric',
+		hour: 'numeric',
+		minute: 'numeric',
+		hour12: false
 	});
-	const badgeActivity: BadgeActivity[] = data.badgeActivity?.data || [];
 </script>
 
 <div class="mx-auto flow-root max-w-[1200px] px-6 lg:px-8 lg:py-10">
@@ -54,4 +64,40 @@
 			<li>No badges unlocked!</li>
 		{/each}
 	</ul>
+	<nav
+		class="mt-8 flex items-center justify-between border-t border-white/10 px-4 py-3 sm:px-6"
+		aria-label="Pagination"
+	>
+		<div class="hidden sm:block">
+			<p class="text-sm text-white">
+				Showing
+				<span class="font-medium">{startIndex}</span>
+				to
+				<span class="font-medium">{endIndex}</span>
+				of
+				<span class="font-medium">{totalItems}</span>
+				results
+			</p>
+		</div>
+		<div class="flex flex-1 justify-between sm:justify-end">
+			<a
+				class:pointer-events-none={currentPage === 0}
+				href="/badges/activity?limit={pageSize}&skip={Math.max((currentPage - 1) * pageSize, 0)}"
+				class="none relative inline-flex items-center rounded-md bg-clash-500 px-3 py-2 text-sm font-semibold text-white hover:bg-clash-400 focus-visible:outline-offset-0"
+				>Previous</a
+			>
+			<a
+				class:pointer-events-none={currentPage === totalPages - 1}
+				href="/badges/activity?limit={pageSize}&skip={(currentPage + 1) * pageSize}"
+				class="relative ml-3 inline-flex items-center rounded-md bg-clash-500 px-3 py-2 text-sm font-semibold text-white hover:bg-clash-400 focus-visible:outline-offset-0"
+				>Next</a
+			>
+		</div>
+	</nav>
 </div>
+
+<style>
+	[aria-label='Pagination'] {
+		view-transition-name: pagination;
+	}
+</style>

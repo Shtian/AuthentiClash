@@ -194,12 +194,21 @@ export const tryUnlockBadge = async (
 	};
 };
 
-export const getBadgeActivity = async (): Promise<SupabaseResponse<BadgeActivity[]>> => {
-	const { data: badge_activity, error } = await supabaseServerClient
+export const getBadgeActivity = async (
+	limit: number = 10,
+	skip: number = 0
+): Promise<SupabaseResponse<{ activity: BadgeActivity[]; count: number }>> => {
+	const {
+		data: badge_activity,
+		count,
+		error
+	} = await supabaseServerClient
 		.from('player_badges')
-		.select('awarded_on, badges (id, name, secret, image), profiles(id, username, avatar_url)')
-		.order('awarded_on', { ascending: false });
-
+		.select('awarded_on, badges (id, name, secret, image), profiles(id, username, avatar_url)', {
+			count: 'exact'
+		})
+		.order('awarded_on', { ascending: false })
+		.range(skip, skip + limit - 1);
 	if (error !== null) {
 		console.error('Error getting badge activity:', error.message);
 		const r: SupabaseResponse<BadgeActivity[]> = { type: 'error', data: null, error };
@@ -208,7 +217,7 @@ export const getBadgeActivity = async (): Promise<SupabaseResponse<BadgeActivity
 
 	const activity: BadgeActivity[] = badge_activity.map(mapToBadgeActivity);
 
-	return { type: 'success', data: activity, error: null };
+	return { type: 'success', data: { activity, count: count || 0 }, error: null };
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
