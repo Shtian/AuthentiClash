@@ -2,7 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	const tabs: { [key: string]: string } = {
-		'My Badges': '/badges',
+		Overview: '/badges',
 		Activity: '/badges/activity'
 	} as const;
 
@@ -19,7 +19,7 @@
 <div class="tabs px-4 py-6 sm:px-6 lg:px-8">
 	<div class="mx-auto max-w-7xl">
 		<div class="sm:hidden">
-			<label for="tabs" class="sr-only">Select a tab</label>´
+			<label for="tabs" class="sr-only">Select a tab</label>
 			<select
 				id="tabs"
 				name="tabs"
