@@ -87,10 +87,10 @@
 								{getRankEmoji(i + 1)}
 							</td>
 							<td
-								class="flex items-center gap-x-2 whitespace-nowrap px-3 py-4 text-sm text-gray-300"
+								class="flex max-w-[20ch] items-center gap-x-2 truncate px-3 py-4 text-sm text-gray-300 sm:max-w-max"
 								>{#if player.nickname_image_url}
 									<Popover.Root>
-										<Popover.Trigger>
+										<Popover.Trigger class="flex-shrink-0 ">
 											<img
 												src={`${player.nickname_image_url.replace('.webp', '-128.webp')}`}
 												alt={player.nickname}
@@ -131,7 +131,7 @@
 									</form>
 								{:else}
 									<Popover.Root>
-										<Popover.Trigger>
+										<Popover.Trigger class="flex-shrink-0">
 											<img
 												src={`https://api.dicebear.com/8.x/adventurer/svg?size=256&seed=${encodeURIComponent(
 													player.nickname
