@@ -1,5 +1,21 @@
 # authenticlash
 
+## 0.10.0
+
+### Minor Changes
+
+- [#66](https://github.com/Shtian/AuthentiClash/pull/66) [`ab8b64b`](https://github.com/Shtian/AuthentiClash/commit/ab8b64be1ef7d51985d3c2fbce320f49c942b503) Thanks [@Shtian](https://github.com/Shtian)! - Add 2 more secret badges
+
+- [#62](https://github.com/Shtian/AuthentiClash/pull/62) [`b3c4972`](https://github.com/Shtian/AuthentiClash/commit/b3c4972c0ea3baf09c278e7b74f3fad4e7a488c7) Thanks [@Shtian](https://github.com/Shtian)! - Add badge activity route
+
+- [#66](https://github.com/Shtian/AuthentiClash/pull/66) [`ab8b64b`](https://github.com/Shtian/AuthentiClash/commit/ab8b64be1ef7d51985d3c2fbce320f49c942b503) Thanks [@Shtian](https://github.com/Shtian)! - Add 4 more badges based on participations without wins or losses
+
+### Patch Changes
+
+- [#64](https://github.com/Shtian/AuthentiClash/pull/64) [`3df5867`](https://github.com/Shtian/AuthentiClash/commit/3df5867aa0d9a176b8972bc7d2959cc907260a42) Thanks [@Shtian](https://github.com/Shtian)! - Set correct sort order for stats graph
+
+- [#64](https://github.com/Shtian/AuthentiClash/pull/64) [`3df5867`](https://github.com/Shtian/AuthentiClash/commit/3df5867aa0d9a176b8972bc7d2959cc907260a42) Thanks [@Shtian](https://github.com/Shtian)! - Truncate username on small screens in high score list
+
 ## 0.9.0
 
 ### Minor Changes
