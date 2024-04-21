@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { UserBadge } from './+page.server';
+	import type { UserBadge } from './player/+page.server';
 	import { seenBadges } from '$lib/stores/SeenBadgesStore';
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';

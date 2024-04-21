@@ -23,6 +23,15 @@ type PlayerBadgesInsertDTO = {
 	badge_id: number;
 };
 
+export type BadgeActivity = {
+	awarded_on: Date;
+	badge: Pick<BadgeDTO, 'name' | 'image'>;
+	player: {
+		username: string;
+		avatar_url: string;
+	};
+};
+
 export type UnlockPlayerBadgeResponse = 'unlocked' | 'exists' | 'not unlocked';
 
 export const getAllEnabledBadges = async (): Promise<SupabaseResponse<BadgeDTO[]>> => {
@@ -183,6 +192,56 @@ export const tryUnlockBadge = async (
 		data: 'unlocked',
 		error: null
 	};
+};
+
+export const getBadgeActivity = async (
+	limit: number = 10,
+	skip: number = 0
+): Promise<SupabaseResponse<{ activity: BadgeActivity[]; count: number }>> => {
+	const {
+		data: badge_activity,
+		count,
+		error
+	} = await supabaseServerClient
+		.from('player_badges')
+		.select('awarded_on, badges (id, name, secret, image), profiles(id, username, avatar_url)', {
+			count: 'exact'
+		})
+		.order('awarded_on', { ascending: false })
+		.range(skip, skip + limit - 1);
+	if (error !== null) {
+		console.error('Error getting badge activity:', error.message);
+		const r: SupabaseResponse<BadgeActivity[]> = { type: 'error', data: null, error };
+		return r;
+	}
+
+	const activity: BadgeActivity[] = badge_activity.map(mapToBadgeActivity);
+
+	return { type: 'success', data: { activity, count: count || 0 }, error: null };
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const mapToBadgeActivity = (data: any) => {
+	const activity: BadgeActivity = {
+		awarded_on: new Date(data.awarded_on),
+		badge: {
+			name: data.badges.secret ? 'Secret badge' : data.badges.name,
+			image: data.badges.secret
+				? 'https://mzuhtoiuhpkczppcdwza.supabase.co/storage/v1/object/public/badges/secret-trophy.webp'
+				: data.badges.image
+		},
+		player: {
+			username: data.profiles.username || 'Anonymous',
+			avatar_url:
+				data.profiles.avatar_url ||
+				`https://api.dicebear.com/8.x/adventurer/svg?size=128&seed=${data.profiles.id.substring(
+					0,
+					8
+				)}`
+		}
+	};
+
+	return activity;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

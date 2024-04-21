@@ -43,7 +43,7 @@ export const load: PageServerLoad = async ({ locals: { getSession } }) => {
 	const enabledBadgesRes = await getAllEnabledBadges();
 
 	if (enabledBadgesRes.type === 'error') {
-		console.log('Error getting enabled badges:', enabledBadgesRes.error);
+		console.error('Error getting enabled badges:', enabledBadgesRes.error);
 		return fail(500, { message: 'Error retrieving badges' });
 	}
 
