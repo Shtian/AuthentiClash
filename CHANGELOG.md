@@ -1,5 +1,11 @@
 # authenticlash
 
+## 0.10.1
+
+### Patch Changes
+
+- [`474a125`](https://github.com/Shtian/AuthentiClash/commit/474a1258018ef6af683b6453b65ffa33df390df1) Thanks [@Shtian](https://github.com/Shtian)! - Add missing outline in badge activity timeline
+
 ## 0.10.0
 
 ### Minor Changes
