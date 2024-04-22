@@ -32,7 +32,7 @@
 					<div class="relative flex space-x-3">
 						<div>
 							<span
-								class="flex h-8 w-8 items-center justify-center rounded-full bg-background ring-8 ring-[bg-background]"
+								class="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-background ring-8 ring-[hsl(var(--background))]"
 							>
 								<img src={activity.player.avatar_url} alt="Player avatar" />
 							</span>
