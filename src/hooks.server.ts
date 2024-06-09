@@ -8,16 +8,16 @@ import {
 } from '$env/static/public';
 import { createSupabaseServerClient } from '@supabase/auth-helpers-sveltekit';
 import type { Handle } from '@sveltejs/kit';
-import { consoleIntegration } from '@sentry/sveltekit';
+// import { consoleIntegration } from '@sentry/sveltekit';
 
 Sentry.init({
 	dsn: PUBLIC_SENTRY_DNS,
 	tracesSampleRate: 1,
-	environment: PUBLIC_ENV,
-	integrations: [consoleIntegration()]
+	environment: PUBLIC_ENV
+	// integrations: [consoleIntegration()]
 });
 
-export const handle: Handle = sequence(Sentry.sentryHandle(), async ({ event, resolve }) => {
+export const handle: Handle = sequence(async ({ event, resolve }) => {
 	const supabase = createSupabaseServerClient({
 		supabaseUrl: PUBLIC_SUPABASE_URL,
 		supabaseKey: PUBLIC_SUPABASE_ANON_KEY,
@@ -39,4 +39,4 @@ export const handle: Handle = sequence(Sentry.sentryHandle(), async ({ event, re
 		}
 	});
 });
-export const handleError = Sentry.handleErrorWithSentry();
+// export const handleError = Sentry.handleErrorWithSentry();
