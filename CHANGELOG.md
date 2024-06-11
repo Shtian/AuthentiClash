@@ -1,5 +1,11 @@
 # authenticlash
 
+## 0.10.2
+
+### Patch Changes
+
+- [#69](https://github.com/Shtian/AuthentiClash/pull/69) [`d820ba6`](https://github.com/Shtian/AuthentiClash/commit/d820ba61ff1edc6fa1946fa6bddd12bdd0e4cc8b) Thanks [@Shtian](https://github.com/Shtian)! - Fix sentry crashing by updating dependencies
+
 ## 0.10.1
 
 ### Patch Changes
