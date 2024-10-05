@@ -51,8 +51,8 @@
 					<StatsNumber value={totalScoreAcrossGames} />
 				</p>
 			</StatsCard>
-			<StatsCard title="2FA value history" cols="full">
-				<ScoreGraph scores={allScores} height={300} />
+			<StatsCard title="2FA value history (limit 50)" cols="full">
+				<ScoreGraph {allScores} height={300} />
 			</StatsCard>
 			<StatsCard title="Median 2FA Value">
 				<p class="text-center text-4xl font-bold">

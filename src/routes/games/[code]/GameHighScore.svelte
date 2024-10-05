@@ -166,7 +166,11 @@
 										></LineChart></Popover.Trigger
 									>
 									<Popover.Content
-										><ScoreGraph scores={player.score} width={250} height={130} /></Popover.Content
+										><ScoreGraph
+											allScores={player.score}
+											width={250}
+											height={130}
+										/></Popover.Content
 									>
 								</Popover.Root>
 							</td>

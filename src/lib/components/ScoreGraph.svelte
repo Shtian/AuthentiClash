@@ -1,19 +1,21 @@
 <script lang="ts">
 	import * as d3 from 'd3';
-
-	export let scores: Array<number> = [];
-
+	import { onMount } from 'svelte';
+	export let allScores: Array<number> = [];
+	export let limit = 50;
 	export let width = 928;
 	export let height = 500;
 	export let marginTop = 20;
 	export let marginRight = 30;
 	export let marginBottom = 30;
 	export let marginLeft = 40;
+	let scores: Array<number> = allScores.slice(limit * -1);
+
+	let path: SVGPathElement;
+	let pathLength = 0;
 
 	const xScale = d3.scaleLinear([1, scores.length], [marginLeft, width - marginRight]);
-
 	const yScale = d3.scaleLinear([0, 100], [height - marginBottom, marginTop]);
-
 	const line = d3
 		.line()
 		.curve(d3.curveMonotoneX)
@@ -21,6 +23,15 @@
 		.y((d) => {
 			return yScale(d as unknown as d3.NumberValue);
 		});
+
+	onMount(() => {
+		if (path) {
+			pathLength = path.getTotalLength();
+			path.style.setProperty('--path-length', pathLength.toString());
+			path.style.strokeDasharray = pathLength.toString();
+			path.style.strokeDashoffset = pathLength.toString();
+		}
+	});
 </script>
 
 <svg {width} {height} viewBox="0 0 {width} {height}" style:max-width="100%" style:height="auto">
@@ -81,20 +92,26 @@
 			>
 		</g>
 	{/each}
-	<path fill="none" stroke="#136195" stroke-width="2.5" d={line(scores)} />
+	<path
+		bind:this={path}
+		class="path-score-line"
+		fill="none"
+		stroke="#136195"
+		stroke-width="2.5"
+		d={line(scores)}
+	/>
 </svg>
 
 <style>
-	path {
+	.path-score-line {
 		fill: transparent;
 		stroke-linejoin: round;
-		stroke-dasharray: 4400;
-		stroke-dashoffset: 0;
-		animation: draw 8.5s ease-out;
+		animation: draw 1s ease-out forwards;
 	}
+
 	@keyframes draw {
 		from {
-			stroke-dashoffset: 4400;
+			stroke-dashoffset: var(--path-length);
 		}
 		to {
 			stroke-dashoffset: 0;
