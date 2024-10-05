@@ -13,3 +13,19 @@ export const getTotalNumberOfPlayers = async (): Promise<SupabaseResponse<number
 
 	return { type: 'success', data: numberOfPlayers || 0, error: null };
 };
+
+export const getUsername = async (userId: string): Promise<SupabaseResponse<string>> => {
+	const { data, error } = await supabaseServerClient
+		.from('profiles')
+		.select('username')
+		.eq('id', userId)
+		.single();
+
+	if (error !== null) {
+		console.error('Error getting username:', error.message);
+		const r: SupabaseResponse<string> = { type: 'error', data: null, error };
+		return r;
+	}
+
+	return { type: 'success', data: data?.username || '', error: null };
+};

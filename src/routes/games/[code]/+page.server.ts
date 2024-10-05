@@ -10,6 +10,27 @@ import { generateImage } from '$lib/ai/image-generator';
 import { createSuccessMessage } from '$lib/utils/event-message-generator';
 import { PARTICIPANT_AVATARS_BUCKET, uploadParticipantImage } from '$lib/supabase/storage';
 import { checkForValueEntryBadge } from '$lib/badges/valueEntryBadges';
+import { getUsername } from '$lib/supabase/profiles';
+
+const getPatchedNickname = async (nickname: string, userId: string) => {
+	if (nickname.includes('(')) {
+		console.debug('Nickname already contains username', nickname);
+		return nickname;
+	}
+
+	const usernameRes = await getUsername(userId);
+	if (usernameRes.type === 'error') {
+		console.error('Error getting username', usernameRes.error);
+		return nickname;
+	}
+
+	const username = usernameRes.data;
+	if (!username) {
+		return nickname;
+	}
+
+	return `${nickname} (${username})`;
+};
 
 export const load: PageServerLoad = async ({ params, locals: { getSession, supabase } }) => {
 	const session = await getSession();
@@ -83,10 +104,11 @@ export const actions = {
 		}
 
 		if (!isParticipating) {
+			const patchedNickname = await getPatchedNickname(nickname!.toString(), session.user.id);
 			const addParticipationRes = await addParticipation(
 				game_id!.toString(),
 				session.user.id,
-				nickname!.toString(),
+				patchedNickname,
 				score
 			);
 
