@@ -12,7 +12,8 @@
 		average2FAScore,
 		averageTotalScore,
 		median2FAscore,
-		wins
+		wins,
+		losses
 	} = data.stats;
 </script>
 
@@ -25,7 +26,7 @@
 	</div>
 	{#if numberOfGames}
 		<div class="grid grid-cols-12 gap-4">
-			<StatsCard title="Number of Games">
+			<StatsCard title="Number of Games" cols="full">
 				<p class="text-center text-4xl font-bold">
 					<StatsNumber value={numberOfGames} />
 				</p>
@@ -33,6 +34,11 @@
 			<StatsCard title="Number of Wins">
 				<p class="text-center text-4xl font-bold">
 					<StatsNumber value={wins} />
+				</p>
+			</StatsCard>
+			<StatsCard title="Number of Losses">
+				<p class="text-center text-4xl font-bold">
+					<StatsNumber value={losses} />
 				</p>
 			</StatsCard>
 			<StatsCard title="Average Total Score">

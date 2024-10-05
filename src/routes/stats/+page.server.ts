@@ -44,12 +44,15 @@ export const load: PageServerLoad = async ({ locals: { getSession, supabase } })
 
 	const median2FAscore = allScores.toSorted((a, b) => a - b)[Math.floor(allScores.length / 2)];
 
-	const wins = participatedGames
-		.map((game) => {
-			const highscoreList = game.participation.toSorted((a, b) => b.total_score - a.total_score);
-			return highscoreList[0].profile_id === userId;
-		})
-		.filter(Boolean).length;
+	const winsAndLosses = participatedGames.map((game) => {
+		const highscoreList = game.participation.toSorted((a, b) => b.total_score - a.total_score);
+		return {
+			isWin: highscoreList[0].profile_id === userId,
+			isLoss: highscoreList.at(-1)?.profile_id === userId
+		};
+	});
+	const wins = winsAndLosses.filter((w) => w.isWin).length;
+	const losses = winsAndLosses.filter((w) => w.isLoss).length;
 
 	return {
 		stats: {
@@ -59,7 +62,8 @@ export const load: PageServerLoad = async ({ locals: { getSession, supabase } })
 			average2FAScore,
 			averageTotalScore,
 			median2FAscore,
-			wins
+			wins,
+			losses
 		},
 		title: 'Stats'
 	};
