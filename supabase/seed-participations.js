@@ -83,7 +83,7 @@ const seedParticipations = async () => {
 		await addParticipation(
 			game.id,
 			creator.id,
-			creator.username,
+			`Nickname ${creator.username.split(' ').at(-1)}`,
 			scores,
 			creator.avatar_url,
 			game.end_at
@@ -110,7 +110,7 @@ const seedParticipations = async () => {
 			await addParticipation(
 				game.id,
 				player.id,
-				player.username,
+				`Nickname ${creator.username.split(' ').at(-1)}`,
 				scores,
 				player.avatar_url,
 				game.end_at
