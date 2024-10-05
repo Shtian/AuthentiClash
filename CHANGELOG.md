@@ -1,5 +1,13 @@
 # authenticlash
 
+## 0.11.0
+
+### Minor Changes
+
+- [#76](https://github.com/Shtian/AuthentiClash/pull/76) [`479a7cc`](https://github.com/Shtian/AuthentiClash/commit/479a7cc467b52c9326e48b3965cb35dd54021c9f) Thanks [@Shtian](https://github.com/Shtian)! - Add feedback when saving account information
+
+- [#76](https://github.com/Shtian/AuthentiClash/pull/76) [`d1d74bf`](https://github.com/Shtian/AuthentiClash/commit/d1d74bf51cbce71f130d3c5851fbc2f1da01a151) Thanks [@Shtian](https://github.com/Shtian)! - Add username to nickname automatically if its set
+
 ## 0.10.2
 
 ### Patch Changes
