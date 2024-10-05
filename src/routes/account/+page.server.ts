@@ -31,12 +31,16 @@ export const actions = {
 
 		if (error) {
 			return fail(500, {
-				username
+				username,
+				session,
+				message: 'Oh no, something went wrong. Please try again. 🙏'
 			});
 		}
 
 		return {
-			username
+			username,
+			session,
+			message: 'Your username has been updated!'
 		};
 	}
 };
