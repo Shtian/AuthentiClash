@@ -11,7 +11,6 @@
 
 	let profileForm: HTMLFormElement;
 	let loading = false;
-	let fullName: string = profile?.full_name ?? '';
 	let username: string = profile?.username ?? '';
 
 	const handleSubmit: SubmitFunction = () => {
@@ -45,25 +44,6 @@
 								value={session.user.email}
 								disabled
 								class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-emerald-600 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 disabled:ring-gray-200 sm:text-sm sm:leading-6"
-							/>
-						</div>
-					</div>
-				</div>
-				<div class="sm:col-span-4">
-					<label for="full-name" class="block text-sm font-medium leading-6 text-white"
-						>Full name</label
-					>
-					<div class="mt-2">
-						<div
-							class="flex rounded-md bg-white/5 ring-1 ring-inset ring-white/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-emerald-500"
-						>
-							<input
-								type="text"
-								name="full-name"
-								id="full-name"
-								autocomplete="name"
-								value={form?.fullName ?? fullName}
-								class="flex-1 border-0 bg-transparent py-1.5 pl-2 text-white focus:ring-0 sm:text-sm sm:leading-6"
 							/>
 						</div>
 					</div>
