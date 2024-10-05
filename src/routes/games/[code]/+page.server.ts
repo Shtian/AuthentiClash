@@ -72,7 +72,15 @@ export const actions = {
 				message: 'Invalid score value. Please try again.'
 			});
 		}
+
 		const score = parseInt(scoreInput.toString(), 10);
+		if (score < 1 || score > 99) {
+			return fail(400, {
+				nickname,
+				score: scoreInput,
+				message: 'Score has to be 1-99. Please try again.'
+			});
+		}
 
 		if (!isParticipating) {
 			const addParticipationRes = await addParticipation(
