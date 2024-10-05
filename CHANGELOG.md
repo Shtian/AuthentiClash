@@ -1,5 +1,15 @@
 # authenticlash
 
+## 0.12.0
+
+### Minor Changes
+
+- [#78](https://github.com/Shtian/AuthentiClash/pull/78) [`9114e30`](https://github.com/Shtian/AuthentiClash/commit/9114e30931630b2ffe8273aee5764642e14b62de) Thanks [@Shtian](https://github.com/Shtian)! - Add score card for number of losses
+
+### Patch Changes
+
+- [#78](https://github.com/Shtian/AuthentiClash/pull/78) [`9114e30`](https://github.com/Shtian/AuthentiClash/commit/9114e30931630b2ffe8273aee5764642e14b62de) Thanks [@Shtian](https://github.com/Shtian)! - Fix stats line animation
+
 ## 0.11.0
 
 ### Minor Changes
