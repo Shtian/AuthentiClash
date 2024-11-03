@@ -1,5 +1,6 @@
 import { OPENAI_API_KEY } from '$env/static/private';
 import OpenAI from 'openai';
+import backdrops from './backdrops.json';
 
 const openaiClient = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || OPENAI_API_KEY });
 
@@ -16,7 +17,7 @@ export async function generateImage(username: string): Promise<string | undefine
 			prompt
 		});
 		console.debug('Revised image prompt: ', image.data[0]?.revised_prompt);
-
+		console.debug('Image URL: ', image.data[0]?.url);
 		return image.data[0].url;
 	} catch (error) {
 		console.error('Error generating image: ', error);
@@ -25,8 +26,8 @@ export async function generateImage(username: string): Promise<string | undefine
 }
 
 function createImagePrompt(username: string) {
-	const promptPrefix = 'My prompt has full detail so no need to add more: ';
 	const nameStrippedOfParentheses = username.replace(/\(.*\)/, '').trim();
 	const [descriptor, creature = nameStrippedOfParentheses] = nameStrippedOfParentheses.split(' ');
-	return `${promptPrefix}Create an epic image of a ${descriptor} ${creature} set in a fantastical game world. This ${creature} stands prominently in a scene that captures the essence of ${descriptor}, embodying both the physical and emotional characteristics associated with the word. The backdrop is a vividly detailed landscape that enhances the ${descriptor} nature of the ${creature}, whether it be a mystical forest, a desolate wasteland, or a bustling magical city. The lighting, atmosphere, and surrounding elements should all work together to highlight the ${creature}'s unique features and the ${descriptor} mood, making it a powerful and memorable part of the game's universe`;
+	const backdrop = backdrops[Math.floor(Math.random() * backdrops.length)];
+	return `Create an image of a ${descriptor} ${creature}, with the background theme of "${backdrop}".`;
 }
