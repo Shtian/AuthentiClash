@@ -1,5 +1,11 @@
 # authenticlash
 
+## 0.13.0
+
+### Minor Changes
+
+- [#80](https://github.com/Shtian/AuthentiClash/pull/80) [`5ac623e`](https://github.com/Shtian/AuthentiClash/commit/5ac623e1028e4a146038bcdd183946caa184dd11) Thanks [@Shtian](https://github.com/Shtian)! - Reworked image generation and nicknames with descriptors + creature and a simplified image prompt that uses a random backdrop
+
 ## 0.12.0
 
 ### Minor Changes
