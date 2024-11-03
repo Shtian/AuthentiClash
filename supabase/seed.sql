@@ -97,7 +97,7 @@ INSERT INTO
             END,
             current_timestamp,
             (ROW_NUMBER() OVER ()) % 2,
-            false
+            true
         from
             auth.users
     );
