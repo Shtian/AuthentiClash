@@ -1,4 +1,4 @@
-import { supabase, type SupabaseResponse } from './supabaseClient';
+import { supabase, supabaseServerClient, type SupabaseResponse } from './supabaseClient';
 
 export type Participation = {
 	id: string;
@@ -114,6 +114,43 @@ export const addParticipation = async (
 		updated_at: new Date()
 	};
 	const { data, error } = await supabase
+		.from('participation')
+		.insert(participationData)
+		.select()
+		.single();
+
+	if (error !== null) {
+		const r: SupabaseResponse<Participation> = { type: 'error', data: null, error };
+		return r;
+	}
+
+	const participation = mapToParticipation(data);
+
+	const successResponse: SupabaseResponse<Participation> = {
+		type: 'success',
+		data: participation,
+		error: null
+	};
+
+	return successResponse;
+};
+
+export const joinGame = async (
+	gameId: string,
+	userId: string,
+	nickname: string
+): Promise<SupabaseResponse<Participation>> => {
+	const participationData = {
+		nickname,
+		score: [],
+		total_score: 0,
+		profile_id: userId,
+		game_id: gameId,
+		created_at: new Date(),
+		updated_at: null
+	};
+
+	const { data, error } = await supabaseServerClient
 		.from('participation')
 		.insert(participationData)
 		.select()
