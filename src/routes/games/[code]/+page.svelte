@@ -4,7 +4,7 @@
 	import { fade } from 'svelte/transition';
 	import { formatTimeDelta, timeUntilCooldownEnds } from '$lib/utils/dateUtils.js';
 	import GameHighScore from './GameHighScore.svelte';
-	import { Clock, Copy, LucideLoader2, RefreshCw, Sparkles } from 'lucide-svelte';
+	import { Clock, Copy, LucideLoader2, Sparkles } from 'lucide-svelte';
 	import Cooldown from './Cooldown.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import { onDestroy } from 'svelte';
