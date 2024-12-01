@@ -1,5 +1,11 @@
 # authenticlash
 
+## 0.14.0
+
+### Minor Changes
+
+- [`3e13231`](https://github.com/Shtian/AuthentiClash/commit/3e13231a1846635ee57597ce0c326b3fdc9c3a1a) Thanks [@Shtian](https://github.com/Shtian)! - Create a new join page for games
+
 ## 0.13.0
 
 ### Minor Changes
