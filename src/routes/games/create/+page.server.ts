@@ -58,6 +58,6 @@ export const actions = {
 
 		const [gameData] = data;
 		const { code } = gameData;
-		redirect(303, `/games/${code}`);
+		redirect(303, `/games/${code}/join`);
 	}
 };

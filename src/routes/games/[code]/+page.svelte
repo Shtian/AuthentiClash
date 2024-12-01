@@ -1,8 +1,6 @@
 <script lang="ts">
 	import InlineMessage from '$lib/components/InlineMessage.svelte';
 	import { page } from '$app/stores';
-	import { generateNickName } from '$lib/utils/word-generator/generator.js';
-	import { capitalize } from '$lib/utils/casing.js';
 	import { fade } from 'svelte/transition';
 	import { formatTimeDelta, timeUntilCooldownEnds } from '$lib/utils/dateUtils.js';
 	import GameHighScore from './GameHighScore.svelte';
@@ -17,26 +15,11 @@
 
 	export let data;
 	export let newScore: number | null = null;
-	export let recentRefresh = false;
-	let nickname = capitalize`${generateNickName()}`;
 	let isLoading = false;
 
 	$: players = data.players;
 
 	let cooldownRemaining = timeUntilCooldownEnds(data.currentPlayer?.updated_at, data.cooldownHours);
-
-	const handleNicknameRefresh = () => {
-		recentRefresh = true;
-		setTimeout(() => {
-			recentRefresh = false;
-		}, 1000);
-		const newNickname = capitalize`${generateNickName()}`;
-		newNickname.split('').forEach((_, i) => {
-			setTimeout(() => {
-				nickname = newNickname.slice(0, i + 1);
-			}, i * 25);
-		});
-	};
 
 	let urlIsRecentlyCopied = false;
 	const copyUrl = () => {
@@ -147,54 +130,9 @@
 	<div class="mx-auto mt-5 max-w-7xl py-5 sm:px-6 lg:px-8">
 		{#if timeLeft > 0}
 			<form method="POST" action="?/updateScore" use:enhance={handleNewScore}>
-				<p>
-					{data.currentPlayer
-						? 'Register new 2FA Code'
-						: 'Choose your nickname and enter your 2FA code to join the game!'}
-				</p>
-				<input
-					type="hidden"
-					name="is-participating"
-					id="is-participating"
-					value={!!data.currentPlayer}
-				/>
+				<p>Register new 2FA Code</p>
 				<input type="hidden" name="game-id" id="game-id" value={data.gameId} />
 				<div class="mt-4 grid grid-cols-3 gap-x-6 gap-y-8">
-					{#if !data.currentPlayer}
-						<div class="col-span-3">
-							<label for="nickname" class="block text-sm font-medium leading-6 text-white"
-								>Nickname</label
-							>
-							<div class="mt-2">
-								<div
-									class="relative flex rounded-md bg-white/5 ring-1 ring-inset ring-white/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-clash-500"
-								>
-									<input
-										type="text"
-										name="nickname"
-										id="nickname"
-										autocomplete="name"
-										value={nickname}
-										required
-										minlength="3"
-										class="flex-1 border-0 bg-transparent py-1.5 pl-2 text-white focus:ring-0 sm:text-sm sm:leading-6"
-									/>
-									<button
-										class="absolute right-2 top-1/2 -translate-y-1/2"
-										type="button"
-										on:click={handleNicknameRefresh}
-									>
-										<span class="sr-only">Generate new nickname suggestion</span>
-										<RefreshCw
-											class="h-6 w-6 origin-center [animation-duration:0.2s] [animation-iteration-count:1] {recentRefresh
-												? 'animate-spin'
-												: null}"
-										/>
-									</button>
-								</div>
-							</div>
-						</div>
-					{/if}
 					<div class="col-span-2">
 						<label for="2fa-score" class="block text-sm font-medium leading-6 text-white"
 							>2FA value (1-99)</label
