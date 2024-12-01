@@ -23,7 +23,7 @@
 
 	let urlIsRecentlyCopied = false;
 	const copyUrl = () => {
-		navigator.clipboard.writeText(window.location.href);
+		navigator.clipboard.writeText(`https://www.authenticlash.app${window.location.pathname}/join`);
 		urlIsRecentlyCopied = true;
 		window.setTimeout(() => {
 			urlIsRecentlyCopied = false;
