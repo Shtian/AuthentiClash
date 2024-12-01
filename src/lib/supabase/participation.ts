@@ -1,4 +1,4 @@
-import { supabase, type SupabaseResponse } from './supabaseClient';
+import { supabase, supabaseServerClient, type SupabaseResponse } from './supabaseClient';
 
 export type Participation = {
 	id: string;
@@ -147,7 +147,7 @@ export const joinGame = async (
 		profile_id: userId,
 		game_id: gameId,
 		created_at: new Date(),
-		updated_at: new Date()
+		updated_at: null
 	};
 
 	const { data, error } = await supabaseServerClient
