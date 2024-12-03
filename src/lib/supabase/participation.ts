@@ -10,6 +10,8 @@ export type Participation = {
 	score: number[];
 	totalScore: number;
 	nicknameImageUrl: string;
+	abilityUsed: string | null;
+	classId: number | null;
 };
 
 export const getParticipation = async (
@@ -19,7 +21,7 @@ export const getParticipation = async (
 	const { data, error } = await supabase
 		.from('participation')
 		.select(
-			'id, score, total_score, updated_at, profile_id, game_id, nickname, created_at, nickname_image_url'
+			'id, score, total_score, updated_at, profile_id, game_id, nickname, created_at, nickname_image_url, ability_used, class_id'
 		)
 		.eq('game_id', gameId)
 		.eq('profile_id', userId)
@@ -175,17 +177,20 @@ export const joinGame = async (
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const mapToParticipation = (data: any) => {
+export const mapToParticipation = (data: any) => {
+	console.log('map to participation', data);
 	const participation: Participation = {
 		id: data.id,
 		score: data.score,
 		totalScore: data.total_score,
 		updatedAt: data.updated_at,
-		profileId: data.game_id,
+		profileId: data.profile_id,
 		gameId: data.game_id,
 		nickname: data.nickname,
 		createdAt: data.created_at,
-		nicknameImageUrl: data.nickname_image_url
+		nicknameImageUrl: data.nickname_image_url,
+		abilityUsed: data.ability_used,
+		classId: data.class_id
 	};
 	return participation;
 };

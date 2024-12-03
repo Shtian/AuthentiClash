@@ -28,7 +28,7 @@ export const load: PageServerLoad = async ({ params, locals: { getSession } }) =
 		error(404, { message: `Game ${code} not found` });
 	}
 
-	const currentPlayer = res.data.participation.find((p) => p.profile_id === session.user.id);
+	const currentPlayer = res.data.participation.find((p) => p.profileId === session.user.id);
 	if (!currentPlayer) {
 		redirect(303, `/games/${code}/join`);
 	}

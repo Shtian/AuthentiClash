@@ -19,7 +19,7 @@
 
 	$: players = data.players;
 
-	let cooldownRemaining = timeUntilCooldownEnds(data.currentPlayer?.updated_at, data.cooldownHours);
+	let cooldownRemaining = timeUntilCooldownEnds(data.currentPlayer?.updatedAt, data.cooldownHours);
 
 	let urlIsRecentlyCopied = false;
 	const copyUrl = () => {

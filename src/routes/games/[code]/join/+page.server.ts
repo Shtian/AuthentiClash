@@ -5,7 +5,7 @@ import { joinGame } from '$lib/supabase/participation';
 import { getAllClasses } from '$lib/supabase/classes';
 import { getGame } from '$lib/supabase/games';
 
-export const load: PageServerLoad = async ({ params, locals: { getSession, supabase } }) => {
+export const load: PageServerLoad = async ({ params, locals: { getSession } }) => {
 	const session = await getSession();
 	const { code } = params;
 	if (!session) {
@@ -21,7 +21,7 @@ export const load: PageServerLoad = async ({ params, locals: { getSession, supab
 		error(404, { message: `Game ${code} not found` });
 	}
 
-	const currentPlayer = res.data.participation.find((p) => p.profile_id === session.user.id);
+	const currentPlayer = res.data.participation.find((p) => p.profileId === session.user.id);
 
 	if (currentPlayer) {
 		redirect(303, `/games/${code}`);
