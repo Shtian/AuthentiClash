@@ -138,7 +138,8 @@ export const addParticipation = async (
 export const joinGame = async (
 	gameId: string,
 	userId: string,
-	nickname: string
+	nickname: string,
+	classId: string
 ): Promise<SupabaseResponse<Participation>> => {
 	const participationData = {
 		nickname,
@@ -146,6 +147,7 @@ export const joinGame = async (
 		total_score: 0,
 		profile_id: userId,
 		game_id: gameId,
+		class_id: classId,
 		created_at: new Date(),
 		updated_at: null
 	};

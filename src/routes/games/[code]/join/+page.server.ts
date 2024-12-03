@@ -2,6 +2,7 @@ import { error, fail, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { getUsername } from '$lib/supabase/profiles';
 import { joinGame } from '$lib/supabase/participation';
+import { getAllClasses } from '$lib/supabase/classes';
 
 export const load: PageServerLoad = async ({ params, locals: { getSession, supabase } }) => {
 	const session = await getSession();
@@ -32,13 +33,17 @@ export const load: PageServerLoad = async ({ params, locals: { getSession, supab
 		redirect(303, `/games/${code}`);
 	}
 
+	const classResponse = await getAllClasses();
+	const classes = classResponse.type === 'success' ? classResponse.data : [];
+
 	return {
 		message: 'Joining game',
 		joinedGame: false,
 		endsAt: data.end_at,
 		gameId: data.id,
 		gameName: data.name,
-		aiEnabled: data.ai_enabled
+		aiEnabled: data.ai_enabled,
+		classes: classes
 	};
 };
 
@@ -66,6 +71,7 @@ export const actions = {
 		const formData = await request.formData();
 		const nickname = formData.get('nickname');
 		const game_id = formData.get('game-id');
+		const class_id = formData.get('class-id');
 		const session = await getSession();
 
 		if (!session) {
@@ -80,7 +86,8 @@ export const actions = {
 		const addParticipationRes = await joinGame(
 			game_id!.toString(),
 			session.user.id,
-			patchedNickname
+			patchedNickname,
+			class_id!.toString()
 		);
 
 		if (addParticipationRes.type === 'error') {
