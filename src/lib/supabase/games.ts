@@ -3,18 +3,51 @@ import { supabaseServerClient, type SupabaseResponse } from './supabaseClient';
 type Game = {
 	id: number;
 	end_at: string;
+	name: string;
+	cooldown_hours: string;
+	ai_enabled: boolean;
 	participation: Participation[];
 };
 
 type Participation = {
 	profile_id: string;
+	nickname: string;
 	score: Array<number>;
 	total_score: number;
+	updated_at: string | null;
+	nickname_image_url: string | null;
+	ability_used: string | null;
+	class_id: number | null;
 };
 
 export type EndedActiveGame = {
 	id: number;
 	participation: string[];
+};
+
+export const getGame = async (code: string): Promise<SupabaseResponse<Game>> => {
+	const { data: game, error } = await supabaseServerClient
+		.from('games')
+		.select(
+			'id, code, creator, end_at, is_active, name, cooldown_hours, ai_enabled, participation ( id, score, total_score, profile_id, updated_at, nickname_image_url, nickname, ability_used, class_id )'
+		)
+		.eq('code', code)
+		.single();
+
+	if (error !== null) {
+		const r: SupabaseResponse<Game> = { type: 'error', data: null, error };
+		return r;
+	}
+
+	const mappedGame = mapToGame(game);
+	console.log(mappedGame);
+	const successResponse: SupabaseResponse<Game> = {
+		type: 'success',
+		data: mappedGame,
+		error: null
+	};
+
+	return successResponse;
 };
 
 export const getEndedActiveGames = async (): Promise<SupabaseResponse<EndedActiveGame[]>> => {
@@ -47,7 +80,7 @@ export const getAllGamesByUserId = async (userId: string): Promise<SupabaseRespo
 	const { data: games, error } = await supabaseServerClient
 		.from('games')
 		.select(
-			'id, creator, code, end_at, is_active, name, participation ( profile_id, score, total_score, nickname )'
+			'id, code, creator, end_at, is_active, name, cooldown_hours, ai_enabled, participation ( id, score, total_score, profile_id, updated_at, nickname_image_url, nickname, ability_used, class_id )'
 		);
 
 	if (error !== null) {
@@ -94,6 +127,9 @@ const mapToGame = (data: any): Game => {
 	return {
 		id: data.id as number,
 		end_at: data.end_at as string,
+		ai_enabled: data.ai_enabled as boolean,
+		name: data.name as string,
+		cooldown_hours: data.cooldown_hours as string,
 		participation: data.participation.map(mapToParticipation)
 	};
 };
@@ -102,7 +138,12 @@ const mapToGame = (data: any): Game => {
 const mapToParticipation = (data: any): Participation => {
 	return {
 		profile_id: data.profile_id as string,
-		score: data.score as number,
-		total_score: data.total_score as number
+		nickname: data.nickname as string,
+		score: data.score as number[],
+		total_score: data.total_score as number,
+		updated_at: data.updated_at as string | null,
+		nickname_image_url: data.nickname_image_url as string | null,
+		ability_used: data.ability_used as string | null,
+		class_id: data.class_id as number | null
 	};
 };

@@ -9,44 +9,39 @@ import { generateImage } from '$lib/ai/image-generator';
 import { createSuccessMessage } from '$lib/utils/event-message-generator';
 import { PARTICIPANT_AVATARS_BUCKET, uploadParticipantImage } from '$lib/supabase/storage';
 import { checkForValueEntryBadge } from '$lib/badges/valueEntryBadges';
+import { getGame } from '$lib/supabase/games';
 
-export const load: PageServerLoad = async ({ params, locals: { getSession, supabase } }) => {
+export const load: PageServerLoad = async ({ params, locals: { getSession } }) => {
 	const session = await getSession();
 	const { code } = params;
 	if (!session) {
 		redirect(303, '/auth/login');
 	}
 
-	const { data, error: err } = await supabase
-		.from('games')
-		.select(
-			'id, code, creator, end_at, is_active, name, cooldown_hours, ai_enabled, participation ( id, score, total_score, profile_id, updated_at, nickname_image_url, nickname )'
-		)
-		.eq('code', code)
-		.single();
+	const res = await getGame(code);
 
-	if (!data) {
+	if (res.type === 'error') {
+		error(500, { message: res.error.message });
+	}
+
+	if (!res.data) {
 		error(404, { message: `Game ${code} not found` });
 	}
 
-	if (err) {
-		error(500, { message: err });
-	}
-
-	const currentPlayer = data.participation.find((p) => p.profile_id === session.user.id);
+	const currentPlayer = res.data.participation.find((p) => p.profile_id === session.user.id);
 	if (!currentPlayer) {
 		redirect(303, `/games/${code}/join`);
 	}
 
 	return {
-		endsAt: data.end_at,
-		gameId: data.id,
-		gameName: data.name,
-		cooldownHours: data.cooldown_hours,
-		players: data.participation,
+		endsAt: res.data.end_at,
+		gameId: res.data.id,
+		gameName: res.data.name,
+		cooldownHours: res.data.cooldown_hours,
+		players: res.data.participation,
 		currentPlayer,
-		title: data.name,
-		aiEnabled: data.ai_enabled,
+		title: res.data.name,
+		aiEnabled: res.data.ai_enabled,
 		description: 'A new game has begun! Enter your score and see what happens'
 	};
 };

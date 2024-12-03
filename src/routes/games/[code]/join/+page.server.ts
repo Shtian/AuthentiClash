@@ -99,7 +99,7 @@ export const actions = {
 		}
 
 		return {
-			message: `Game joined 🎉 Good luck, ${nickname}!`,
+			message: `Game joined, redirecting 🎉 Good luck, ${nickname}!`,
 			joinedGame: true
 		};
 	}
