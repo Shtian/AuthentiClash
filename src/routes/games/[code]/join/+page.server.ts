@@ -3,6 +3,7 @@ import type { PageServerLoad } from './$types';
 import { getUsername } from '$lib/supabase/profiles';
 import { joinGame } from '$lib/supabase/participation';
 import { getAllClasses } from '$lib/supabase/classes';
+import { getGame } from '$lib/supabase/games';
 
 export const load: PageServerLoad = async ({ params, locals: { getSession, supabase } }) => {
 	const session = await getSession();
@@ -11,23 +12,16 @@ export const load: PageServerLoad = async ({ params, locals: { getSession, supab
 		redirect(303, '/auth/login');
 	}
 
-	const { data, error: err } = await supabase
-		.from('games')
-		.select(
-			'id, code, creator, end_at, is_active, name, cooldown_hours, ai_enabled, participation ( id, score, total_score, profile_id, updated_at, nickname_image_url, nickname )'
-		)
-		.eq('code', code)
-		.single();
+	const res = await getGame(code);
 
-	if (!data) {
+	if (res.type === 'error') {
+		error(500, { message: res.error.message });
+	}
+	if (!res.data) {
 		error(404, { message: `Game ${code} not found` });
 	}
 
-	if (err) {
-		error(500, { message: err });
-	}
-
-	const currentPlayer = data.participation.find((p) => p.profile_id === session.user.id);
+	const currentPlayer = res.data.participation.find((p) => p.profile_id === session.user.id);
 
 	if (currentPlayer) {
 		redirect(303, `/games/${code}`);
@@ -39,10 +33,10 @@ export const load: PageServerLoad = async ({ params, locals: { getSession, supab
 	return {
 		message: 'Joining game',
 		joinedGame: false,
-		endsAt: data.end_at,
-		gameId: data.id,
-		gameName: data.name,
-		aiEnabled: data.ai_enabled,
+		endsAt: res.data.end_at,
+		gameId: res.data.id,
+		gameName: res.data.name,
+		aiEnabled: res.data.ai_enabled,
 		classes: classes
 	};
 };
