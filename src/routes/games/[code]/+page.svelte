@@ -134,37 +134,32 @@
 	<div class="mx-auto mt-5 max-w-7xl py-5 sm:px-6 lg:px-8">
 		{#if timeLeft > 0}
 			<form method="POST" action="?/updateScore" use:enhance={handleNewScore}>
-				<p>Register new 2FA Code</p>
 				<input type="hidden" name="game-id" id="game-id" value={data.gameId} />
 				<input type="hidden" name="ability-id" id="ability-id" value={abilityIdUsed} />
 
 				<div class="mt-4 grid grid-cols-12 gap-x-6 gap-y-8">
 					<div class="col-span-12 sm:col-span-4">
-						<label for="2fa-score" class="block text-sm font-medium leading-6 text-white"
-							>2FA value (1-99)</label
-						>
-						<div class="mt-2">
-							<div
-								class="flex max-w-16 rounded-md bg-white/5 ring-1 ring-inset ring-white/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-clash-500"
-							>
-								<input
-									type="number"
-									name="2fa-score"
-									id="2fa-score"
-									value={newScore}
-									required
-									min="1"
-									max="99"
-									class=" flex-1 border-0 bg-transparent py-1.5 pl-2 text-white focus:ring-0 sm:text-sm sm:leading-6"
-								/>
-							</div>
+						<label for="2fa-score" class="block font-medium leading-6 text-white">2FA value</label>
+						<p class="text-sm text-gray-400">Between 1 and 99</p>
+						<div class="mt-4">
+							<input
+								type="number"
+								name="2fa-score"
+								id="2fa-score"
+								value={newScore}
+								required
+								min="1"
+								max="99"
+								class="size-16 flex-1 rounded-t-md border-b border-b-2 bg-foreground/5 p-2.5 text-4xl tabular-nums text-white transition-colors focus:border-b-clash-500 focus:outline-none"
+							/>
 						</div>
 					</div>
 					{#if data.class}
 						<div class="col-span-12 sm:col-span-8">
-							<p class="block text-sm font-medium leading-6 text-white">Use class ability</p>
+							<p class="leading-6 text-white">Use class ability</p>
+							<p class="text-sm text-gray-400">Can only be used once per game</p>
 							{#each data.class.abilities as ability (ability.id)}
-								<div class="mt-2 flex gap-4">
+								<div class="mt-4 flex gap-4">
 									<button
 										type="button"
 										class="ability-button flex size-16 shrink-0 items-center rounded-md border"
