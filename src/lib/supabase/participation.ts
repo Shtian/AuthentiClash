@@ -42,6 +42,31 @@ export const getParticipation = async (
 	return successResponse;
 };
 
+export const getGameParticipations = async (
+	gameId: string
+): Promise<SupabaseResponse<Participation[]>> => {
+	const { data, error } = await supabase
+		.from('participation')
+		.select(
+			'id, score, total_score, updated_at, profile_id, game_id, nickname, created_at, nickname_image_url, ability_used, class_id'
+		)
+		.eq('game_id', gameId);
+
+	if (error !== null) {
+		const r: SupabaseResponse<Participation[]> = { type: 'error', data: null, error };
+		return r;
+	}
+
+	const participation = data.map(mapToParticipation);
+
+	const successResponse: SupabaseResponse<Participation[]> = {
+		type: 'success',
+		data: participation,
+		error: null
+	};
+	return successResponse;
+};
+
 export const updateParticipationScore = async (
 	score: number,
 	existingParticipation: Partial<Participation>,
