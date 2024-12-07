@@ -1,16 +1,13 @@
 import { error, fail, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
-import {
-	getParticipation,
-	updateParticipationNicknameImage,
-	updateParticipationScore
-} from '$lib/supabase/participation';
+import { updateParticipationNicknameImage } from '$lib/supabase/participation';
 import { generateImage } from '$lib/ai/image-generator';
 import { createSuccessMessage } from '$lib/utils/event-message-generator';
 import { PARTICIPANT_AVATARS_BUCKET, uploadParticipantImage } from '$lib/supabase/storage';
 import { checkForValueEntryBadge } from '$lib/badges/valueEntryBadges';
 import { getGame } from '$lib/supabase/games';
 import { getClass } from '$lib/supabase/classes';
+import { handleScoreUpdate } from './score-engine';
 
 export const load: PageServerLoad = async ({ params, locals: { getSession } }) => {
 	const session = await getSession();
@@ -84,32 +81,29 @@ export const actions = {
 			});
 		}
 
-		const res = await getParticipation(session.user.id, game_id!.toString());
-		if (res.type === 'error') {
-			console.error('Error getting existing participation', JSON.stringify(res.error));
+		const abilityId = ability_id?.toString() ?? null;
+		const scoreUpdateRes = await handleScoreUpdate(
+			score,
+			session.user.id,
+			game_id!.toString(),
+			abilityId
+		);
+
+		if (scoreUpdateRes.type === 'error') {
+			console.error('Error updating score', JSON.stringify(scoreUpdateRes.error));
 			return fail(500, {
 				nickname,
 				score,
-				message: 'Oh no, something went wrong. Please try again. 🙏'
-			});
-		}
-		const { data: participation } = res;
-
-		const updateParticipationRes = await updateParticipationScore(score, participation);
-
-		if (updateParticipationRes.type === 'error') {
-			console.error('Error updating score', JSON.stringify(error));
-			return fail(500, {
-				nickname,
-				score,
-				message: 'Oh no, something went wrong. Please try again. 🙏'
+				message: scoreUpdateRes.error.message
 			});
 		}
 
-		const badgeRes = await checkForValueEntryBadge(score, session.user.id);
+		const badgeRes = await checkForValueEntryBadge(scoreUpdateRes.data.newScore, session.user.id);
 
 		return {
-			message: createSuccessMessage(score),
+			message: abilityId
+				? scoreUpdateRes.data.message
+				: createSuccessMessage(scoreUpdateRes.data.newScore),
 			unlockBadgeStatus: badgeRes
 		};
 	},

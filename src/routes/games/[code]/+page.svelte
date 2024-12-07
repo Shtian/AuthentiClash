@@ -80,6 +80,7 @@
 				});
 			}
 			isLoading = false;
+			abilityIdUsed = null;
 			await update();
 		};
 	};
