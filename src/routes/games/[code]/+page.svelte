@@ -17,6 +17,8 @@
 	export let newScore: number | null = null;
 	let isLoading = false;
 	let abilityIdUsed: number | null = null;
+	let hasUsedAbility =
+		data.players?.find((x) => x.profileId === data.session?.user.id)?.abilityUsed !== null;
 	$: players = data.players;
 
 	let cooldownRemaining = timeUntilCooldownEnds(data.currentPlayer?.updatedAt, data.cooldownHours);
@@ -64,6 +66,7 @@
 						type: 'success'
 					});
 				}
+				if (result.data?.hasUsedAbility) hasUsedAbility = true;
 				toast.send({
 					message: result.data?.message,
 					type: 'success',
@@ -165,11 +168,11 @@
 									<button
 										type="button"
 										class="ability-button flex size-16 shrink-0 items-center rounded-md border"
-										class:active={abilityIdUsed === ability.id}
-										class:border-clash-500={abilityIdUsed === ability.id}
-										class:border-2={abilityIdUsed === ability.id}
+										class:active={!hasUsedAbility && abilityIdUsed === ability.id}
+										class:grayscale={hasUsedAbility}
+										class:cursor-not-allowed={hasUsedAbility}
+										disabled={hasUsedAbility}
 										on:click={() => {
-											console.log(ability, abilityIdUsed);
 											if (abilityIdUsed === ability.id) {
 												abilityIdUsed = null;
 											} else {
@@ -184,8 +187,8 @@
 										/>
 									</button>
 									<div class="flex flex-col justify-center">
-										<p class="text-left">{ability.name}</p>
-										<p class="text-left text-sm text-gray-400">{ability.description}</p>
+										<p>{ability.name}</p>
+										<p class=" text-sm text-gray-400">{ability.description}</p>
 									</div>
 								</div>
 							{/each}
@@ -228,6 +231,11 @@
 		overflow: hidden;
 		position: relative;
 		border-radius: 8px;
+	}
+
+	.ability-button.active {
+		border: solid 2px rgb(19 97 149);
+		cursor: not-allowed;
 	}
 
 	.ability-button.active::before {

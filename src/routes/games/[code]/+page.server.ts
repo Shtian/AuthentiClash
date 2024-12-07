@@ -104,7 +104,8 @@ export const actions = {
 			message: abilityId
 				? scoreUpdateRes.data.message
 				: createSuccessMessage(scoreUpdateRes.data.newScore),
-			unlockBadgeStatus: badgeRes
+			unlockBadgeStatus: badgeRes,
+			hasUsedAbility: abilityId !== null
 		};
 	},
 	generateParticipantImage: async ({ request, locals: { getSession, supabase } }) => {
