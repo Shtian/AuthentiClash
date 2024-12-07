@@ -107,14 +107,75 @@ const runAbilityCalculations = async (
 	}
 };
 
-const runCutpurseAbility = async (score: number, userParticipation: Participation) => {
-	console.log('runCutpurseAbility', score, userParticipation);
-	// Get all _other_ participants with one or more scores
-	// Select a random participant from the list
-	// Get a random score from the target
-	// Subtract the score from the target
-	// Set the score of the current user to the target score stolen
-	throw new Error('Not implemented');
+/**
+ * Steals 20-40 points to the other player with the highest total score.
+ * Other players need to be in the positive.
+ * Cannot steal more than total score
+ * @param score
+ * @param userParticipation
+ * @returns
+ */
+
+const runCutpurseAbility = async (
+	score: number,
+	userParticipation: Participation
+): Promise<Response<Success>> => {
+	const res = await getGameParticipations(userParticipation.gameId);
+	if (res.type === 'error') {
+		console.error('Error getting participation: ', JSON.stringify(res));
+		return {
+			type: 'error',
+			data: null,
+			error: { message: 'Oh no, something went wrong. Please try again. 🙏' }
+		};
+	}
+
+	// Other players WITH positive totalScore
+	const otherParticipants = res.data.filter(
+		(participation) =>
+			participation.profileId !== userParticipation.profileId && participation.totalScore > 0
+	);
+
+	if (!otherParticipants.length) {
+		return {
+			type: 'error',
+			data: null,
+			error: { message: 'No valid targets for Cutpurse!' }
+		};
+	}
+
+	const topPlayers = otherParticipants.toSorted((a, b) => b.totalScore - a.totalScore);
+	const target = topPlayers[0];
+
+	const attemptToSteal = Math.floor(Math.random() * 21) + 20;
+	const stolen = Math.min(target.totalScore, attemptToSteal);
+	await giveOtherPlayerScore(stolen * -1, target);
+
+	const playerNewScore = Math.min(99, score + stolen);
+
+	const updateParticipationRes = await updateParticipationScore(
+		playerNewScore,
+		userParticipation,
+		true
+	);
+
+	if (updateParticipationRes.type === 'error') {
+		console.error('Error updating score: ', JSON.stringify(updateParticipationRes));
+		return {
+			type: 'error',
+			error: { message: 'Oh no, something went wrong. 🙏' },
+			data: null
+		};
+	}
+
+	return {
+		type: 'success',
+		data: {
+			newScore: playerNewScore,
+			message: `Cutpurse stole ${stolen} points from ${target.nickname.replace(/\(.*\)/, '').trim()}! 💰`
+		},
+		error: null
+	};
 };
 
 /**
