@@ -157,7 +157,7 @@
 					{#if data.class}
 						<div class="col-span-12 sm:col-span-8">
 							<p class="leading-6 text-white">Use class ability</p>
-							<p class="text-sm text-gray-400">Can only be used once per game</p>
+							<p class="text-sm text-gray-400">Can only be used <strong>once</strong> per game!</p>
 							{#each data.class.abilities as ability (ability.id)}
 								<div class="mt-4 flex gap-4">
 									<button
@@ -190,7 +190,7 @@
 						</div>
 						<input type="hidden" name="ability-id" id="ability-id" bind:value={abilityIdUsed} />
 					{/if}
-					<div class="col-span-6 max-w-24 sm:col-span-3">
+					<div class="col-span-6 max-w-28 sm:col-span-3">
 						{#if cooldownRemaining <= 0}
 							<Button type="submit" disabled={isLoading}>
 								{#if isLoading}
@@ -230,7 +230,6 @@
 
 	.ability-button.active {
 		border: solid 2px rgb(19 97 149);
-		cursor: not-allowed;
 	}
 
 	.ability-button.active::before {

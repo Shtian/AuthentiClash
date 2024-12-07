@@ -1,4 +1,6 @@
+import { giveOtherPlayerScore } from '$lib/supabase/abilities/attacks';
 import {
+	getGameParticipations,
 	getParticipation,
 	updateParticipationScore,
 	type Participation
@@ -9,6 +11,12 @@ export type Response<T> =
 	| { type: 'error'; data: null; error: { message: string } };
 
 type Success = { newScore: number; message: string };
+
+const ABILITIES = {
+	CUTPURSE: 1,
+	CRIMSON_REAP: 2,
+	INFERNAL_RAGE: 3
+} as const;
 
 export const handleScoreUpdate = async (
 	score: number,
@@ -58,19 +66,12 @@ const tryUpdateParticipationScore = async (
 	};
 };
 
-const ABILITIES = {
-	CUTPURSE: 1,
-	CRIMSON_REAP: 2,
-	INFERNAL_RAGE: 3
-} as const;
-
 const runAbilityCalculations = async (
 	score: number,
 	userId: string,
 	gameId: string,
 	abilityId: number
 ): Promise<Response<Success>> => {
-	console.log('abilityId', abilityId);
 	const res = await getParticipation(userId, gameId);
 	if (res.type === 'error') {
 		console.error('Error getting participation: ', JSON.stringify(res));
@@ -94,7 +95,7 @@ const runAbilityCalculations = async (
 		case ABILITIES.CUTPURSE:
 			return runCutpurseAbility(score, userParticipation);
 		case ABILITIES.CRIMSON_REAP:
-			return runCrimsonReapAbility(userParticipation);
+			return runCrimsonReapAbility(score, userParticipation);
 		case ABILITIES.INFERNAL_RAGE:
 			return runInfernalRageAbility(score, userParticipation);
 		default:
@@ -115,12 +116,72 @@ const runCutpurseAbility = async (score: number, userParticipation: Participatio
 	// Set the score of the current user to the target score stolen
 	throw new Error('Not implemented');
 };
-const runCrimsonReapAbility = async (userParticipation: Participation) => {
-	console.log('runCrimsonReapAbility', userParticipation);
-	// Get all _other_ participants
-	// Select up to 3? random participants from the list
-	// Add a negative score between -10 and -20 to each participant
-	throw new Error('Not implemented');
+
+/**
+ * Deals 10-20 damage to 5 random targets
+ * @param score
+ * @param userParticipation
+ * @returns
+ */
+const runCrimsonReapAbility = async (
+	score: number,
+	userParticipation: Participation
+): Promise<Response<Success>> => {
+	const MAX_TARGETS = 5;
+
+	const res = await getGameParticipations(userParticipation.gameId);
+	if (res.type === 'error') {
+		console.error('Error getting participation: ', JSON.stringify(res));
+		return {
+			type: 'error',
+			data: null,
+			error: { message: 'Oh no, something went wrong. Please try again. 🙏' }
+		};
+	}
+
+	const otherParticipants = res.data.filter(
+		(participation) => participation.profileId !== userParticipation.profileId
+	);
+
+	if (!otherParticipants.length) {
+		return {
+			type: 'error',
+			data: null,
+			error: { message: 'No valid targets for Crimson Reap!' }
+		};
+	}
+
+	const targets: Participation[] = [];
+	const numberOfTargets = Math.min(MAX_TARGETS, otherParticipants.length);
+	for (let i = 0; i < numberOfTargets; i++) {
+		const targetIndex = Math.floor(Math.random() * otherParticipants.length);
+		targets.push(otherParticipants[targetIndex]);
+		otherParticipants.splice(targetIndex, 1);
+	}
+
+	let totalDamage = 0;
+	for (const target of targets) {
+		const damage = Math.floor(Math.random() * 11) + 10;
+		await giveOtherPlayerScore(damage * -1, target);
+		totalDamage += damage;
+	}
+
+	const updateParticipationRes = await updateParticipationScore(score, userParticipation, true);
+
+	if (updateParticipationRes.type === 'error') {
+		console.error('Error updating score: ', JSON.stringify(updateParticipationRes));
+		return {
+			type: 'error',
+			error: { message: 'Oh no, something went wrong. 🙏' },
+			data: null
+		};
+	}
+
+	return {
+		type: 'success',
+		data: { newScore: score, message: `Crimson Reap dealt ${totalDamage} damage! ☠️` },
+		error: null
+	};
 };
 
 /**
@@ -138,7 +199,7 @@ const runInfernalRageAbility = async (
 		console.error('Error updating score: ', JSON.stringify(updateParticipationRes));
 		return {
 			type: 'error',
-			error: { message: 'Oh no, something went wrong. Please try again. 🙏' },
+			error: { message: 'Oh no, something went wrong. 🙏' },
 			data: null
 		};
 	}

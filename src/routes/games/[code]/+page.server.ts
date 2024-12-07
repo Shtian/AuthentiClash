@@ -54,6 +54,7 @@ export const actions = {
 		const scoreInput = formData.get('2fa-score');
 		const game_id = formData.get('game-id');
 		const ability_id = formData.get('ability-id');
+		const abilityId = ability_id?.toString() ?? null;
 		const session = await getSession();
 
 		if (!session) {
@@ -81,7 +82,6 @@ export const actions = {
 			});
 		}
 
-		const abilityId = ability_id?.toString() ?? null;
 		const scoreUpdateRes = await handleScoreUpdate(
 			score,
 			session.user.id,
@@ -94,7 +94,8 @@ export const actions = {
 			return fail(500, {
 				nickname,
 				score,
-				message: scoreUpdateRes.error.message
+				message: scoreUpdateRes.error.message,
+				hasUsedAbility: abilityId !== null
 			});
 		}
 
