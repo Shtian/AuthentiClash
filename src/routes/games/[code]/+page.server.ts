@@ -10,6 +10,7 @@ import { createSuccessMessage } from '$lib/utils/event-message-generator';
 import { PARTICIPANT_AVATARS_BUCKET, uploadParticipantImage } from '$lib/supabase/storage';
 import { checkForValueEntryBadge } from '$lib/badges/valueEntryBadges';
 import { getGame } from '$lib/supabase/games';
+import { getClass } from '$lib/supabase/classes';
 
 export const load: PageServerLoad = async ({ params, locals: { getSession } }) => {
 	const session = await getSession();
@@ -33,6 +34,8 @@ export const load: PageServerLoad = async ({ params, locals: { getSession } }) =
 		redirect(303, `/games/${code}/join`);
 	}
 
+	const classResponse = await getClass(currentPlayer.classId);
+
 	return {
 		endsAt: res.data.end_at,
 		gameId: res.data.id,
@@ -40,6 +43,7 @@ export const load: PageServerLoad = async ({ params, locals: { getSession } }) =
 		cooldownHours: res.data.cooldown_hours,
 		players: res.data.participation,
 		currentPlayer,
+		class: classResponse.data,
 		title: res.data.name,
 		aiEnabled: res.data.ai_enabled,
 		description: 'A new game has begun! Enter your score and see what happens'
@@ -52,6 +56,7 @@ export const actions = {
 		const nickname = formData.get('nickname');
 		const scoreInput = formData.get('2fa-score');
 		const game_id = formData.get('game-id');
+		const ability_id = formData.get('ability-id');
 		const session = await getSession();
 
 		if (!session) {

@@ -16,7 +16,7 @@
 	export let data;
 	export let newScore: number | null = null;
 	let isLoading = false;
-
+	let abilityIdUsed: number | null = null;
 	$: players = data.players;
 
 	let cooldownRemaining = timeUntilCooldownEnds(data.currentPlayer?.updatedAt, data.cooldownHours);
@@ -132,14 +132,16 @@
 			<form method="POST" action="?/updateScore" use:enhance={handleNewScore}>
 				<p>Register new 2FA Code</p>
 				<input type="hidden" name="game-id" id="game-id" value={data.gameId} />
-				<div class="mt-4 grid grid-cols-3 gap-x-6 gap-y-8">
-					<div class="col-span-2">
+				<input type="hidden" name="ability-id" id="ability-id" value={abilityIdUsed} />
+
+				<div class="mt-4 grid grid-cols-12 gap-x-6 gap-y-8">
+					<div class="col-span-12 sm:col-span-4">
 						<label for="2fa-score" class="block text-sm font-medium leading-6 text-white"
 							>2FA value (1-99)</label
 						>
 						<div class="mt-2">
 							<div
-								class="flex rounded-md bg-white/5 ring-1 ring-inset ring-white/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-clash-500"
+								class="flex max-w-16 rounded-md bg-white/5 ring-1 ring-inset ring-white/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-clash-500"
 							>
 								<input
 									type="number"
@@ -149,12 +151,47 @@
 									required
 									min="1"
 									max="99"
-									class="flex-1 border-0 bg-transparent py-1.5 pl-2 text-white focus:ring-0 sm:text-sm sm:leading-6"
+									class=" flex-1 border-0 bg-transparent py-1.5 pl-2 text-white focus:ring-0 sm:text-sm sm:leading-6"
 								/>
 							</div>
 						</div>
 					</div>
-					<div class="col-span-1 self-end">
+					{#if data.class}
+						<div class="col-span-12 sm:col-span-8">
+							<p class="block text-sm font-medium leading-6 text-white">Use class ability</p>
+							{#each data.class.abilities as ability (ability.id)}
+								<div class="mt-2 flex gap-4">
+									<button
+										type="button"
+										class="ability-button flex size-16 shrink-0 items-center rounded-md border"
+										class:active={abilityIdUsed === ability.id}
+										class:border-clash-500={abilityIdUsed === ability.id}
+										class:border-2={abilityIdUsed === ability.id}
+										on:click={() => {
+											console.log(ability, abilityIdUsed);
+											if (abilityIdUsed === ability.id) {
+												abilityIdUsed = null;
+											} else {
+												abilityIdUsed = ability.id;
+											}
+										}}
+									>
+										<img
+											class="m-auto size-12"
+											src={`https://api.dicebear.com/9.x/rings/svg?seed=${ability.name}`}
+											alt={`icon for ability ${ability.name}`}
+										/>
+									</button>
+									<div class="flex flex-col justify-center">
+										<p class="text-left">{ability.name}</p>
+										<p class="text-left text-sm text-gray-400">{ability.description}</p>
+									</div>
+								</div>
+							{/each}
+						</div>
+						<input type="hidden" name="ability-id" id="ability-id" bind:value={abilityIdUsed} />
+					{/if}
+					<div class="col-span-6 max-w-24 sm:col-span-3">
 						{#if cooldownRemaining <= 0}
 							<Button type="submit" disabled={isLoading}>
 								{#if isLoading}
@@ -178,3 +215,34 @@
 		<GameHighScore {players} currentPlayerId={data.session?.user.id} aiEnabled={data.aiEnabled} />
 	</div>
 </main>
+
+<style lang="postcss">
+	@property --a {
+		syntax: '<angle>';
+		initial-value: 0deg;
+		inherits: false;
+	}
+
+	.ability-button {
+		overflow: hidden;
+		position: relative;
+		border-radius: 8px;
+	}
+
+	.ability-button.active::before {
+		content: '';
+		position: absolute;
+		z-index: -1;
+		inset: -0em;
+		border: solid 8px;
+		border-image: conic-gradient(from var(--a), rgb(19 97 149), transparent, transparent) 1;
+		filter: blur(8px);
+		animation: gradientRotation 2s linear infinite;
+	}
+
+	@keyframes gradientRotation {
+		to {
+			--a: 1turn;
+		}
+	}
+</style>
