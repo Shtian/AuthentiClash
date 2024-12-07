@@ -44,14 +44,20 @@ export const getParticipation = async (
 
 export const updateParticipationScore = async (
 	score: number,
-	existingParticipation: Partial<Participation>
+	existingParticipation: Partial<Participation>,
+	abilityUsed = false
 ): Promise<SupabaseResponse<Participation>> => {
 	const existingScore = existingParticipation.score || [];
 	const newScore = [...existingScore, score];
 	const newTotalScore = newScore.reduce((acc, curr) => acc + curr, 0);
 	const { data, error } = await supabase
 		.from('participation')
-		.update({ score: newScore, total_score: newTotalScore, updated_at: new Date() })
+		.update({
+			score: newScore,
+			total_score: newTotalScore,
+			updated_at: new Date(),
+			ability_used: abilityUsed ? new Date() : existingParticipation.abilityUsed
+		})
 		.eq('id', existingParticipation.id)
 		.select()
 		.single();
@@ -178,7 +184,6 @@ export const joinGame = async (
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const mapToParticipation = (data: any) => {
-	console.log('map to participation', data);
 	const participation: Participation = {
 		id: data.id,
 		score: data.score,
