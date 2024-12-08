@@ -1,5 +1,13 @@
 # authenticlash
 
+## 0.15.0
+
+### Minor Changes
+
+- [#84](https://github.com/Shtian/AuthentiClash/pull/84) [`8a0730c`](https://github.com/Shtian/AuthentiClash/commit/8a0730cadc4cc77ca0c134146eeff068ff6ff4a5) Thanks [@Shtian](https://github.com/Shtian)! - Adds DB migration for class/abilities
+
+- [#87](https://github.com/Shtian/AuthentiClash/pull/87) [`52e88a9`](https://github.com/Shtian/AuthentiClash/commit/52e88a9c602428c763680e5f7a4aec7ed86d6039) Thanks [@Shtian](https://github.com/Shtian)! - Add class selection and abilities
+
 ## 0.14.0
 
 ### Minor Changes
