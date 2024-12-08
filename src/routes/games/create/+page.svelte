@@ -15,6 +15,7 @@
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { goto } from '$app/navigation';
 	import { toast } from '$lib/stores/ToastStore.js';
+	import AbilityAnnouncement from '$lib/components/AbilityAnnouncement.svelte';
 
 	const df = new DateFormatter('en-US', {
 		dateStyle: 'long'
@@ -51,11 +52,11 @@
 <form method="POST" action="?/create" use:enhance={handleSubmit}>
 	<div class="space-y-12">
 		<div class="border-b border-white/10 pb-12">
+			<AbilityAnnouncement />
 			<h2 class="text-base font-semibold leading-7 text-white">Create an AuthentiClash game! ⚔️</h2>
 			<p class="mt-1 text-sm leading-6 text-gray-400">
 				You will get a shareable code after the game has been created.
 			</p>
-
 			<div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
 				<div class="col-span-4 sm:col-span-6">
 					<label for="game-name" class="block text-sm font-medium leading-6 text-white"

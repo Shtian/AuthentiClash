@@ -45,18 +45,12 @@ importers:
       '@vercel/speed-insights':
         specifier: ^1.0.12
         version: 1.0.12(@sveltejs/kit@2.8.3(@sveltejs/vite-plugin-svelte@3.1.2(svelte@4.2.19)(vite@5.4.8(@types/node@22.7.4)))(svelte@4.2.19)(vite@5.4.8(@types/node@22.7.4)))(svelte@4.2.19)
-      bits-ui:
-        specifier: ^0.11.8
-        version: 0.11.8(svelte@4.2.19)
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
       d3:
         specifier: ^7.9.0
         version: 7.9.0
-      lucide-svelte:
-        specifier: ^0.359.0
-        version: 0.359.0(svelte@4.2.19)
       openai:
         specifier: ^4.67.1
         version: 4.67.1
@@ -100,6 +94,9 @@ importers:
       autoprefixer:
         specifier: ^10.4.20
         version: 10.4.20(postcss@8.4.47)
+      bits-ui:
+        specifier: ^0.11.8
+        version: 0.11.8(svelte@4.2.19)
       eslint:
         specifier: ^8.57.1
         version: 8.57.1
@@ -109,6 +106,9 @@ importers:
       eslint-plugin-svelte:
         specifier: ^2.44.1
         version: 2.44.1(eslint@8.57.1)(svelte@4.2.19)
+      lucide-svelte:
+        specifier: ^0.359.0
+        version: 0.359.0(svelte@4.2.19)
       postcss:
         specifier: ^8.4.47
         version: 8.4.47

@@ -6,7 +6,9 @@
 	import { formatTimeDelta } from '$lib/utils/dateUtils';
 	import { generateNickName } from '$lib/utils/word-generator/generator';
 	import type { SubmitFunction } from '@sveltejs/kit';
-	import { Cog, LucideLoader2 } from 'lucide-svelte';
+	import { LucideLoader2, Shuffle } from 'lucide-svelte';
+	import * as RadioGroup from '$lib/components/ui/radio-group/index.js';
+	import { Label } from '$lib/components/ui/label/index.js';
 
 	export let data;
 	let isLoading = false;
@@ -82,7 +84,7 @@
 			<input type="hidden" name="game-id" id="game-id" value={data.gameId} />
 			<div class="col-span-3">
 				<label for="nickname" class="block text-sm font-medium leading-6 text-white"
-					>Choose your nickname or generate one clicking the cog:</label
+					>Choose your character name:</label
 				>
 				<div class="mt-2">
 					<div class="relative flex">
@@ -102,14 +104,41 @@
 							on:click={handleNicknameRefresh}
 						>
 							<span class="sr-only">Generate new nickname suggestion</span>
-							<Cog
+							<Shuffle
 								class="size-6 origin-center text-slate-400 [animation-duration:1s] [animation-iteration-count:1] {recentRefresh
-									? 'animate-spin'
+									? 'animate-pulse'
 									: null}"
 							/>
 						</button>
 					</div>
 				</div>
+				{#if data.classes.length > 0}
+					<div class="mt-8 space-y-4">
+						<p class="block text-sm font-medium leading-6 text-white">
+							Choose your class. Each ability can only be used once per game:
+						</p>
+						<RadioGroup.Root value={data.classes.at(0)?.id.toString()} required>
+							{#each data.classes as classChoice (classChoice.id)}
+								<div
+									class="border-grey-200 flex items-center space-x-2 rounded-md border p-3 transition-colors focus-within:border-clash-500"
+								>
+									<RadioGroup.Item
+										value={classChoice.id.toString()}
+										id={classChoice.id.toString()}
+										aria-required="true"
+									/>
+									<Label for={classChoice.id.toString()}
+										><p class="text-lg font-bold">{classChoice.name}</p>
+										{#each classChoice.abilities as ability (ability.id)}
+											<p class=" text-gray-400">{ability.name}: {ability.description}</p>
+										{/each}
+									</Label>
+								</div>
+							{/each}
+							<RadioGroup.Input name="class-id" />
+						</RadioGroup.Root>
+					</div>
+				{/if}
 			</div>
 			<Button class="mx-auto mt-8 max-w-fit" type="submit" disabled={isLoading}>
 				{#if isLoading}

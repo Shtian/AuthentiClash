@@ -1,52 +1,48 @@
 import { error, fail, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
-import {
-	getParticipation,
-	updateParticipationNicknameImage,
-	updateParticipationScore
-} from '$lib/supabase/participation';
+import { updateParticipationNicknameImage } from '$lib/supabase/participation';
 import { generateImage } from '$lib/ai/image-generator';
 import { createSuccessMessage } from '$lib/utils/event-message-generator';
 import { PARTICIPANT_AVATARS_BUCKET, uploadParticipantImage } from '$lib/supabase/storage';
 import { checkForValueEntryBadge } from '$lib/badges/valueEntryBadges';
+import { getGame } from '$lib/supabase/games';
+import { getClass } from '$lib/supabase/classes';
+import { handleScoreUpdate } from './score-engine';
 
-export const load: PageServerLoad = async ({ params, locals: { getSession, supabase } }) => {
+export const load: PageServerLoad = async ({ params, locals: { getSession } }) => {
 	const session = await getSession();
 	const { code } = params;
 	if (!session) {
 		redirect(303, '/auth/login');
 	}
 
-	const { data, error: err } = await supabase
-		.from('games')
-		.select(
-			'id, code, creator, end_at, is_active, name, cooldown_hours, ai_enabled, participation ( id, score, total_score, profile_id, updated_at, nickname_image_url, nickname )'
-		)
-		.eq('code', code)
-		.single();
+	const res = await getGame(code);
 
-	if (!data) {
+	if (res.type === 'error') {
+		error(500, { message: res.error.message });
+	}
+
+	if (!res.data) {
 		error(404, { message: `Game ${code} not found` });
 	}
 
-	if (err) {
-		error(500, { message: err });
-	}
-
-	const currentPlayer = data.participation.find((p) => p.profile_id === session.user.id);
+	const currentPlayer = res.data.participation.find((p) => p.profileId === session.user.id);
 	if (!currentPlayer) {
 		redirect(303, `/games/${code}/join`);
 	}
 
+	const classResponse = await getClass(currentPlayer.classId);
+
 	return {
-		endsAt: data.end_at,
-		gameId: data.id,
-		gameName: data.name,
-		cooldownHours: data.cooldown_hours,
-		players: data.participation,
+		endsAt: res.data.end_at,
+		gameId: res.data.id,
+		gameName: res.data.name,
+		cooldownHours: res.data.cooldown_hours,
+		players: res.data.participation,
 		currentPlayer,
-		title: data.name,
-		aiEnabled: data.ai_enabled,
+		class: classResponse.data,
+		title: res.data.name,
+		aiEnabled: res.data.ai_enabled,
 		description: 'A new game has begun! Enter your score and see what happens'
 	};
 };
@@ -57,6 +53,8 @@ export const actions = {
 		const nickname = formData.get('nickname');
 		const scoreInput = formData.get('2fa-score');
 		const game_id = formData.get('game-id');
+		const ability_id = formData.get('ability-id');
+		const abilityId = ability_id?.toString() ?? null;
 		const session = await getSession();
 
 		if (!session) {
@@ -84,32 +82,28 @@ export const actions = {
 			});
 		}
 
-		const res = await getParticipation(session.user.id, game_id!.toString());
-		if (res.type === 'error') {
-			console.error('Error getting existing participation', JSON.stringify(res.error));
+		const scoreUpdateRes = await handleScoreUpdate(
+			score,
+			session.user.id,
+			game_id!.toString(),
+			abilityId
+		);
+
+		if (scoreUpdateRes.type === 'error') {
+			console.error('Error updating score', JSON.stringify(scoreUpdateRes.error));
 			return fail(500, {
 				nickname,
 				score,
-				message: 'Oh no, something went wrong. Please try again. 🙏'
-			});
-		}
-		const { data: participation } = res;
-
-		const updateParticipationRes = await updateParticipationScore(score, participation);
-
-		if (updateParticipationRes.type === 'error') {
-			console.error('Error updating score', JSON.stringify(error));
-			return fail(500, {
-				nickname,
-				score,
-				message: 'Oh no, something went wrong. Please try again. 🙏'
+				message: scoreUpdateRes.error.message
 			});
 		}
 
-		const badgeRes = await checkForValueEntryBadge(score, session.user.id);
+		const badgeRes = await checkForValueEntryBadge(scoreUpdateRes.data.newScore, session.user.id);
 
 		return {
-			message: createSuccessMessage(score),
+			message: abilityId
+				? scoreUpdateRes.data.message
+				: createSuccessMessage(scoreUpdateRes.data.newScore),
 			unlockBadgeStatus: badgeRes
 		};
 	},

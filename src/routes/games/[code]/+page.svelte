@@ -4,7 +4,7 @@
 	import { fade } from 'svelte/transition';
 	import { formatTimeDelta, timeUntilCooldownEnds } from '$lib/utils/dateUtils.js';
 	import GameHighScore from './GameHighScore.svelte';
-	import { Clock, Copy, LucideLoader2, Sparkles } from 'lucide-svelte';
+	import { Clock, Copy, Flame, HandCoins, LucideLoader2, Skull, Sparkles } from 'lucide-svelte';
 	import Cooldown from './Cooldown.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import { onDestroy } from 'svelte';
@@ -12,14 +12,17 @@
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import * as Popover from '$lib/components/ui/popover';
+	import { ABILITIES } from '$lib/classes/abilities';
 
 	export let data;
 	export let newScore: number | null = null;
 	let isLoading = false;
-
+	let abilityIdUsed: number | null = null;
+	$: hasUsedAbility =
+		data.players?.find((x) => x.profileId === data.session?.user.id)?.abilityUsed !== null;
 	$: players = data.players;
 
-	let cooldownRemaining = timeUntilCooldownEnds(data.currentPlayer?.updated_at, data.cooldownHours);
+	let cooldownRemaining = timeUntilCooldownEnds(data.currentPlayer?.updatedAt, data.cooldownHours);
 
 	let urlIsRecentlyCopied = false;
 	const copyUrl = () => {
@@ -106,8 +109,8 @@
 				{/if}
 			</button>
 		</div>
-		<p class="text-pretty text-sm text-gray-300" title={data.endsAt}>
-			Time remaining: {timeLeftText}
+		<p class="text-pretty text-sm tabular-nums text-gray-300" title={data.endsAt}>
+			Ends in: {timeLeftText}
 		</p>
 		{#if data.aiEnabled}
 			<Popover.Root>
@@ -130,31 +133,65 @@
 	<div class="mx-auto mt-5 max-w-7xl py-5 sm:px-6 lg:px-8">
 		{#if timeLeft > 0}
 			<form method="POST" action="?/updateScore" use:enhance={handleNewScore}>
-				<p>Register new 2FA Code</p>
 				<input type="hidden" name="game-id" id="game-id" value={data.gameId} />
-				<div class="mt-4 grid grid-cols-3 gap-x-6 gap-y-8">
-					<div class="col-span-2">
-						<label for="2fa-score" class="block text-sm font-medium leading-6 text-white"
-							>2FA value (1-99)</label
-						>
-						<div class="mt-2">
-							<div
-								class="flex rounded-md bg-white/5 ring-1 ring-inset ring-white/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-clash-500"
-							>
-								<input
-									type="number"
-									name="2fa-score"
-									id="2fa-score"
-									value={newScore}
-									required
-									min="1"
-									max="99"
-									class="flex-1 border-0 bg-transparent py-1.5 pl-2 text-white focus:ring-0 sm:text-sm sm:leading-6"
-								/>
-							</div>
+				<input type="hidden" name="ability-id" id="ability-id" value={abilityIdUsed} />
+
+				<div class="mt-4 grid grid-cols-12 gap-x-6 gap-y-8">
+					<div class="col-span-12 sm:col-span-4">
+						<label for="2fa-score" class="block font-medium leading-6 text-white">2FA value</label>
+						<p class="text-sm text-gray-400">Between 1 and 99</p>
+						<div class="mt-4">
+							<input
+								type="number"
+								name="2fa-score"
+								id="2fa-score"
+								value={newScore}
+								required
+								min="1"
+								max="99"
+								class="size-16 flex-1 rounded-t-md border-b-2 bg-foreground/5 p-2.5 text-4xl tabular-nums text-white transition-colors focus:border-b-clash-500 focus:outline-none"
+							/>
 						</div>
 					</div>
-					<div class="col-span-1 self-end">
+					{#if data.class}
+						<div class="col-span-12 sm:col-span-8">
+							<p class="leading-6 text-white">Use class ability</p>
+							<p class="text-sm text-gray-400">Can only be used <strong>once</strong> per game!</p>
+							{#each data.class.abilities as ability (ability.id)}
+								<div class="mt-4 flex gap-4">
+									<button
+										type="button"
+										class="ability-button relative flex size-16 shrink-0 items-center border transition-colors"
+										class:active={!hasUsedAbility && abilityIdUsed === ability.id}
+										class:grayscale={hasUsedAbility}
+										class:cursor-not-allowed={hasUsedAbility}
+										disabled={hasUsedAbility}
+										on:click={() => {
+											if (abilityIdUsed === ability.id) {
+												abilityIdUsed = null;
+											} else {
+												abilityIdUsed = ability.id;
+											}
+										}}
+									>
+										{#if ability.id === ABILITIES.CRIMSON_REAP}
+											<Skull class="m-auto size-12" />
+										{:else if ability.id === ABILITIES.CUTPURSE}
+											<HandCoins class="m-auto size-12" />
+										{:else if ability.id === ABILITIES.INFERNAL_RAGE}
+											<Flame class="m-auto size-12" />
+										{/if}
+									</button>
+									<div class="flex flex-col justify-center">
+										<p>{ability.name}</p>
+										<p class=" text-sm text-gray-400">{ability.description}</p>
+									</div>
+								</div>
+							{/each}
+						</div>
+						<input type="hidden" name="ability-id" id="ability-id" bind:value={abilityIdUsed} />
+					{/if}
+					<div class="col-span-6 max-w-28 sm:col-span-3">
 						{#if cooldownRemaining <= 0}
 							<Button type="submit" disabled={isLoading}>
 								{#if isLoading}
@@ -178,3 +215,42 @@
 		<GameHighScore {players} currentPlayerId={data.session?.user.id} aiEnabled={data.aiEnabled} />
 	</div>
 </main>
+
+<style lang="postcss">
+	@property --a {
+		syntax: '<angle>';
+		initial-value: 0deg;
+		inherits: false;
+	}
+
+	.ability-button.active {
+		@apply bg-clash-100/10;
+	}
+
+	.ability-button.active::before {
+		content: '';
+		position: absolute;
+		inset: -2px;
+		border: solid 4px;
+		border-image: conic-gradient(
+				from var(--a),
+				transparent,
+				transparent,
+				rgb(252 211 77),
+				transparent,
+				transparent,
+				rgb(252 211 77),
+				transparent,
+				transparent
+			)
+			1;
+		filter: blur(1px);
+		animation: gradientRotation 4s linear infinite;
+	}
+
+	@keyframes gradientRotation {
+		to {
+			--a: 1turn;
+		}
+	}
+</style>

@@ -6,16 +6,10 @@
 	import { flip } from 'svelte/animate';
 	import * as Popover from '$lib/components/ui/popover';
 	import ScoreGraph from '$lib/components/ScoreGraph.svelte';
+	import type { Participation } from '$lib/supabase/participation';
+	import { getClassName } from '$lib/classes/classes';
 	/* eslint-disable  @typescript-eslint/no-explicit-any */
-	export let players: {
-		id: any;
-		score: any;
-		total_score: any;
-		profile_id: any;
-		updated_at: any;
-		nickname: any;
-		nickname_image_url: any;
-	}[] = [];
+	export let players: Participation[] = [];
 	export let aiEnabled = false;
 	export let currentPlayerId = '';
 
@@ -78,9 +72,9 @@
 					</tr>
 				</thead>
 				<tbody class="divide-y divide-gray-800">
-					{#each players.sort((a, b) => b.total_score - a.total_score) as player, i (player.profile_id)}
+					{#each players.sort((a, b) => b.totalScore - a.totalScore) as player, i (player.profileId)}
 						<tr
-							class:bg-clash-800={player.profile_id === currentPlayerId}
+							class:bg-clash-800={player.profileId === currentPlayerId}
 							animate:flip={{ duration: 300 }}
 						>
 							<td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white">
@@ -88,30 +82,33 @@
 							</td>
 							<td
 								class="flex max-w-[20ch] items-center gap-x-2 truncate px-3 py-4 text-sm text-gray-300 sm:max-w-max"
-								>{#if player.nickname_image_url}
+								>{#if player.nicknameImageUrl}
 									<Popover.Root>
 										<Popover.Trigger class="flex-shrink-0 ">
 											<img
-												src={`${player.nickname_image_url.replace('.webp', '-128.webp')}`}
+												src={`${player.nicknameImageUrl.replace('.webp', '-128.webp')}`}
 												alt={player.nickname}
 												class="size-6 rounded-full"
 											/>
 										</Popover.Trigger>
 										<Popover.Content>
-											<a href={player.nickname_image_url} class="mt-6 underline hover:no-underline">
+											<a href={player.nicknameImageUrl} class="mt-6 underline hover:no-underline">
 												<img
-													src={`${player.nickname_image_url.replace('.webp', '-512.webp')}`}
+													src={`${player.nicknameImageUrl.replace('.webp', '-512.webp')}`}
 													width={256}
 													height={256}
 													alt={player.nickname}
 													class="size-64"
 												/>
 											</a>
+											{#if player.classId}
+												Class: {getClassName(player.classId)}
+											{/if}
 										</Popover.Content>
 									</Popover.Root>
-								{:else if isLoading && player.profile_id === currentPlayerId}
+								{:else if isLoading && player.profileId === currentPlayerId}
 									<Loader2 class="size-6 animate-spin text-gray-300"></Loader2>
-								{:else if aiEnabled && player.profile_id === currentPlayerId}
+								{:else if aiEnabled && player.profileId === currentPlayerId}
 									<form
 										method="post"
 										action="?/generateParticipantImage"
@@ -150,6 +147,9 @@
 												alt={player.nickname}
 												class="size-48 w-full"
 											/>
+											{#if player.classId}
+												Class: {getClassName(player.classId)}
+											{/if}
 										</Popover.Content>
 									</Popover.Root>
 								{/if}{player.nickname}</td
@@ -157,7 +157,7 @@
 							<td
 								class="whitespace-nowrap px-3 py-4 text-sm text-gray-300"
 								title={player.score.join(' → ')}
-								>{player.total_score}
+								>{player.totalScore}
 							</td>
 							<td class="whitespace-nowrap text-sm text-gray-300">
 								<Popover.Root>
