@@ -3,11 +3,10 @@ export function formatTimeDelta(deltaMilliseconds: number): string {
 	const [days, hours, minutes, seconds] = timeLeft(deltaMilliseconds);
 
 	let result = '';
-	if (days > 0) result += `${days} day${days > 1 ? 's' : ''}, `;
-	if (hours > 0 || days > 0) result += `${hours} hour${hours > 1 ? 's' : ''}, `;
-	if (minutes > 0 || hours > 0 || days > 0)
-		result += `${minutes} minute${minutes > 1 ? 's' : ''}, `;
-	result += `${seconds} second${seconds > 1 ? 's' : ''}`;
+	if (days > 0) result += `${leftPad(days, 2)}d `;
+	if (hours > 0 || days > 0) result += `${leftPad(hours, 2)}h `;
+	if (minutes > 0 || hours > 0 || days > 0) result += `${leftPad(minutes, 2)}m `;
+	result += `${leftPad(seconds, 2)}s`;
 
 	return result.trimEnd().replace(/,\s*$/, '');
 }
