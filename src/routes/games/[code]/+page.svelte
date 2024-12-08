@@ -4,7 +4,7 @@
 	import { fade } from 'svelte/transition';
 	import { formatTimeDelta, timeUntilCooldownEnds } from '$lib/utils/dateUtils.js';
 	import GameHighScore from './GameHighScore.svelte';
-	import { Clock, Copy, LucideLoader2, Sparkles } from 'lucide-svelte';
+	import { Clock, Copy, Flame, HandCoins, LucideLoader2, Skull, Sparkles } from 'lucide-svelte';
 	import Cooldown from './Cooldown.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import { onDestroy } from 'svelte';
@@ -12,6 +12,7 @@
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import * as Popover from '$lib/components/ui/popover';
+	import { ABILITIES } from '$lib/classes/abilities';
 
 	export let data;
 	export let newScore: number | null = null;
@@ -173,11 +174,13 @@
 											}
 										}}
 									>
-										<img
-											class="m-auto size-12"
-											src={`https://api.dicebear.com/9.x/rings/svg?seed=${ability.name}`}
-											alt={`icon for ability ${ability.name}`}
-										/>
+										{#if ability.id === ABILITIES.CRIMSON_REAP}
+											<Skull class="m-auto size-12" />
+										{:else if ability.id === ABILITIES.CUTPURSE}
+											<HandCoins class="m-auto size-12" />
+										{:else if ability.id === ABILITIES.INFERNAL_RAGE}
+											<Flame class="m-auto size-12" />
+										{/if}
 									</button>
 									<div class="flex flex-col justify-center">
 										<p>{ability.name}</p>

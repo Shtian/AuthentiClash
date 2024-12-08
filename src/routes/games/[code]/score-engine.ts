@@ -1,3 +1,4 @@
+import { ABILITIES } from '$lib/classes/abilities';
 import { giveOtherPlayerScore } from '$lib/supabase/abilities/attacks';
 import {
 	getGameParticipations,
@@ -11,12 +12,6 @@ export type Response<T> =
 	| { type: 'error'; data: null; error: { message: string } };
 
 type Success = { newScore: number; message: string };
-
-const ABILITIES = {
-	CUTPURSE: 1,
-	CRIMSON_REAP: 2,
-	INFERNAL_RAGE: 3
-} as const;
 
 export const handleScoreUpdate = async (
 	score: number,
