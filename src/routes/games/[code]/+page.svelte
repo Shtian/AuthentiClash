@@ -17,7 +17,7 @@
 	export let newScore: number | null = null;
 	let isLoading = false;
 	let abilityIdUsed: number | null = null;
-	let hasUsedAbility =
+	$: hasUsedAbility =
 		data.players?.find((x) => x.profileId === data.session?.user.id)?.abilityUsed !== null;
 	$: players = data.players;
 
@@ -66,7 +66,6 @@
 						type: 'success'
 					});
 				}
-				if (result.data?.hasUsedAbility) hasUsedAbility = true;
 				toast.send({
 					message: result.data?.message,
 					type: 'success',
@@ -83,7 +82,6 @@
 				});
 			}
 			isLoading = false;
-			abilityIdUsed = null;
 			await update();
 		};
 	};
@@ -110,8 +108,8 @@
 				{/if}
 			</button>
 		</div>
-		<p class="text-pretty text-sm text-gray-300" title={data.endsAt}>
-			Time remaining: {timeLeftText}
+		<p class="text-pretty text-sm tabular-nums text-gray-300" title={data.endsAt}>
+			Ends in: {timeLeftText}
 		</p>
 		{#if data.aiEnabled}
 			<Popover.Root>
@@ -247,14 +245,5 @@
 		to {
 			--a: 1turn;
 		}
-	}
-
-	input::-webkit-outer-spin-button,
-	input::-webkit-inner-spin-button {
-		-webkit-appearance: none;
-		margin: 0;
-	}
-	input[type='number'] {
-		-moz-appearance: textfield;
 	}
 </style>

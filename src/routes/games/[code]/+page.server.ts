@@ -94,8 +94,7 @@ export const actions = {
 			return fail(500, {
 				nickname,
 				score,
-				message: scoreUpdateRes.error.message,
-				hasUsedAbility: abilityId !== null
+				message: scoreUpdateRes.error.message
 			});
 		}
 
@@ -105,8 +104,7 @@ export const actions = {
 			message: abilityId
 				? scoreUpdateRes.data.message
 				: createSuccessMessage(scoreUpdateRes.data.newScore),
-			unlockBadgeStatus: badgeRes,
-			hasUsedAbility: abilityId !== null
+			unlockBadgeStatus: badgeRes
 		};
 	},
 	generateParticipantImage: async ({ request, locals: { getSession, supabase } }) => {
