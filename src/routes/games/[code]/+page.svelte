@@ -150,7 +150,7 @@
 								required
 								min="1"
 								max="99"
-								class="size-16 flex-1 rounded-t-md border-b border-b-2 bg-foreground/5 p-2.5 text-4xl tabular-nums text-white transition-colors focus:border-b-clash-500 focus:outline-none"
+								class="size-16 flex-1 rounded-t-md border-b-2 bg-foreground/5 p-2.5 text-4xl tabular-nums text-white transition-colors focus:border-b-clash-500 focus:outline-none"
 							/>
 						</div>
 					</div>
