@@ -3,6 +3,7 @@
 	import { fly, scale } from 'svelte/transition';
 	import logo from '$lib/assets/authenticlash_logo.svg';
 	import { ArrowRightCircle } from 'lucide-svelte';
+	import AbilityAnnouncement from '$lib/components/AbilityAnnouncement.svelte';
 	let visible = false;
 	onMount(() => {
 		visible = true;
@@ -30,6 +31,9 @@
 
 		<div in:scale={{ start: 0, duration: 200, delay: 1500, opacity: 0 }}>
 			<img class="mx-auto mt-16 h-80 w-auto" src={logo} alt="AuthentiClash logo" />
+		</div>
+		<div class="mt-8 text-left" in:fly={{ y: 10, duration: 1500, delay: 1700, opacity: 0 }}>
+			<AbilityAnnouncement />
 		</div>
 	{/if}
 </heading>
