@@ -160,7 +160,7 @@
 								<div class="mt-4 flex gap-4">
 									<button
 										type="button"
-										class="ability-button flex size-16 shrink-0 items-center rounded-md border"
+										class="ability-button relative flex size-16 shrink-0 items-center border transition-colors"
 										class:active={!hasUsedAbility && abilityIdUsed === ability.id}
 										class:grayscale={hasUsedAbility}
 										class:cursor-not-allowed={hasUsedAbility}
@@ -220,25 +220,29 @@
 		inherits: false;
 	}
 
-	.ability-button {
-		overflow: hidden;
-		position: relative;
-		border-radius: 8px;
-	}
-
 	.ability-button.active {
-		border: solid 2px rgb(19 97 149);
+		@apply bg-clash-100/10;
 	}
 
 	.ability-button.active::before {
 		content: '';
 		position: absolute;
-		z-index: -1;
-		inset: -0em;
-		border: solid 8px;
-		border-image: conic-gradient(from var(--a), rgb(19 97 149), transparent, transparent) 1;
-		filter: blur(8px);
-		animation: gradientRotation 2s linear infinite;
+		inset: -2px;
+		border: solid 4px;
+		border-image: conic-gradient(
+				from var(--a),
+				transparent,
+				transparent,
+				rgb(252 211 77),
+				transparent,
+				transparent,
+				rgb(252 211 77),
+				transparent,
+				transparent
+			)
+			1;
+		filter: blur(1px);
+		animation: gradientRotation 4s linear infinite;
 	}
 
 	@keyframes gradientRotation {
