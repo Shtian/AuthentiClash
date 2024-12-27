@@ -8,7 +8,7 @@
 	import ScoreGraph from '$lib/components/ScoreGraph.svelte';
 	import type { Participation } from '$lib/supabase/participation';
 	import { getClassName } from '$lib/classes/classes';
-	/* eslint-disable  @typescript-eslint/no-explicit-any */
+
 	export let players: Participation[] = [];
 	export let aiEnabled = false;
 	export let currentPlayerId = '';
