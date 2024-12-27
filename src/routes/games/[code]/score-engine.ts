@@ -1,5 +1,6 @@
 import { ABILITIES } from '$lib/classes/abilities';
 import { giveOtherPlayerScore } from '$lib/supabase/abilities/attacks';
+import { addGameLog } from '$lib/supabase/gameLog';
 import {
 	getGameParticipations,
 	getParticipation,
@@ -19,7 +20,6 @@ export const handleScoreUpdate = async (
 	gameId: string,
 	abilityId: string | null
 ): Promise<Response<Success>> => {
-	console.log('handleScoreUpdate', score, userId, gameId, abilityId);
 	if (!abilityId) {
 		console.log('no ability id');
 		return await tryUpdateParticipationScore(score, userId, gameId);
@@ -53,6 +53,8 @@ const tryUpdateParticipationScore = async (
 			error: { message: 'Oh no, something went wrong. Please try again. 🙏' }
 		};
 	}
+
+	await addGameLog(gameId, `Player ${userParticipation.nickname} scored ${score}`, '');
 
 	return {
 		type: 'success',
@@ -162,6 +164,12 @@ const runCutpurseAbility = async (
 		};
 	}
 
+	await addGameLog(
+		userParticipation.gameId,
+		`Player ${userParticipation.nickname} activated Cutpurse and stole ${stolen} points from ${target.nickname} 💰`,
+		''
+	);
+
 	return {
 		type: 'success',
 		data: {
@@ -231,6 +239,12 @@ const runCrimsonReapAbility = async (
 			data: null
 		};
 	}
+	const targetNames = targets.map((t) => t.nickname).join(', ');
+	await addGameLog(
+		userParticipation.gameId,
+		`Player ${userParticipation.nickname} activated Crimson Reap and hit ${targetNames} for a total of ${totalDamage} damage! ☠️`,
+		''
+	);
 
 	return {
 		type: 'success',
@@ -258,6 +272,12 @@ const runInfernalRageAbility = async (
 			data: null
 		};
 	}
+
+	await addGameLog(
+		userParticipation.gameId,
+		`Player ${userParticipation.nickname} activated Infernal Rage and scored ${newScore} 🔥`,
+		''
+	);
 
 	return {
 		type: 'success',

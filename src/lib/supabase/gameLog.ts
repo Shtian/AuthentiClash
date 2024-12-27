@@ -8,7 +8,7 @@ type GameLog = {
 	created_at: Date;
 };
 
-export const getGameLogs = async (gameId: number): Promise<SupabaseResponse<Array<GameLog>>> => {
+export const getGameLogs = async (gameId: string): Promise<SupabaseResponse<Array<GameLog>>> => {
 	const { data, error } = await supabaseServerClient
 		.from('game_log')
 		.select('id, game_id, text, text_ai, created_at')
@@ -24,7 +24,7 @@ export const getGameLogs = async (gameId: number): Promise<SupabaseResponse<Arra
 };
 
 export const addGameLog = async (
-	gameId: number,
+	gameId: string,
 	text: string,
 	textAi: string
 ): Promise<SupabaseResponse<GameLog>> => {
