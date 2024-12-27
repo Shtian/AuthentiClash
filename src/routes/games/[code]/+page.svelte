@@ -13,6 +13,7 @@
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import * as Popover from '$lib/components/ui/popover';
 	import { ABILITIES } from '$lib/classes/abilities';
+	import GameLogs from './GameLogs.svelte';
 
 	export let data;
 	export let newScore: number | null = null;
@@ -213,6 +214,8 @@
 			<p class="text-white">Final scores:</p>
 		{/if}
 		<GameHighScore {players} currentPlayerId={data.session?.user.id} aiEnabled={data.aiEnabled} />
+		<h3 class="mb-6 mt-12 text-lg">Game logs:</h3>
+		<GameLogs logs={data.logs} />
 	</div>
 </main>
 

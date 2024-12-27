@@ -1,18 +1,19 @@
 import { supabaseServerClient, type SupabaseResponse } from './supabaseClient';
 
-type GameLog = {
+export type GameLog = {
 	id: number;
 	game_id: number;
 	text: string;
 	text_ai: string;
-	created_at: Date;
+	created_at: string;
 };
 
 export const getGameLogs = async (gameId: string): Promise<SupabaseResponse<Array<GameLog>>> => {
 	const { data, error } = await supabaseServerClient
 		.from('game_log')
 		.select('id, game_id, text, text_ai, created_at')
-		.eq('game_id', gameId);
+		.eq('game_id', gameId)
+		.order('created_at', { ascending: false });
 
 	if (error) {
 		console.error('Error getting all classes:', error.message);

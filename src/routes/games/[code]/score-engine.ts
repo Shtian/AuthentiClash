@@ -54,7 +54,7 @@ const tryUpdateParticipationScore = async (
 		};
 	}
 
-	await addGameLog(gameId, `Player ${userParticipation.nickname} scored ${score}`, '');
+	await addGameLog(gameId, `${userParticipation.nickname} scored ${score}`, '');
 
 	return {
 		type: 'success',
@@ -166,7 +166,7 @@ const runCutpurseAbility = async (
 
 	await addGameLog(
 		userParticipation.gameId,
-		`Player ${userParticipation.nickname} activated Cutpurse and stole ${stolen} points from ${target.nickname} 💰`,
+		`${userParticipation.nickname} activated Cutpurse and stole ${stolen} points from ${target.nickname} 💰`,
 		''
 	);
 
@@ -242,7 +242,7 @@ const runCrimsonReapAbility = async (
 	const targetNames = targets.map((t) => t.nickname).join(', ');
 	await addGameLog(
 		userParticipation.gameId,
-		`Player ${userParticipation.nickname} activated Crimson Reap and hit ${targetNames} for a total of ${totalDamage} damage! ☠️`,
+		`${userParticipation.nickname} activated Crimson Reap and hit ${targetNames} for a total of ${totalDamage} damage ☠️`,
 		''
 	);
 
@@ -275,7 +275,7 @@ const runInfernalRageAbility = async (
 
 	await addGameLog(
 		userParticipation.gameId,
-		`Player ${userParticipation.nickname} activated Infernal Rage and scored ${newScore} 🔥`,
+		`${userParticipation.nickname} activated Infernal Rage and scored ${newScore} 🔥`,
 		''
 	);
 

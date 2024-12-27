@@ -8,6 +8,7 @@ import { checkForValueEntryBadge } from '$lib/badges/valueEntryBadges';
 import { getGame } from '$lib/supabase/games';
 import { getClass } from '$lib/supabase/classes';
 import { handleScoreUpdate } from './score-engine';
+import { getGameLogs } from '$lib/supabase/gameLog';
 
 export const load: PageServerLoad = async ({ params, locals: { getSession } }) => {
 	const session = await getSession();
@@ -33,6 +34,8 @@ export const load: PageServerLoad = async ({ params, locals: { getSession } }) =
 
 	const classResponse = await getClass(currentPlayer.classId);
 
+	const gameLogs = await getGameLogs(res.data.id.toString());
+
 	return {
 		endsAt: res.data.end_at,
 		gameId: res.data.id,
@@ -43,6 +46,7 @@ export const load: PageServerLoad = async ({ params, locals: { getSession } }) =
 		class: classResponse.data,
 		title: res.data.name,
 		aiEnabled: res.data.ai_enabled,
+		logs: gameLogs.data || [],
 		description: 'A new game has begun! Enter your score and see what happens'
 	};
 };
