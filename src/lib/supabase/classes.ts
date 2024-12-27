@@ -22,7 +22,7 @@ export const getAllClasses = async (): Promise<SupabaseResponse<Array<Class>>> =
 		const r: SupabaseResponse<Array<Class>> = { type: 'error', data: null, error };
 		return r;
 	}
-	console.log(data);
+
 	return { type: 'success', data: data || [], error: null };
 };
 

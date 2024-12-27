@@ -21,7 +21,6 @@ export const handleScoreUpdate = async (
 	abilityId: string | null
 ): Promise<Response<Success>> => {
 	if (!abilityId) {
-		console.log('no ability id');
 		return await tryUpdateParticipationScore(score, userId, gameId);
 	}
 
