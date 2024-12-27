@@ -60,8 +60,8 @@
 					message: result.data?.message,
 					type: 'error'
 				});
+				isLoading = false;
 			}
-			isLoading = false;
 			await update();
 		};
 	};
