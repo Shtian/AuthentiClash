@@ -4,6 +4,8 @@ import { getUsername } from '$lib/supabase/profiles';
 import { joinGame } from '$lib/supabase/participation';
 import { getAllClasses } from '$lib/supabase/classes';
 import { getGame } from '$lib/supabase/games';
+import { addGameLog } from '$lib/supabase/gameLog';
+import { CLASSES_NAME } from '$lib/classes/abilities';
 
 export const load: PageServerLoad = async ({ params, locals: { getSession } }) => {
 	const session = await getSession();
@@ -91,6 +93,12 @@ export const actions = {
 				joinedGame: false
 			});
 		}
+
+		await addGameLog(
+			game_id!.toString(),
+			`${patchedNickname} joined the game as a ${CLASSES_NAME[parseInt(class_id!.toString(), 10)]} ⚔️`,
+			''
+		);
 
 		return {
 			message: `Game joined, redirecting 🎉 Good luck, ${nickname}!`,

@@ -31,7 +31,8 @@ const seedParticipations = async () => {
 		nickname,
 		scores,
 		nickname_image_url,
-		endTime
+		endTime,
+		class_id
 	) => {
 		const referenceDate =
 			new Date(endTime).getTime() > new Date().getTime() ? new Date() : new Date(endTime);
@@ -46,7 +47,8 @@ const seedParticipations = async () => {
 			game_id: gameId,
 			nickname_image_url,
 			created_at,
-			updated_at
+			updated_at,
+			class_id
 		};
 
 		const { error } = await supabase
@@ -80,13 +82,15 @@ const seedParticipations = async () => {
 		const creator = users.find((user) => user.id === game.creator);
 		const scoresPerPlayer = Math.floor(Math.random() * 5) + 1;
 		const scores = createSetOfScores(scoresPerPlayer);
+		const class_id = Math.floor(Math.random() * 3) + 1;
 		await addParticipation(
 			game.id,
 			creator.id,
 			`Nickname ${creator.username.split(' ').at(-1)}`,
 			scores,
 			creator.avatar_url,
-			game.end_at
+			game.end_at,
+			class_id
 		);
 
 		// Add participation for other players
@@ -107,13 +111,15 @@ const seedParticipations = async () => {
 		// Add participation for all other players
 		for (const player of selectedPlayers) {
 			const scores = createSetOfScores(scoresPerPlayer);
+			const class_id = Math.floor(Math.random() * 3) + 1;
 			await addParticipation(
 				game.id,
 				player.id,
 				`Nickname ${creator.username.split(' ').at(-1)}`,
 				scores,
 				player.avatar_url,
-				game.end_at
+				game.end_at,
+				class_id
 			);
 		}
 

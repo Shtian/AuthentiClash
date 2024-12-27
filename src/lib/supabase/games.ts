@@ -15,23 +15,23 @@ export type EndedActiveGame = {
 	participation: string[];
 };
 
-export const getGame = async (code: string): Promise<SupabaseResponse<Game>> => {
+export const getGame = async (code: string): Promise<SupabaseResponse<Game | null>> => {
 	const { data: game, error } = await supabaseServerClient
 		.from('games')
 		.select(
 			'id, code, creator, end_at, is_active, name, cooldown_hours, ai_enabled, participation ( id, score, total_score, profile_id, updated_at, nickname_image_url, nickname, ability_used, class_id )'
 		)
 		.eq('code', code)
-		.single();
+		.maybeSingle();
 
 	if (error !== null) {
 		const r: SupabaseResponse<Game> = { type: 'error', data: null, error };
 		return r;
 	}
 
-	const successResponse: SupabaseResponse<Game> = {
+	const successResponse: SupabaseResponse<Game | null> = {
 		type: 'success',
-		data: mapToGame(game),
+		data: game ? mapToGame(game) : null,
 		error: null
 	};
 
