@@ -16,7 +16,6 @@ export const load: PageServerLoad = async ({ params, locals: { getSession } }) =
 	if (!session) {
 		redirect(303, '/auth/login');
 	}
-
 	const res = await getGame(code);
 
 	if (res.type === 'error') {
