@@ -50,7 +50,7 @@
 		"@changesets/changelog-github": "^0.5.0",
 		"@changesets/cli": "^2.27.11",
 		"@internationalized/date": "^3.6.0",
-		"@sentry/sveltekit": "^7.119.1",
+		"@sentry/sveltekit": "^8.47.0",
 		"@supabase/auth-helpers-sveltekit": "^0.10.7",
 		"@supabase/auth-ui-shared": "^0.1.8",
 		"@supabase/auth-ui-svelte": "^0.2.9",
