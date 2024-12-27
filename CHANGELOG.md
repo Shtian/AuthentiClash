@@ -1,5 +1,17 @@
 # authenticlash
 
+## 0.16.0
+
+### Minor Changes
+
+- [#89](https://github.com/Shtian/AuthentiClash/pull/89) [`78e2430`](https://github.com/Shtian/AuthentiClash/commit/78e243076ef18bb063c4ec549860ea94ed18af11) Thanks [@Shtian](https://github.com/Shtian)! - Add game event log feature showing scores, abilities and join messages
+
+### Patch Changes
+
+- [#89](https://github.com/Shtian/AuthentiClash/pull/89) [`78e2430`](https://github.com/Shtian/AuthentiClash/commit/78e243076ef18bb063c4ec549860ea94ed18af11) Thanks [@Shtian](https://github.com/Shtian)! - Show 404 instead of 500 server error when visiting a non-existing game page
+
+- [#89](https://github.com/Shtian/AuthentiClash/pull/89) [`78e2430`](https://github.com/Shtian/AuthentiClash/commit/78e243076ef18bb063c4ec549860ea94ed18af11) Thanks [@Shtian](https://github.com/Shtian)! - Show loading text when creating game until redirect
+
 ## 0.15.0
 
 ### Minor Changes
