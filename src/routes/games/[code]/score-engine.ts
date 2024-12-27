@@ -110,7 +110,6 @@ const runAbilityCalculations = async (
  * @param userParticipation
  * @returns
  */
-
 const runCutpurseAbility = async (
 	score: number,
 	userParticipation: Participation
