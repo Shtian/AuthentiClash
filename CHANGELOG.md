@@ -1,5 +1,11 @@
 # authenticlash
 
+## 0.17.0
+
+### Minor Changes
+
+- [#92](https://github.com/Shtian/AuthentiClash/pull/92) [`f809534`](https://github.com/Shtian/AuthentiClash/commit/f8095344bac8dc9ad8fec6660d4e8172a8bcac15) Thanks [@Shtian](https://github.com/Shtian)! - Add AI game commentator, replacing plain log events
+
 ## 0.16.0
 
 ### Minor Changes
