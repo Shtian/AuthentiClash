@@ -1,6 +1,6 @@
 import { ABILITIES } from '$lib/classes/abilities';
 import { giveOtherPlayerScore } from '$lib/supabase/abilities/attacks';
-import { addGameLog, addGameLogWithAI } from '$lib/supabase/gameLog';
+import { addGameLogWithAI } from '$lib/supabase/gameLog';
 import {
 	getGameParticipations,
 	getParticipation,
