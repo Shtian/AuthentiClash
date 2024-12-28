@@ -1,3 +1,4 @@
+import { generateCommentatorEvent } from '$lib/ai/game-event-commentator';
 import { supabaseServerClient, type SupabaseResponse } from './supabaseClient';
 
 export type GameLog = {
@@ -26,12 +27,41 @@ export const getGameLogs = async (gameId: string): Promise<SupabaseResponse<Arra
 
 export const addGameLog = async (
 	gameId: string,
-	text: string,
-	textAi: string
+	text: string
 ): Promise<SupabaseResponse<GameLog>> => {
 	const { data, error } = await supabaseServerClient
 		.from('game_log')
-		.insert({ game_id: gameId, text, text_ai: textAi })
+		.insert({ game_id: gameId, text })
+		.select()
+		.single();
+
+	if (error) {
+		console.error('Error adding game log:', error.message);
+		const r: SupabaseResponse<GameLog> = { type: 'error', data: null, error };
+		return r;
+	}
+
+	return { type: 'success', data: data || null, error: null };
+};
+
+export const addGameLogWithAI = async (
+	gameId: string,
+	text: string
+): Promise<SupabaseResponse<GameLog>> => {
+	const previousLogs = await getGameLogs(gameId);
+	const aiText =
+		previousLogs.type === 'success'
+			? await generateCommentatorEvent(
+					text,
+					previousLogs.data.map((log) => log.text)
+				)
+			: '';
+	console.log('Text: ', text);
+	console.log('AI Text: ', aiText);
+
+	const { data, error } = await supabaseServerClient
+		.from('game_log')
+		.insert({ game_id: gameId, text, text_ai: aiText })
 		.select()
 		.single();
 
