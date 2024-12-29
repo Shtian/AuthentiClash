@@ -65,20 +65,28 @@ export const getEndedActiveGames = async (): Promise<SupabaseResponse<EndedActiv
 };
 
 export const getAllGamesByUserId = async (userId: string): Promise<SupabaseResponse<Game[]>> => {
-	const { data: games, error } = await supabaseServerClient
+	const { data: matchingParticipations, error: pError } = await supabaseServerClient
+		.from('participation')
+		.select('game_id')
+		.eq('profile_id', userId);
+
+	if (pError !== null) {
+		const r: SupabaseResponse<Game[]> = { type: 'error', data: null, error: pError };
+		return r;
+	}
+
+	const gameIds = matchingParticipations.map((p) => p.game_id);
+	const { data: participatingGames, error } = await supabaseServerClient
 		.from('games')
 		.select(
 			'id, code, creator, end_at, is_active, name, cooldown_hours, ai_enabled, participation ( id, score, total_score, profile_id, updated_at, nickname_image_url, nickname, ability_used, class_id )'
-		);
+		)
+		.in('id', gameIds);
 
 	if (error !== null) {
 		const r: SupabaseResponse<Game[]> = { type: 'error', data: null, error };
 		return r;
 	}
-
-	const participatingGames = games.filter((game) =>
-		game.participation.some((participation) => participation.profile_id === userId)
-	);
 
 	const successResponse: SupabaseResponse<Game[]> = {
 		type: 'success',
