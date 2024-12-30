@@ -115,7 +115,7 @@
 				{#if data.classes.length > 0}
 					<div class="mt-8 space-y-4">
 						<p class="block text-sm font-medium leading-6 text-white">
-							Choose your class. Each ability can only be used once per game:
+							Choose your class. Each active ability can only be used once per game:
 						</p>
 						<RadioGroup.Root value={data.classes.at(0)?.id.toString()} required>
 							{#each data.classes as classChoice (classChoice.id)}
