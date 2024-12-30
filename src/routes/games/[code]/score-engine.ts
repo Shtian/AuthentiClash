@@ -220,11 +220,13 @@ const runCrimsonReapAbility = async (
 	}
 
 	let totalDamage = 0;
+	let totalDamageMitigated = 0;
 	for (const target of targets) {
 		const damage = Math.floor(Math.random() * 11) + 10;
 		const damageAfterMitigation = classMitigation(damage, target);
 		await giveOtherPlayerScore(damageAfterMitigation * -1, target);
 		totalDamage += damageAfterMitigation;
+		totalDamageMitigated += damage - damageAfterMitigation;
 	}
 
 	const updateParticipationRes = await updateParticipationScore(score, userParticipation, true);
@@ -238,9 +240,13 @@ const runCrimsonReapAbility = async (
 	}
 
 	const targetNames = targets.map((t) => t.nickname).join(', ');
+	const mitigationText =
+		totalDamageMitigated > 0
+			? ` ${totalDamageMitigated} points were mitigated by one or more targets!`
+			: '';
 	await addGameLogWithAI(
 		userParticipation.gameId,
-		`${userParticipation.nickname} activated Crimson Reap and hit ${targetNames} for a total of ${totalDamage} damage ☠️`
+		`${userParticipation.nickname} activated Crimson Reap and hit ${targetNames} for a total of ${totalDamage} damage ☠️${mitigationText}`
 	);
 
 	return {
