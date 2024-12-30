@@ -1,9 +1,10 @@
 <script lang="ts">
+	import type { Snippet } from 'svelte';
 	import { fade } from 'svelte/transition';
 
 	interface Props {
 		msgType?: 'success' | 'error';
-		children?: import('svelte').Snippet;
+		children?: Snippet;
 	}
 
 	let { msgType = 'success', children }: Props = $props();

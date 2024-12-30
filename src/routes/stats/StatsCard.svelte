@@ -1,12 +1,13 @@
 <script lang="ts">
 	import { CircleHelp } from 'lucide-svelte';
 	import * as Popover from '$lib/components/ui/popover';
+	import type { Snippet } from 'svelte';
 
 	interface Props {
 		title: string;
 		cols?: 'single' | 'half' | 'full';
 		helptext?: string;
-		children?: import('svelte').Snippet;
+		children?: Snippet;
 	}
 
 	let { title, cols = 'half', helptext = '', children }: Props = $props();
