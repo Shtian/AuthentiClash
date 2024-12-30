@@ -2,11 +2,12 @@
 	import { Calendar as CalendarPrimitive } from "bits-ui";
 	import { cn } from "$lib/utils.js";
 
-	let {
-		ref = $bindable(null),
-		class: className,
-		...restProps
-	}: CalendarPrimitive.GridBodyProps = $props();
+	type $$Props = CalendarPrimitive.GridBodyProps;
+
+	let className: $$Props["class"] = undefined;
+	export { className as class };
 </script>
 
-<CalendarPrimitive.GridBody bind:ref class={cn(className)} {...restProps} />
+<CalendarPrimitive.GridBody class={cn(className)} {...$$restProps}>
+	<slot />
+</CalendarPrimitive.GridBody>
