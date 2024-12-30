@@ -1,19 +1,13 @@
 <script lang="ts">
-	import type { HTMLAttributes } from 'svelte/elements';
-	import { cn } from '$lib/utils.js';
+	import type { HTMLAttributes } from "svelte/elements";
+	import { cn } from "$lib/utils.js";
 
 	type $$Props = HTMLAttributes<HTMLDivElement>;
 
-	interface Props {
-		class?: $$Props['class'];
-		children?: import('svelte').Snippet;
-		[key: string]: any
-	}
-
-	let { class: className = undefined, children, ...rest }: Props = $props();
-	
+	let className: $$Props["class"] = undefined;
+	export { className as class };
 </script>
 
-<div class={cn('text-sm [&_p]:leading-relaxed', className)} {...rest}>
-	{@render children?.()}
+<div class={cn("text-sm [&_p]:leading-relaxed", className)} {...$$restProps}>
+	<slot />
 </div>
