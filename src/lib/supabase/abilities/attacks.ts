@@ -7,8 +7,7 @@ export const giveOtherPlayerScore = async (
 	existingParticipation: Partial<Participation>
 ): Promise<SupabaseResponse<Participation>> => {
 	const existingScore = existingParticipation.score || [];
-	const scoreAfterClassMitigations = classMitigation(score, existingParticipation);
-	const newScore = [...existingScore, scoreAfterClassMitigations];
+	const newScore = [...existingScore, score];
 	const newTotalScore = newScore.reduce((acc, curr) => acc + curr, 0);
 	const { data, error } = await supabaseServerClient
 		.from('participation')
@@ -36,9 +35,9 @@ export const giveOtherPlayerScore = async (
 	return successResponse;
 };
 
-const classMitigation = (score: number, participation: Partial<Participation>) => {
-	if (score < 0 && participation.classId === CLASSES.PALADIN) {
-		return Math.ceil(score * (1 - DIVINE_AEGIS_PERCENTAGE));
+export const classMitigation = (score: number, participation: Partial<Participation>) => {
+	if (participation.classId === CLASSES.PALADIN) {
+		return Math.floor(score * (1 - DIVINE_AEGIS_PERCENTAGE));
 	}
 	return score;
 };
