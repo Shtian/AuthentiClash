@@ -63,12 +63,12 @@
 						<a
 							href="/games?filter=ended"
 							class={`transition-colors ${$page.url.searchParams.get('filter') === 'ended' ? 'text-clash-200' : 'hover:text-white'}`}
-							>Ended</a
+							data-sveltekit-preload-data="hover">Ended</a
 						>
 						<a
 							href="/games?filter=created"
 							class={`transition-colors ${$page.url.searchParams.get('filter') === 'created' ? 'text-clash-200' : 'hover:text-white'}`}
-							>Created</a
+							data-sveltekit-preload-data="hover">Created</a
 						>
 					</ul>
 				</nav>
