@@ -1,5 +1,17 @@
 # authenticlash
 
+## 0.18.0
+
+### Minor Changes
+
+- [#94](https://github.com/Shtian/AuthentiClash/pull/94) [`695a694`](https://github.com/Shtian/AuthentiClash/commit/695a6940c568c3f8588178420a1543d1dd0e35e5) Thanks [@Shtian](https://github.com/Shtian)! - Add game overview filter tabs
+
+- [#96](https://github.com/Shtian/AuthentiClash/pull/96) [`08f591a`](https://github.com/Shtian/AuthentiClash/commit/08f591a481ce0f4ee79d0546102564144d4c8747) Thanks [@Shtian](https://github.com/Shtian)! - Add new class: Paladin
+
+### Patch Changes
+
+- [#97](https://github.com/Shtian/AuthentiClash/pull/97) [`d659207`](https://github.com/Shtian/AuthentiClash/commit/d6592074f7a5efb07d7a1a21edae0ef0084ccb02) Thanks [@Shtian](https://github.com/Shtian)! - Preload tabs on hover
+
 ## 0.17.0
 
 ### Minor Changes
