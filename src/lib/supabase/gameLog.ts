@@ -56,8 +56,6 @@ export const addGameLogWithAI = async (
 					previousLogs.data.map((log) => log.text)
 				)
 			: '';
-	console.log('Text: ', text);
-	console.log('AI Text: ', aiText);
 
 	const { data, error } = await supabaseServerClient
 		.from('game_log')
