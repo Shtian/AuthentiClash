@@ -1,5 +1,5 @@
 import { ABILITIES } from '$lib/classes/abilities';
-import { giveOtherPlayerScore } from '$lib/supabase/abilities/attacks';
+import { classMitigation, giveOtherPlayerScore } from '$lib/supabase/abilities/attacks';
 import { addGameLogWithAI } from '$lib/supabase/gameLog';
 import {
 	getGameParticipations,
@@ -141,13 +141,11 @@ const runCutpurseAbility = async (
 
 	const topPlayers = otherParticipants.toSorted((a, b) => b.totalScore - a.totalScore);
 	const target = topPlayers[0];
-
-	const attemptToSteal = Math.floor(Math.random() * 21) + 20;
-	const stolen = Math.min(target.totalScore, attemptToSteal);
+	const attemptToSteal = Math.min(target.totalScore, Math.floor(Math.random() * 21) + 20);
+	const stolen = classMitigation(attemptToSteal, target);
 	await giveOtherPlayerScore(stolen * -1, target);
 
-	const playerNewScore = Math.min(99, score + stolen);
-
+	const playerNewScore = Math.min(99, stolen + score);
 	const updateParticipationRes = await updateParticipationScore(
 		playerNewScore,
 		userParticipation,
@@ -163,10 +161,11 @@ const runCutpurseAbility = async (
 		};
 	}
 
-	await addGameLogWithAI(
-		userParticipation.gameId,
-		`${userParticipation.nickname} activated Cutpurse and stole ${stolen} points from ${target.nickname}, making their total score entry ${playerNewScore} 💰`
-	);
+	const playerStealText =
+		stolen < attemptToSteal
+			? `${userParticipation.nickname} attempted to steal ${attemptToSteal} points from ${target.nickname}, but ${attemptToSteal - stolen} points was blocked by ${target.nickname}, upping ${userParticipation.nickname}'s original 2FA entry from ${score} to ${playerNewScore} 💰`
+			: `${userParticipation.nickname} activated Cutpurse and stole ${stolen} points from ${target.nickname}, upping ${userParticipation.nickname}'s original 2FA entry from ${score} to ${playerNewScore} 💰`;
+	await addGameLogWithAI(userParticipation.gameId, playerStealText);
 
 	return {
 		type: 'success',
@@ -221,14 +220,16 @@ const runCrimsonReapAbility = async (
 	}
 
 	let totalDamage = 0;
+	let totalDamageMitigated = 0;
 	for (const target of targets) {
 		const damage = Math.floor(Math.random() * 11) + 10;
-		await giveOtherPlayerScore(damage * -1, target);
-		totalDamage += damage;
+		const damageAfterMitigation = classMitigation(damage, target);
+		await giveOtherPlayerScore(damageAfterMitigation * -1, target);
+		totalDamage += damageAfterMitigation;
+		totalDamageMitigated += damage - damageAfterMitigation;
 	}
 
 	const updateParticipationRes = await updateParticipationScore(score, userParticipation, true);
-
 	if (updateParticipationRes.type === 'error') {
 		console.error('Error updating score: ', JSON.stringify(updateParticipationRes));
 		return {
@@ -237,10 +238,15 @@ const runCrimsonReapAbility = async (
 			data: null
 		};
 	}
+
 	const targetNames = targets.map((t) => t.nickname).join(', ');
+	const mitigationText =
+		totalDamageMitigated > 0
+			? ` ${totalDamageMitigated} points were mitigated by one or more targets!`
+			: '';
 	await addGameLogWithAI(
 		userParticipation.gameId,
-		`${userParticipation.nickname} activated Crimson Reap and hit ${targetNames} for a total of ${totalDamage} damage ☠️`
+		`${userParticipation.nickname} activated Crimson Reap and hit ${targetNames} for a total of ${totalDamage} damage ☠️${mitigationText}`
 	);
 
 	return {

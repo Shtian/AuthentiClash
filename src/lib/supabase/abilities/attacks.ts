@@ -1,3 +1,4 @@
+import { CLASSES, DIVINE_AEGIS_PERCENTAGE } from '$lib/classes/abilities';
 import { mapToParticipation, type Participation } from '../participation';
 import { supabaseServerClient, type SupabaseResponse } from '../supabaseClient';
 
@@ -32,4 +33,11 @@ export const giveOtherPlayerScore = async (
 	};
 
 	return successResponse;
+};
+
+export const classMitigation = (score: number, participation: Partial<Participation>) => {
+	if (participation.classId === CLASSES.PALADIN) {
+		return Math.floor(score * (1 - DIVINE_AEGIS_PERCENTAGE));
+	}
+	return score;
 };
