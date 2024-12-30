@@ -4,7 +4,16 @@
 	import { fade } from 'svelte/transition';
 	import { formatTimeDelta, timeUntilCooldownEnds } from '$lib/utils/dateUtils.js';
 	import GameHighScore from './GameHighScore.svelte';
-	import { Clock, Copy, Flame, HandCoins, LucideLoader2, Skull, Sparkles } from 'lucide-svelte';
+	import {
+		Clock,
+		Copy,
+		Flame,
+		HandCoins,
+		LucideLoader2,
+		Shield,
+		Skull,
+		Sparkles
+	} from 'lucide-svelte';
 	import Cooldown from './Cooldown.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import { onDestroy } from 'svelte';
@@ -157,32 +166,39 @@
 					{#if data.class}
 						<div class="col-span-12 sm:col-span-8">
 							<p class="leading-6 text-white">Use class ability</p>
-							<p class="text-sm text-gray-400">Can only be used <strong>once</strong> per game!</p>
+							<p class="text-sm text-gray-400">
+								Active abilities can only be used <strong>once</strong> per game
+							</p>
 							{#each data.class.abilities as ability (ability.id)}
 								<div class="mt-4 flex gap-4">
-									<button
-										type="button"
-										class="ability-button relative flex size-16 shrink-0 items-center border transition-colors"
-										class:active={!hasUsedAbility && abilityIdUsed === ability.id}
-										class:grayscale={hasUsedAbility}
-										class:cursor-not-allowed={hasUsedAbility}
-										disabled={hasUsedAbility}
-										on:click={() => {
-											if (abilityIdUsed === ability.id) {
-												abilityIdUsed = null;
-											} else {
-												abilityIdUsed = ability.id;
-											}
-										}}
-									>
-										{#if ability.id === ABILITIES.CRIMSON_REAP}
-											<Skull class="m-auto size-12" />
-										{:else if ability.id === ABILITIES.CUTPURSE}
-											<HandCoins class="m-auto size-12" />
-										{:else if ability.id === ABILITIES.INFERNAL_RAGE}
-											<Flame class="m-auto size-12" />
-										{/if}
-									</button>
+									{#if ability.description.startsWith('(Passive)')}
+										<Shield class="size-12" />
+									{:else}
+										<button
+											type="button"
+											class="ability-button relative flex size-16 shrink-0 items-center border transition-colors"
+											class:active={!hasUsedAbility && abilityIdUsed === ability.id}
+											class:grayscale={hasUsedAbility}
+											class:text-gray={hasUsedAbility}
+											class:cursor-not-allowed={hasUsedAbility}
+											disabled={hasUsedAbility}
+											on:click={() => {
+												if (abilityIdUsed === ability.id) {
+													abilityIdUsed = null;
+												} else {
+													abilityIdUsed = ability.id;
+												}
+											}}
+										>
+											{#if ability.id === ABILITIES.CRIMSON_REAP}
+												<Skull class="m-auto size-12" />
+											{:else if ability.id === ABILITIES.CUTPURSE}
+												<HandCoins class="m-auto size-12" />
+											{:else if ability.id === ABILITIES.INFERNAL_RAGE}
+												<Flame class="m-auto size-12" />
+											{/if}
+										</button>
+									{/if}
 									<div class="flex flex-col justify-center">
 										<p>{ability.name}</p>
 										<p class=" text-sm text-gray-400">{ability.description}</p>
