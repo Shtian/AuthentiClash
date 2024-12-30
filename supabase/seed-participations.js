@@ -111,7 +111,7 @@ const seedParticipations = async () => {
 		// Add participation for all other players
 		for (const player of selectedPlayers) {
 			const scores = createSetOfScores(scoresPerPlayer);
-			const class_id = Math.floor(Math.random() * 3) + 1;
+			const class_id = Math.floor(Math.random() * 4) + 1;
 			await addParticipation(
 				game.id,
 				player.id,
