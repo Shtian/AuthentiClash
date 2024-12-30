@@ -37,7 +37,11 @@
 					class="flex min-w-full flex-none gap-x-6 px-2 text-sm font-semibold leading-6 text-gray-400"
 				>
 					{#each Object.entries(tabs) as [name, url]}
-						<a href={url} class:text-clash-200={$page.url.pathname === tabs[name]}>{name}</a>
+						<a
+							href={url}
+							class={`transition-colors ${$page.url.pathname === tabs[name] ? 'text-clash-200' : 'hover:text-white'}`}
+							>{name}</a
+						>
 					{/each}
 				</ul>
 			</nav>

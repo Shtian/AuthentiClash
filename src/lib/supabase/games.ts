@@ -1,8 +1,9 @@
 import { mapToParticipation, type Participation } from './participation';
 import { supabaseServerClient, type SupabaseResponse } from './supabaseClient';
 
-type Game = {
+export type Game = {
 	id: number;
+	code: string;
 	end_at: string;
 	name: string;
 	cooldown_hours: number;
@@ -15,12 +16,13 @@ export type EndedActiveGame = {
 	participation: string[];
 };
 
+const GAME_SELECT_QUERY =
+	'id, code, creator, end_at, is_active, name, cooldown_hours, ai_enabled, participation ( id, score, total_score, profile_id, updated_at, nickname_image_url, nickname, ability_used, class_id )';
+
 export const getGame = async (code: string): Promise<SupabaseResponse<Game | null>> => {
 	const { data: game, error } = await supabaseServerClient
 		.from('games')
-		.select(
-			'id, code, creator, end_at, is_active, name, cooldown_hours, ai_enabled, participation ( id, score, total_score, profile_id, updated_at, nickname_image_url, nickname, ability_used, class_id )'
-		)
+		.select(GAME_SELECT_QUERY)
 		.eq('code', code)
 		.maybeSingle();
 
@@ -65,24 +67,113 @@ export const getEndedActiveGames = async (): Promise<SupabaseResponse<EndedActiv
 };
 
 export const getAllGamesByUserId = async (userId: string): Promise<SupabaseResponse<Game[]>> => {
-	const { data: games, error } = await supabaseServerClient
+	const { data: matchingParticipations, error: pError } = await supabaseServerClient
+		.from('participation')
+		.select('game_id')
+		.eq('profile_id', userId);
+
+	if (pError !== null) {
+		const r: SupabaseResponse<Game[]> = { type: 'error', data: null, error: pError };
+		return r;
+	}
+
+	const gameIds = matchingParticipations.map((p) => p.game_id);
+	const { data: participatingGames, error } = await supabaseServerClient
 		.from('games')
-		.select(
-			'id, code, creator, end_at, is_active, name, cooldown_hours, ai_enabled, participation ( id, score, total_score, profile_id, updated_at, nickname_image_url, nickname, ability_used, class_id )'
-		);
+		.select(GAME_SELECT_QUERY)
+		.in('id', gameIds);
 
 	if (error !== null) {
 		const r: SupabaseResponse<Game[]> = { type: 'error', data: null, error };
 		return r;
 	}
 
-	const participatingGames = games.filter((game) =>
-		game.participation.some((participation) => participation.profile_id === userId)
-	);
+	const successResponse: SupabaseResponse<Game[]> = {
+		type: 'success',
+		data: participatingGames.map(mapToGame),
+		error: null
+	};
+	return successResponse;
+};
+
+export const getActiveGamesByUserId = async (userId: string): Promise<SupabaseResponse<Game[]>> => {
+	const { data: matchingParticipations, error: pError } = await supabaseServerClient
+		.from('participation')
+		.select('game_id')
+		.eq('profile_id', userId);
+
+	if (pError !== null) {
+		const r: SupabaseResponse<Game[]> = { type: 'error', data: null, error: pError };
+		return r;
+	}
+
+	const gameIds = matchingParticipations.map((p) => p.game_id);
+	const { data: participatingGames, error } = await supabaseServerClient
+		.from('games')
+		.select(GAME_SELECT_QUERY)
+		.in('id', gameIds)
+		.gt('end_at', new Date().toISOString());
+
+	if (error !== null) {
+		const r: SupabaseResponse<Game[]> = { type: 'error', data: null, error };
+		return r;
+	}
 
 	const successResponse: SupabaseResponse<Game[]> = {
 		type: 'success',
 		data: participatingGames.map(mapToGame),
+		error: null
+	};
+	return successResponse;
+};
+
+export const getEndedGamesByUserId = async (userId: string): Promise<SupabaseResponse<Game[]>> => {
+	const { data: matchingParticipations, error: pError } = await supabaseServerClient
+		.from('participation')
+		.select('game_id')
+		.eq('profile_id', userId);
+
+	if (pError !== null) {
+		const r: SupabaseResponse<Game[]> = { type: 'error', data: null, error: pError };
+		return r;
+	}
+
+	const gameIds = matchingParticipations.map((p) => p.game_id);
+	const { data: participatingGames, error } = await supabaseServerClient
+		.from('games')
+		.select(GAME_SELECT_QUERY)
+		.in('id', gameIds)
+		.lte('end_at', new Date().toISOString());
+
+	if (error !== null) {
+		const r: SupabaseResponse<Game[]> = { type: 'error', data: null, error };
+		return r;
+	}
+
+	const successResponse: SupabaseResponse<Game[]> = {
+		type: 'success',
+		data: participatingGames.map(mapToGame),
+		error: null
+	};
+	return successResponse;
+};
+
+export const getAllGamesCreatedByUserId = async (
+	userId: string
+): Promise<SupabaseResponse<Game[]>> => {
+	const { data: createdGames, error } = await supabaseServerClient
+		.from('games')
+		.select(GAME_SELECT_QUERY)
+		.eq('creator', userId);
+
+	if (error !== null) {
+		const r: SupabaseResponse<Game[]> = { type: 'error', data: null, error };
+		return r;
+	}
+
+	const successResponse: SupabaseResponse<Game[]> = {
+		type: 'success',
+		data: createdGames.map(mapToGame),
 		error: null
 	};
 	return successResponse;
@@ -114,6 +205,7 @@ export const deactivateGame = async (id: number): Promise<SupabaseResponse<boole
 const mapToGame = (data: any): Game => {
 	return {
 		id: data.id as number,
+		code: data.code as string,
 		end_at: data.end_at as string,
 		ai_enabled: data.ai_enabled as boolean,
 		name: data.name as string,

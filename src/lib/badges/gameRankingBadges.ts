@@ -27,18 +27,18 @@ export const checkForRankingBadge = async (userId: string): Promise<void> => {
 		.toSorted((a, b) => new Date(a.end_at).getTime() - new Date(b.end_at).getTime())
 		.map((game) => {
 			const sortedParticipations = game.participation?.toSorted((a, b) => {
-				const aScore = a.total_score;
-				const bScore = b.total_score;
+				const aScore = a.totalScore;
+				const bScore = b.totalScore;
 				return bScore - aScore;
 			});
 
-			const userRankIndex = sortedParticipations.findIndex((p) => p.profile_id === userId);
+			const userRankIndex = sortedParticipations.findIndex((p) => p.profileId === userId);
 			const userRank = userRankIndex === -1 ? 0 : userRankIndex + 1;
-			const userTotalScore = sortedParticipations.at(userRankIndex)?.total_score ?? 0;
+			const userTotalScore = sortedParticipations.at(userRankIndex)?.totalScore ?? 0;
 			const userScore = sortedParticipations.at(userRankIndex)?.score ?? [];
 
 			const qualifiesForTwinzies = sortedParticipations.some(
-				(p) => p.profile_id !== userId && userTotalScore > 0 && p.total_score === userTotalScore
+				(p) => p.profileId !== userId && userTotalScore > 0 && p.totalScore === userTotalScore
 			);
 			const qualifiesForLiterallyCantBelieveIt = checkQualifiesForLiterallyCantBelieveIt(userScore);
 			const qualifiesForLuckyInLove = checkForQualifiesForLuckyInLove(userScore);
