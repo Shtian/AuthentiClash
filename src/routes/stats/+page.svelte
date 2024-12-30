@@ -4,7 +4,7 @@
 	import StatsNumber from './StatsNumber.svelte';
 	import ScoreGraph from '$lib/components/ScoreGraph.svelte';
 
-	export let data;
+	let { data } = $props();
 	const {
 		numberOfGames,
 		allScores,

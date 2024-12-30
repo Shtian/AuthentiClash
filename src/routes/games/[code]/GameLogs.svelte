@@ -1,7 +1,11 @@
 <script lang="ts">
 	import type { GameLog } from '$lib/supabase/gameLog';
 
-	export let logs: Array<GameLog> = [];
+	interface Props {
+		logs?: Array<GameLog>;
+	}
+
+	let { logs = [] }: Props = $props();
 
 	const dateFormatter = Intl.DateTimeFormat('en-US', {
 		month: 'short',

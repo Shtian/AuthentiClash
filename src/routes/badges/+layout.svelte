@@ -1,6 +1,11 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	interface Props {
+		children?: import('svelte').Snippet;
+	}
+
+	let { children }: Props = $props();
 	const tabs: { [key: string]: string } = {
 		Overview: '/badges',
 		Activity: '/badges/activity'
@@ -23,7 +28,7 @@
 				id="tabs"
 				name="tabs"
 				class="block w-full rounded-md border-none bg-white/5 py-2 pl-3 pr-10 text-base text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm"
-				on:change={tabSelected}
+				onchange={tabSelected}
 			>
 				{#each Object.entries(tabs) as [name]}
 					<option selected={$page.url.pathname == tabs[name]} value={name}>{name}</option>
@@ -49,7 +54,7 @@
 	</div>
 </div>
 
-<slot />
+{@render children?.()}
 
 <style>
 	.tabs {

@@ -1,23 +1,27 @@
 <script lang="ts">
 	import { tweened } from 'svelte/motion';
 
-	export let count: number;
-	export let total: number;
-	export let width = 100;
-	export let strokeWidth = 10;
-	export let textType: 'count' | 'percentage' = 'count';
+	interface Props {
+		count: number;
+		total: number;
+		width?: number;
+		strokeWidth?: number;
+		textType?: 'count' | 'percentage';
+	}
+
+	let { count, total, width = 100, strokeWidth = 10, textType = 'count' }: Props = $props();
 
 	const progress = (count / total) * 100;
 	const animationProgres = tweened(0, { duration: 500 });
 	animationProgres.set(100);
-	$: currentPercentage = ($animationProgres * progress) / 100;
-	$: currentNum = ($animationProgres * count) / 100;
+	let currentPercentage = $derived(($animationProgres * progress) / 100);
+	let currentNum = $derived(($animationProgres * count) / 100);
 
 	const cx = width / 2;
 	const cy = width / 2;
 	const radius = (width - strokeWidth) / 2;
 	const circumference = 2 * Math.PI * radius;
-	$: dashoffset = circumference - (circumference * currentPercentage) / 100;
+	let dashoffset = $derived(circumference - (circumference * currentPercentage) / 100);
 </script>
 
 <div class="relative size-20">

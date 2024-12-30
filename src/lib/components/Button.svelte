@@ -20,13 +20,18 @@
 	type Variant = VariantProps<typeof buttonVariants>['variant'];
 	type Size = VariantProps<typeof buttonVariants>['size'];
 
-	let className = '';
-	export { className as class };
-	export let variant: Variant = 'default';
+	interface Props {
+		class?: string;
+		variant?: Variant;
+		children?: import('svelte').Snippet;
+		[key: string]: any;
+	}
+
+	let { class: className = '', variant = 'default', children, ...rest }: Props = $props();
 	let size: Size = 'default';
 </script>
 
 <div class="justy"></div>
-<button type="button" class={cn(buttonVariants({ variant, size, className }))} {...$$restProps}>
-	<slot />
+<button type="button" class={cn(buttonVariants({ variant, size, className }))} {...rest}>
+	{@render children?.()}
 </button>

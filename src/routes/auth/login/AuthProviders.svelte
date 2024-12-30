@@ -5,8 +5,12 @@
 	import googleLogo from '$lib/assets/google_logo.svg';
 	import githubLogo from '$lib/assets/github_logo.svg';
 
-	/* eslint-disable  @typescript-eslint/no-explicit-any */
-	export let supabase: SupabaseClient<any, 'public', any>;
+	interface Props {
+		/* eslint-disable  @typescript-eslint/no-explicit-any */
+		supabase: SupabaseClient<any, 'public', any>;
+	}
+
+	let { supabase }: Props = $props();
 
 	type OAuthProvider = 'github' | 'discord' | 'google';
 
@@ -30,7 +34,7 @@
 
 <button
 	class="mt-1 flex w-full justify-center rounded-md bg-clash-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-clash-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500"
-	on:click={() => oAuthLogin('google')}
+	onclick={() => oAuthLogin('google')}
 	><img
 		class="mr-3 size-6"
 		width="24"
@@ -41,7 +45,7 @@
 >
 <button
 	class="mt-2 flex w-full justify-center rounded-md bg-clash-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-clash-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500"
-	on:click={() => oAuthLogin('github')}
+	onclick={() => oAuthLogin('github')}
 	><img
 		class="mr-3 size-6"
 		width="24"
@@ -52,7 +56,7 @@
 >
 <button
 	class="mt-2 flex w-full justify-center rounded-md bg-clash-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-clash-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500"
-	on:click={() => oAuthLogin('discord')}
+	onclick={() => oAuthLogin('discord')}
 	><img
 		class="mr-3 size-6"
 		width="24"

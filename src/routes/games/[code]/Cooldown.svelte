@@ -2,9 +2,13 @@
 	import { formatTimeDeltaShort } from '$lib/utils/dateUtils';
 	import { onDestroy } from 'svelte';
 
-	export let delta: number;
+	interface Props {
+		delta: number;
+	}
+
+	let { delta = $bindable() }: Props = $props();
 	const cooldownFinished = delta + new Date().getTime();
-	let timeLeftString = delta <= 0 ? '00:00:00' : formatTimeDeltaShort(delta);
+	let timeLeftString = $state(delta <= 0 ? '00:00:00' : formatTimeDeltaShort(delta));
 
 	const timer = setInterval(() => {
 		delta = cooldownFinished - new Date().getTime();

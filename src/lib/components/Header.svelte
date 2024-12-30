@@ -6,7 +6,11 @@
 	import { clickOutside } from '$lib/utils/clickOutside';
 	import logo from '$lib/assets/authenticlash_logo.svg';
 
-	export let session: Session | null = null;
+	interface Props {
+		session?: Session | null;
+	}
+
+	let { session = null }: Props = $props();
 
 	const links = [
 		{ name: 'Games', href: '/games' },
@@ -15,8 +19,8 @@
 		{ name: 'Badges', href: '/badges' }
 	];
 
-	let isMainMenuOpen = false;
-	let isUserMenuOpen = false;
+	let isMainMenuOpen = $state(false);
+	let isUserMenuOpen = $state(false);
 	let isLoggedIn = !!session?.user;
 
 	async function sha256(message: string) {
@@ -42,7 +46,7 @@
 						class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
 						aria-controls="mobile-menu"
 						aria-expanded="false"
-						on:click={(e) => {
+						onclick={(e) => {
 							isMainMenuOpen = !isMainMenuOpen;
 							e.stopPropagation();
 						}}
@@ -117,7 +121,7 @@
 								id="user-menu-button"
 								aria-expanded="false"
 								aria-haspopup="true"
-								on:click={(e) => {
+								onclick={(e) => {
 									isUserMenuOpen = !isUserMenuOpen;
 									e.stopPropagation();
 								}}
@@ -170,7 +174,7 @@
 										href="/account"
 										class="block px-4 py-2 text-sm text-gray-700"
 										role="menuitem"
-										on:click={() => (isUserMenuOpen = false)}
+										onclick={() => (isUserMenuOpen = false)}
 										tabindex="-1">Account</a
 									>
 									<a
@@ -178,7 +182,7 @@
 										href="/auth/logout"
 										class="block px-4 py-2 text-sm text-gray-700"
 										role="menuitem"
-										on:click={() => (isUserMenuOpen = false)}
+										onclick={() => (isUserMenuOpen = false)}
 										tabindex="-1">Sign out</a
 									>
 								{:else}
@@ -186,7 +190,7 @@
 										href="/auth/login"
 										class="block px-4 py-2 text-sm text-gray-700"
 										role="menuitem"
-										on:click={() => (isUserMenuOpen = false)}
+										onclick={() => (isUserMenuOpen = false)}
 										tabindex="-1">Login</a
 									>
 								{/if}

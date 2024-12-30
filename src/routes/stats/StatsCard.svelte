@@ -2,11 +2,16 @@
 	import { CircleHelp } from 'lucide-svelte';
 	import * as Popover from '$lib/components/ui/popover';
 
-	export let title: string;
-	export let cols: 'single' | 'half' | 'full' = 'half';
-	export let helptext = '';
+	interface Props {
+		title: string;
+		cols?: 'single' | 'half' | 'full';
+		helptext?: string;
+		children?: import('svelte').Snippet;
+	}
 
-	let colClass = 'sm:col-span-6';
+	let { title, cols = 'half', helptext = '', children }: Props = $props();
+
+	let colClass = $state('sm:col-span-6');
 	switch (cols) {
 		case 'half':
 			colClass = 'sm:col-span-6';
@@ -32,5 +37,5 @@
 			</Popover.Root>
 		{/if}
 	</h2>
-	<slot />
+	{@render children?.()}
 </div>

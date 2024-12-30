@@ -3,8 +3,13 @@
 	import { onDestroy, onMount } from 'svelte';
 	import { tweened } from 'svelte/motion';
 
-	export let message = '';
-	export let duration: number;
+	interface Props {
+		message?: string;
+		duration: number;
+		[key: string]: any;
+	}
+
+	let { message = '', duration, ...rest }: Props = $props();
 	let progress = tweened(0, {
 		duration
 	});
@@ -19,6 +24,6 @@
 	});
 </script>
 
-<p {...$$restProps}>
+<p {...rest}>
 	{message}
 </p>

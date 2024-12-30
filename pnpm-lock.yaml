@@ -126,10 +126,10 @@ importers:
         specifier: ^0.6.9
         version: 0.6.9(prettier-plugin-svelte@3.3.2(prettier@3.4.2)(svelte@5.16.0))(prettier@3.4.2)
       svelte:
-        specifier: ^5.0.0
+        specifier: ^5.16.0
         version: 5.16.0
       svelte-check:
-        specifier: ^4.0.0
+        specifier: ^4.1.1
         version: 4.1.1(picomatch@4.0.2)(svelte@5.16.0)(typescript@5.6.2)
       tailwindcss:
         specifier: ^3.4.17

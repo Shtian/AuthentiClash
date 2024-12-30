@@ -24,17 +24,24 @@
 	import { ABILITIES } from '$lib/classes/abilities';
 	import GameLogs from './GameLogs.svelte';
 
-	export let data;
-	export let newScore: number | null = null;
-	let isLoading = false;
-	let abilityIdUsed: number | null = null;
-	$: hasUsedAbility =
-		data.players?.find((x) => x.profileId === data.session?.user.id)?.abilityUsed !== null;
-	$: players = data.players;
+	interface Props {
+		data: any;
+		newScore?: number | null;
+	}
 
-	let cooldownRemaining = timeUntilCooldownEnds(data.currentPlayer?.updatedAt, data.cooldownHours);
+	let { data, newScore = null }: Props = $props();
+	let isLoading = $state(false);
+	let abilityIdUsed: number | null = $state(null);
+	let hasUsedAbility = $derived(
+		data.players?.find((x) => x.profileId === data.session?.user.id)?.abilityUsed !== null
+	);
+	let players = $derived(data.players);
 
-	let urlIsRecentlyCopied = false;
+	let cooldownRemaining = $state(
+		timeUntilCooldownEnds(data.currentPlayer?.updatedAt, data.cooldownHours)
+	);
+
+	let urlIsRecentlyCopied = $state(false);
 	const copyUrl = () => {
 		navigator.clipboard.writeText(`https://www.authenticlash.app${window.location.pathname}/join`);
 		urlIsRecentlyCopied = true;
@@ -45,8 +52,8 @@
 
 	const millisecondsToEnd = new Date(data.endsAt).getTime();
 	let millisecondsNow = new Date().getTime();
-	let timeLeft = millisecondsToEnd - millisecondsNow;
-	let timeLeftText = timeLeft > 0 ? formatTimeDelta(timeLeft) : 'Game has ended';
+	let timeLeft = $state(millisecondsToEnd - millisecondsNow);
+	let timeLeftText = $state(timeLeft > 0 ? formatTimeDelta(timeLeft) : 'Game has ended');
 
 	const timer = setInterval(() => {
 		millisecondsNow = new Date().getTime();
@@ -109,7 +116,7 @@
 			<button
 				type="submit"
 				class="relative inline-flex items-center gap-x-2 self-center rounded-md bg-transparent px-2 py-2 text-sm font-semibold text-white transition-colors hover:text-clash-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500"
-				on:click={copyUrl}
+				onclick={copyUrl}
 			>
 				<Copy />
 				{#if urlIsRecentlyCopied}
@@ -182,7 +189,7 @@
 											class:text-gray={hasUsedAbility}
 											class:cursor-not-allowed={hasUsedAbility}
 											disabled={hasUsedAbility}
-											on:click={() => {
+											onclick={() => {
 												if (abilityIdUsed === ability.id) {
 													abilityIdUsed = null;
 												} else {

@@ -3,7 +3,11 @@
 	import UserBadge from './UserBadge.svelte';
 	import CircularProgressBar from '$lib/components/CircularProgressBar.svelte';
 
-	export let data: PageServerData;
+	interface Props {
+		data: PageServerData;
+	}
+
+	let { data }: Props = $props();
 	const badges = data.badges || [];
 </script>
 

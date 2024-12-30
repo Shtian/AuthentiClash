@@ -18,11 +18,13 @@
 		</ul>
 		<p>Activate your ability strategically for a competitive edge!</p>
 	</Collapsible.Content>
-	<Collapsible.Trigger asChild let:builder>
-		<Button builders={[builder]} variant="link" size="sm" class="group flex pl-0"
-			><span class="group-data-[state=open]:hidden">Read more</span>
-			<span class="group-data-[state=closed]:hidden">Read less</span>
-			<ChevronDown class="transition-transform group-data-[state=open]:rotate-180" /></Button
-		>
+	<Collapsible.Trigger asChild>
+		{#snippet children({ builder })}
+			<Button builders={[builder]} variant="link" size="sm" class="group flex pl-0"
+				><span class="group-data-[state=open]:hidden">Read more</span>
+				<span class="group-data-[state=closed]:hidden">Read less</span>
+				<ChevronDown class="transition-transform group-data-[state=open]:rotate-180" /></Button
+			>
+		{/snippet}
 	</Collapsible.Trigger>
 </Collapsible.Root>

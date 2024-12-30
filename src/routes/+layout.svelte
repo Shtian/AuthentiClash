@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import '../app.pcss';
 	import { invalidate, onNavigate } from '$app/navigation';
 	import { onMount } from 'svelte';
@@ -7,12 +9,14 @@
 	import { page } from '$app/stores';
 	import Footer from '$lib/components/Footer.svelte';
 
-	export let data;
+	let { data, children } = $props();
 
-	let { supabase, session } = data;
-	$: ({ supabase, session } = data);
+	let { supabase, session } = $state(data);
+	run(() => {
+		({ supabase, session } = data);
+	});
 
-	$: title = $page.data.title;
+	let title = $derived($page.data.title);
 
 	const baseUrl = 'https://www.authenticlash.app';
 
@@ -64,7 +68,7 @@
 <Header {session} />
 <div class="mx-auto min-h-full max-w-7xl px-4 pt-8 sm:px-6 lg:pt-16">
 	<div class="mx-auto max-w-2xl">
-		<slot />
+		{@render children?.()}
 	</div>
 </div>
 <Footer />

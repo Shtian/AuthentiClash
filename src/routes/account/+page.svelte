@@ -1,18 +1,21 @@
 <!-- src/routes/account/+page.svelte -->
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { enhance } from '$app/forms';
 	import { toast } from '$lib/stores/ToastStore.js';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { LucideLoader2 } from 'lucide-svelte';
 
-	export let data;
-	export let form;
+	let { data, form } = $props();
 
-	let { session, profile } = data;
-	$: ({ session, profile } = data);
+	let { session, profile } = $state(data);
+	run(() => {
+		({ session, profile } = data);
+	});
 
-	let profileForm: HTMLFormElement;
-	let isLoading = false;
+	let profileForm: HTMLFormElement = $state();
+	let isLoading = $state(false);
 	let username: string = profile?.username ?? '';
 
 	const handleSubmit: SubmitFunction = () => {

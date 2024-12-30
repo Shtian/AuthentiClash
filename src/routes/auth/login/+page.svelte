@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import type { ActionData } from './$types.js';
 	import { fly } from 'svelte/transition';
 	import { quadIn, quadOut } from 'svelte/easing';
@@ -6,22 +8,20 @@
 	import logo from '$lib/assets/authenticlash_logo.svg';
 	import AuthProviders from './AuthProviders.svelte';
 
-	export let data;
-	let { supabase } = data;
-	$: ({ supabase } = data);
+	let { supabase } = $state(data);
 
-	export let form: ActionData;
-	$: ({ error, success, registeredEmail } = form ?? {
-		error: '',
-		success: false,
-		registeredEmail: ''
-	});
+	interface Props {
+		data: any;
+		form: ActionData;
+	}
+
+	let { data, form }: Props = $props();
 
 	const animationDuration = 150;
-	let password = '';
-	let email = form?.email ?? '';
-	let loading = false;
-	let showRegister = false;
+	let password = $state('');
+	let email = $state(form?.email ?? '');
+	let loading = $state(false);
+	let showRegister = $state(false);
 
 	function getEmailParam(email: string) {
 		return email ? `?email=${encodeURIComponent(email)}` : '';
@@ -30,6 +30,17 @@
 	const setLoadingState = () => {
 		loading = true;
 	};
+	run(() => {
+		({ supabase } = data);
+	});
+	let error;
+	run(() => {
+		({ error, success, registeredEmail } = form ?? {
+			error: '',
+			success: false,
+			registeredEmail: ''
+		});
+	});
 </script>
 
 <div class="flex min-h-full flex-col justify-center">
@@ -64,7 +75,7 @@
 				easing: quadOut
 			}}
 		>
-			<form class="space-y-6" method="POST" action="?/signIn" on:submit={setLoadingState}>
+			<form class="space-y-6" method="POST" action="?/signIn" onsubmit={setLoadingState}>
 				<div>
 					<label for="email" class="block text-sm font-medium leading-6 text-white"
 						>Email address</label
@@ -122,7 +133,7 @@
 				Not a member?
 				<button
 					class="font-semibold leading-6 text-clash-400 hover:text-clash-300"
-					on:click={() => {
+					onclick={() => {
 						showRegister = true;
 						error = '';
 					}}>Register</button
@@ -139,7 +150,7 @@
 				x: 400
 			}}
 		>
-			<form class="space-y-6" method="POST" action="?/signUp" on:submit={setLoadingState}>
+			<form class="space-y-6" method="POST" action="?/signUp" onsubmit={setLoadingState}>
 				<div>
 					<label for="email" class="block text-sm font-medium leading-6 text-white"
 						>Email address</label
@@ -190,7 +201,7 @@
 				Already a member?
 				<button
 					class="font-semibold leading-6 text-clash-400 hover:text-clash-300"
-					on:click={() => {
+					onclick={() => {
 						showRegister = false;
 						error = '';
 					}}>Sign in</button

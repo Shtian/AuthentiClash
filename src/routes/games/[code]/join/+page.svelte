@@ -10,14 +10,14 @@
 	import * as RadioGroup from '$lib/components/ui/radio-group/index.js';
 	import { Label } from '$lib/components/ui/label/index.js';
 
-	export let data;
-	let isLoading = false;
+	let { data } = $props();
+	let isLoading = $state(false);
 
 	// Game timer
 	const millisecondsToEnd = new Date(data.endsAt).getTime();
 	let millisecondsNow = new Date().getTime();
 	let timeLeft = millisecondsToEnd - millisecondsNow;
-	let timeLeftText = timeLeft > 0 ? formatTimeDelta(timeLeft) : 'Game has ended';
+	let timeLeftText = $state(timeLeft > 0 ? formatTimeDelta(timeLeft) : 'Game has ended');
 	const timer = setInterval(() => {
 		millisecondsNow = new Date().getTime();
 		timeLeft = millisecondsToEnd - millisecondsNow;
@@ -30,8 +30,8 @@
 	}, 1000);
 
 	// Nickname generation
-	let recentRefresh = false;
-	let nickname = '';
+	let recentRefresh = $state(false);
+	let nickname = $state('');
 	const handleNicknameRefresh = () => {
 		recentRefresh = true;
 		setTimeout(() => {
@@ -101,7 +101,7 @@
 						<button
 							class="absolute right-2 top-1/2 -translate-y-1/2"
 							type="button"
-							on:click={handleNicknameRefresh}
+							onclick={handleNicknameRefresh}
 						>
 							<span class="sr-only">Generate new nickname suggestion</span>
 							<Shuffle

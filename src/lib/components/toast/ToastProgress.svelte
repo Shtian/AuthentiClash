@@ -1,7 +1,11 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
 	import { tweened } from 'svelte/motion';
-	export let duration: number;
+	interface Props {
+		duration: number;
+	}
+
+	let { duration }: Props = $props();
 	const progress = tweened(0, {
 		duration
 	});
