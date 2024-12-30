@@ -40,7 +40,7 @@
 						<a
 							href={url}
 							class={`transition-colors ${$page.url.pathname === tabs[name] ? 'text-clash-200' : 'hover:text-white'}`}
-							>{name}</a
+							data-sveltekit-preload-data="hover">{name}</a
 						>
 					{/each}
 				</ul>
