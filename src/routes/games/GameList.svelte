@@ -2,15 +2,19 @@
 	import { goto } from '$app/navigation';
 	import Badge from '$lib/components/Badge.svelte';
 
-	export let gamesWithParticipation: {
-		id: string;
-		name: string;
-		userRank: number;
-		endAtString: string;
-		endAtDate: Date;
-		code: string;
-		totalScore: number;
-	}[] = [];
+	interface Props {
+		gamesWithParticipation?: {
+			id: string;
+			name: string;
+			userRank: number;
+			endAtString: string;
+			endAtDate: Date;
+			code: string;
+			totalScore: number;
+		}[];
+	}
+
+	let { gamesWithParticipation = [] }: Props = $props();
 </script>
 
 <div class="mt-6 flow-root">
@@ -33,7 +37,7 @@
 				<tbody class="divide-y divide-gray-800">
 					{#each gamesWithParticipation as game (game.id)}
 						<tr
-							on:click={() => {
+							onclick={() => {
 								goto(`/games/${game.code}`);
 							}}
 							class="group cursor-pointer transition-colors hover:bg-gray-800"

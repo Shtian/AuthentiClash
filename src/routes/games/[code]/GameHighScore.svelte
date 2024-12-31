@@ -9,11 +9,15 @@
 	import type { Participation } from '$lib/supabase/participation';
 	import { getClassName } from '$lib/classes/classes';
 
-	export let players: Participation[] = [];
-	export let aiEnabled = false;
-	export let currentPlayerId = '';
+	interface Props {
+		players?: Participation[];
+		aiEnabled?: boolean;
+		currentPlayerId?: string;
+	}
 
-	let isLoading = false;
+	let { players = [], aiEnabled = false, currentPlayerId = '' }: Props = $props();
+
+	let isLoading = $state(false);
 
 	const handleGenerateImage: SubmitFunction = () => {
 		isLoading = true;

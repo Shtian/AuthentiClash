@@ -17,7 +17,6 @@ export const load: PageServerLoad = async ({ locals: { getSession }, url }) => {
 	if (!userId) return fail(401, { message: 'User not found' });
 
 	const filter = url.searchParams.get('filter');
-	console.log('filter: ', filter);
 	const gamesByFilter = await getGamesByFilter(filter, userId);
 
 	if (gamesByFilter.type === 'error') {

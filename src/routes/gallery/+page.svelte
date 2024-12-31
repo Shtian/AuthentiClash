@@ -2,7 +2,7 @@
 	import { CircleUser, RocketIcon } from 'lucide-svelte';
 	import * as Popover from '$lib/components/ui/popover';
 
-	export let data;
+	let { data } = $props();
 	const games =
 		data.games
 			?.filter((game) => game.participation.length > 0)

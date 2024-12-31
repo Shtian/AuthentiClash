@@ -4,7 +4,7 @@
 	import logo from '$lib/assets/authenticlash_logo.svg';
 	import { ArrowRightCircle } from 'lucide-svelte';
 	import AbilityAnnouncement from '$lib/components/AbilityAnnouncement.svelte';
-	let visible = false;
+	let visible = $state(false);
 	onMount(() => {
 		visible = true;
 	});

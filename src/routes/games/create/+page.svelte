@@ -9,7 +9,7 @@
 		parseDate
 	} from '@internationalized/date';
 	import { cn } from '$lib/utils';
-	import { Button } from '$lib/components/ui/button';
+	import { buttonVariants } from '$lib/components/ui/button';
 	import { Calendar } from '$lib/components/ui/calendar';
 	import * as Popover from '$lib/components/ui/popover';
 	import type { SubmitFunction } from '@sveltejs/kit';
@@ -20,16 +20,17 @@
 	const df = new DateFormatter('en-US', {
 		dateStyle: 'long'
 	});
-	export let form;
+	let { form } = $props();
 
 	let name = '';
-	let endDate: DateValue | undefined = form?.endDate
-		? parseDate(form.endDate.toString())
-		: today(getLocalTimeZone()).add({ days: 1 });
+	let endDate: DateValue | undefined = $state(
+		form?.endDate ? parseDate(form.endDate.toString()) : today(getLocalTimeZone()).add({ days: 1 })
+	);
+	let contentRef = $state<HTMLElement | null>(null);
 
 	let endTime: string = form?.endTime?.toString() ?? '12:00';
 	let cooldown: string = form?.cooldown?.toString() ?? '4';
-	let isLoading = false;
+	let isLoading = $state(false);
 
 	const handleSubmit: SubmitFunction = () => {
 		isLoading = true;
@@ -109,20 +110,19 @@
 					<div class="w-fu mt-2">
 						<input type="hidden" name="end-date" id="end-date" bind:value={endDate} />
 						<Popover.Root>
-							<Popover.Trigger asChild let:builder>
-								<Button
-									variant="outline"
-									class={cn(
-										'w-full justify-start text-left font-normal',
-										!endDate && 'text-muted-foreground'
-									)}
-									builders={[builder]}
-								>
-									<CalendarIcon class="mr-2 h-4 w-4" />
-									{endDate ? df.format(endDate.toDate(getLocalTimeZone())) : 'Pick a date'}
-								</Button>
+							<Popover.Trigger
+								class={cn(
+									buttonVariants({
+										variant: 'outline',
+										class: 'w-[280px] justify-start text-left font-normal'
+									}),
+									!endDate && 'text-muted-foreground'
+								)}
+							>
+								<CalendarIcon />
+								{endDate ? df.format(endDate.toDate(getLocalTimeZone())) : 'Pick a date'}
 							</Popover.Trigger>
-							<Popover.Content class="w-auto p-0">
+							<Popover.Content bind:ref={contentRef} class="w-auto p-0">
 								<Calendar
 									bind:value={endDate}
 									weekStartsOn={1}

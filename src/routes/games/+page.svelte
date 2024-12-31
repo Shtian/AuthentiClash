@@ -3,9 +3,9 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 
-	export let data;
+	let { data } = $props();
 
-	$: games = data.participatingGames || [];
+	let games = $derived(data.participatingGames || []);
 
 	function tabSelected(e: Event) {
 		const eventTarget: HTMLSelectElement = e.target as HTMLSelectElement;
@@ -38,7 +38,7 @@
 					id="tabs"
 					name="tabs"
 					class="block w-full rounded-md border-none bg-white/5 py-2 pl-3 pr-10 text-base text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm"
-					on:change={tabSelected}
+					onchange={tabSelected}
 				>
 					<option selected={$page.url.searchParams.get('filter') === null} value="">Active</option>
 					<option selected={$page.url.searchParams.get('filter') === 'ended'} value="ended"

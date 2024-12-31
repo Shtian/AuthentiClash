@@ -5,15 +5,13 @@
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { LucideLoader2 } from 'lucide-svelte';
 
-	export let data;
-	export let form;
+	let { data, form } = $props();
+	let session = $state(data.session);
+	let profile = $state(data.profile);
+	let isLoading = $state(false);
 
-	let { session, profile } = data;
-	$: ({ session, profile } = data);
-
-	let profileForm: HTMLFormElement;
-	let isLoading = false;
 	let username: string = profile?.username ?? '';
+	let profileForm: HTMLFormElement | undefined = $state();
 
 	const handleSubmit: SubmitFunction = () => {
 		isLoading = true;

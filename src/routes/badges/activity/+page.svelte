@@ -1,15 +1,15 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 
-	export let data;
+	let { data } = $props();
 	let pageSize = 10;
 
-	$: badgeActivity = data.badgeActivity || [];
-	$: totalItems = data.totalEntries || 0;
-	$: totalPages = Math.ceil(totalItems / pageSize);
-	$: currentPage = (Number($page.url.searchParams.get('skip')) || 0) / pageSize;
-	$: startIndex = currentPage * pageSize + 1;
-	$: endIndex = Math.min(startIndex + pageSize - 1, totalItems);
+	let badgeActivity = $derived(data.badgeActivity || []);
+	let totalItems = $derived(data.totalEntries || 0);
+	let totalPages = $derived(Math.ceil(totalItems / pageSize));
+	let currentPage = $derived((Number($page.url.searchParams.get('skip')) || 0) / pageSize);
+	let startIndex = $derived(currentPage * pageSize + 1);
+	let endIndex = $derived(Math.min(startIndex + pageSize - 1, totalItems));
 
 	const dateFormatter = Intl.DateTimeFormat('en-US', {
 		month: 'short',

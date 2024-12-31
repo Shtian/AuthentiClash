@@ -3,13 +3,17 @@
 	import { seenBadges } from '$lib/stores/SeenBadgesStore';
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
-	export let badge: UserBadge;
+	interface Props {
+		badge: UserBadge;
+	}
+
+	let { badge }: Props = $props();
 
 	// Only show custom image if its NOT a secret badge or if the secret badge is unlocked
 	const showBadgeCustomImage =
 		(badge.image && !badge.secret) || (badge.image && badge.unlocked && badge.secret);
 
-	$: showBadge = false;
+	let showBadge = $state(false);
 
 	onMount(() => {
 		showBadge = !$seenBadges.includes(badge.slug);
@@ -29,8 +33,8 @@
 
 <li
 	class="flex flex-col gap-y-4 rounded-lg border-[1px] p-4"
-	on:mouseover={() => markBadgeAsSeen()}
-	on:focus={() => markBadgeAsSeen()}
+	onmouseover={() => markBadgeAsSeen()}
+	onfocus={() => markBadgeAsSeen()}
 >
 	<div class="group relative flex gap-x-4">
 		<div class=" inline-flex size-16 flex-shrink-0 items-center rounded-full">

@@ -1,17 +1,30 @@
 <script lang="ts">
 	import * as d3 from 'd3';
 	import { onMount } from 'svelte';
-	export let allScores: Array<number> = [];
-	export let limit = 50;
-	export let width = 928;
-	export let height = 500;
-	export let marginTop = 20;
-	export let marginRight = 30;
-	export let marginBottom = 30;
-	export let marginLeft = 40;
+	interface Props {
+		allScores?: Array<number>;
+		limit?: number;
+		width?: number;
+		height?: number;
+		marginTop?: number;
+		marginRight?: number;
+		marginBottom?: number;
+		marginLeft?: number;
+	}
+
+	let {
+		allScores = [],
+		limit = 50,
+		width = 928,
+		height = 500,
+		marginTop = 20,
+		marginRight = 30,
+		marginBottom = 30,
+		marginLeft = 40
+	}: Props = $props();
 	let scores: Array<number> = allScores.slice(limit * -1);
 
-	let path: SVGPathElement;
+	let path: SVGPathElement = $state();
 	let pathLength = 0;
 
 	const xScale = d3.scaleLinear([1, scores.length], [marginLeft, width - marginRight]);

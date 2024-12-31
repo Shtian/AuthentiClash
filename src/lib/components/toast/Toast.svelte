@@ -10,7 +10,7 @@
 </script>
 
 <svelte:window
-	on:keydown={(e) => {
+	onkeydown={(e) => {
 		if (e.key === 'Escape') {
 			toast.remove();
 		}
@@ -40,7 +40,7 @@
 					message={toastContent.message}
 					duration={toastContent.duration}
 				/>
-				<button class="ml-4 p-1" on:click={() => toast.remove(toastContent.id)}
+				<button class="ml-4 p-1" onclick={() => toast.remove(toastContent.id)}
 					><X class="h-4 w-4 text-gray-300 transition-colors hover:text-white"></X><VisuallyHidden
 						>Close message</VisuallyHidden
 					></button

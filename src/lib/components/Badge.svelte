@@ -1,8 +1,11 @@
 <script lang="ts">
-	export let color: 'gray' | 'red' | 'yellow' | 'green' | 'blue' | 'indigo' | 'purple' | 'pink' =
-		'green';
-	export let text = '';
-	export let title = '';
+	interface Props {
+		color?: 'gray' | 'red' | 'yellow' | 'green' | 'blue' | 'indigo' | 'purple' | 'pink';
+		text?: string;
+		title?: string;
+	}
+
+	let { color = 'green', text = '', title = '' }: Props = $props();
 	const getColorClass = () => {
 		switch (color) {
 			case 'gray':

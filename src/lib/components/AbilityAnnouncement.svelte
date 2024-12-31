@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { ChevronDown, Info } from 'lucide-svelte';
 	import * as Collapsible from '$lib/components/ui/collapsible';
-	import { Button } from '$lib/components/ui/button';
+	import { buttonVariants } from '$lib/components/ui/button';
 </script>
 
 <Collapsible.Root class="mb-4 space-y-2 rounded-md border p-4">
@@ -18,11 +18,11 @@
 		</ul>
 		<p>Activate your ability strategically for a competitive edge!</p>
 	</Collapsible.Content>
-	<Collapsible.Trigger asChild let:builder>
-		<Button builders={[builder]} variant="link" size="sm" class="group flex pl-0"
-			><span class="group-data-[state=open]:hidden">Read more</span>
-			<span class="group-data-[state=closed]:hidden">Read less</span>
-			<ChevronDown class="transition-transform group-data-[state=open]:rotate-180" /></Button
-		>
+	<Collapsible.Trigger
+		class={buttonVariants({ variant: 'link', size: 'sm', class: 'pl group flex' })}
+	>
+		<span class="group-data-[state=open]:hidden">Read more</span>
+		<span class="group-data-[state=closed]:hidden">Read less</span>
+		<ChevronDown class="transition-transform group-data-[state=open]:rotate-180" />
 	</Collapsible.Trigger>
 </Collapsible.Root>

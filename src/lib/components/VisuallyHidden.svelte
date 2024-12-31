@@ -1,1 +1,11 @@
-<span class="sr-only"><slot /></span>
+<script lang="ts">
+	import type { Snippet } from 'svelte';
+
+	interface Props {
+		children?: Snippet;
+	}
+
+	let { children }: Props = $props();
+</script>
+
+<span class="sr-only">{@render children?.()}</span>
