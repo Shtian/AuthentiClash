@@ -21,7 +21,7 @@
 	let registeredEmail = $state('');
 	let loading = $state(false);
 	let showRegister = $state(false);
-	let error = $state<string | undefined>(undefined);
+	let error = $state<string | undefined>(form?.error);
 
 	function getEmailParam(email: string) {
 		return email ? `?email=${encodeURIComponent(email)}` : '';
