@@ -9,6 +9,7 @@
 		Copy,
 		Flame,
 		HandCoins,
+		HandHeart,
 		LucideLoader2,
 		Shield,
 		Skull,
@@ -210,6 +211,8 @@
 												<HandCoins class="m-auto size-12" />
 											{:else if ability.id === ABILITIES.INFERNAL_RAGE}
 												<Flame class="m-auto size-12" />
+											{:else if ability.id === ABILITIES.PROTECTORS_OATH}
+												<HandHeart class="m-auto size-12" />
 											{/if}
 										</button>
 									{/if}
