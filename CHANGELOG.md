@@ -1,5 +1,15 @@
 # authenticlash
 
+## 0.19.0
+
+### Minor Changes
+
+- [#101](https://github.com/Shtian/AuthentiClash/pull/101) [`31dfad8`](https://github.com/Shtian/AuthentiClash/commit/31dfad848c0ec0a83f2f932c8e68f417029ab631) Thanks [@Shtian](https://github.com/Shtian)! - Add Warden class
+
+### Patch Changes
+
+- [#103](https://github.com/Shtian/AuthentiClash/pull/103) [`5e013db`](https://github.com/Shtian/AuthentiClash/commit/5e013db3e06513ec95c5a4c519819ebc295c3df3) Thanks [@Shtian](https://github.com/Shtian)! - Make sure Cutpurse isnt used on self
+
 ## 0.18.1
 
 ### Patch Changes
