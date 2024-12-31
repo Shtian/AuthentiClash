@@ -1,5 +1,13 @@
 # authenticlash
 
+## 0.18.1
+
+### Patch Changes
+
+- [#98](https://github.com/Shtian/AuthentiClash/pull/98) [`60980c2`](https://github.com/Shtian/AuthentiClash/commit/60980c2c0cedad3f067b68cfaaa273c704cd1476) Thanks [@Shtian](https://github.com/Shtian)! - Update to svelte 5
+
+- [#99](https://github.com/Shtian/AuthentiClash/pull/99) [`7a1f777`](https://github.com/Shtian/AuthentiClash/commit/7a1f7770a5677185c3a71d0729f92a0e38b04a38) Thanks [@Shtian](https://github.com/Shtian)! - Filter game ids with null values from participations
+
 ## 0.18.0
 
 ### Minor Changes
