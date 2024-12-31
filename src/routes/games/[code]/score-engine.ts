@@ -143,6 +143,15 @@ const runCutpurseAbility = async (
 
 	const topPlayers = otherParticipants.toSorted((a, b) => b.totalScore - a.totalScore);
 	const target = topPlayers[0];
+
+	if (target.profileId === userParticipation.profileId) {
+		return {
+			type: 'error',
+			data: null,
+			error: { message: 'Cutpurse cannot be used on yourself!' }
+		};
+	}
+
 	const attemptToSteal = Math.min(target.totalScore, Math.floor(Math.random() * 21) + 20);
 	const stolen = classMitigation(attemptToSteal, target);
 	await giveOtherPlayerScore(stolen * -1, target);
