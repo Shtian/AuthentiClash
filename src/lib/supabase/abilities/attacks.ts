@@ -1,4 +1,5 @@
-import { CLASSES, DIVINE_AEGIS_PERCENTAGE } from '$lib/classes/abilities';
+import { DIVINE_AEGIS_PERCENTAGE } from '$lib/classes/abilities';
+import { CLASSES } from '$lib/classes/classes';
 import { mapToParticipation, type Participation } from '../participation';
 import { supabaseServerClient, type SupabaseResponse } from '../supabaseClient';
 
