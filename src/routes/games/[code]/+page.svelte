@@ -23,9 +23,11 @@
 	import * as Popover from '$lib/components/ui/popover';
 	import { ABILITIES } from '$lib/classes/abilities';
 	import GameLogs from './GameLogs.svelte';
+	import type { Participation } from '$lib/supabase/participation';
+	import type { PageData } from './$types';
 
 	interface Props {
-		data: any;
+		data: PageData;
 		newScore?: number | null;
 	}
 
@@ -33,7 +35,8 @@
 	let isLoading = $state(false);
 	let abilityIdUsed: number | null = $state(null);
 	let hasUsedAbility = $derived(
-		data.players?.find((x) => x.profileId === data.session?.user.id)?.abilityUsed !== null
+		data.players?.find((x: Participation) => x.profileId === data.session?.user.id)?.abilityUsed !==
+			null
 	);
 	let players = $derived(data.players);
 
@@ -53,7 +56,11 @@
 	const millisecondsToEnd = new Date(data.endsAt).getTime();
 	let millisecondsNow = new Date().getTime();
 	let timeLeft = $state(millisecondsToEnd - millisecondsNow);
-	let timeLeftText = $state(timeLeft > 0 ? formatTimeDelta(timeLeft) : 'Game has ended');
+	let timeLeftText = $state(
+		millisecondsToEnd - millisecondsNow > 0
+			? formatTimeDelta(millisecondsToEnd - millisecondsNow)
+			: 'Game has ended'
+	);
 
 	const timer = setInterval(() => {
 		millisecondsNow = new Date().getTime();

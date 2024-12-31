@@ -1,27 +1,27 @@
 <script lang="ts">
-	import { run } from 'svelte/legacy';
-
-	import type { ActionData } from './$types.js';
+	import type { ActionData, PageData } from './$types.js';
 	import { fly } from 'svelte/transition';
 	import { quadIn, quadOut } from 'svelte/easing';
 	import InlineMessage from '$lib/components/InlineMessage.svelte';
 	import logo from '$lib/assets/authenticlash_logo.svg';
 	import AuthProviders from './AuthProviders.svelte';
 
-	let { supabase } = $state(data);
-
 	interface Props {
-		data: any;
+		data: PageData;
 		form: ActionData;
 	}
 
 	let { data, form }: Props = $props();
+	let supabase = $state(data.supabase);
 
 	const animationDuration = 150;
 	let password = $state('');
 	let email = $state(form?.email ?? '');
+	let success = $state(false);
+	let registeredEmail = $state('');
 	let loading = $state(false);
 	let showRegister = $state(false);
+	let error = $state<string | undefined>(undefined);
 
 	function getEmailParam(email: string) {
 		return email ? `?email=${encodeURIComponent(email)}` : '';
@@ -30,17 +30,6 @@
 	const setLoadingState = () => {
 		loading = true;
 	};
-	run(() => {
-		({ supabase } = data);
-	});
-	let error;
-	run(() => {
-		({ error, success, registeredEmail } = form ?? {
-			error: '',
-			success: false,
-			registeredEmail: ''
-		});
-	});
 </script>
 
 <div class="flex min-h-full flex-col justify-center">

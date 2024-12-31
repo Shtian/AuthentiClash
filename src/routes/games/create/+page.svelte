@@ -9,7 +9,7 @@
 		parseDate
 	} from '@internationalized/date';
 	import { cn } from '$lib/utils';
-	import { Button, buttonVariants } from '$lib/components/ui/button';
+	import { buttonVariants } from '$lib/components/ui/button';
 	import { Calendar } from '$lib/components/ui/calendar';
 	import * as Popover from '$lib/components/ui/popover';
 	import type { SubmitFunction } from '@sveltejs/kit';
