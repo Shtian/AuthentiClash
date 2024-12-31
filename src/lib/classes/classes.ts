@@ -1,7 +1,9 @@
 export const CLASSES = {
 	THIEF: 1,
 	BARBARIAN: 3,
-	NECROMANCER: 2
+	NECROMANCER: 2,
+	PALADIN: 4,
+	WARDEN: 5
 } as const;
 
 export const CLASSES_NAME: {
@@ -9,7 +11,9 @@ export const CLASSES_NAME: {
 } = {
 	[CLASSES.THIEF]: 'Thief',
 	[CLASSES.BARBARIAN]: 'Barbarian',
-	[CLASSES.NECROMANCER]: 'Necromancer'
+	[CLASSES.NECROMANCER]: 'Necromancer',
+	[CLASSES.PALADIN]: 'Paladin',
+	[CLASSES.WARDEN]: 'Warden'
 };
 
 export function getClassName(classId: number) {

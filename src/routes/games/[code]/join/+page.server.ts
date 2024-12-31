@@ -5,7 +5,7 @@ import { joinGame } from '$lib/supabase/participation';
 import { getAllClasses } from '$lib/supabase/classes';
 import { getGame } from '$lib/supabase/games';
 import { addGameLogWithAI } from '$lib/supabase/gameLog';
-import { CLASSES_NAME } from '$lib/classes/abilities';
+import { getClassName } from '$lib/classes/classes';
 
 export const load: PageServerLoad = async ({ params, locals: { getSession } }) => {
 	const session = await getSession();
@@ -96,7 +96,7 @@ export const actions = {
 
 		await addGameLogWithAI(
 			game_id!.toString(),
-			`${patchedNickname} joined the game as a ${CLASSES_NAME[parseInt(class_id!.toString(), 10)]} ⚔️`
+			`${patchedNickname} joined the game as a ${getClassName(parseInt(class_id!.toString(), 10))} ⚔️`
 		);
 
 		return {

@@ -1,4 +1,4 @@
-import { ABILITIES } from '$lib/classes/abilities';
+import { ABILITIES, PROTECTORS_OATH_PERCENTAGE } from '$lib/classes/abilities';
 import { classMitigation, giveOtherPlayerScore } from '$lib/supabase/abilities/attacks';
 import { addGameLogWithAI } from '$lib/supabase/gameLog';
 import {
@@ -94,6 +94,8 @@ const runAbilityCalculations = async (
 			return runCrimsonReapAbility(score, userParticipation);
 		case ABILITIES.INFERNAL_RAGE:
 			return runInfernalRageAbility(score, userParticipation);
+		case ABILITIES.PROTECTORS_OATH:
+			return runProtectorsOathAbility(score, userParticipation);
 		default:
 			return {
 				type: 'error',
@@ -284,6 +286,69 @@ const runInfernalRageAbility = async (
 	return {
 		type: 'success',
 		data: { newScore, message: `Infernal Rage used, new score: ${newScore}! 🔥` },
+		error: null
+	};
+};
+
+/**
+ * Heal the last player for 30-40 points and get 25% back
+ */
+const runProtectorsOathAbility = async (
+	score: number,
+	userParticipation: Participation
+): Promise<Response<Success>> => {
+	const res = await getGameParticipations(userParticipation.gameId);
+	if (res.type === 'error') {
+		console.error('Error getting participation: ', JSON.stringify(res));
+		return {
+			type: 'error',
+			data: null,
+			error: { message: 'Oh no, something went wrong. Please try again. 🙏' }
+		};
+	}
+
+	// sort participations by totalScore and get player in last position
+	const sortedParticipations = res.data.sort((a, b) => b.totalScore - a.totalScore);
+	const lastPlayer = sortedParticipations.at(-1);
+	if (!lastPlayer || lastPlayer.profileId === userParticipation.profileId) {
+		return {
+			type: 'error',
+			data: null,
+			error: { message: "Protector's Oath cannot be used on yourself!" }
+		};
+	}
+
+	const healAmount = Math.floor(Math.random() * 11) + 30;
+	await giveOtherPlayerScore(healAmount, lastPlayer);
+
+	const protectorsOathSelfHeal = Math.ceil(healAmount * PROTECTORS_OATH_PERCENTAGE);
+	const playerNewScore = Math.min(99, protectorsOathSelfHeal + score);
+	const updateParticipationRes = await updateParticipationScore(
+		playerNewScore,
+		userParticipation,
+		true
+	);
+
+	if (updateParticipationRes.type === 'error') {
+		console.error('Error updating score: ', JSON.stringify(updateParticipationRes));
+		return {
+			type: 'error',
+			error: { message: 'Oh no, something went wrong. 🙏' },
+			data: null
+		};
+	}
+
+	await addGameLogWithAI(
+		userParticipation.gameId,
+		`${userParticipation.nickname} healed ${lastPlayer.nickname} with Protector's Oath for ${healAmount} points, upping ${userParticipation.nickname}'s original 2FA entry from ${score} to ${playerNewScore}!`
+	);
+
+	return {
+		type: 'success',
+		data: {
+			newScore: playerNewScore,
+			message: `You healed ${lastPlayer.nickname} for ${healAmount} points, and got ${protectorsOathSelfHeal} points back!`
+		},
 		error: null
 	};
 };
