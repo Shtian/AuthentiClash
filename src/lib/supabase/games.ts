@@ -107,7 +107,7 @@ export const getActiveGamesByUserId = async (userId: string): Promise<SupabaseRe
 		return r;
 	}
 
-	const gameIds = matchingParticipations.map((p) => p.game_id);
+	const gameIds = matchingParticipations.map((p) => p.game_id).filter((id) => id !== null);
 	const { data: participatingGames, error } = await supabaseServerClient
 		.from('games')
 		.select(GAME_SELECT_QUERY)
@@ -138,7 +138,7 @@ export const getEndedGamesByUserId = async (userId: string): Promise<SupabaseRes
 		return r;
 	}
 
-	const gameIds = matchingParticipations.map((p) => p.game_id);
+	const gameIds = matchingParticipations.map((p) => p.game_id).filter((id) => id !== null);
 	const { data: participatingGames, error } = await supabaseServerClient
 		.from('games')
 		.select(GAME_SELECT_QUERY)
