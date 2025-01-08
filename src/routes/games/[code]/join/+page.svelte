@@ -117,7 +117,7 @@
 						<p class="block text-sm font-medium leading-6 text-white">
 							Choose your class. Each active ability can only be used once per game:
 						</p>
-						<RadioGroup.Root value={data.classes.at(0)?.id.toString()} required>
+						<RadioGroup.Root value={data.classes.at(0)?.id.toString()} required name="class-id">
 							{#each data.classes as classChoice (classChoice.id)}
 								<div
 									class="border-grey-200 flex items-center space-x-2 rounded-md border p-3 transition-colors focus-within:border-clash-500"
@@ -135,7 +135,6 @@
 									</Label>
 								</div>
 							{/each}
-							<RadioGroup.Input name="class-id" />
 						</RadioGroup.Root>
 					</div>
 				{/if}
