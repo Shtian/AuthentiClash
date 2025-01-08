@@ -15,7 +15,6 @@ export const load: PageServerLoad = async ({ params, locals: { getSession } }) =
 	}
 
 	const res = await getGame(code);
-
 	if (res.type === 'error') {
 		error(500, { message: res.error.message });
 	}
@@ -93,9 +92,7 @@ export const actions = {
 				joinedGame: false
 			});
 		}
-		console.log('classid: ', class_id);
-		console.log('classid: ', parseInt(class_id!.toString(), 10));
-		console.log('className: ', getClassName(parseInt(class_id!.toString(), 10)));
+
 		await addGameLogWithAI(
 			game_id!.toString(),
 			`${patchedNickname} joined the game as a ${getClassName(parseInt(class_id!.toString(), 10))} ⚔️`
