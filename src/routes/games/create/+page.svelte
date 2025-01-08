@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { applyAction, enhance } from '$app/forms';
-	import { Calendar as CalendarIcon } from 'lucide-svelte';
+	import { Calendar as CalendarIcon, Sparkles } from 'lucide-svelte';
 	import {
 		type DateValue,
 		DateFormatter,
@@ -9,13 +9,15 @@
 		parseDate
 	} from '@internationalized/date';
 	import { cn } from '$lib/utils';
-	import { buttonVariants } from '$lib/components/ui/button';
+	import { Button, buttonVariants } from '$lib/components/ui/button';
 	import { Calendar } from '$lib/components/ui/calendar';
 	import * as Popover from '$lib/components/ui/popover';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { goto } from '$app/navigation';
 	import { toast } from '$lib/stores/ToastStore.js';
-	import AbilityAnnouncement from '$lib/components/AbilityAnnouncement.svelte';
+	import { Textarea } from '$lib/components/ui/textarea/index.js';
+	import Badge from '$lib/components/Badge.svelte';
+	import { predefinedPersonalityPrompts } from './personalities';
 
 	const df = new DateFormatter('en-US', {
 		dateStyle: 'long'
@@ -27,6 +29,10 @@
 		form?.endDate ? parseDate(form.endDate.toString()) : today(getLocalTimeZone()).add({ days: 1 })
 	);
 	let contentRef = $state<HTMLElement | null>(null);
+
+	let commentatorPersonality = $state<string>(
+	''
+	);
 
 	let endTime: string = form?.endTime?.toString() ?? '12:00';
 	let cooldown: string = form?.cooldown?.toString() ?? '4';
@@ -84,7 +90,7 @@
 					<label for="2fa-cooldown" class="block text-sm font-medium leading-6 text-white"
 						>2FA Entry Cooldown (0-24h)</label
 					>
-					<div class="text-xs text-gray-300">Limit how often players can enter 2FA values</div>
+					<div class="text-xs text-gray-400">Limit how often players can enter 2FA values</div>
 					<div class="mt-2 max-w-12">
 						<div
 							class="flex rounded-md bg-white/5 ring-1 ring-inset ring-white/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-clash-500"
@@ -97,7 +103,7 @@
 								required
 								min="0"
 								max="24"
-								class="flex-1 border-0 bg-transparent py-1.5 pl-2 text-white focus:ring-0 sm:text-sm sm:leading-6"
+								class="flex-1 border-0 bg-transparent py-1.5 pl-2 text-white sm:text-sm sm:leading-6"
 							/>
 						</div>
 					</div>
@@ -113,7 +119,7 @@
 								class={cn(
 									buttonVariants({
 										variant: 'outline',
-										class: 'w-[280px] justify-start text-left font-normal'
+										class: 'w-full justify-start text-left font-normal bg-white/5'
 									}),
 									!endDate && 'text-muted-foreground'
 								)}
@@ -150,6 +156,35 @@
 						</div>
 					</div>
 				</div>
+				<div class="col-span-6">
+					<label for="commentator-personality" class="block text-sm font-medium leading-6 text-white"
+						>AI commentator personality prompt <Badge color="clash" class="ml-2">New<Sparkles class="size-4 ml-1" /></Badge></label
+					>
+					<p class="text-sm text-gray-400">Use a prompt that describes the personality of the commentator, or choose a pre-defined personality below.</p>
+					<div class="mt-2">
+						<Textarea
+							name="commentator-personality"
+							id="commentator-personality"
+							bind:value={commentatorPersonality}
+							maxlength={255}
+							required
+							class="flex-1 border-0 py-1.5 px-2 text-white focus:ring-0 sm:text-sm sm:leading-6 bg-white/5 resize-none"
+						/>
+					</div>
+					<div class="mt-2 flex flex-wrap gap-2">
+						{#each predefinedPersonalityPrompts as personality}
+							<Button
+								type="button"
+								variant="outline"
+								class="text-xs p-2 h-auto text-gray-300"
+								onclick={() => (commentatorPersonality = personality.prompt)}
+							>
+								{personality.name}
+							</Button>
+						{/each}
+					</div>
+				</div>
+
 			</div>
 		</div>
 	</div>
