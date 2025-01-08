@@ -53,7 +53,6 @@
 <form method="POST" action="?/create" use:enhance={handleSubmit}>
 	<div class="space-y-12">
 		<div class="border-b border-white/10 pb-12">
-			<AbilityAnnouncement />
 			<h2 class="text-base font-semibold leading-7 text-white">Create an AuthentiClash game! ⚔️</h2>
 			<p class="mt-1 text-sm leading-6 text-gray-400">
 				You will get a shareable code after the game has been created.
