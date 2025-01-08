@@ -25,7 +25,7 @@
 	let { form } = $props();
 
 	let name = '';
-	let endDate: DateValue | undefined = $state(
+	let endDate = $state<DateValue | undefined>(
 		form?.endDate ? parseDate(form.endDate.toString()) : today(getLocalTimeZone()).add({ days: 1 })
 	);
 	let contentRef = $state<HTMLElement | null>(null);
@@ -129,6 +129,7 @@
 							</Popover.Trigger>
 							<Popover.Content bind:ref={contentRef} class="w-auto p-0">
 								<Calendar
+								type="single"
 									bind:value={endDate}
 									weekStartsOn={1}
 									minValue={today(getLocalTimeZone())}
