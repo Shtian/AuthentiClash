@@ -14,7 +14,7 @@ export const actions = {
 		const formData = await request.formData();
 		const name = formData.get('game-name');
 		const cooldown = formData.get('2fa-cooldown');
-
+		const commentatorPersonality = formData.get('commentator-personality');
 		const endDate = formData.get('end-date');
 		const endTime = formData.get('end-time');
 		const endAt = new Date(`${endDate}T${endTime}:00Z`);
@@ -40,7 +40,8 @@ export const actions = {
 			is_active: true,
 			cooldown_hours: cooldown,
 			created_at: new Date(),
-			updated_at: new Date()
+			updated_at: new Date(),
+			commentator_personality: commentatorPersonality
 		};
 
 		const { data, error } = await supabase.from('games').insert(game).select();
