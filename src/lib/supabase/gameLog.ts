@@ -1,4 +1,5 @@
 import { generateCommentatorEvent } from '$lib/ai/game-event-commentator';
+import { getGameCommentatorPersonality } from './games';
 import { supabaseServerClient, type SupabaseResponse } from './supabaseClient';
 
 export type GameLog = {
@@ -49,11 +50,13 @@ export const addGameLogWithAI = async (
 	text: string
 ): Promise<SupabaseResponse<GameLog>> => {
 	const previousLogs = await getGameLogs(gameId);
+	const personality = await getGameCommentatorPersonality(gameId);
 	const aiText =
-		previousLogs.type === 'success'
+		previousLogs.type === 'success' && personality.type === 'success'
 			? await generateCommentatorEvent(
 					text,
-					previousLogs.data.map((log) => log.text)
+					previousLogs.data.map((log) => log.text),
+					personality.data
 				)
 			: '';
 

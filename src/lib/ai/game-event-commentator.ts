@@ -3,7 +3,11 @@ import OpenAI from 'openai';
 
 const openaiClient = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || OPENAI_API_KEY });
 
-export async function generateCommentatorEvent(event: string, history: string[], personalityPrompt?: string): Promise<string> {
+export async function generateCommentatorEvent(
+	event: string,
+	history: string[],
+	personalityPrompt?: string
+): Promise<string> {
 	try {
 		const systemPrompt = createSystemPrompt(history, personalityPrompt);
 		const response = await openaiClient.chat.completions.create({
