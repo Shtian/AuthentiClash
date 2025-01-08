@@ -18,7 +18,7 @@
 />
 
 <Portal>
-	<div class="fixed left-1/2 top-5 z-toast -translate-x-1/2">
+	<div class="z-toast fixed left-1/2 top-5 -translate-x-1/2">
 		{#each $toast as toastContent (toastContent.id)}
 			<div
 				class="relative mb-2 flex w-80 items-start rounded-sm border border-slate-800 px-2 py-4 backdrop-blur-3xl"
