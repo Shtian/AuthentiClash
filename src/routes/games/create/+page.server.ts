@@ -61,7 +61,10 @@ export const actions = {
 		const [gameData] = data;
 		const { code, id } = gameData;
 
-		await addGameLogWithAI(id, "[New Game] Introduce who you are and welcome the players. If you're given a name, state it. Otherwise make up a fitting name. Keep it short.");
+		await addGameLogWithAI(
+			id,
+			"[New Game] Introduce who you are and welcome the players. If you're given a name, state it. Otherwise make up a fitting name. Keep it short."
+		);
 
 		redirect(303, `/games/${code}/join`);
 	}

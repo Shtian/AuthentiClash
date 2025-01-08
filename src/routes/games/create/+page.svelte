@@ -30,9 +30,7 @@
 	);
 	let contentRef = $state<HTMLElement | null>(null);
 
-	let commentatorPersonality = $state<string>(
-	''
-	);
+	let commentatorPersonality = $state<string>('');
 
 	let endTime: string = form?.endTime?.toString() ?? '12:00';
 	let cooldown: string = form?.cooldown?.toString() ?? '4';
@@ -119,7 +117,7 @@
 								class={cn(
 									buttonVariants({
 										variant: 'outline',
-										class: 'w-full justify-start text-left font-normal bg-white/5'
+										class: 'w-full justify-start bg-white/5 text-left font-normal'
 									}),
 									!endDate && 'text-muted-foreground'
 								)}
@@ -129,7 +127,7 @@
 							</Popover.Trigger>
 							<Popover.Content bind:ref={contentRef} class="w-auto p-0">
 								<Calendar
-								type="single"
+									type="single"
 									bind:value={endDate}
 									weekStartsOn={1}
 									minValue={today(getLocalTimeZone())}
@@ -158,10 +156,17 @@
 					</div>
 				</div>
 				<div class="col-span-6">
-					<label for="commentator-personality" class="block text-sm font-medium leading-6 text-white"
-						>AI commentator personality prompt <Badge color="clash" class="ml-2">New<Sparkles class="size-4 ml-1" /></Badge></label
+					<label
+						for="commentator-personality"
+						class="block text-sm font-medium leading-6 text-white"
+						>AI commentator personality prompt <Badge color="clash" class="ml-2"
+							>New<Sparkles class="ml-1 size-4" /></Badge
+						></label
 					>
-					<p class="text-sm text-gray-400">Use a prompt that describes the personality of the commentator, or choose a pre-defined personality below.</p>
+					<p class="text-sm text-gray-400">
+						Use a prompt that describes the personality of the commentator, or choose a pre-defined
+						personality below.
+					</p>
 					<div class="mt-2">
 						<Textarea
 							name="commentator-personality"
@@ -169,7 +174,7 @@
 							bind:value={commentatorPersonality}
 							maxlength={255}
 							required
-							class="flex-1 border-0 py-1.5 px-2 text-white focus:ring-0 sm:text-sm sm:leading-6 bg-white/5 resize-none"
+							class="flex-1 resize-none border-0 bg-white/5 px-2 py-1.5 text-white focus:ring-0 sm:text-sm sm:leading-6"
 						/>
 					</div>
 					<div class="mt-2 flex flex-wrap gap-2">
@@ -177,7 +182,7 @@
 							<Button
 								type="button"
 								variant="outline"
-								class="text-xs p-2 h-auto text-gray-300"
+								class="h-auto p-2 text-xs text-gray-300"
 								onclick={() => (commentatorPersonality = personality.prompt)}
 							>
 								{personality.name}
@@ -185,7 +190,6 @@
 						{/each}
 					</div>
 				</div>
-
 			</div>
 		</div>
 	</div>

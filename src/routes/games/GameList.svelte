@@ -54,7 +54,8 @@
 								<Badge
 									title={game.endAtString}
 									color={game.endAtDate < new Date() ? 'red' : 'green'}
-								>{game.endAtDate < new Date() ? 'Ended' : 'In Progress'}</Badge>
+									>{game.endAtDate < new Date() ? 'Ended' : 'In Progress'}</Badge
+								>
 							</td>
 						</tr>
 					{/each}
