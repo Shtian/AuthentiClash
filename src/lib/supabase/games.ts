@@ -201,6 +201,29 @@ export const deactivateGame = async (id: number): Promise<SupabaseResponse<boole
 	return successResponse;
 };
 
+export const getGameCommentatorPersonality = async (
+	gameId: string
+): Promise<SupabaseResponse<string>> => {
+	const { data, error } = await supabaseServerClient
+		.from('games')
+		.select('commentator_personality')
+		.eq('id', gameId)
+		.single();
+
+	if (error !== null) {
+		console.error('Error getting commentator personality:', error.message);
+		const r: SupabaseResponse<string> = { type: 'error', data: null, error };
+		return r;
+	}
+
+	const successResponse: SupabaseResponse<string> = {
+		type: 'success',
+		data: data.commentator_personality || '',
+		error: null
+	};
+	return successResponse;
+};
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const mapToGame = (data: any): Game => {
 	return {

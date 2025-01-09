@@ -53,9 +53,9 @@
 							<td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">
 								<Badge
 									title={game.endAtString}
-									text={game.endAtDate < new Date() ? 'Ended' : 'In Progress'}
 									color={game.endAtDate < new Date() ? 'red' : 'green'}
-								/>
+									>{game.endAtDate < new Date() ? 'Ended' : 'In Progress'}</Badge
+								>
 							</td>
 						</tr>
 					{/each}

@@ -1,11 +1,10 @@
 <script lang="ts">
-	interface Props {
-		color?: 'gray' | 'red' | 'yellow' | 'green' | 'blue' | 'indigo' | 'purple' | 'pink';
-		text?: string;
-		title?: string;
+	import type { HTMLAttributes } from 'svelte/elements';
+	interface Props extends HTMLAttributes<HTMLSpanElement> {
+		color?: 'gray' | 'clash' | 'red' | 'yellow' | 'green' | 'blue' | 'indigo' | 'purple' | 'pink';
 	}
 
-	let { color = 'green', text = '', title = '' }: Props = $props();
+	let { color = 'green', class: className, children, ...restProps }: Props = $props();
 	const getColorClass = () => {
 		switch (color) {
 			case 'gray':
@@ -16,6 +15,8 @@
 				return 'bg-yellow-50 text-yellow-800 ring-yellow-600/20';
 			case 'blue':
 				return 'bg-blue-50 text-blue-700 ring-blue-700/10';
+			case 'clash':
+				return 'bg-clash-50 text-clash-700 ring-clash-700/10';
 			case 'indigo':
 				return 'bg-indigo-50 text-indigo-700 ring-indigo-700/10';
 			case 'purple':
@@ -30,7 +31,6 @@
 </script>
 
 <span
-	{title}
-	class={`inline-flex items-center rounded-md px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset ${getColorClass()}`}
-	>{text}</span
+	class={`inline-flex items-center rounded-md px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset ${getColorClass()} ${className}`}
+	{...restProps}>{@render children?.()}</span
 >

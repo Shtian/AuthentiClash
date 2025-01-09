@@ -15,7 +15,6 @@ export const load: PageServerLoad = async ({ params, locals: { getSession } }) =
 	}
 
 	const res = await getGame(code);
-
 	if (res.type === 'error') {
 		error(500, { message: res.error.message });
 	}

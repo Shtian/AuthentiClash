@@ -2,6 +2,7 @@ import { kebabCase } from '$lib/utils/casing.js';
 import { generateUniqueSentence } from '$lib/utils/word-generator/generator.js';
 import { fail, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from '../$types';
+import { addGameLogWithAI } from '$lib/supabase/gameLog';
 
 export const load: PageServerLoad = async function get() {
 	return {
@@ -14,7 +15,7 @@ export const actions = {
 		const formData = await request.formData();
 		const name = formData.get('game-name');
 		const cooldown = formData.get('2fa-cooldown');
-
+		const commentatorPersonality = formData.get('commentator-personality');
 		const endDate = formData.get('end-date');
 		const endTime = formData.get('end-time');
 		const endAt = new Date(`${endDate}T${endTime}:00Z`);
@@ -40,7 +41,8 @@ export const actions = {
 			is_active: true,
 			cooldown_hours: cooldown,
 			created_at: new Date(),
-			updated_at: new Date()
+			updated_at: new Date(),
+			commentator_personality: commentatorPersonality
 		};
 
 		const { data, error } = await supabase.from('games').insert(game).select();
@@ -57,7 +59,13 @@ export const actions = {
 		}
 
 		const [gameData] = data;
-		const { code } = gameData;
+		const { code, id } = gameData;
+
+		await addGameLogWithAI(
+			id,
+			"[New Game] Introduce who you are and welcome the players. If you're given a name, state it. Otherwise make up a fitting name. Keep it short."
+		);
+
 		redirect(303, `/games/${code}/join`);
 	}
 };
