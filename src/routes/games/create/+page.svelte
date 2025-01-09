@@ -182,7 +182,7 @@
 							<Button
 								type="button"
 								variant="outline"
-								class="h-auto p-2 text-xs text-gray-300"
+								class="h-auto px-2 py-1 text-xs text-gray-300"
 								onclick={() => (commentatorPersonality = personality.prompt)}
 							>
 								{personality.name}
