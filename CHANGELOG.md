@@ -1,5 +1,17 @@
 # authenticlash
 
+## 0.20.0
+
+### Minor Changes
+
+- [#106](https://github.com/Shtian/AuthentiClash/pull/106) [`093509e`](https://github.com/Shtian/AuthentiClash/commit/093509ef4854aed0dc3e36739a80dad6f93f6e02) Thanks [@Shtian](https://github.com/Shtian)! - Add welcome message from AI commentator
+
+- [#106](https://github.com/Shtian/AuthentiClash/pull/106) [`093509e`](https://github.com/Shtian/AuthentiClash/commit/093509ef4854aed0dc3e36739a80dad6f93f6e02) Thanks [@Shtian](https://github.com/Shtian)! - Add AI commentator personality option when creating games
+
+### Patch Changes
+
+- [#104](https://github.com/Shtian/AuthentiClash/pull/104) [`d007c03`](https://github.com/Shtian/AuthentiClash/commit/d007c03ac71e29dd8d54874142558d9802a10b53) Thanks [@Shtian](https://github.com/Shtian)! - Migrate all shadcn components to v5
+
 ## 0.19.0
 
 ### Minor Changes
