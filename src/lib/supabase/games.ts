@@ -224,7 +224,6 @@ export const getGameCommentatorPersonality = async (
 	return successResponse;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const mapToGame = (data: any): Game => {
 	return {
 		id: data.id as number,

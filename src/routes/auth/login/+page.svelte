@@ -11,14 +11,14 @@
 		form: ActionData;
 	}
 
-	let { data, form }: Props = $props();
-	let supabase = $state(data.supabase);
+	const { data, form }: Props = $props();
+	const supabase = $state(data.supabase);
 
 	const animationDuration = 150;
 	let password = $state('');
 	let email = $state(form?.email ?? '');
-	let success = $state(false);
-	let registeredEmail = $state('');
+	const success = $state(false);
+	const registeredEmail = $state('');
 	let loading = $state(false);
 	let showRegister = $state(false);
 	let error = $state<string | undefined>(form?.error);

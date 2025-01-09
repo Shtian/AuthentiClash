@@ -220,7 +220,6 @@ export const getBadgeActivity = async (
 	return { type: 'success', data: { activity, count: count || 0 }, error: null };
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const mapToBadgeActivity = (data: any) => {
 	const activity: BadgeActivity = {
 		awarded_on: new Date(data.awarded_on),
@@ -244,7 +243,6 @@ const mapToBadgeActivity = (data: any) => {
 	return activity;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const mapToBadge = (data: any) => {
 	const badgeDTO: BadgeDTO = {
 		id: data.id,
@@ -260,7 +258,6 @@ const mapToBadge = (data: any) => {
 	return badgeDTO;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const mapToPlayerBadge = (data: any) => {
 	const playerBadgesDTO: PlayerBadgesDTO = {
 		player_id: data.player_id,

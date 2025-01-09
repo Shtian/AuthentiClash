@@ -7,7 +7,7 @@
 		badge: UserBadge;
 	}
 
-	let { badge }: Props = $props();
+	const { badge }: Props = $props();
 
 	// Only show custom image if its NOT a secret badge or if the secret badge is unlocked
 	const showBadgeCustomImage =

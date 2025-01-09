@@ -6,7 +6,7 @@
 		children?: Snippet;
 	}
 
-	let { children }: Props = $props();
+	const { children }: Props = $props();
 	const tabs: { [key: string]: string } = {
 		Overview: '/badges',
 		Activity: '/badges/activity'

@@ -9,14 +9,14 @@
 	import { page } from '$app/stores';
 	import Footer from '$lib/components/Footer.svelte';
 
-	let { data, children } = $props();
+	const { data, children } = $props();
 
 	let { supabase, session } = $state(data);
 	run(() => {
 		({ supabase, session } = data);
 	});
 
-	let title = $derived($page.data.title);
+	const title = $derived($page.data.title);
 
 	const baseUrl = 'https://www.authenticlash.app';
 

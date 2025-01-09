@@ -63,7 +63,7 @@ export const load: PageServerLoad = async ({ locals: { getSession } }) => {
 		return fail(500, { message: unlockedBadgesError });
 	}
 
-	const badges: Array<UserBadge> = enabledBadgesRes.data.map((badge) => {
+	const badges: UserBadge[] = enabledBadgesRes.data.map((badge) => {
 		const unlockedBadge = unlockedBadges.find((ub) => ub.badge_id === badge.id);
 		const awardedOn = unlockedBadge?.awarded_on ? new Date(unlockedBadge.awarded_on) : undefined;
 		const fiveDays = 1000 * 60 * 60 * 24 * 5;

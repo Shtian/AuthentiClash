@@ -32,14 +32,14 @@
 		newScore?: number | null;
 	}
 
-	let { data, newScore = null }: Props = $props();
+	const { data, newScore = null }: Props = $props();
 	let isLoading = $state(false);
 	let abilityIdUsed: number | null = $state(null);
-	let hasUsedAbility = $derived(
+	const hasUsedAbility = $derived(
 		data.players?.find((x: Participation) => x.profileId === data.session?.user.id)?.abilityUsed !==
 			null
 	);
-	let players = $derived(data.players);
+	const players = $derived(data.players);
 
 	let cooldownRemaining = $state(
 		timeUntilCooldownEnds(data.currentPlayer?.updatedAt, data.cooldownHours)
