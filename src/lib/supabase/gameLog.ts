@@ -10,7 +10,7 @@ export type GameLog = {
 	created_at: string;
 };
 
-export const getGameLogs = async (gameId: string): Promise<SupabaseResponse<Array<GameLog>>> => {
+export const getGameLogs = async (gameId: string): Promise<SupabaseResponse<GameLog[]>> => {
 	const { data, error } = await supabaseServerClient
 		.from('game_log')
 		.select('id, game_id, text, text_ai, created_at')
@@ -19,7 +19,7 @@ export const getGameLogs = async (gameId: string): Promise<SupabaseResponse<Arra
 
 	if (error) {
 		console.error('Error getting all classes:', error.message);
-		const r: SupabaseResponse<Array<GameLog>> = { type: 'error', data: null, error };
+		const r: SupabaseResponse<GameLog[]> = { type: 'error', data: null, error };
 		return r;
 	}
 

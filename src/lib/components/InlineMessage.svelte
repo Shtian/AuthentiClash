@@ -7,7 +7,7 @@
 		children?: Snippet;
 	}
 
-	let { msgType = 'success', children }: Props = $props();
+	const { msgType = 'success', children }: Props = $props();
 </script>
 
 {#if msgType === 'error'}

@@ -10,7 +10,7 @@
 	import * as RadioGroup from '$lib/components/ui/radio-group/index.js';
 	import { Label } from '$lib/components/ui/label/index.js';
 
-	let { data } = $props();
+	const { data } = $props();
 	let isLoading = $state(false);
 
 	// Game timer

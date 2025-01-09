@@ -4,7 +4,7 @@
 		color?: 'gray' | 'clash' | 'red' | 'yellow' | 'green' | 'blue' | 'indigo' | 'purple' | 'pink';
 	}
 
-	let { color = 'green', class: className, children, ...restProps }: Props = $props();
+	const { color = 'green', class: className, children, ...restProps }: Props = $props();
 	const getColorClass = () => {
 		switch (color) {
 			case 'gray':

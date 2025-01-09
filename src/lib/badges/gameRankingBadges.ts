@@ -21,7 +21,7 @@ export const checkForRankingBadge = async (userId: string): Promise<void> => {
 	}
 
 	const games = gamesRes.data;
-	const gamesWithRankings: Array<GameWithRankings> = games
+	const gamesWithRankings: GameWithRankings[] = games
 		.filter((game) => new Date(game.end_at).getTime() < new Date().getTime())
 		.filter((game) => game.participation.length > 1)
 		.toSorted((a, b) => new Date(a.end_at).getTime() - new Date(b.end_at).getTime())
@@ -128,7 +128,7 @@ const awardParticipation = async (userId: string, participatedGames: number) => 
 	}
 };
 
-const awardWinAfterLoss = async (userId: string, gamesWithRankings: Array<GameWithRankings>) => {
+const awardWinAfterLoss = async (userId: string, gamesWithRankings: GameWithRankings[]) => {
 	if (gamesWithRankings.length < 2) return;
 	for (let i = 0; i < gamesWithRankings.length - 1; i++) {
 		const currentGame = gamesWithRankings[i];
@@ -140,7 +140,7 @@ const awardWinAfterLoss = async (userId: string, gamesWithRankings: Array<GameWi
 	}
 };
 
-const awardLossAfterWin = async (userId: string, gamesWithRankings: Array<GameWithRankings>) => {
+const awardLossAfterWin = async (userId: string, gamesWithRankings: GameWithRankings[]) => {
 	if (gamesWithRankings.length < 2) return;
 	for (let i = 0; i < gamesWithRankings.length - 1; i++) {
 		const currentGame = gamesWithRankings[i];
@@ -152,7 +152,7 @@ const awardLossAfterWin = async (userId: string, gamesWithRankings: Array<GameWi
 	}
 };
 
-const awardTotalScore = async (userId: string, gamesWithRankings: Array<GameWithRankings>) => {
+const awardTotalScore = async (userId: string, gamesWithRankings: GameWithRankings[]) => {
 	const totalScore = gamesWithRankings.reduce((acc, game) => acc + game.userTotalScore, 0);
 	if (totalScore >= 1000) {
 		await tryUnlockBadge('humble-beginnings', userId);
@@ -165,7 +165,7 @@ const awardTotalScore = async (userId: string, gamesWithRankings: Array<GameWith
 	}
 };
 
-const awardTwinziesScore = async (userId: string, gamesWithRankings: Array<GameWithRankings>) => {
+const awardTwinziesScore = async (userId: string, gamesWithRankings: GameWithRankings[]) => {
 	if (gamesWithRankings.some((game) => game.qualifiesForTwinzies)) {
 		await tryUnlockBadge('twinzies', userId);
 	}
@@ -173,14 +173,14 @@ const awardTwinziesScore = async (userId: string, gamesWithRankings: Array<GameW
 
 const awardLiterallyCantBelieveIt = async (
 	userId: string,
-	gamesWithRankings: Array<GameWithRankings>
+	gamesWithRankings: GameWithRankings[]
 ) => {
 	if (gamesWithRankings.some((game) => game.qualifiesForLiterallyCantBelieveIt)) {
 		await tryUnlockBadge('literally-cant-believe-it', userId);
 	}
 };
 
-const awardLuckyInLove = async (userId: string, gamesWithRankings: Array<GameWithRankings>) => {
+const awardLuckyInLove = async (userId: string, gamesWithRankings: GameWithRankings[]) => {
 	if (gamesWithRankings.some((game) => game.qualifiesForLuckyInLove)) {
 		await tryUnlockBadge('lucky-in-love', userId);
 	}

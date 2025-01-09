@@ -3,7 +3,7 @@ type Personality = {
 	prompt: string;
 };
 
-export const predefinedPersonalityPrompts: Array<Personality> = [
+export const predefinedPersonalityPrompts: Personality[] = [
 	{
 		name: 'E-sports commentator (default)',
 		prompt: 'An e-sports commentator. The use of humour like irony, sarcasm and puns is encouraged.'

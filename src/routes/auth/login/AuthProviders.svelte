@@ -6,11 +6,10 @@
 	import githubLogo from '$lib/assets/github_logo.svg';
 
 	interface Props {
-		/* eslint-disable  @typescript-eslint/no-explicit-any */
 		supabase: SupabaseClient<any, 'public', any>;
 	}
 
-	let { supabase }: Props = $props();
+	const { supabase }: Props = $props();
 
 	type OAuthProvider = 'github' | 'discord' | 'google';
 

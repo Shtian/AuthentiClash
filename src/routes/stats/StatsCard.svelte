@@ -10,7 +10,7 @@
 		children?: Snippet;
 	}
 
-	let { title, cols = 'half', helptext = '', children }: Props = $props();
+	const { title, cols = 'half', helptext = '', children }: Props = $props();
 
 	let colClass = $state('sm:col-span-6');
 	switch (cols) {

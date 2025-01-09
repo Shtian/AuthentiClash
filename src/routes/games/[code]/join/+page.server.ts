@@ -38,7 +38,7 @@ export const load: PageServerLoad = async ({ params, locals: { getSession } }) =
 		gameId: res.data.id,
 		gameName: res.data.name,
 		aiEnabled: res.data.ai_enabled,
-		classes: classes
+		classes
 	};
 };
 

@@ -6,12 +6,12 @@
 	interface Props {
 		message?: string;
 		duration: number;
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 		[key: string]: any;
 	}
 
-	let { message = '', duration, ...rest }: Props = $props();
-	let progress = tweened(0, {
+	const { message = '', duration, ...rest }: Props = $props();
+	const progress = tweened(0, {
 		duration
 	});
 

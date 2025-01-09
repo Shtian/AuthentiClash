@@ -15,7 +15,7 @@
 		currentPlayerId?: string;
 	}
 
-	let { players = [], aiEnabled = false, currentPlayerId = '' }: Props = $props();
+	const { players = [], aiEnabled = false, currentPlayerId = '' }: Props = $props();
 
 	let isLoading = $state(false);
 

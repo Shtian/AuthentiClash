@@ -5,7 +5,7 @@
 		duration: number;
 	}
 
-	let { duration }: Props = $props();
+	const { duration }: Props = $props();
 	const progress = tweened(0, {
 		duration
 	});

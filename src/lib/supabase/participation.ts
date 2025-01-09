@@ -207,7 +207,6 @@ export const joinGame = async (
 	return successResponse;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const mapToParticipation = (data: any) => {
 	const participation: Participation = {
 		id: data.id,

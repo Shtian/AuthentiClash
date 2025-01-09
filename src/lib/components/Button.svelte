@@ -25,12 +25,12 @@
 		class?: string;
 		variant?: Variant;
 		children?: Snippet;
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 		[key: string]: any;
 	}
 
-	let { class: className = '', variant = 'default', children, ...rest }: Props = $props();
-	let size: Size = 'default';
+	const { class: className = '', variant = 'default', children, ...rest }: Props = $props();
+	const size: Size = 'default';
 </script>
 
 <div class="justy"></div>

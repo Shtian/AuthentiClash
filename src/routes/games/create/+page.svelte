@@ -22,9 +22,9 @@
 	const df = new DateFormatter('en-US', {
 		dateStyle: 'long'
 	});
-	let { form } = $props();
+	const { form } = $props();
 
-	let name = '';
+	const name = '';
 	let endDate = $state<DateValue | undefined>(
 		form?.endDate ? parseDate(form.endDate.toString()) : today(getLocalTimeZone()).add({ days: 1 })
 	);
@@ -32,8 +32,8 @@
 
 	let commentatorPersonality = $state<string>('');
 
-	let endTime: string = form?.endTime?.toString() ?? '12:00';
-	let cooldown: string = form?.cooldown?.toString() ?? '4';
+	const endTime: string = form?.endTime?.toString() ?? '12:00';
+	const cooldown: string = form?.cooldown?.toString() ?? '4';
 	let isLoading = $state(false);
 
 	const handleSubmit: SubmitFunction = () => {

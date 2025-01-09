@@ -2,10 +2,10 @@
 	import type { GameLog } from '$lib/supabase/gameLog';
 
 	interface Props {
-		logs?: Array<GameLog>;
+		logs?: GameLog[];
 	}
 
-	let { logs = [] }: Props = $props();
+	const { logs = [] }: Props = $props();
 
 	const dateFormatter = Intl.DateTimeFormat('en-US', {
 		month: 'short',

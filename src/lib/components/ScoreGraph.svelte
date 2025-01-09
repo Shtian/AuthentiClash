@@ -2,7 +2,7 @@
 	import * as d3 from 'd3';
 	import { onMount } from 'svelte';
 	interface Props {
-		allScores?: Array<number>;
+		allScores?: number[];
 		limit?: number;
 		width?: number;
 		height?: number;
@@ -12,7 +12,7 @@
 		marginLeft?: number;
 	}
 
-	let {
+	const {
 		allScores = [],
 		limit = 50,
 		width = 928,
@@ -22,7 +22,7 @@
 		marginBottom = 30,
 		marginLeft = 40
 	}: Props = $props();
-	let scores: Array<number> = allScores.slice(limit * -1);
+	const scores: number[] = allScores.slice(limit * -1);
 
 	let path: SVGPathElement = $state();
 	let pathLength = 0;

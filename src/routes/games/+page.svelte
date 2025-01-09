@@ -3,17 +3,17 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 
-	let { data } = $props();
+	const { data } = $props();
 
-	let games = $derived(data.participatingGames || []);
+	const games = $derived(data.participatingGames || []);
 
 	function tabSelected(e: Event) {
 		const eventTarget: HTMLSelectElement = e.target as HTMLSelectElement;
 		const tabname = eventTarget.value;
-		let url = new URL($page.url);
+		const url = new URL($page.url);
 		const currentFilter = url.searchParams.get('filter');
 		if (currentFilter === null && tabname === '') return;
-		if (currentFilter !== null && tabname === '') goto(`/games`);
+		if (currentFilter !== null && tabname === '') goto('/games');
 		if (currentFilter !== tabname) {
 			url.searchParams.set('filter', tabname);
 			goto(url);

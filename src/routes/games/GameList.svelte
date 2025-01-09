@@ -3,7 +3,7 @@
 	import Badge from '$lib/components/Badge.svelte';
 
 	interface Props {
-		gamesWithParticipation?: {
+		gamesWithParticipation?: Array<{
 			id: string;
 			name: string;
 			userRank: number;
@@ -11,10 +11,10 @@
 			endAtDate: Date;
 			code: string;
 			totalScore: number;
-		}[];
+		}>;
 	}
 
-	let { gamesWithParticipation = [] }: Props = $props();
+	const { gamesWithParticipation = [] }: Props = $props();
 </script>
 
 <div class="mt-6 flow-root">

@@ -9,19 +9,19 @@
 		textType?: 'count' | 'percentage';
 	}
 
-	let { count, total, width = 100, strokeWidth = 10, textType = 'count' }: Props = $props();
+	const { count, total, width = 100, strokeWidth = 10, textType = 'count' }: Props = $props();
 
 	const progress = (count / total) * 100;
 	const animationProgres = tweened(0, { duration: 500 });
 	animationProgres.set(100);
-	let currentPercentage = $derived(($animationProgres * progress) / 100);
-	let currentNum = $derived(($animationProgres * count) / 100);
+	const currentPercentage = $derived(($animationProgres * progress) / 100);
+	const currentNum = $derived(($animationProgres * count) / 100);
 
 	const cx = width / 2;
 	const cy = width / 2;
 	const radius = (width - strokeWidth) / 2;
 	const circumference = 2 * Math.PI * radius;
-	let dashoffset = $derived(circumference - (circumference * currentPercentage) / 100);
+	const dashoffset = $derived(circumference - (circumference * currentPercentage) / 100);
 </script>
 
 <div class="relative size-20">

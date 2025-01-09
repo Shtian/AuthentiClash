@@ -10,7 +10,7 @@
 		session?: Session | null;
 	}
 
-	let { session = null }: Props = $props();
+	const { session = null }: Props = $props();
 
 	const links = [
 		{ name: 'Games', href: '/games' },
@@ -21,7 +21,7 @@
 
 	let isMainMenuOpen = $state(false);
 	let isUserMenuOpen = $state(false);
-	let isLoggedIn = !!session?.user;
+	const isLoggedIn = !!session?.user;
 
 	async function sha256(message: string) {
 		const msgBuffer = new TextEncoder().encode(message.trim().toLocaleLowerCase());
