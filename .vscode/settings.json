@@ -1,0 +1,36 @@
+{
+	"editor.codeActionsOnSave": { "source.fixAll.eslint": "explicit" },
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.formatOnSave": true,
+	"editor.rulers": [80],
+	"editor.tabSize": 2,
+	"eslint.probe": [
+		"astro",
+		"javascript",
+		"javascriptreact",
+		"typescript",
+		"typescriptreact",
+		"html",
+		"mdx",
+		"vue",
+		"markdown",
+		"json",
+		"jsonc",
+		"svelte"
+	],
+	"eslint.rules.customizations": [{ "rule": "*", "severity": "warn" }],
+	"eslint.validate": [
+		"astro",
+		"javascript",
+		"javascriptreact",
+		"typescript",
+		"typescriptreact",
+		"html",
+		"mdx",
+		"vue",
+		"markdown",
+		"json",
+		"jsonc",
+		"svelte"
+	]
+}
