@@ -2,10 +2,9 @@
 	import type { HTMLAttributes } from 'svelte/elements';
 	interface Props extends HTMLAttributes<HTMLSpanElement> {
 		color?: 'gray' | 'clash' | 'red' | 'yellow' | 'green' | 'blue' | 'indigo' | 'purple' | 'pink';
-		text?: string;
 	}
 
-	let { color = 'green', text = '', class: className, children, ...restProps }: Props = $props();
+	let { color = 'green', class: className, children, ...restProps }: Props = $props();
 	const getColorClass = () => {
 		switch (color) {
 			case 'gray':
