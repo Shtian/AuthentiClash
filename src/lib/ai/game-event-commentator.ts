@@ -3,6 +3,8 @@ import OpenAI from 'openai';
 
 const openaiClient = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || OPENAI_API_KEY });
 
+export const NEW_GAME_PREFIX = '[New Game]';
+
 export async function generateCommentatorEvent(
 	event: string,
 	history: string[],
@@ -54,9 +56,11 @@ function createSystemPrompt(events: string[], personalityPrompt?: string) {
 	const personalityPromptToUse = personalityPrompt || defaultPersonalityPrompt;
 	const baseSystemPrompt = `You are a commentator for a game called AuthentiClash. Users sign up and enter their 2FA codes ranging from 10-99, where 10 is the worst and 99 is the best. Highest accumulated score at the end of the game wins. The users can choose a class and use a class ability once per game. Keep it short and concise in a few sentences max. You will be given plain text events and repeat them as with the personality: ${personalityPromptToUse}`;
 
-	if (events.length > 0) {
-		const prompt = `${baseSystemPrompt} These are the previous events, from newest to oldest:\n${events.join('\n')}`;
+	const excludeNewGameFromEvents = events.filter((event) => !event.startsWith(NEW_GAME_PREFIX));
+	if (excludeNewGameFromEvents.length > 0) {
+		const prompt = `${baseSystemPrompt} These are the previous events, from newest to oldest:\n${excludeNewGameFromEvents.join('\n')}`;
 		return prompt;
 	}
+
 	return baseSystemPrompt;
 }
