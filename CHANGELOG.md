@@ -1,5 +1,11 @@
 # authenticlash
 
+## 0.20.1
+
+### Patch Changes
+
+- [#108](https://github.com/Shtian/AuthentiClash/pull/108) [`d91e0f6`](https://github.com/Shtian/AuthentiClash/commit/d91e0f6ec0a6b82e56867f8afeb04f6c6ec4a82c) Thanks [@Shtian](https://github.com/Shtian)! - Exclude New Game from event prompt context
+
 ## 0.20.0
 
 ### Minor Changes
