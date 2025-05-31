@@ -7,13 +7,14 @@ export type GameLog = {
 	game_id: number;
 	text: string;
 	text_ai: string;
+	response_id?: string | null;
 	created_at: string;
 };
 
 export const getGameLogs = async (gameId: string): Promise<SupabaseResponse<GameLog[]>> => {
 	const { data, error } = await supabaseServerClient
 		.from('game_log')
-		.select('id, game_id, text, text_ai, created_at')
+		.select('id, game_id, text, text_ai, response_id, created_at')
 		.eq('game_id', gameId)
 		.order('created_at', { ascending: false });
 
@@ -28,11 +29,12 @@ export const getGameLogs = async (gameId: string): Promise<SupabaseResponse<Game
 
 export const addGameLog = async (
 	gameId: string,
-	text: string
+	text: string,
+	responseId?: string
 ): Promise<SupabaseResponse<GameLog>> => {
 	const { data, error } = await supabaseServerClient
 		.from('game_log')
-		.insert({ game_id: gameId, text })
+		.insert({ game_id: gameId, text, response_id: responseId })
 		.select()
 		.single();
 
@@ -47,7 +49,8 @@ export const addGameLog = async (
 
 export const addGameLogWithAI = async (
 	gameId: string,
-	text: string
+	text: string,
+	responseId?: string
 ): Promise<SupabaseResponse<GameLog>> => {
 	const previousLogs = await getGameLogs(gameId);
 	const personality = await getGameCommentatorPersonality(gameId);
@@ -57,12 +60,12 @@ export const addGameLogWithAI = async (
 					text,
 					previousLogs.data.map((log) => log.text),
 					personality.data
-				)
+			  )
 			: '';
 
 	const { data, error } = await supabaseServerClient
 		.from('game_log')
-		.insert({ game_id: gameId, text, text_ai: aiText })
+		.insert({ game_id: gameId, text, text_ai: aiText, response_id: responseId })
 		.select()
 		.single();
 
