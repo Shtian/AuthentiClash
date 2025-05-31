@@ -74,3 +74,21 @@ export const addGameLogWithAI = async (
 
 	return { type: 'success', data: data || null, error: null };
 };
+
+export const getLatestGameLog = async (gameId: string): Promise<SupabaseResponse<GameLog>> => {
+	const { data, error } = await supabaseServerClient
+		.from('game_log')
+		.select('id, game_id, text, text_ai, created_at')
+		.eq('game_id', gameId)
+		.order('created_at', { ascending: false })
+		.limit(1)
+		.single();
+
+	if (error) {
+		console.error('Error getting latest game log:', error.message);
+		const r: SupabaseResponse<GameLog> = { type: 'error', data: null, error };
+		return r;
+	}
+
+	return { type: 'success', data: data || null, error: null };
+};
