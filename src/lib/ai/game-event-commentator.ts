@@ -3,64 +3,64 @@ import OpenAI from 'openai';
 
 const openaiClient = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || OPENAI_API_KEY });
 
-export const NEW_GAME_PREFIX = '[New Game]';
+type CommentatorEventResponse = {
+	output_text: string;
+	response_id: string;
+	type: 'success';
+	error: null;
+} | {
+	error: string;
+	output_text: '';
+	type: 'error';
+}
 
-export async function generateCommentatorEvent(
-	event: string,
-	history: string[],
-	personalityPrompt?: string
-): Promise<string> {
+export async function setupNewCommentator(personalityPrompt: string): Promise<CommentatorEventResponse> {
 	try {
-		const systemPrompt = createSystemPrompt(history, personalityPrompt);
-		const response = await openaiClient.chat.completions.create({
-			model: 'gpt-4o-mini',
-			messages: [
-				{
-					role: 'system',
-					content: [
-						{
-							type: 'text',
-							text: systemPrompt
-						}
-					]
-				},
-				{
-					role: 'user',
-					content: [
-						{
-							type: 'text',
-							text: event
-						}
-					]
-				}
-			],
-			response_format: {
-				type: 'text'
-			},
-			temperature: 1,
-			max_completion_tokens: 10000,
-			top_p: 1,
-			frequency_penalty: 0,
-			presence_penalty: 0
+		const defaultPersonalityPrompt =
+		'An e-sports commentator. The use of humour like irony, sarcasm and puns is encouraged.';
+		const personalityPromptToUse = personalityPrompt || defaultPersonalityPrompt;
+		const baseSystemPrompt = `You are a commentator for a game called AuthentiClash. Users sign up and enter their 2FA codes ranging from 10-99, where 10 is the worst and 99 is the best. Highest accumulated score at the end of the game wins. The users can choose a class and use a class ability once per game. Keep it short and concise in a few sentences max. You will be given plain text events and repeat them as with the personality: ${personalityPromptToUse}`;
+
+		const response = await openaiClient.responses.create({
+			model: 'gpt-4.1-mini',
+			instructions: baseSystemPrompt,
+			input: [{ role: 'user', content: 'Introduce yourself as a commentator for the game AuthentiClash. Include your name.' }],
 		});
-		return response.choices[0].message.content || '';
+		return {
+			output_text: response.output_text,
+			response_id: response.id,
+			type: 'success',
+			error: null
+		};
 	} catch (error) {
 		console.error('Error generating commentator event: ', error);
-		return '';
+		return {
+			output_text: '',
+			type: 'error',
+			error: error instanceof Error ? error.message : 'Unknown error'
+		};
 	}
 }
 
-function createSystemPrompt(events: string[], personalityPrompt?: string) {
-	const defaultPersonalityPrompt =
-		'An e-sports commentator. The use of humour like irony, sarcasm and puns is encouraged.';
-	const personalityPromptToUse = personalityPrompt || defaultPersonalityPrompt;
-	const baseSystemPrompt = `You are a commentator for a game called AuthentiClash. Users sign up and enter their 2FA codes ranging from 10-99, where 10 is the worst and 99 is the best. Highest accumulated score at the end of the game wins. The users can choose a class and use a class ability once per game. Keep it short and concise in a few sentences max. You will be given plain text events and repeat them as with the personality: ${personalityPromptToUse}`;
-
-	const excludeNewGameFromEvents = events.filter((event) => !event.startsWith(NEW_GAME_PREFIX));
-	if (excludeNewGameFromEvents.length > 0) {
-		const prompt = `${baseSystemPrompt} These are the previous events, from newest to oldest:\n${excludeNewGameFromEvents.join('\n')}`;
-		return prompt;
+export async function generateCommentatorEventV2(event: string, previousEventId: string): Promise<CommentatorEventResponse> {
+	try {
+		const response = await openaiClient.responses.create({
+			model: 'gpt-4.1-mini',
+			input: [{ role: 'user', content: event }],
+			previous_response_id: previousEventId
+		});
+		return {
+			output_text: response.output_text,
+			response_id: response.id,
+			type: 'success',
+			error: null
+		};
+	} catch (error) {
+		console.error('Error generating commentator event: ', error);
+		return {
+			output_text: '',
+			type: 'error',
+			error: error instanceof Error ? error.message : 'Unknown error'
+		};
 	}
-
-	return baseSystemPrompt;
 }

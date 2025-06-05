@@ -2,8 +2,7 @@ import { kebabCase } from '$lib/utils/casing.js';
 import { generateUniqueSentence } from '$lib/utils/word-generator/generator.js';
 import { fail, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from '../$types';
-import { addGameLogWithAI } from '$lib/supabase/gameLog';
-import { NEW_GAME_PREFIX } from '$lib/ai/game-event-commentator';
+import { beginGameLogWithAI } from '$lib/supabase/gameLog';
 
 export const load: PageServerLoad = async function get() {
 	return {
@@ -62,9 +61,9 @@ export const actions = {
 		const [gameData] = data;
 		const { code, id } = gameData;
 
-		await addGameLogWithAI(
+		await beginGameLogWithAI(
 			id,
-			`${NEW_GAME_PREFIX} Introduce who you are and welcome the players. If you're given a name, state it. Otherwise make up a fitting name. Keep it short.`
+			commentatorPersonality
 		);
 
 		redirect(303, `/games/${code}/join`);

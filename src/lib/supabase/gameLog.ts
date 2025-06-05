@@ -1,5 +1,4 @@
-import { generateCommentatorEvent } from '$lib/ai/game-event-commentator';
-import { getGameCommentatorPersonality } from './games';
+import { generateCommentatorEventV2, setupNewCommentator } from '$lib/ai/game-event-commentator';
 import { supabaseServerClient, type SupabaseResponse } from './supabaseClient';
 
 export type GameLog = {
@@ -47,19 +46,41 @@ export const addGameLog = async (
 	return { type: 'success', data: data || null, error: null };
 };
 
+export const beginGameLogWithAI = async (
+	gameId: string,
+	personalityPrompt: string
+): Promise<SupabaseResponse<GameLog>> => {
+	const aiText = await setupNewCommentator(personalityPrompt);
+	if(aiText.type === 'error') {
+		return { type: 'error', data: null, error: new Error(aiText.error) };
+	}
+
+	const { data, error } = await supabaseServerClient
+		.from('game_log')
+		.insert({ game_id: gameId, text: aiText.output_text, text_ai: aiText.output_text, response_id: aiText.response_id })
+		.select()
+		.single();
+
+	if (error) {
+		console.error('Error adding game log:', error.message);
+		const r: SupabaseResponse<GameLog> = { type: 'error', data: null, error };
+		return r;
+	}
+
+	return { type: 'success', data: data || null, error: null };
+};
+
 export const addGameLogWithAI = async (
 	gameId: string,
 	text: string,
 	responseId?: string
 ): Promise<SupabaseResponse<GameLog>> => {
-	const previousLogs = await getGameLogs(gameId);
-	const personality = await getGameCommentatorPersonality(gameId);
+	const previousLog = await getLatestGameLog(gameId);
 	const aiText =
-		previousLogs.type === 'success' && personality.type === 'success'
-			? await generateCommentatorEvent(
+		previousLog.type === 'success'
+			? await generateCommentatorEventV2(
 					text,
-					previousLogs.data.map((log) => log.text),
-					personality.data
+					previousLog.data?.response_id || ''
 			  )
 			: '';
 
