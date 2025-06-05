@@ -55,7 +55,7 @@
 
 	<!-- Y-Axis and Grid Lines -->
 	<g transform="translate({marginLeft},0)">
-		{#each yScale.ticks(2) as tick}
+		{#each yScale.ticks(2) as tick (tick)}
 			{#if tick !== 0}
 				<line
 					stroke="currentColor"
@@ -79,7 +79,7 @@
 			</text>
 		{/each}
 	</g>
-	{#each scores as score, i}
+	{#each scores as score, i (i)}
 		<g class="group outline-none">
 			<rect
 				x={xScale(i + 1) - 24}

@@ -178,7 +178,7 @@
 						/>
 					</div>
 					<div class="mt-2 flex flex-wrap gap-2">
-						{#each predefinedPersonalityPrompts as personality}
+						{#each predefinedPersonalityPrompts as personality (personality.name)}
 							<Button
 								type="button"
 								variant="outline"

@@ -27,7 +27,7 @@
 		</p>
 	</div>
 	<ul class="space-y-4">
-		{#each badges as badge}
+		{#each badges as badge (badge.id)}
 			<UserBadge {badge} />
 		{:else}
 			<li>No badges enabled yet 🤡</li>

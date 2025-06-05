@@ -90,7 +90,7 @@
 					<div class="hidden sm:ml-6 sm:block">
 						{#if isLoggedIn}
 							<div class="flex space-x-4">
-								{#each links as link}
+								{#each links as link (link.href)}
 									{#if $page.url.pathname.includes(link.href)}
 										<a
 											href={link.href}
@@ -214,7 +214,7 @@
 				<div class="space-y-1 px-2 pb-3 pt-2">
 					{#if isLoggedIn}
 						<div class="flex space-x-4">
-							{#each links as link}
+							{#each links as link (link.href)}
 								{#if $page.url.pathname.includes(link.href)}
 									<a
 										href={link.href}
