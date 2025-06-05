@@ -10,7 +10,7 @@
 		[key: string]: any;
 	}
 
-	const { message = '', duration, ...rest }: Props = $props();
+	const { message = '', duration, ...others }: Props = $props();
 	const progress = tweened(0, {
 		duration
 	});
@@ -25,6 +25,6 @@
 	});
 </script>
 
-<p {...rest}>
+<p {...others}>
 	{message}
 </p>

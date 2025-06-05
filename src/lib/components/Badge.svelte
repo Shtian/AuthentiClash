@@ -4,7 +4,7 @@
 		color?: 'gray' | 'clash' | 'red' | 'yellow' | 'green' | 'blue' | 'indigo' | 'purple' | 'pink';
 	}
 
-	const { color = 'green', class: className, children, ...restProps }: Props = $props();
+	const { color = 'green', class: className, children, ...others }: Props = $props();
 	const getColorClass = () => {
 		switch (color) {
 			case 'gray':
@@ -32,5 +32,5 @@
 
 <span
 	class={`inline-flex items-center rounded-md px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset ${getColorClass()} ${className}`}
-	{...restProps}>{@render children?.()}</span
+	{...others}>{@render children?.()}</span
 >

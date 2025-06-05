@@ -29,11 +29,11 @@
 		[key: string]: any;
 	}
 
-	const { class: className = '', variant = 'default', children, ...rest }: Props = $props();
+	const { class: className = '', variant = 'default', children, ...others }: Props = $props();
 	const size: Size = 'default';
 </script>
 
 <div class="justy"></div>
-<button type="button" class={cn(buttonVariants({ variant, size, className }))} {...rest}>
+<button type="button" class={cn(buttonVariants({ variant, size, className }))} {...others}>
 	{@render children?.()}
 </button>
