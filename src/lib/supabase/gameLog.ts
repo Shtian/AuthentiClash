@@ -51,13 +51,18 @@ export const beginGameLogWithAI = async (
 	personalityPrompt: string
 ): Promise<SupabaseResponse<GameLog>> => {
 	const aiText = await setupNewCommentator(personalityPrompt);
-	if(aiText.type === 'error') {
+	if (aiText.type === 'error') {
 		return { type: 'error', data: null, error: new Error(aiText.error) };
 	}
 
 	const { data, error } = await supabaseServerClient
 		.from('game_log')
-		.insert({ game_id: gameId, text: aiText.output_text, text_ai: aiText.output_text, response_id: aiText.response_id })
+		.insert({
+			game_id: gameId,
+			text: aiText.output_text,
+			text_ai: aiText.output_text,
+			response_id: aiText.response_id
+		})
 		.select()
 		.single();
 
@@ -78,10 +83,7 @@ export const addGameLogWithAI = async (
 	const previousLog = await getLatestGameLog(gameId);
 	const aiText =
 		previousLog.type === 'success'
-			? await generateCommentatorEventV2(
-					text,
-					previousLog.data?.response_id || ''
-			  )
+			? await generateCommentatorEventV2(text, previousLog.data?.response_id || '')
 			: '';
 
 	const { data, error } = await supabaseServerClient

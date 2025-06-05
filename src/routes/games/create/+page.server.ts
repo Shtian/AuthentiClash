@@ -61,10 +61,7 @@ export const actions = {
 		const [gameData] = data;
 		const { code, id } = gameData;
 
-		await beginGameLogWithAI(
-			id,
-			commentatorPersonality
-		);
+		await beginGameLogWithAI(id, commentatorPersonality);
 
 		redirect(303, `/games/${code}/join`);
 	}
