@@ -251,10 +251,6 @@
 		inherits: false;
 	}
 
-	.ability-button.active {
-		@apply bg-clash-100/10;
-	}
-
 	.ability-button.active::before {
 		content: '';
 		position: absolute;

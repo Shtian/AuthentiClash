@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { run } from 'svelte/legacy';
-
 	import '../app.css';
 	import { invalidate, onNavigate } from '$app/navigation';
 	import { onMount } from 'svelte';
@@ -10,14 +9,13 @@
 	import Footer from '$lib/components/Footer.svelte';
 
 	const { data, children } = $props();
-
 	let { supabase, session } = $state(data);
+
 	run(() => {
 		({ supabase, session } = data);
 	});
 
 	const title = $derived($page.data.title);
-
 	const baseUrl = 'https://www.authenticlash.app';
 
 	onMount(() => {
@@ -32,6 +30,7 @@
 
 	onNavigate((navigation) => {
 		if (!document.startViewTransition) return;
+
 		return new Promise((resolve) => {
 			document.startViewTransition(async () => {
 				resolve();
