@@ -7,23 +7,28 @@
 	import Toast from '$lib/components/toast/Toast.svelte';
 	import { page } from '$app/stores';
 	import Footer from '$lib/components/Footer.svelte';
+	import type { AuthChangeEvent, Session } from '@supabase/supabase-js';
 
-	const { data, children } = $props();
-	let { supabase, session } = $state(data);
+	const props = $props();
+	let { supabase, session } = $state(props);
 
 	run(() => {
-		({ supabase, session } = data);
+		({ supabase, session } = props);
 	});
 
 	const title = $derived($page.data.title);
 	const baseUrl = 'https://www.authenticlash.app';
 
 	onMount(() => {
-		const { data } = supabase.auth.onAuthStateChange((event, _session) => {
-			if (_session?.expires_at !== session?.expires_at) {
-				invalidate('supabase:auth');
+		if (!supabase?.auth) return;
+
+		const { data } = supabase.auth.onAuthStateChange(
+			(event: AuthChangeEvent, _session: Session | null) => {
+				if (_session?.expires_at !== session?.expires_at) {
+					invalidate('supabase:auth');
+				}
 			}
-		});
+		);
 
 		return () => data.subscription.unsubscribe();
 	});
@@ -67,7 +72,7 @@
 <Header {session} />
 <div class="mx-auto min-h-full max-w-7xl px-4 pt-8 sm:px-6 lg:pt-16">
 	<div class="mx-auto max-w-2xl">
-		{@render children?.()}
+		{@render props?.children?.()}
 	</div>
 </div>
 <Footer />
