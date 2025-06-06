@@ -52,6 +52,7 @@ export const beginGameLogWithAI = async (
 ): Promise<SupabaseResponse<GameLog>> => {
 	const aiText = await setupNewCommentator(personalityPrompt);
 	if (aiText.type === 'error') {
+		console.error('Error setting up new commentator:', aiText.error);
 		return { type: 'error', data: null, error: new Error(aiText.error) };
 	}
 
@@ -77,18 +78,24 @@ export const beginGameLogWithAI = async (
 
 export const addGameLogWithAI = async (
 	gameId: string,
-	text: string,
-	responseId?: string
+	text: string
 ): Promise<SupabaseResponse<GameLog>> => {
 	const previousLog = await getLatestGameLog(gameId);
-	const aiText =
-		previousLog.type === 'success'
-			? await generateCommentatorEventV2(text, previousLog.data?.response_id || '')
-			: '';
+	console.log('previousLog', previousLog);
+	let aiText = '';
+	let previousResponseId = '';
+	if (previousLog.type === 'success' && previousLog.data?.response_id) {
+		const aiResponse = await generateCommentatorEventV2(text, previousLog.data.response_id);
+		console.log('aiResponse', aiResponse);
+		if (aiResponse.type === 'success') {
+			aiText = aiResponse.output_text;
+			previousResponseId = aiResponse.response_id;
+		}
+	}
 
 	const { data, error } = await supabaseServerClient
 		.from('game_log')
-		.insert({ game_id: gameId, text, text_ai: aiText, response_id: responseId })
+		.insert({ game_id: gameId, text, text_ai: aiText, response_id: previousResponseId })
 		.select()
 		.single();
 
@@ -104,7 +111,7 @@ export const addGameLogWithAI = async (
 export const getLatestGameLog = async (gameId: string): Promise<SupabaseResponse<GameLog>> => {
 	const { data, error } = await supabaseServerClient
 		.from('game_log')
-		.select('id, game_id, text, text_ai, created_at')
+		.select('id, game_id, text, text_ai, created_at, response_id')
 		.eq('game_id', gameId)
 		.order('created_at', { ascending: false })
 		.limit(1)
