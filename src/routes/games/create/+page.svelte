@@ -159,9 +159,7 @@
 					<label
 						for="commentator-personality"
 						class="block text-sm font-medium leading-6 text-white"
-						>AI commentator personality prompt <Badge color="clash" class="ml-2"
-							>New<Sparkles class="ml-1 size-4" /></Badge
-						></label
+						>AI commentator personality prompt</label
 					>
 					<p class="text-sm text-gray-400">
 						Use a prompt that describes the personality of the commentator, or choose a pre-defined
@@ -172,7 +170,7 @@
 							name="commentator-personality"
 							id="commentator-personality"
 							bind:value={commentatorPersonality}
-							maxlength={255}
+							maxlength={512}
 							required
 							class="flex-1 resize-none border-0 bg-white/5 px-2 py-1.5 text-white focus:ring-0 sm:text-sm sm:leading-6"
 						/>
