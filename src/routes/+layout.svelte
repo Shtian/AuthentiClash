@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { run } from 'svelte/legacy';
 
-	import '../app.pcss';
+	import '../app.css';
 	import { invalidate, onNavigate } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import Header from '$lib/components/Header.svelte';
