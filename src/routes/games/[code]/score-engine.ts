@@ -53,8 +53,14 @@ const tryUpdateParticipationScore = async (
 		};
 	}
 
-	const gameLogRes = await addGameLogWithAI(gameId, `${userParticipation.nickname} scored ${score}`);
-	const message = gameLogRes.type === 'success' && gameLogRes.data ? (gameLogRes.data.text_ai || gameLogRes.data.text) : '';
+	const gameLogRes = await addGameLogWithAI(
+		gameId,
+		`${userParticipation.nickname} scored ${score}`
+	);
+	const message =
+		gameLogRes.type === 'success' && gameLogRes.data
+			? gameLogRes.data.text_ai || gameLogRes.data.text
+			: '';
 
 	return {
 		type: 'success',
