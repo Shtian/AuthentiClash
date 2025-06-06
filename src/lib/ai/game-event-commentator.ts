@@ -27,8 +27,11 @@ export async function setupNewCommentator(
 
 		const response = await openaiClient.responses.create({
 			model: 'gpt-4.1-mini',
-			instructions: baseSystemPrompt,
 			input: [
+				{
+					role: 'system',
+					content: baseSystemPrompt
+				},
 				{
 					role: 'user',
 					content:
@@ -62,6 +65,7 @@ export async function generateCommentatorEventV2(
 			input: [{ role: 'user', content: event }],
 			previous_response_id: previousEventId
 		});
+
 		return {
 			output_text: response.output_text,
 			response_id: response.id,
