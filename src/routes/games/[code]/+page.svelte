@@ -115,21 +115,19 @@
 <header>
 	<div class="mx-auto flex max-w-7xl flex-col gap-y-2 sm:px-6 lg:px-8">
 		<div class="flex flex-row gap-2">
-			<h1 class="tracking-tigh text-3xl font-bold leading-tight text-white">{data.gameName}</h1>
+			<h1 class="tracking-tigh text-3xl leading-tight font-bold text-white">{data.gameName}</h1>
 			<button
 				type="submit"
-				class="relative inline-flex items-center gap-x-2 self-center rounded-md bg-transparent px-2 py-2 text-sm font-semibold text-white transition-colors hover:text-clash-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500"
+				class="hover:text-clash-400 focus-visible:outline-clash-500 relative inline-flex items-center gap-x-2 self-center rounded-md bg-transparent px-2 py-2 text-sm font-semibold text-white transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
 				onclick={copyUrl}
 			>
 				<Copy />
 				{#if urlIsRecentlyCopied}
-					<span class="absolute -bottom-[0.875rem] text-sm text-white" in:fade out:fade
-						>Copied!</span
-					>
+					<span class="absolute -bottom-3.5 text-sm text-white" in:fade out:fade>Copied!</span>
 				{/if}
 			</button>
 		</div>
-		<p class="text-pretty text-sm tabular-nums text-gray-300" title={data.endsAt}>
+		<p class="text-sm text-pretty text-gray-300 tabular-nums" title={data.endsAt}>
 			Ends in: {timeLeftText}
 		</p>
 		{#if data.aiEnabled}
@@ -139,7 +137,7 @@
 						<Sparkles class="inline size-4" /> AI enabled
 					</div>
 				</Popover.Trigger>
-				<Popover.Content class="text-pretty text-sm">
+				<Popover.Content class="text-sm text-pretty">
 					AI features have been enabled for this game:
 					<ul class="ml-4 list-disc">
 						<li>Click the sparkles on your row to generate an epic avatar!</li>
@@ -158,7 +156,7 @@
 
 				<div class="mt-4 grid grid-cols-12 gap-x-6 gap-y-8">
 					<div class="col-span-12 sm:col-span-4">
-						<label for="2fa-score" class="block font-medium leading-6 text-white">2FA value</label>
+						<label for="2fa-score" class="block leading-6 font-medium text-white">2FA value</label>
 						<p class="text-sm text-gray-400">Between 1 and 99</p>
 						<div class="mt-4">
 							<input
@@ -168,7 +166,7 @@
 								required
 								min="1"
 								max="99"
-								class="size-16 flex-1 rounded-t-md border-b-2 bg-foreground/5 p-2.5 text-4xl tabular-nums text-white transition-colors focus:border-b-clash-500 focus:outline-none"
+								class="bg-foreground/5 focus:border-b-clash-500 size-16 flex-1 rounded-t-md border-b-2 p-2.5 text-4xl text-white tabular-nums transition-colors focus:outline-none"
 							/>
 						</div>
 					</div>
@@ -230,7 +228,7 @@
 							</Button>
 						{:else}
 							<Button type="submit" disabled>
-								<Clock class="mr-2 h-4 w-4 flex-shrink-0" />
+								<Clock class="mr-2 h-4 w-4 shrink-0" />
 								<Cooldown bind:delta={cooldownRemaining}></Cooldown>
 							</Button>
 						{/if}
@@ -241,7 +239,7 @@
 			<p class="text-white">Final scores:</p>
 		{/if}
 		<GameHighScore {players} currentPlayerId={data.session?.user.id} aiEnabled={data.aiEnabled} />
-		<h3 class="mb-6 mt-12 text-lg">Events:</h3>
+		<h3 class="mt-12 mb-6 text-lg">Events:</h3>
 		<GameLogs logs={data.logs} />
 	</div>
 </main>

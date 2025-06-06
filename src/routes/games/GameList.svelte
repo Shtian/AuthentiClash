@@ -23,7 +23,7 @@
 			<table class="min-w-full divide-y divide-gray-700">
 				<thead>
 					<tr>
-						<th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white">
+						<th scope="col" class="py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-white">
 							Game
 						</th>
 						<th scope="col" class="py-3.5 pr-3 text-left text-sm font-semibold text-white">
@@ -43,14 +43,14 @@
 							class="group cursor-pointer transition-colors hover:bg-gray-800"
 						>
 							<td
-								class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white group-hover:underline"
+								class="py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-white group-hover:underline"
 							>
 								{game.name}
 							</td>
-							<td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0"
+							<td class="py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-white sm:pl-0"
 								>{game.userRank === 0 ? 'No entries' : `#${game.userRank} (${game.totalScore})`}</td
 							>
-							<td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">
+							<td class="py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-white sm:pl-0">
 								<Badge
 									title={game.endAtString}
 									color={game.endAtDate < new Date() ? 'red' : 'green'}

@@ -32,12 +32,12 @@
 </script>
 
 <li
-	class="flex flex-col gap-y-4 rounded-lg border-[1px] p-4"
+	class="flex flex-col gap-y-4 rounded-lg border p-4"
 	onmouseover={() => markBadgeAsSeen()}
 	onfocus={() => markBadgeAsSeen()}
 >
 	<div class="group relative flex gap-x-4">
-		<div class=" inline-flex size-16 flex-shrink-0 items-center rounded-full">
+		<div class=" inline-flex size-16 shrink-0 items-center rounded-full">
 			{#if showBadgeCustomImage}
 				<img
 					class={badge.unlocked
@@ -71,7 +71,7 @@
 					{badge.name}
 				{/if}
 			</h2>
-			<p class="text-pretty text-xs text-gray-300">
+			<p class="text-xs text-pretty text-gray-300">
 				{badge.secret && !badge.unlocked
 					? 'Veiled in secrecy, this trophy beckons to be unveiled by the worthy.'
 					: badge.description}
@@ -81,7 +81,7 @@
 			<span
 				in:fade={{ duration: 150 }}
 				out:fade={{ duration: 150 }}
-				class="absolute -left-2 -top-2 rounded bg-clash-400 px-2 py-1 text-xs text-white">NEW</span
+				class="bg-clash-400 absolute -top-2 -left-2 rounded px-2 py-1 text-xs text-white">NEW</span
 			>
 		{/if}
 	</div>

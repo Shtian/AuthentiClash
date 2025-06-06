@@ -17,6 +17,6 @@
 	});
 </script>
 
-<div class="absolute bottom-0 left-0 right-0 h-1.5 w-full overflow-hidden rounded-b-sm">
-	<div class="h-1.5 bg-clash-600" style={`width:${$progress}%`}></div>
+<div class="absolute right-0 bottom-0 left-0 h-1.5 w-full overflow-hidden rounded-b-sm">
+	<div class="bg-clash-600 h-1.5" style={`width:${$progress}%`}></div>
 </div>

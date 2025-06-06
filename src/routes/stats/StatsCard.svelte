@@ -27,7 +27,7 @@
 </script>
 
 <div
-	class={`col-span-12 ${colClass} flex flex-col gap-4 rounded-lg border-[1px] border-gray-700 p-6 shadow-sm`}
+	class={`col-span-12 ${colClass} flex flex-col gap-4 rounded-lg border border-gray-700 p-6 shadow-sm`}
 >
 	<h2 class="flex place-content-between text-xl text-gray-300">
 		<span>{title}</span>

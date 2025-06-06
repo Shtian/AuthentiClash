@@ -63,7 +63,7 @@
 			<table class="min-w-full divide-y divide-gray-700">
 				<thead>
 					<tr>
-						<th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white">
+						<th scope="col" class="py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-white">
 							Rank
 						</th>
 						<th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-white">
@@ -81,14 +81,14 @@
 							class:bg-clash-800={player.profileId === currentPlayerId}
 							animate:flip={{ duration: 300 }}
 						>
-							<td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white">
+							<td class="py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-white">
 								{getRankEmoji(i + 1)}
 							</td>
 							<td
 								class="flex max-w-[20ch] items-center gap-x-2 truncate px-3 py-4 text-sm text-gray-300 sm:max-w-max"
 								>{#if player.nicknameImageUrl}
 									<Popover.Root>
-										<Popover.Trigger class="flex-shrink-0 ">
+										<Popover.Trigger class="shrink-0 ">
 											<img
 												src={`${player.nicknameImageUrl.replace('.webp', '-128.webp')}`}
 												alt={player.nickname}
@@ -132,7 +132,7 @@
 									</form>
 								{:else}
 									<Popover.Root>
-										<Popover.Trigger class="flex-shrink-0">
+										<Popover.Trigger class="shrink-0">
 											<img
 												src={`https://api.dicebear.com/8.x/adventurer/svg?size=256&seed=${encodeURIComponent(
 													player.nickname
@@ -159,11 +159,11 @@
 								{/if}{player.nickname}</td
 							>
 							<td
-								class="whitespace-nowrap px-3 py-4 text-sm text-gray-300"
+								class="px-3 py-4 text-sm whitespace-nowrap text-gray-300"
 								title={player.score.join(' → ')}
 								>{player.totalScore}
 							</td>
-							<td class="whitespace-nowrap text-sm text-gray-300">
+							<td class="text-sm whitespace-nowrap text-gray-300">
 								<Popover.Root>
 									<Popover.Trigger
 										><span class="sr-only">Show scores</span><LineChart class="size-6 text-gray-300"

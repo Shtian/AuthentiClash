@@ -35,7 +35,7 @@
 			fill="transparent"
 		></circle>
 		<circle
-			class="transition-color progress-ring__circle origin-center -rotate-90 transform stroke-current text-clash-400 duration-500"
+			class="transition-color progress-ring__circle text-clash-400 origin-center -rotate-90 transform stroke-current duration-500"
 			class:text-emerald-500={currentPercentage === 100}
 			stroke-linecap="round"
 			fill="transparent"

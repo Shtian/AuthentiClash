@@ -56,18 +56,18 @@
 <form method="POST" action="?/create" use:enhance={handleSubmit}>
 	<div class="space-y-12">
 		<div class="border-b border-white/10 pb-12">
-			<h2 class="text-base font-semibold leading-7 text-white">Create an AuthentiClash game! ⚔️</h2>
+			<h2 class="text-base leading-7 font-semibold text-white">Create an AuthentiClash game! ⚔️</h2>
 			<p class="mt-1 text-sm leading-6 text-gray-400">
 				You will get a shareable code after the game has been created.
 			</p>
 			<div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
 				<div class="col-span-4 sm:col-span-6">
-					<label for="game-name" class="block text-sm font-medium leading-6 text-white"
+					<label for="game-name" class="block text-sm leading-6 font-medium text-white"
 						>Game name</label
 					>
 					<div class="mt-2">
 						<div
-							class="flex rounded-md bg-white/5 ring-1 ring-inset ring-white/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-clash-500"
+							class="focus-within:ring-clash-500 flex rounded-md bg-white/5 ring-1 ring-white/10 ring-inset focus-within:ring-2 focus-within:ring-inset"
 						>
 							<input
 								type="text"
@@ -84,13 +84,13 @@
 				</div>
 
 				<div class="col-span-6">
-					<label for="2fa-cooldown" class="block text-sm font-medium leading-6 text-white"
+					<label for="2fa-cooldown" class="block text-sm leading-6 font-medium text-white"
 						>2FA Entry Cooldown (0-24h)</label
 					>
 					<div class="text-xs text-gray-400">Limit how often players can enter 2FA values</div>
 					<div class="mt-2 max-w-12">
 						<div
-							class="flex rounded-md bg-white/5 ring-1 ring-inset ring-white/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-clash-500"
+							class="focus-within:ring-clash-500 flex rounded-md bg-white/5 ring-1 ring-white/10 ring-inset focus-within:ring-2 focus-within:ring-inset"
 						>
 							<input
 								type="number"
@@ -106,7 +106,7 @@
 					</div>
 				</div>
 				<div class="col-span-4 sm:col-span-3">
-					<label for="end-date" class="block text-sm font-medium leading-6 text-white"
+					<label for="end-date" class="block text-sm leading-6 font-medium text-white"
 						>End date</label
 					>
 					<div class="w-fu mt-2">
@@ -136,12 +136,12 @@
 					</div>
 				</div>
 				<div class="col-span-4 sm:col-span-3">
-					<label for="game-name" class="block text-sm font-medium leading-6 text-white"
+					<label for="game-name" class="block text-sm leading-6 font-medium text-white"
 						>End time (UTC)</label
 					>
 					<div class="mt-2">
 						<div
-							class="flex rounded-md bg-white/5 ring-1 ring-inset ring-white/10 focus-within:ring-2 focus-within:ring-inset focus-within:ring-clash-500"
+							class="focus-within:ring-clash-500 flex rounded-md bg-white/5 ring-1 ring-white/10 ring-inset focus-within:ring-2 focus-within:ring-inset"
 						>
 							<input
 								type="time"
@@ -157,7 +157,7 @@
 				<div class="col-span-6">
 					<label
 						for="commentator-personality"
-						class="block text-sm font-medium leading-6 text-white"
+						class="block text-sm leading-6 font-medium text-white"
 						>AI commentator personality prompt</label
 					>
 					<p class="text-sm text-gray-400">
@@ -194,7 +194,7 @@
 	<div class="mt-6 flex items-center gap-x-6">
 		<button
 			type="submit"
-			class="rounded-md bg-clash-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-clash-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500"
+			class="bg-clash-500 hover:bg-clash-400 focus-visible:outline-clash-500 rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
 			disabled={isLoading}>{isLoading ? 'Creating...' : 'Create'}</button
 		>
 	</div>

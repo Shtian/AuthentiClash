@@ -36,7 +36,7 @@ importers:
         version: 2.45.4
       '@tailwindcss/forms':
         specifier: ^0.5.9
-        version: 0.5.9(tailwindcss@4.1.8)
+        version: 0.5.9
       d3:
         specifier: ^7.9.0
         version: 7.9.0
@@ -133,13 +133,10 @@ importers:
         version: 2.6.0
       tailwind-variants:
         specifier: ^0.3.0
-        version: 0.3.0(tailwindcss@4.1.8)
-      tailwindcss:
-        specifier: ^4.1.8
-        version: 4.1.8
+        version: 0.3.0
       tailwindcss-animate:
         specifier: ^1.0.7
-        version: 1.0.7(tailwindcss@4.1.8)
+        version: 1.0.7
       tslib:
         specifier: ^2.7.0
         version: 2.7.0
@@ -4701,10 +4698,9 @@ snapshots:
     dependencies:
       tslib: 2.7.0
 
-  '@tailwindcss/forms@0.5.9(tailwindcss@4.1.8)':
+  '@tailwindcss/forms@0.5.9':
     dependencies:
       mini-svg-data-uri: 1.4.4
-      tailwindcss: 4.1.8
 
   '@tailwindcss/node@4.1.8':
     dependencies:
@@ -6603,14 +6599,11 @@ snapshots:
 
   tailwind-merge@2.6.0: {}
 
-  tailwind-variants@0.3.0(tailwindcss@4.1.8):
+  tailwind-variants@0.3.0:
     dependencies:
       tailwind-merge: 2.6.0
-      tailwindcss: 4.1.8
 
-  tailwindcss-animate@1.0.7(tailwindcss@4.1.8):
-    dependencies:
-      tailwindcss: 4.1.8
+  tailwindcss-animate@1.0.7: {}
 
   tailwindcss@4.1.8: {}
 
