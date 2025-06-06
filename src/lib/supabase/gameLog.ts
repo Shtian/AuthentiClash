@@ -70,13 +70,13 @@ export const addGameLogWithAI = async (
 ): Promise<SupabaseResponse<GameLog>> => {
 	const previousLog = await getLatestGameLogWithResponseId(gameId);
 
-	if (previousLog.type !== 'success' || !previousLog.data?.response_id) {
+	if (previousLog.type === 'error' || !previousLog.data?.response_id) {
 		return addGameLog(gameId, text);
 	}
 
 	const aiResponse = await generateCommentatorEventV2(text, previousLog.data.response_id);
 
-	if (aiResponse.type !== 'success') {
+	if (aiResponse.type === 'error') {
 		return addGameLog(gameId, text);
 	}
 
