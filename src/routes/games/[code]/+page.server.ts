@@ -104,9 +104,7 @@ export const actions = {
 		const badgeRes = await checkForValueEntryBadge(scoreUpdateRes.data.newScore, session.user.id);
 
 		return {
-			message: abilityId
-				? scoreUpdateRes.data.message
-				: createSuccessMessage(scoreUpdateRes.data.newScore),
+			message: scoreUpdateRes.data.message,
 			unlockBadgeStatus: badgeRes
 		};
 	},
