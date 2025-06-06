@@ -28,22 +28,59 @@ export const getGameLogs = async (gameId: string): Promise<SupabaseResponse<Game
 
 export const addGameLog = async (
 	gameId: string,
-	text: string,
-	responseId?: string
+	text: string
 ): Promise<SupabaseResponse<GameLog>> => {
 	const { data, error } = await supabaseServerClient
 		.from('game_log')
-		.insert({ game_id: gameId, text, response_id: responseId })
+		.insert({ game_id: gameId, text })
 		.select()
 		.single();
 
 	if (error) {
 		console.error('Error adding game log:', error.message);
-		const r: SupabaseResponse<GameLog> = { type: 'error', data: null, error };
-		return r;
+		return { type: 'error', data: null, error };
 	}
 
 	return { type: 'success', data: data || null, error: null };
+};
+
+export const addGameLogWithAIResponse = async (
+	gameId: string,
+	text: string,
+	responseId: string,
+	aiText: string
+): Promise<SupabaseResponse<GameLog>> => {
+	const { data, error } = await supabaseServerClient
+		.from('game_log')
+		.insert({ game_id: gameId, text, response_id: responseId, text_ai: aiText })
+		.select()
+		.single();
+
+	if (error) {
+		console.error('Error adding game log with AI response:', error.message);
+		return { type: 'error', data: null, error };
+	}
+
+	return { type: 'success', data: data || null, error: null };
+};
+
+export const addGameLogWithAI = async (
+	gameId: string,
+	text: string
+): Promise<SupabaseResponse<GameLog>> => {
+	const previousLog = await getLatestGameLogWithResponseId(gameId);
+
+	if (previousLog.type !== 'success' || !previousLog.data?.response_id) {
+		return addGameLog(gameId, text);
+	}
+
+	const aiResponse = await generateCommentatorEventV2(text, previousLog.data.response_id);
+
+	if (aiResponse.type !== 'success') {
+		return addGameLog(gameId, text);
+	}
+
+	return addGameLogWithAIResponse(gameId, text, aiResponse.response_id, aiResponse.output_text);
 };
 
 export const beginGameLogWithAI = async (
@@ -76,50 +113,21 @@ export const beginGameLogWithAI = async (
 	return { type: 'success', data: data || null, error: null };
 };
 
-export const addGameLogWithAI = async (
-	gameId: string,
-	text: string
-): Promise<SupabaseResponse<GameLog>> => {
-	const previousLog = await getLatestGameLog(gameId);
-	console.log('previousLog', previousLog);
-	let aiText = '';
-	let previousResponseId = '';
-	if (previousLog.type === 'success' && previousLog.data?.response_id) {
-		const aiResponse = await generateCommentatorEventV2(text, previousLog.data.response_id);
-		console.log('aiResponse', aiResponse);
-		if (aiResponse.type === 'success') {
-			aiText = aiResponse.output_text;
-			previousResponseId = aiResponse.response_id;
-		}
-	}
-
+export const getLatestGameLogWithResponseId = async (
+	gameId: string
+): Promise<SupabaseResponse<{ response_id: string }>> => {
 	const { data, error } = await supabaseServerClient
 		.from('game_log')
-		.insert({ game_id: gameId, text, text_ai: aiText, response_id: previousResponseId })
-		.select()
-		.single();
-
-	if (error) {
-		console.error('Error adding game log:', error.message);
-		const r: SupabaseResponse<GameLog> = { type: 'error', data: null, error };
-		return r;
-	}
-
-	return { type: 'success', data: data || null, error: null };
-};
-
-export const getLatestGameLog = async (gameId: string): Promise<SupabaseResponse<GameLog>> => {
-	const { data, error } = await supabaseServerClient
-		.from('game_log')
-		.select('id, game_id, text, text_ai, created_at, response_id')
+		.select('response_id')
 		.eq('game_id', gameId)
+		.not('response_id', 'is', null)
 		.order('created_at', { ascending: false })
 		.limit(1)
 		.single();
 
 	if (error) {
-		console.error('Error getting latest game log:', error.message);
-		const r: SupabaseResponse<GameLog> = { type: 'error', data: null, error };
+		console.error('Error getting latest game log with response ID:', error.message);
+		const r: SupabaseResponse<{ response_id: string }> = { type: 'error', data: null, error };
 		return r;
 	}
 
