@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { applyAction, enhance } from '$app/forms';
-	import { Calendar as CalendarIcon, Sparkles } from 'lucide-svelte';
+	import { Calendar as CalendarIcon } from 'lucide-svelte';
 	import {
 		type DateValue,
 		DateFormatter,
@@ -16,7 +16,6 @@
 	import { goto } from '$app/navigation';
 	import { toast } from '$lib/stores/ToastStore.js';
 	import { Textarea } from '$lib/components/ui/textarea/index.js';
-	import Badge from '$lib/components/Badge.svelte';
 	import { predefinedPersonalityPrompts } from './personalities';
 
 	const df = new DateFormatter('en-US', {
