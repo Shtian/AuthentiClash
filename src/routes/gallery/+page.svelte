@@ -32,7 +32,7 @@
 				role="list"
 				class="mx-auto mt-20 grid max-w-2xl grid-cols-2 gap-x-8 gap-y-16 text-center sm:grid-cols-3 md:grid-cols-4"
 			>
-				{#each games as game}
+				{#each games as game (game.code)}
 					<li>
 						{#if game.participation.nickname_image_url}
 							<a href={game.participation.nickname_image_url} target="_blank">

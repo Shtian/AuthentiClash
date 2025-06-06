@@ -27,12 +27,7 @@
 	import type { Participation } from '$lib/supabase/participation';
 	import type { PageData } from './$types';
 
-	interface Props {
-		data: PageData;
-		newScore?: number | null;
-	}
-
-	const { data, newScore = null }: Props = $props();
+	const { data }: { data: PageData } = $props();
 	let isLoading = $state(false);
 	let abilityIdUsed: number | null = $state(null);
 	const hasUsedAbility = $derived(
@@ -170,7 +165,6 @@
 								type="number"
 								name="2fa-score"
 								id="2fa-score"
-								value={newScore}
 								required
 								min="1"
 								max="99"

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { applyAction, enhance } from '$app/forms';
-	import { Calendar as CalendarIcon, Sparkles } from 'lucide-svelte';
+	import { Calendar as CalendarIcon } from 'lucide-svelte';
 	import {
 		type DateValue,
 		DateFormatter,
@@ -16,7 +16,6 @@
 	import { goto } from '$app/navigation';
 	import { toast } from '$lib/stores/ToastStore.js';
 	import { Textarea } from '$lib/components/ui/textarea/index.js';
-	import Badge from '$lib/components/Badge.svelte';
 	import { predefinedPersonalityPrompts } from './personalities';
 
 	const df = new DateFormatter('en-US', {
@@ -159,9 +158,7 @@
 					<label
 						for="commentator-personality"
 						class="block text-sm font-medium leading-6 text-white"
-						>AI commentator personality prompt <Badge color="clash" class="ml-2"
-							>New<Sparkles class="ml-1 size-4" /></Badge
-						></label
+						>AI commentator personality prompt</label
 					>
 					<p class="text-sm text-gray-400">
 						Use a prompt that describes the personality of the commentator, or choose a pre-defined
@@ -172,13 +169,13 @@
 							name="commentator-personality"
 							id="commentator-personality"
 							bind:value={commentatorPersonality}
-							maxlength={255}
+							maxlength={512}
 							required
 							class="flex-1 resize-none border-0 bg-white/5 px-2 py-1.5 text-white focus:ring-0 sm:text-sm sm:leading-6"
 						/>
 					</div>
 					<div class="mt-2 flex flex-wrap gap-2">
-						{#each predefinedPersonalityPrompts as personality}
+						{#each predefinedPersonalityPrompts as personality (personality.name)}
 							<Button
 								type="button"
 								variant="outline"

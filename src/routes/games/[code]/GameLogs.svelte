@@ -18,7 +18,7 @@
 
 <div class="mx-auto max-w-[1200px] px-6">
 	<ul role="list" class="space-y-6">
-		{#each logs as log, index}
+		{#each logs as log, index (log.id)}
 			<li class="relative flex gap-x-4">
 				{#if index !== logs.length - 1}
 					<div class="absolute -bottom-6 left-0 top-0 flex w-6 justify-center">

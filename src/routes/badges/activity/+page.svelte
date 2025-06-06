@@ -22,7 +22,7 @@
 
 <div class="mx-auto flow-root max-w-[1200px] px-6 lg:px-8 lg:py-10">
 	<ul role="list" class="-mb-8">
-		{#each badgeActivity as activity, index}
+		{#each badgeActivity as activity, index (activity.awarded_on.toISOString())}
 			<li>
 				<div class="relative pb-8">
 					{#if index !== badgeActivity.length - 1}<span
