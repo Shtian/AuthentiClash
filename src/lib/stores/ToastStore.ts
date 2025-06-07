@@ -1,5 +1,8 @@
 import { writable } from 'svelte/store';
-import { v4 as uuidv4 } from 'uuid';
+
+function generateUUID(): string {
+	return crypto.randomUUID();
+}
 
 type NotificationType = 'success' | 'error' | 'warning' | 'info';
 type Toast = {
@@ -15,7 +18,7 @@ const newToast = () => {
 	const { update, subscribe } = writable<Toast[]>([]);
 
 	function send({ message, type, duration = 5000 }: ToastOptions) {
-		const newContent: Toast = { id: uuidv4(), message, type, duration };
+		const newContent: Toast = { id: generateUUID(), message, type, duration };
 		update((store) => [...store, newContent]);
 	}
 

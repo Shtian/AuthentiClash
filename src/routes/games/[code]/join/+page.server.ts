@@ -1,5 +1,5 @@
 import { error, fail, redirect } from '@sveltejs/kit';
-import type { PageServerLoad } from './$types';
+import type { Actions, PageServerLoad } from './$types';
 import { getUsername } from '$lib/supabase/profiles';
 import { joinGame } from '$lib/supabase/participation';
 import { getAllClasses } from '$lib/supabase/classes';
@@ -7,10 +7,10 @@ import { getGame } from '$lib/supabase/games';
 import { addGameLogWithAI } from '$lib/supabase/gameLog';
 import { getClassName } from '$lib/classes/classes';
 
-export const load: PageServerLoad = async ({ params, locals: { getSession } }) => {
-	const session = await getSession();
+export const load: PageServerLoad = async ({ params, locals: { safeGetSession } }) => {
+	const session = await safeGetSession();
 	const { code } = params;
-	if (!session) {
+	if (!session || !session.user) {
 		redirect(303, '/auth/login');
 	}
 
@@ -22,7 +22,7 @@ export const load: PageServerLoad = async ({ params, locals: { getSession } }) =
 		error(404, { message: `Game ${code} not found` });
 	}
 
-	const currentPlayer = res.data.participation.find((p) => p.profileId === session.user.id);
+	const currentPlayer = res.data.participation.find((p) => p.profileId === session.user!.id);
 
 	if (currentPlayer) {
 		redirect(303, `/games/${code}`);
@@ -38,7 +38,8 @@ export const load: PageServerLoad = async ({ params, locals: { getSession } }) =
 		gameId: res.data.id,
 		gameName: res.data.name,
 		aiEnabled: res.data.ai_enabled,
-		classes
+		classes,
+		title: 'Join Game'
 	};
 };
 
@@ -62,14 +63,14 @@ const getPatchedNickname = async (nickname: string, userId: string) => {
 };
 
 export const actions = {
-	joinGame: async ({ request, locals: { getSession } }) => {
+	joinGame: async ({ request, locals: { safeGetSession } }) => {
 		const formData = await request.formData();
 		const nickname = formData.get('nickname');
 		const game_id = formData.get('game-id');
 		const class_id = formData.get('class-id');
-		const session = await getSession();
+		const session = await safeGetSession();
 
-		if (!session) {
+		if (!session || !session.user) {
 			return fail(401, {
 				nickname,
 				message: 'No login session found. Please login and try again.',
@@ -103,4 +104,4 @@ export const actions = {
 			joinedGame: true
 		};
 	}
-};
+} satisfies Actions;

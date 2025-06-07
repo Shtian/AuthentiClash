@@ -69,10 +69,10 @@
 
 <header>
 	<div class="mx-auto flex max-w-7xl flex-col gap-y-2 sm:px-6 lg:px-8">
-		<h1 class="tracking-tigh text-3xl font-bold leading-tight text-white">
+		<h1 class="tracking-tigh text-3xl leading-tight font-bold text-white">
 			Joining {data.gameName}
 		</h1>
-		<p class="text-pretty text-sm text-gray-300" title={data.endsAt}>
+		<p class="text-sm text-pretty text-gray-300" title={data.endsAt}>
 			Time remaining: {timeLeftText}
 		</p>
 	</div>
@@ -83,7 +83,7 @@
 		<form method="POST" action="?/joinGame" use:enhance={handleNewPlayer}>
 			<input type="hidden" name="game-id" id="game-id" value={data.gameId} />
 			<div class="col-span-3">
-				<label for="nickname" class="block text-sm font-medium leading-6 text-white"
+				<label for="nickname" class="block text-sm leading-6 font-medium text-white"
 					>Choose your character name:</label
 				>
 				<div class="mt-2">
@@ -96,10 +96,10 @@
 							value={nickname}
 							required
 							minlength="3"
-							class="flex-1 border-b bg-transparent py-1.5 text-lg text-white transition-colors focus:border-b-clash-500 focus:outline-none md:text-4xl"
+							class="focus:border-b-clash-500 flex-1 border-b bg-transparent py-1.5 text-lg text-white transition-colors focus:outline-none md:text-4xl"
 						/>
 						<button
-							class="absolute right-2 top-1/2 -translate-y-1/2"
+							class="absolute top-1/2 right-2 -translate-y-1/2"
 							type="button"
 							onclick={handleNicknameRefresh}
 						>
@@ -114,13 +114,13 @@
 				</div>
 				{#if data.classes.length > 0}
 					<div class="mt-8 space-y-4">
-						<p class="block text-sm font-medium leading-6 text-white">
+						<p class="block text-sm leading-6 font-medium text-white">
 							Choose your class. Each active ability can only be used once per game:
 						</p>
 						<RadioGroup.Root value={data.classes.at(0)?.id.toString()} required name="class-id">
 							{#each data.classes as classChoice (classChoice.id)}
 								<div
-									class="border-grey-200 flex items-center space-x-2 rounded-md border p-3 transition-colors focus-within:border-clash-500"
+									class="border-grey-200 focus-within:border-clash-500 flex items-center space-x-2 rounded-md border p-3 transition-colors"
 								>
 									<RadioGroup.Item
 										value={classChoice.id.toString()}

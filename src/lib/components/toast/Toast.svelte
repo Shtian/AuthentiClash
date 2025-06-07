@@ -18,7 +18,7 @@
 />
 
 <Portal>
-	<div class="z-toast fixed left-1/2 top-5 -translate-x-1/2">
+	<div class="z-toast fixed top-5 left-1/2 -translate-x-1/2">
 		{#each $toast as toastContent (toastContent.id)}
 			<div
 				class="relative mb-2 flex w-80 items-start rounded-sm border border-slate-800 px-2 py-4 backdrop-blur-3xl"
@@ -27,16 +27,16 @@
 				animate:flip={{ duration: 300 }}
 			>
 				{#if toastContent.type === 'success'}
-					<CheckCircle2 class="h-6 w-6 flex-shrink-0 text-green-600" />
+					<CheckCircle2 class="h-6 w-6 shrink-0 text-green-600" />
 				{:else if toastContent.type === 'error'}
-					<AlertTriangle class="h-6 w-6 flex-shrink-0 text-red-400" />
+					<AlertTriangle class="h-6 w-6 shrink-0 text-red-400" />
 				{:else if toastContent.type === 'info'}
-					<Info class="h-6 w-6 flex-shrink-0" />
+					<Info class="h-6 w-6 shrink-0" />
 				{:else}
-					<Info class="h-6 w-6 flex-shrink-0 text-green-600" />
+					<Info class="h-6 w-6 shrink-0 text-green-600" />
 				{/if}
 				<ToastMessage
-					class="ml-3 text-pretty text-sm"
+					class="ml-3 text-sm text-pretty"
 					message={toastContent.message}
 					duration={toastContent.duration}
 				/>

@@ -1,8 +1,8 @@
-import { fail, redirect } from '@sveltejs/kit';
-import type { PageServerLoad } from './$types';
+import { error, redirect } from '@sveltejs/kit';
 import { supabaseServerClient } from '$lib/supabase/supabaseClient';
 import { getAllEnabledBadges, getGlobalBadgeUnlockStats } from '$lib/supabase/badges';
 import { getTotalNumberOfPlayers } from '$lib/supabase/profiles';
+import type { PageServerLoad } from './$types';
 
 type Badge = {
 	awarded_on?: Date;
@@ -20,37 +20,46 @@ export type UserBadge = Badge & {
 	globalUnlockPercentage: number;
 };
 
-export const load: PageServerLoad = async ({ locals: { getSession } }) => {
-	const session = await getSession();
-	if (!session) {
+export const load: PageServerLoad = async ({ locals: { safeGetSession } }) => {
+	const session = await safeGetSession();
+	if (!session || !session.user) {
 		redirect(303, '/auth/login');
 	}
 
 	const userId = session.user.id;
-	if (!userId) return fail(401, { message: 'User not found' });
+	if (!userId)
+		return error(401, {
+			message: 'User not found'
+		});
 
 	const badgeUnlockCount = await getGlobalBadgeUnlockStats();
 	if (badgeUnlockCount.type === 'error') {
 		console.error('Error getting global badge unlock stats:', badgeUnlockCount.error.message);
-		return fail(500, { message: 'Error retrieving badge stats' });
+		return error(500, {
+			message: 'Error retrieving badge stats'
+		});
 	}
 
 	const totalNumberOfPlayers = await getTotalNumberOfPlayers();
 	if (totalNumberOfPlayers.type === 'error') {
 		console.error('Error getting global badge unlock stats:', totalNumberOfPlayers.error.message);
-		return fail(500, { message: 'Error retrieving badge stats' });
+		return error(500, {
+			message: 'Error retrieving badge stats'
+		});
 	}
 	const enabledBadgesRes = await getAllEnabledBadges();
 
 	if (enabledBadgesRes.type === 'error') {
 		console.error('Error getting enabled badges:', enabledBadgesRes.error);
-		return fail(500, { message: 'Error retrieving badges' });
+		return error(500, { message: 'Error retrieving badges' });
 	}
 
 	if (!enabledBadgesRes.data?.length) {
 		return {
 			badges: [],
-			title: 'Badges'
+			title: 'Badges',
+			session: session.session,
+			user: session.user
 		};
 	}
 
@@ -60,7 +69,7 @@ export const load: PageServerLoad = async ({ locals: { getSession } }) => {
 		.eq('player_id', session.user.id);
 
 	if (unlockedBadgesError) {
-		return fail(500, { message: unlockedBadgesError });
+		return error(500, { message: unlockedBadgesError.message });
 	}
 
 	const badges: UserBadge[] = enabledBadgesRes.data.map((badge) => {
@@ -92,7 +101,9 @@ export const load: PageServerLoad = async ({ locals: { getSession } }) => {
 
 	return {
 		badges,
-		title: 'Badges'
+		title: 'Badges',
+		session: session.session,
+		user: session.user
 	};
 };
 

@@ -1,37 +1,31 @@
 <script lang="ts">
-	import { run } from 'svelte/legacy';
-
-	import '../app.pcss';
+	import '../app.css';
 	import { invalidate, onNavigate } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import Header from '$lib/components/Header.svelte';
 	import Toast from '$lib/components/toast/Toast.svelte';
 	import { page } from '$app/stores';
 	import Footer from '$lib/components/Footer.svelte';
+	import { type AuthChangeEvent, type Session } from '@supabase/supabase-js';
 
 	const { data, children } = $props();
-
-	let { supabase, session } = $state(data);
-	run(() => {
-		({ supabase, session } = data);
-	});
-
-	const title = $derived($page.data.title);
-
-	const baseUrl = 'https://www.authenticlash.app';
-
+	const { session, supabase } = $derived(data);
 	onMount(() => {
-		const { data } = supabase.auth.onAuthStateChange((event, _session) => {
-			if (_session?.expires_at !== session?.expires_at) {
-				invalidate('supabase:auth');
+		const { data } = supabase.auth.onAuthStateChange(
+			(_: AuthChangeEvent, newSession: Session | null) => {
+				if (newSession?.expires_at !== session?.expires_at) {
+					invalidate('supabase:auth');
+				}
 			}
-		});
-
+		);
 		return () => data.subscription.unsubscribe();
 	});
+	const title = $derived($page.data.title);
+	const baseUrl = 'https://www.authenticlash.app';
 
 	onNavigate((navigation) => {
 		if (!document.startViewTransition) return;
+
 		return new Promise((resolve) => {
 			document.startViewTransition(async () => {
 				resolve();

@@ -24,18 +24,16 @@
 	}: Props = $props();
 	const scores: number[] = allScores.slice(limit * -1);
 
-	let path: SVGPathElement = $state();
+	let path: SVGPathElement | undefined = $state(undefined);
 	let pathLength = 0;
 
 	const xScale = d3.scaleLinear([1, scores.length], [marginLeft, width - marginRight]);
 	const yScale = d3.scaleLinear([0, 100], [height - marginBottom, marginTop]);
 	const line = d3
-		.line()
+		.line<number>()
 		.curve(d3.curveMonotoneX)
 		.x((_, i) => xScale(i + 1))
-		.y((d) => {
-			return yScale(d as unknown as d3.NumberValue);
-		});
+		.y((d) => yScale(d));
 
 	onMount(() => {
 		if (path) {

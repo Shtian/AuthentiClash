@@ -1,5 +1,5 @@
 import { error, fail, redirect } from '@sveltejs/kit';
-import type { PageServerLoad } from './$types';
+import type { Actions, PageServerLoad } from './$types';
 import { updateParticipationNicknameImage } from '$lib/supabase/participation';
 import { generateImage } from '$lib/ai/image-generator';
 import { PARTICIPANT_AVATARS_BUCKET, uploadParticipantImage } from '$lib/supabase/storage';
@@ -9,10 +9,10 @@ import { getClass } from '$lib/supabase/classes';
 import { handleScoreUpdate } from './score-engine';
 import { getGameLogs } from '$lib/supabase/gameLog';
 
-export const load: PageServerLoad = async ({ params, locals: { getSession } }) => {
-	const session = await getSession();
+export const load: PageServerLoad = async ({ params, locals: { safeGetSession } }) => {
+	const session = await safeGetSession();
 	const { code } = params;
-	if (!session) {
+	if (!session || !session.user) {
 		redirect(303, '/auth/login');
 	}
 	const res = await getGame(code);
@@ -25,7 +25,7 @@ export const load: PageServerLoad = async ({ params, locals: { getSession } }) =
 		error(404, { message: `Game ${code} not found` });
 	}
 
-	const currentPlayer = res.data.participation.find((p) => p.profileId === session.user.id);
+	const currentPlayer = res.data.participation.find((p) => p.profileId === session.user!.id);
 	if (!currentPlayer) {
 		redirect(303, `/games/${code}/join`);
 	}
@@ -50,16 +50,16 @@ export const load: PageServerLoad = async ({ params, locals: { getSession } }) =
 };
 
 export const actions = {
-	updateScore: async ({ request, locals: { getSession } }) => {
+	updateScore: async ({ request, locals: { safeGetSession } }) => {
 		const formData = await request.formData();
 		const nickname = formData.get('nickname');
 		const scoreInput = formData.get('2fa-score');
 		const game_id = formData.get('game-id');
 		const ability_id = formData.get('ability-id');
 		const abilityId = ability_id?.toString() ?? null;
-		const session = await getSession();
+		const session = await safeGetSession();
 
-		if (!session) {
+		if (!session || !session.user) {
 			return fail(401, {
 				nickname,
 				score: scoreInput,
@@ -107,9 +107,9 @@ export const actions = {
 			unlockBadgeStatus: badgeRes
 		};
 	},
-	generateParticipantImage: async ({ request, locals: { getSession, supabase } }) => {
-		const session = await getSession();
-		if (!session) {
+	generateParticipantImage: async ({ request, locals: { safeGetSession, supabase } }) => {
+		const session = await safeGetSession();
+		if (!session || !session.user) {
 			return fail(401, {
 				message: 'No login session found. Please login and try again.'
 			});
@@ -158,4 +158,4 @@ export const actions = {
 			message: 'Your participation image has been generated!'
 		};
 	}
-};
+} satisfies Actions;

@@ -28,7 +28,7 @@
 			<select
 				id="tabs"
 				name="tabs"
-				class="block w-full rounded-md border-none bg-white/5 py-2 pl-3 pr-10 text-base text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm"
+				class="block w-full rounded-md border-none bg-white/5 py-2 pr-10 pl-3 text-base text-white shadow-sm ring-1 ring-white/10 ring-inset focus:ring-2 focus:ring-indigo-500 focus:ring-inset sm:text-sm"
 				onchange={tabSelected}
 			>
 				{#each Object.entries(tabs) as [name] (name)}
@@ -40,7 +40,7 @@
 			<nav class="flex border-b border-white/10 py-4">
 				<ul
 					role="list"
-					class="flex min-w-full flex-none gap-x-6 px-2 text-sm font-semibold leading-6 text-gray-400"
+					class="flex min-w-full flex-none gap-x-6 px-2 text-sm leading-6 font-semibold text-gray-400"
 				>
 					{#each Object.entries(tabs) as [name, url] (name)}
 						<a

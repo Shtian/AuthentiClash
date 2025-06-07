@@ -26,13 +26,13 @@
 			<li>
 				<div class="relative pb-8">
 					{#if index !== badgeActivity.length - 1}<span
-							class="absolute left-4 top-4 -ml-px h-full w-0.5 bg-gray-700"
+							class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-700"
 							aria-hidden="true"
 						></span>{/if}
 					<div class="relative flex space-x-3">
 						<div>
 							<span
-								class="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-background ring-8 ring-[hsl(var(--background))]"
+								class="bg-background flex h-8 w-8 items-center justify-center overflow-hidden rounded-full ring-8 ring-[hsl(var(--background))]"
 							>
 								<img src={activity.player.avatar_url} alt="Player avatar" />
 							</span>
@@ -49,7 +49,7 @@
 									{activity.badge.name}
 								</p>
 							</div>
-							<div class="whitespace-nowrap text-right text-sm text-gray-500">
+							<div class="text-right text-sm whitespace-nowrap text-gray-500">
 								<time
 									datetime={activity.awarded_on.toISOString()}
 									title={activity.awarded_on.toISOString()}
@@ -83,13 +83,13 @@
 			<a
 				class:pointer-events-none={currentPage === 0}
 				href="/badges/activity?limit={pageSize}&skip={Math.max((currentPage - 1) * pageSize, 0)}"
-				class="none relative inline-flex items-center rounded-md bg-clash-500 px-3 py-2 text-sm font-semibold text-white hover:bg-clash-400 focus-visible:outline-offset-0"
+				class="none bg-clash-500 hover:bg-clash-400 relative inline-flex items-center rounded-md px-3 py-2 text-sm font-semibold text-white focus-visible:outline-offset-0"
 				>Previous</a
 			>
 			<a
 				class:pointer-events-none={currentPage === totalPages - 1}
 				href="/badges/activity?limit={pageSize}&skip={(currentPage + 1) * pageSize}"
-				class="relative ml-3 inline-flex items-center rounded-md bg-clash-500 px-3 py-2 text-sm font-semibold text-white hover:bg-clash-400 focus-visible:outline-offset-0"
+				class="bg-clash-500 hover:bg-clash-400 relative ml-3 inline-flex items-center rounded-md px-3 py-2 text-sm font-semibold text-white focus-visible:outline-offset-0"
 				>Next</a
 			>
 		</div>

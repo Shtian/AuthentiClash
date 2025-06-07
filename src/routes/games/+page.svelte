@@ -28,7 +28,7 @@
 				<h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">Games</h2>
 				<a
 					href="/games/create"
-					class="block rounded-md bg-clash-500 px-3 py-2 text-center text-sm font-semibold text-white hover:bg-clash-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500"
+					class="bg-clash-500 hover:bg-clash-400 focus-visible:outline-clash-500 block rounded-md px-3 py-2 text-center text-sm font-semibold text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
 					>New game</a
 				>
 			</div>
@@ -37,7 +37,7 @@
 				<select
 					id="tabs"
 					name="tabs"
-					class="block w-full rounded-md border-none bg-white/5 py-2 pl-3 pr-10 text-base text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm"
+					class="block w-full rounded-md border-none bg-white/5 py-2 pr-10 pl-3 text-base text-white shadow-sm ring-1 ring-white/10 ring-inset focus:ring-2 focus:ring-indigo-500 focus:ring-inset sm:text-sm"
 					onchange={tabSelected}
 				>
 					<option selected={$page.url.searchParams.get('filter') === null} value="">Active</option>
@@ -53,7 +53,7 @@
 				<nav class="flex border-b border-white/10 py-4">
 					<ul
 						role="list"
-						class="flex min-w-full flex-none gap-x-6 px-2 text-sm font-semibold leading-6 text-gray-400"
+						class="flex min-w-full flex-none gap-x-6 px-2 text-sm leading-6 font-semibold text-gray-400"
 					>
 						<a
 							href="/games"

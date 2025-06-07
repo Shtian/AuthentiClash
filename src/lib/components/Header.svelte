@@ -43,7 +43,7 @@
 					<!-- Mobile menu button-->
 					<button
 						type="button"
-						class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+						class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:ring-2 focus:ring-white focus:outline-none focus:ring-inset"
 						aria-controls="mobile-menu"
 						aria-expanded="false"
 						onclick={(e) => {
@@ -84,7 +84,7 @@
 					</button>
 				</div>
 				<div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-					<a href="/" class="flex flex-shrink-0 items-center">
+					<a href="/" class="flex shrink-0 items-center">
 						<img class="h-8 w-auto" src={logo} alt="AuthentiClash logo" />
 					</a>
 					<div class="hidden sm:ml-6 sm:block">
@@ -117,7 +117,7 @@
 						<div>
 							<button
 								type="button"
-								class="relative flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+								class="relative flex rounded-full text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-none"
 								id="user-menu-button"
 								aria-expanded="false"
 								aria-haspopup="true"
@@ -147,7 +147,7 @@
 										{#await sha256(session?.user?.email) then hash}
 											<img
 												in:fade={{ duration: 300, easing: quintOut }}
-												class="absolute left-0 top-0 h-8 w-8 rounded-full"
+												class="absolute top-0 left-0 h-8 w-8 rounded-full"
 												width="32"
 												height="32"
 												src={`https://gravatar.com/avatar/${hash}`}
@@ -162,7 +162,7 @@
 							<div
 								in:scale={{ duration: 200, easing: quintOut, start: 0.95, opacity: 0 }}
 								out:scale={{ duration: 150, easing: quintOut, start: 1, opacity: 0 }}
-								class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+								class="ring-opacity-5 absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black focus:outline-none"
 								role="menu"
 								aria-orientation="vertical"
 								aria-labelledby="user-menu-button"
@@ -211,7 +211,7 @@
 					isMainMenuOpen = false;
 				}}
 			>
-				<div class="space-y-1 px-2 pb-3 pt-2">
+				<div class="space-y-1 px-2 pt-2 pb-3">
 					{#if isLoggedIn}
 						<div class="flex space-x-4">
 							{#each links as link (link.href)}
