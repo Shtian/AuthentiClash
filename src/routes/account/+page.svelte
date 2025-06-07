@@ -47,7 +47,7 @@
 					<div class="block text-sm leading-6 font-medium text-white">Email</div>
 					<div class="mt-2">
 						<div class="flex text-sm text-gray-300">
-							{session.user.email}
+							{session?.user?.email ?? ''}
 						</div>
 					</div>
 				</div>
