@@ -5,16 +5,17 @@
 	import ScoreGraph from '$lib/components/ScoreGraph.svelte';
 
 	const { data } = $props();
+	const stats = data?.stats;
 	const {
-		numberOfGames,
-		allScores,
-		totalScoreAcrossGames,
-		average2FAScore,
-		averageTotalScore,
-		median2FAscore,
-		wins,
-		losses
-	} = data.stats;
+		numberOfGames = 0,
+		allScores = [],
+		totalScoreAcrossGames = 0,
+		average2FAScore = 0,
+		averageTotalScore = 0,
+		median2FAscore = 0,
+		wins = 0,
+		losses = 0
+	} = stats ?? {};
 </script>
 
 <div class="mx-auto max-w-[1200px] px-6 lg:px-8 lg:py-10">
