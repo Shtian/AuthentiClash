@@ -1,4 +1,4 @@
-import { fail, redirect } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { getBadgeActivity } from '$lib/supabase/badges';
 
@@ -9,7 +9,7 @@ export const load: PageServerLoad = async ({ locals: { safeGetSession }, url }) 
 	}
 
 	const userId = session.user.id;
-	if (!userId) return fail(401, { message: 'User not found' });
+	if (!userId) return error(401, { message: 'User not found' });
 
 	const limit = Number(url.searchParams.get('limit')) || 10;
 	const skip = Number(url.searchParams.get('skip')) || 0;
@@ -17,7 +17,7 @@ export const load: PageServerLoad = async ({ locals: { safeGetSession }, url }) 
 	const badgeActivity = await getBadgeActivity(limit, skip);
 	if (badgeActivity.type === 'error') {
 		console.error('Error getting global badge unlock stats:', badgeActivity.error.message);
-		return fail(500, { message: 'Error retrieving badge stats' });
+		return error(500, { message: 'Error retrieving badge stats' });
 	}
 
 	return {

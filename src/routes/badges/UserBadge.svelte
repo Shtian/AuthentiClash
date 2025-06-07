@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type { UserBadge } from './player/+page.server';
 	import { seenBadges } from '$lib/stores/SeenBadgesStore';
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
+	import type { UserBadge } from './+page.server';
 	interface Props {
 		badge: UserBadge;
 	}
