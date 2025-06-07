@@ -6,16 +6,19 @@
 <footer aria-labelledby="footer-heading">
 	<h2 id="footer-heading" class="sr-only">Footer</h2>
 	<div class="mx-auto max-w-7xl px-6 pt-8 pb-8 lg:px-8">
-		<div class="mt-8 border-t border-white/10 pt-8 md:flex md:items-center md:justify-between">
+		<div class="border-foreground/10 mt-8 border-t pt-8 md:flex md:items-center md:justify-between">
 			<div class="flex space-x-6 md:order-2">
 				<a
 					href="https://github.com/Shtian/AuthentiClash/blob/main/CHANGELOG.md"
-					class="text-gray-500 hover:text-gray-400"
+					class="text-foreground/70 hover:text-foreground"
 				>
 					<span class="sr-only">Changelog</span>
 					<NotebookText class="size-6" />
 				</a>
-				<a href="https://github.com/Shtian/AuthentiClash" class="text-gray-500 hover:text-gray-400">
+				<a
+					href="https://github.com/Shtian/AuthentiClash"
+					class="text-foreground/70 hover:text-foreground"
+				>
 					<span class="sr-only">GitHub</span>
 					<svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
 						<path
@@ -26,7 +29,7 @@
 					</svg>
 				</a>
 			</div>
-			<p class="mt-8 text-xs leading-5 text-gray-400 md:order-1 md:mt-0">
+			<p class="text-foreground/70 mt-8 text-xs leading-5 md:order-1 md:mt-0">
 				&copy; {new Date().getFullYear()}, v{VERSION}
 			</p>
 		</div>

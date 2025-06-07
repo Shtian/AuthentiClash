@@ -28,7 +28,7 @@
 			<select
 				id="tabs"
 				name="tabs"
-				class="block w-full rounded-md border-none bg-white/5 py-2 pr-10 pl-3 text-base text-white shadow-sm ring-1 ring-white/10 ring-inset focus:ring-2 focus:ring-indigo-500 focus:ring-inset sm:text-sm"
+				class="text-foreground block w-full rounded-md border-none bg-white/5 py-2 pr-10 pl-3 text-base shadow-sm ring-1 ring-white/10 ring-inset focus:ring-2 focus:ring-indigo-500 focus:ring-inset sm:text-sm"
 				onchange={tabSelected}
 			>
 				{#each Object.entries(tabs) as [name] (name)}
@@ -40,12 +40,12 @@
 			<nav class="flex border-b border-white/10 py-4">
 				<ul
 					role="list"
-					class="flex min-w-full flex-none gap-x-6 px-2 text-sm leading-6 font-semibold text-gray-400"
+					class="text-foreground flex min-w-full flex-none gap-x-6 px-2 text-sm leading-6 font-semibold"
 				>
 					{#each Object.entries(tabs) as [name, url] (name)}
 						<a
 							href={url}
-							class={`transition-colors ${$page.url.pathname === tabs[name] ? 'text-clash-200' : 'hover:text-white'}`}
+							class={`transition-colors ${$page.url.pathname === tabs[name] ? 'text-clash-400 dark:text-clash-200' : 'hover:text-clash-400'}`}
 							data-sveltekit-preload-data="hover">{name}</a
 						>
 					{/each}

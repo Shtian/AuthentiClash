@@ -95,7 +95,7 @@
 				fill="#136195"
 			/>
 			<text
-				class="cursor-default text-sm text-gray-400 opacity-0 transition-opacity group-hover:opacity-100"
+				class="text-muted-foreground cursor-default text-sm opacity-0 transition-opacity group-hover:opacity-100"
 				fill="currentColor"
 				text-anchor="middle"
 				x={xScale(i + 1)}

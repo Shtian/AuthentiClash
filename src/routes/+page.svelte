@@ -21,7 +21,7 @@
 			<p class="text-md mt-4 md:text-lg">Get Ready for the Most Average Adventure of Your Life!</p>
 			<a
 				href="/games"
-				class="bg-clash-500 hover:bg-clash-400 focus-visible:outline-clash-500 mt-8 inline-flex items-center gap-x-2 self-center rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+				class="bg-clash-500 hover:bg-clash-400 focus-visible:outline-clash-500 text-foreground mt-8 inline-flex items-center gap-x-2 self-center rounded-md px-3 py-2 text-sm font-semibold shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2"
 			>
 				Play Now
 				<ArrowRightCircle class="h-6 w-6" />
@@ -29,7 +29,11 @@
 		</div>
 
 		<div in:scale={{ start: 0, duration: 200, delay: 1500, opacity: 0 }}>
-			<img class="mx-auto mt-16 h-80 w-auto" src={logo} alt="AuthentiClash logo" />
+			<img
+				class="mx-auto mt-16 h-80 w-auto invert dark:invert-0"
+				src={logo}
+				alt="AuthentiClash logo"
+			/>
 		</div>
 	{/if}
 </heading>

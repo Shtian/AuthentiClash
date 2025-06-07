@@ -34,6 +34,9 @@ importers:
       d3:
         specifier: ^7.9.0
         version: 7.9.0
+      mode-watcher:
+        specifier: 0.5.1
+        version: 0.5.1(svelte@5.33.14)
       openai:
         specifier: ^5.0.1
         version: 5.0.1(ws@8.18.0)
@@ -2600,6 +2603,11 @@ packages:
     resolution: {integrity: sha512-+NsyUUAZDmo6YVHzL/stxSu3t9YS1iljliy3BSDrXJ/dkn1KYdmtZODGGjLcc9XLgVVpH4KshHB8XmZgMhaBXg==}
     engines: {node: '>=10'}
     hasBin: true
+
+  mode-watcher@0.5.1:
+    resolution: {integrity: sha512-adEC6T7TMX/kzQlaO/MtiQOSFekZfQu4MC+lXyoceQG+U5sKpJWZ4yKXqw846ExIuWJgedkOIPqAYYRk/xHm+w==}
+    peerDependencies:
+      svelte: '>=4.2.19'
 
   module-details-from-path@1.0.3:
     resolution: {integrity: sha512-ySViT69/76t8VhE1xXHK6Ch4NcDd26gx0MzKXLO+F7NOtnqH68d9zF94nT8ZWSxXh8ELOERsnJO/sWt1xZYw5A==}
@@ -6104,6 +6112,10 @@ snapshots:
       rimraf: 5.0.10
 
   mkdirp@3.0.1: {}
+
+  mode-watcher@0.5.1(svelte@5.33.14):
+    dependencies:
+      svelte: 5.33.14
 
   module-details-from-path@1.0.3: {}
 

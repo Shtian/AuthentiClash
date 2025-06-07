@@ -69,10 +69,10 @@
 
 <header>
 	<div class="mx-auto flex max-w-7xl flex-col gap-y-2 sm:px-6 lg:px-8">
-		<h1 class="tracking-tigh text-3xl leading-tight font-bold text-white">
+		<h1 class="tracking-tigh text-foreground text-3xl leading-tight font-bold">
 			Joining {data.gameName}
 		</h1>
-		<p class="text-sm text-pretty text-gray-300" title={data.endsAt}>
+		<p class="text-muted-foreground text-sm text-pretty" title={data.endsAt}>
 			Time remaining: {timeLeftText}
 		</p>
 	</div>
@@ -83,7 +83,7 @@
 		<form method="POST" action="?/joinGame" use:enhance={handleNewPlayer}>
 			<input type="hidden" name="game-id" id="game-id" value={data.gameId} />
 			<div class="col-span-3">
-				<label for="nickname" class="block text-sm leading-6 font-medium text-white"
+				<label for="nickname" class="text-foreground block text-sm leading-6 font-medium"
 					>Choose your character name:</label
 				>
 				<div class="mt-2">
@@ -96,7 +96,7 @@
 							value={nickname}
 							required
 							minlength="3"
-							class="focus:border-b-clash-500 flex-1 border-b bg-transparent py-1.5 text-lg text-white transition-colors focus:outline-none md:text-4xl"
+							class="focus:ring-ring ring-foreground/10 text-foreground hover:bg-muted flex-1 rounded-md border-b bg-transparent px-4 py-1.5 text-lg shadow-xs ring-1 transition-colors focus:ring-[3px] focus:outline-none md:text-4xl"
 						/>
 						<button
 							class="absolute top-1/2 right-2 -translate-y-1/2"
@@ -105,7 +105,7 @@
 						>
 							<span class="sr-only">Generate new nickname suggestion</span>
 							<Shuffle
-								class="size-6 origin-center text-slate-400 [animation-duration:1s] [animation-iteration-count:1] {recentRefresh
+								class="text-foreground size-6 origin-center cursor-pointer [animation-duration:1s] [animation-iteration-count:1] {recentRefresh
 									? 'animate-pulse'
 									: null}"
 							/>
@@ -114,7 +114,7 @@
 				</div>
 				{#if data.classes.length > 0}
 					<div class="mt-8 space-y-4">
-						<p class="block text-sm leading-6 font-medium text-white">
+						<p class="text-foreground block text-sm leading-6 font-medium">
 							Choose your class. Each active ability can only be used once per game:
 						</p>
 						<RadioGroup.Root value={data.classes.at(0)?.id.toString()} required name="class-id">
@@ -130,7 +130,9 @@
 									<Label for={classChoice.id.toString()}
 										><p class="text-lg font-bold">{classChoice.name}</p>
 										{#each classChoice.abilities as ability (ability.id)}
-											<p class=" text-gray-400">{ability.name}: {ability.description}</p>
+											<p class="text-muted-foreground text-xs">
+												{ability.name}: {ability.description}
+											</p>
 										{/each}
 									</Label>
 								</div>

@@ -28,7 +28,7 @@
 				<div class="bg-background relative flex size-6 flex-none items-center justify-center">
 					<div class="size-1.5 rounded-full bg-gray-700 ring-1 ring-gray-600"></div>
 				</div>
-				<p class="flex-auto py-0.5 text-xs/5 text-gray-300">
+				<p class="text-muted-foreground flex-auto py-0.5 text-xs/5">
 					{#if log.text_ai}
 						{log.text_ai}
 					{:else}
@@ -40,7 +40,9 @@
 				>
 			</li>
 		{:else}
-			<li><p class="flex-auto py-0.5 text-xs/5 text-gray-300">No logs found for this game</p></li>
+			<li>
+				<p class="flex-auto py-0.5 text-xs/5 text-muted-foreground">No logs found for this game</p>
+			</li>
 		{/each}
 	</ul>
 </div>

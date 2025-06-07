@@ -5,7 +5,7 @@
 	import type { Session } from '@supabase/supabase-js';
 	import { clickOutside } from '$lib/utils/clickOutside';
 	import logo from '$lib/assets/authenticlash_logo.svg';
-
+	import ThemeToggle from './ThemeToggle.svelte';
 	interface Props {
 		session?: Session | null;
 	}
@@ -36,14 +36,14 @@
 </script>
 
 <header>
-	<nav class="">
+	<nav class="border-foreground/10 border-b">
 		<div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
 			<div class="relative flex h-16 items-center justify-between">
 				<div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
 					<!-- Mobile menu button-->
 					<button
 						type="button"
-						class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:ring-2 focus:ring-white focus:outline-none focus:ring-inset"
+						class="hover:text-foreground text-muted-foreground relative inline-flex items-center justify-center rounded-md p-2 hover:bg-gray-700 focus:ring-2 focus:ring-white focus:outline-none focus:ring-inset"
 						aria-controls="mobile-menu"
 						aria-expanded="false"
 						onclick={(e) => {
@@ -85,7 +85,7 @@
 				</div>
 				<div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
 					<a href="/" class="flex shrink-0 items-center">
-						<img class="h-8 w-auto" src={logo} alt="AuthentiClash logo" />
+						<img class="h-8 w-auto invert dark:invert-0" src={logo} alt="AuthentiClash logo" />
 					</a>
 					<div class="hidden sm:ml-6 sm:block">
 						{#if isLoggedIn}
@@ -94,13 +94,13 @@
 									{#if $page.url.pathname.includes(link.href)}
 										<a
 											href={link.href}
-											class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
+											class="text-foreground dark:text-foreground rounded-md bg-zinc-100 px-3 py-2 text-sm font-medium dark:bg-zinc-700"
 											aria-current="page">{link.name}</a
 										>
 									{:else}
 										<a
 											href={link.href}
-											class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+											class="hover:text-foreground dark:hover:text-foreground dark:text-muted-foreground rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-zinc-100 dark:hover:bg-gray-700"
 											>{link.name}</a
 										>
 									{/if}
@@ -113,6 +113,7 @@
 					class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
 				>
 					<!-- Profile dropdown -->
+					<ThemeToggle />
 					<div class="relative ml-3">
 						<div>
 							<button
@@ -135,7 +136,7 @@
 										viewBox="0 0 24 24"
 										stroke-width="1.5"
 										stroke="currentColor"
-										class="absolute inset-0 h-8 w-8 text-gray-400"
+										class="text-muted-foreground absolute inset-0 h-8 w-8"
 									>
 										<path
 											stroke-linecap="round"
@@ -218,13 +219,13 @@
 								{#if $page.url.pathname.includes(link.href)}
 									<a
 										href={link.href}
-										class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white"
+										class="text-foreground block rounded-md bg-gray-900 px-3 py-2 text-base font-medium"
 										aria-current="page">{link.name}</a
 									>
 								{:else}
 									<a
 										href={link.href}
-										class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+										class="hover:text-foreground text-muted-foreground block rounded-md px-3 py-2 text-base font-medium hover:bg-gray-700"
 										>{link.name}</a
 									>
 								{/if}

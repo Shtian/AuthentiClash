@@ -46,7 +46,14 @@
 			stroke-dasharray={circumference}
 			stroke-dashoffset={dashoffset}
 		></circle>
-		<text x="50" y="50" font-size="18" text-anchor="middle" fill="white" alignment-baseline="middle"
+		<text
+			class="fill-foreground"
+			x="50"
+			y="50"
+			font-size="18"
+			text-anchor="middle"
+			fill="white"
+			alignment-baseline="middle"
 			>{#if textType === 'count'}
 				{currentNum.toFixed(0)} / {total}
 			{:else if textType === 'percentage'}

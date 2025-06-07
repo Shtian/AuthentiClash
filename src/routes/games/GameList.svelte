@@ -20,37 +20,43 @@
 <div class="mt-6 flow-root">
 	<div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
 		<div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-			<table class="min-w-full divide-y divide-gray-700">
+			<table class="divide-foreground/70 min-w-full divide-y">
 				<thead>
 					<tr>
-						<th scope="col" class="py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-white">
+						<th
+							scope="col"
+							class="text-foreground py-3.5 pr-3 pl-4 text-left text-sm font-semibold"
+						>
 							Game
 						</th>
-						<th scope="col" class="py-3.5 pr-3 text-left text-sm font-semibold text-white">
+						<th scope="col" class="text-foreground py-3.5 pr-3 text-left text-sm font-semibold">
 							Your Rank
 						</th>
-						<th scope="col" class="py-3.5 pr-3 text-left text-sm font-semibold text-white">
+						<th scope="col" class="text-foreground py-3.5 pr-3 text-left text-sm font-semibold">
 							Status
 						</th>
 					</tr>
 				</thead>
-				<tbody class="divide-y divide-gray-800">
+				<tbody class="divide-foreground/10 divide-y">
 					{#each gamesWithParticipation as game (game.id)}
 						<tr
 							onclick={() => {
 								goto(`/games/${game.code}`);
 							}}
-							class="group cursor-pointer transition-colors hover:bg-gray-800"
+							class="group hover:bg-clash-50 cursor-pointer transition-colors dark:hover:bg-gray-800"
 						>
 							<td
-								class="py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-white group-hover:underline"
+								class="text-foreground py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap group-hover:underline"
 							>
 								{game.name}
 							</td>
-							<td class="py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-white sm:pl-0"
+							<td
+								class="text-foreground py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap sm:pl-0"
 								>{game.userRank === 0 ? 'No entries' : `#${game.userRank} (${game.totalScore})`}</td
 							>
-							<td class="py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-white sm:pl-0">
+							<td
+								class="text-foreground py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap sm:pl-0"
+							>
 								<Badge
 									title={game.endAtString}
 									color={game.endAtDate < new Date() ? 'red' : 'green'}

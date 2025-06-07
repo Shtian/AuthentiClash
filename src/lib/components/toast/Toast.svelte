@@ -41,9 +41,8 @@
 					duration={toastContent.duration}
 				/>
 				<button class="ml-4 p-1" onclick={() => toast.remove(toastContent.id)}
-					><X class="h-4 w-4 text-gray-300 transition-colors hover:text-white"></X><VisuallyHidden
-						>Close message</VisuallyHidden
-					></button
+					><X class="hover:text-foreground text-muted-foreground h-4 w-4 transition-colors"
+					></X><VisuallyHidden>Close message</VisuallyHidden></button
 				>
 				<ToastProgress duration={toastContent.duration} />
 			</div>

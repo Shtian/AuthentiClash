@@ -20,8 +20,8 @@
 
 <div class="mx-auto max-w-[1200px] px-6 lg:px-8 lg:py-10">
 	<div class="mx-auto mb-8 max-w-2xl lg:mx-0">
-		<h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">Stats</h2>
-		<p class="mt-6 text-lg leading-8 text-white">
+		<h2 class="text-foreground text-3xl font-bold tracking-tight sm:text-4xl">Stats</h2>
+		<p class="text-foreground mt-6 text-lg leading-8">
 			Only counts games that are finished and have more than one player participating.
 		</p>
 	</div>
@@ -68,14 +68,16 @@
 		</div>
 	{:else}
 		<div class="mx-auto max-w-7xl py-6 text-center sm:px-6 lg:px-8 lg:py-10">
-			<RocketIcon class="mx-auto h-12 w-12 text-gray-400" />
-			<h3 class="mt-2 text-sm font-semibold text-white">No past games found</h3>
-			<p class="mt-1 text-sm text-white">Get started by creating a new AuthentiClash session.</p>
+			<RocketIcon class="text-muted-foreground mx-auto h-12 w-12" />
+			<h3 class="text-foreground mt-2 text-sm font-semibold">No past games found</h3>
+			<p class="text-foreground mt-1 text-sm">
+				Get started by creating a new AuthentiClash session.
+			</p>
 			<div class="mt-6">
 				<a
 					href="/games/create"
 					type="button"
-					class="bg-clash-600 hover:bg-clash-500 focus-visible:outline-clash-600 inline-flex items-center rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+					class="bg-clash-600 hover:bg-clash-500 focus-visible:outline-clash-600 text-foreground inline-flex items-center rounded-md px-3 py-2 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
 				>
 					<svg
 						class="mr-1.5 -ml-0.5 h-5 w-5"

@@ -32,7 +32,7 @@
 </script>
 
 <li
-	class="flex flex-col gap-y-4 rounded-lg border p-4"
+	class="flex flex-col gap-y-4 rounded-lg p-4 shadow-sm"
 	onmouseover={() => markBadgeAsSeen()}
 	onfocus={() => markBadgeAsSeen()}
 >
@@ -71,7 +71,7 @@
 					{badge.name}
 				{/if}
 			</h2>
-			<p class="text-xs text-pretty text-gray-300">
+			<p class="text-muted-foreground text-xs text-pretty">
 				{badge.secret && !badge.unlocked
 					? 'Veiled in secrecy, this trophy beckons to be unveiled by the worthy.'
 					: badge.description}
@@ -81,17 +81,18 @@
 			<span
 				in:fade={{ duration: 150 }}
 				out:fade={{ duration: 150 }}
-				class="bg-clash-400 absolute -top-2 -left-2 rounded px-2 py-1 text-xs text-white">NEW</span
+				class="bg-clash-400 text-foreground absolute -top-2 -left-2 rounded px-2 py-1 text-xs"
+				>NEW</span
 			>
 		{/if}
 	</div>
 	<footer class="flex justify-between">
-		<p class="text-xs text-gray-300">
+		<p class="text-muted-foreground text-xs">
 			{badge.globalUnlockPercentage.toFixed(1)}% global unlock rate
 		</p>
 		{#if badge.unlocked}
 			<p
-				class="text-xs text-gray-300"
+				class="text-muted-foreground text-xs"
 				title={`Awarded to you on ${badge.awarded_on?.toDateString()}`}
 			>
 				<em>{badge.awarded_on?.toISOString().substring(0, 10)}</em>
@@ -114,6 +115,6 @@
 	}
 
 	.image-glow {
-		animation: glow 3s infinite alternate ease-in-out; /* Adjust the duration and animation type as needed */
+		animation: glow 3s infinite alternate ease-in-out;
 	}
 </style>

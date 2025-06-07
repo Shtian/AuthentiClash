@@ -7,6 +7,7 @@
 	import { page } from '$app/stores';
 	import Footer from '$lib/components/Footer.svelte';
 	import { type AuthChangeEvent, type Session } from '@supabase/supabase-js';
+	import { ModeWatcher } from 'mode-watcher';
 
 	const { data, children } = $props();
 	const { session, supabase } = $derived(data);
@@ -58,6 +59,7 @@
 	{/if}
 </svelte:head>
 
+<ModeWatcher />
 <Toast />
 <Header {session} />
 <div class="mx-auto min-h-full max-w-7xl px-4 pt-8 sm:px-6 lg:pt-16">

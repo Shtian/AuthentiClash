@@ -37,22 +37,22 @@
 <form method="POST" action="?/update" use:enhance={handleSubmit} bind:this={profileForm}>
 	<div class="space-y-12">
 		<div class="border-b border-white/10 pb-12">
-			<h2 class="text-base leading-7 font-semibold text-white">Profile</h2>
-			<p class="mt-1 text-sm leading-6 text-gray-400">
+			<h2 class="text-foreground text-base leading-7 font-semibold">Profile</h2>
+			<p class="text-muted-foreground mt-1 text-sm leading-6">
 				This information will be displayed publicly so be careful what you share.
 			</p>
 
 			<div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
 				<div class="sm:col-span-4">
-					<div class="block text-sm leading-6 font-medium text-white">Email</div>
+					<div class="text-foreground block text-sm leading-6 font-medium">Email</div>
 					<div class="mt-2">
-						<div class="flex text-sm text-gray-300">
+						<div class="text-muted-foreground flex text-sm">
 							{session?.user?.email ?? ''}
 						</div>
 					</div>
 				</div>
 				<div class="sm:col-span-4">
-					<label for="username" class="block text-sm leading-6 font-medium text-white"
+					<label for="username" class="text-foreground block text-sm leading-6 font-medium"
 						>Username</label
 					>
 					<div class="mt-2">
@@ -65,7 +65,7 @@
 								id="username"
 								autocomplete="username"
 								value={form?.username ?? username}
-								class="flex-1 border-0 bg-transparent py-1.5 pl-2 text-white focus:ring-0 sm:text-sm sm:leading-6"
+								class="text-foreground flex-1 border-0 bg-transparent py-1.5 pl-2 focus:ring-0 sm:text-sm sm:leading-6"
 								minlength="3"
 								required
 							/>
@@ -79,7 +79,7 @@
 	<div class="mt-6 flex items-center gap-x-6">
 		<button
 			type="submit"
-			class="rounded-md bg-emerald-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-emerald-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500"
+			class="text-foreground rounded-md bg-emerald-500 px-3 py-2 text-sm font-semibold shadow-sm hover:bg-emerald-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500"
 			disabled={isLoading}
 			>{#if isLoading}
 				<LucideLoader2 class="h-6 w-6 animate-spin" />
