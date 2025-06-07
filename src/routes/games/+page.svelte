@@ -28,7 +28,7 @@
 				<h2 class="text-foreground text-3xl font-bold tracking-tight sm:text-4xl">Games</h2>
 				<a
 					href="/games/create"
-					class="bg-clash-400 hover:bg-clash-300 focus-visible:outline-clash-500 text-background rounded-md px-3 py-2 text-sm font-semibold shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2"
+					class="bg-clash-500 hover:bg-clash-400 focus-visible:outline-clash-500 text-background dark:text-foreground rounded-md px-3 py-2 text-sm font-semibold shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2"
 					>New game</a
 				>
 			</div>
