@@ -70,7 +70,7 @@ export const supabase: Handle = async ({ event, resolve }) => {
 	});
 };
 
-const protectedRoutes = ['/games', '/badges', '/account', 'gallery', 'stats'];
+const protectedRoutes = ['/games', '/badges', '/account', '/gallery', '/stats'];
 
 const authGuard: Handle = async ({ event, resolve }) => {
 	const { session, user } = await event.locals.safeGetSession();
@@ -85,7 +85,7 @@ const authGuard: Handle = async ({ event, resolve }) => {
 	}
 
 	if (event.locals.session && event.url.pathname === '/auth/login') {
-		redirect(303, '/private');
+		redirect(303, '/games');
 	}
 
 	return resolve(event);
