@@ -2,18 +2,23 @@
 	import { run } from 'svelte/legacy';
 	import '../app.css';
 	import { invalidate, onNavigate } from '$app/navigation';
-	import { onMount } from 'svelte';
+	import { onMount, type Snippet } from 'svelte';
 	import Header from '$lib/components/Header.svelte';
 	import Toast from '$lib/components/toast/Toast.svelte';
 	import { page } from '$app/stores';
 	import Footer from '$lib/components/Footer.svelte';
 	import type { AuthChangeEvent, Session } from '@supabase/supabase-js';
+	import type { PageData } from './$types';
 
-	const props = $props();
-	let { supabase, session } = $state(props);
+	interface Props {
+		data: PageData;
+		children?: Snippet;
+	}
+	const { data, children }: Props = $props();
+	let { supabase, session } = $state(data);
 
 	run(() => {
-		({ supabase, session } = props);
+		({ supabase, session } = data);
 	});
 
 	const title = $derived($page.data.title);
@@ -72,7 +77,7 @@
 <Header {session} />
 <div class="mx-auto min-h-full max-w-7xl px-4 pt-8 sm:px-6 lg:pt-16">
 	<div class="mx-auto max-w-2xl">
-		{@render props?.children?.()}
+		{@render children?.()}
 	</div>
 </div>
 <Footer />
