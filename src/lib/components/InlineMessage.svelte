@@ -13,7 +13,7 @@
 {#if msgType === 'error'}
 	<div
 		in:fade
-		class="sm-w-full text-foreground mt-10 flex items-center gap-x-2 rounded-md px-4 py-2 ring-1 ring-red-300 sm:mx-auto sm:max-w-sm"
+		class="sm-w-full mt-10 flex items-center gap-x-2 rounded-md px-4 py-2 ring-1 ring-red-300 sm:mx-auto sm:max-w-sm"
 	>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -34,7 +34,7 @@
 {:else if msgType === 'success'}
 	<div
 		in:fade
-		class="sm-w-full text-foreground mt-10 flex items-center gap-x-2 rounded-md px-4 py-2 ring-1 ring-green-300 sm:mx-auto sm:max-w-sm"
+		class="sm-w-full mt-10 flex items-center gap-x-2 rounded-md px-4 py-2 ring-1 ring-green-300 sm:mx-auto sm:max-w-sm"
 	>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"

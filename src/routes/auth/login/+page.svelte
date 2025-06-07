@@ -34,8 +34,8 @@
 
 <div class="flex min-h-full flex-col justify-center">
 	<div class="sm:mx-auto sm:w-full sm:max-w-sm">
-		<img class="mx-auto h-10 w-auto" src={logo} alt="AuthentiClash logo" />
-		<h2 class="text-foreground mt-10 text-center text-2xl leading-9 font-bold tracking-tight">
+		<img class="mx-auto h-10 w-auto invert dark:invert-0" src={logo} alt="AuthentiClash logo" />
+		<h2 class="mt-10 text-center text-2xl leading-9 font-bold tracking-tight">
 			{showRegister ? 'Create your account' : 'Sign in to your account'}
 		</h2>
 	</div>
@@ -66,9 +66,7 @@
 		>
 			<form class="space-y-6" method="POST" action="?/signIn" onsubmit={setLoadingState}>
 				<div>
-					<label for="email" class="text-foreground block text-sm leading-6 font-medium"
-						>Email address</label
-					>
+					<label for="email" class="block text-sm leading-6 font-medium">Email address</label>
 					<div class="mt-2">
 						<input
 							id="email"
@@ -77,16 +75,14 @@
 							autocomplete="email"
 							bind:value={email}
 							required
-							class="focus:ring-clash-500 text-foreground block w-full rounded-md border-0 bg-white/5 py-1.5 pl-2 shadow-sm ring-1 ring-white/10 ring-inset focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
+							class="focus-visible:ring-ring ring-foreground/10 block w-full rounded-md border-0 bg-white/5 py-1.5 pl-2 shadow-sm ring-1 ring-inset focus-visible:ring-2 focus-visible:outline-0 sm:text-sm sm:leading-6"
 						/>
 					</div>
 				</div>
 
 				<div>
 					<div class="flex items-center justify-between">
-						<label for="password" class="text-foreground block text-sm leading-6 font-medium"
-							>Password</label
-						>
+						<label for="password" class="block text-sm leading-6 font-medium">Password</label>
 						<div class="text-sm">
 							<a
 								href={`/auth/forgot${getEmailParam(email)}`}
@@ -102,7 +98,7 @@
 							autocomplete="current-password"
 							bind:value={password}
 							required
-							class="focus:ring-clash-500 text-foreground block w-full rounded-md border-0 bg-white/5 py-1.5 pl-2 shadow-sm ring-1 ring-white/10 ring-inset focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
+							class="focus-visible:ring-ring ring-foreground/10 block w-full rounded-md border-0 bg-white/5 py-1.5 pl-2 shadow-sm ring-1 ring-inset focus-visible:ring-2 focus-visible:outline-0 sm:text-sm sm:leading-6"
 						/>
 					</div>
 				</div>
@@ -111,7 +107,7 @@
 					<button
 						type="submit"
 						disabled={loading}
-						class="bg-clash-500 hover:bg-clash-400 focus-visible:outline-clash-500 text-foreground flex w-full justify-center rounded-md px-3 py-1.5 text-sm leading-6 font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+						class="bg-clash-500 hover:bg-clash-400 focus-visible:outline-clash-500 text-background dark:text-foreground flex w-full justify-center rounded-md px-3 py-1.5 text-sm leading-6 font-semibold shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2"
 						>{loading ? 'Signing in...' : 'Sign in'}</button
 					>
 				</div>
@@ -141,9 +137,7 @@
 		>
 			<form class="space-y-6" method="POST" action="?/signUp" onsubmit={setLoadingState}>
 				<div>
-					<label for="email" class="text-foreground block text-sm leading-6 font-medium"
-						>Email address</label
-					>
+					<label for="email" class="block text-sm leading-6 font-medium">Email address</label>
 					<div class="mt-2">
 						<input
 							id="email"
@@ -152,16 +146,14 @@
 							autocomplete="email"
 							bind:value={email}
 							required
-							class="focus:ring-clash-500 text-foreground block w-full rounded-md border-0 bg-white/5 py-1.5 pl-2 shadow-sm ring-1 ring-white/10 ring-inset focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
+							class="focus-visible:ring-ring ring-foreground/10 block w-full rounded-md border-0 bg-white/5 py-1.5 pl-2 shadow-sm ring-1 ring-inset focus-visible:ring-2 focus-visible:outline-0 sm:text-sm sm:leading-6"
 						/>
 					</div>
 				</div>
 
 				<div>
 					<div class="flex items-center">
-						<label for="password" class="text-foreground block text-sm leading-6 font-medium"
-							>Password</label
-						>
+						<label for="password" class="block text-sm leading-6 font-medium">Password</label>
 					</div>
 					<div class="mt-2">
 						<input
@@ -172,7 +164,7 @@
 							bind:value={password}
 							required
 							minlength="6"
-							class="focus:ring-clash-500 text-foreground block w-full rounded-md border-0 bg-white/5 py-1.5 pl-2 shadow-sm ring-1 ring-white/10 ring-inset focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
+							class="focus:ring-ring ring-foreground/10 block w-full rounded-md border-0 bg-white/5 py-1.5 pl-2 shadow-sm ring-1 ring-inset focus:ring-2 focus:outline-none sm:text-sm sm:leading-6"
 						/>
 					</div>
 				</div>
@@ -181,7 +173,7 @@
 					<button
 						type="submit"
 						disabled={loading}
-						class="bg-clash-500 hover:bg-clash-400 focus-visible:outline-clash-500 text-foreground flex w-full justify-center rounded-md px-3 py-1.5 text-sm leading-6 font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+						class="bg-clash-500 hover:bg-clash-400 focus-visible:outline-clash-500 text-background dark:text-foreground flex w-full justify-center rounded-md px-3 py-1.5 text-sm leading-6 font-semibold shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2"
 						>{loading ? 'Signing up...' : 'Sign up'}</button
 					>
 				</div>
