@@ -31,7 +31,6 @@
 		"@tailwindcss/postcss": "^4.1.8",
 		"@tailwindcss/vite": "^4.0.0",
 		"@types/d3": "^7.4.3",
-		"@types/uuid": "^9.0.8",
 		"@typescript-eslint/eslint-plugin": "^8.18.2",
 		"@typescript-eslint/parser": "^8.18.2",
 		"bits-ui": "^2.4.1",
@@ -47,7 +46,7 @@
 		"prettier-plugin-svelte": "^3.4.0",
 		"prettier-plugin-tailwindcss": "^0.6.11",
 		"svelte": "^5.33.14",
-		"svelte-check": "^4.1.1",
+		"svelte-check": "^4.2.1",
 		"tailwind-merge": "^3.3.0",
 		"tailwind-variants": "^1.0.0",
 		"tailwindcss": "^4.0.0",
@@ -63,15 +62,12 @@
 		"@changesets/changelog-github": "^0.5.0",
 		"@changesets/cli": "^2.27.11",
 		"@sentry/sveltekit": "^8.47.0",
-		"@supabase/auth-ui-shared": "^0.1.8",
-		"@supabase/auth-ui-svelte": "^0.2.9",
 		"@supabase/ssr": "^0.6.1",
 		"@supabase/supabase-js": "^2.45.4",
 		"@tailwindcss/forms": "^0.5.9",
 		"d3": "^7.9.0",
 		"openai": "^5.0.1",
-		"sharp": "^0.33.5",
-		"uuid": "^9.0.1"
+		"sharp": "^0.33.5"
 	},
 	"engines": {
 		"node": ">=20"
