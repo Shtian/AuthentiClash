@@ -11,7 +11,7 @@ export const load: PageServerLoad = async function get() {
 };
 
 export const actions = {
-	create: async ({ request, locals: { supabase, getSession } }) => {
+	create: async ({ request, locals: { supabase, safeGetSession } }) => {
 		const formData = await request.formData();
 		const name = formData.get('game-name');
 		const cooldown = formData.get('2fa-cooldown');
@@ -20,7 +20,7 @@ export const actions = {
 		const endTime = formData.get('end-time');
 		const endAt = new Date(`${endDate}T${endTime}:00Z`);
 
-		const session = await getSession();
+		const session = await safeGetSession();
 
 		if (!session) {
 			return fail(401, {

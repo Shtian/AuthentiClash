@@ -1,18 +1,4 @@
 import { fail, redirect } from '@sveltejs/kit';
-import type { PageServerLoad } from './$types';
-
-export const load: PageServerLoad = async ({ locals: { getSession } }) => {
-	const session = await getSession();
-
-	// if the user is already logged in return them to the games page
-	if (session) {
-		redirect(303, '/games');
-	}
-
-	return {
-		title: 'Login'
-	};
-};
 
 export const actions = {
 	signIn: async ({ request, locals: { supabase } }) => {

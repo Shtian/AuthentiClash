@@ -8,9 +8,9 @@ import {
 } from '$lib/supabase/games';
 import { DateFormatter } from '@internationalized/date';
 
-export const load: PageServerLoad = async ({ locals: { getSession }, url }) => {
-	const session = await getSession();
-	if (!session) {
+export const load: PageServerLoad = async ({ locals: { safeGetSession }, url }) => {
+	const session = await safeGetSession();
+	if (!session || !session.user) {
 		redirect(303, '/auth/login');
 	}
 	const userId = session.user.id;

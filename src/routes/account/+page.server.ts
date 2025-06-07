@@ -1,9 +1,9 @@
 import { fail, redirect } from '@sveltejs/kit';
 
-export const load = async ({ locals: { supabase, getSession } }) => {
-	const session = await getSession();
+export const load = async ({ locals: { supabase, safeGetSession } }) => {
+	const session = await safeGetSession();
 
-	if (!session) {
+	if (!session || !session.user) {
 		redirect(303, '/');
 	}
 
@@ -17,11 +17,11 @@ export const load = async ({ locals: { supabase, getSession } }) => {
 };
 
 export const actions = {
-	update: async ({ request, locals: { supabase, getSession } }) => {
+	update: async ({ request, locals: { supabase, safeGetSession } }) => {
 		const formData = await request.formData();
 		const username = formData.get('username') as string;
 
-		const session = await getSession();
+		const session = await safeGetSession();
 
 		const { error } = await supabase.from('profiles').upsert({
 			id: session?.user.id,

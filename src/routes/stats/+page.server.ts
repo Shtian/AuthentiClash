@@ -1,13 +1,13 @@
 import { fail, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ locals: { getSession, supabase } }) => {
-	const session = await getSession();
+export const load: PageServerLoad = async ({ locals: { safeGetSession, supabase } }) => {
+	const session = await safeGetSession();
 	if (!session) {
 		redirect(303, '/auth/login');
 	}
 
-	const userId = session.user.id;
+	const userId = session.user?.id;
 	if (!userId) return fail(401, { message: 'User not found' });
 
 	const { data: games, error } = await supabase

@@ -20,9 +20,9 @@ export type UserBadge = Badge & {
 	globalUnlockPercentage: number;
 };
 
-export const load: PageServerLoad = async ({ locals: { getSession } }) => {
-	const session = await getSession();
-	if (!session) {
+export const load: PageServerLoad = async ({ locals: { safeGetSession } }) => {
+	const session = await safeGetSession();
+	if (!session || !session.user) {
 		redirect(303, '/auth/login');
 	}
 
