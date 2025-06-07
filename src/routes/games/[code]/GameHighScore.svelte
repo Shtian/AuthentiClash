@@ -82,7 +82,8 @@
 				<tbody class="divide-y divide-gray-800">
 					{#each players.sort((a, b) => b.totalScore - a.totalScore) as player, i (player.profileId)}
 						<tr
-							class:bg-clash-800={player.profileId === currentPlayerId}
+							class:dark:bg-clash-900={player.profileId === currentPlayerId}
+							class:bg-clash-50={player.profileId === currentPlayerId}
 							animate:flip={{ duration: 300 }}
 						>
 							<td class="text-foreground py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap">

@@ -170,7 +170,7 @@
 								required
 								min="1"
 								max="99"
-								class="bg-foreground/5 focus:border-b-clash-500 text-foreground size-16 flex-1 rounded-t-md border-b-2 p-2.5 text-4xl tabular-nums transition-colors focus:outline-none"
+								class="ring-foreground/10 hover:bg-muted focus:border-b-clash-500 text-foreground size-16 flex-1 rounded-t-md border-b-2 p-2.5 text-4xl tabular-nums shadow-2xs ring-1 transition-colors focus:outline-none"
 							/>
 						</div>
 					</div>

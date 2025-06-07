@@ -28,14 +28,14 @@
 				<div class="bg-background relative flex size-6 flex-none items-center justify-center">
 					<div class="size-1.5 rounded-full bg-gray-700 ring-1 ring-gray-600"></div>
 				</div>
-				<p class="text-muted-foreground flex-auto py-0.5 text-xs/5">
+				<p class="flex-auto py-0.5 text-xs/5">
 					{#if log.text_ai}
 						{log.text_ai}
 					{:else}
 						{log.text}
 					{/if}
 				</p>
-				<time datetime={log.created_at} class="flex-none py-0.5 text-xs/5 text-gray-500"
+				<time datetime={log.created_at} class="text-muted-foreground flex-none py-0.5 text-xs/5"
 					>{dateFormatter.format(new Date(log.created_at))}</time
 				>
 			</li>
