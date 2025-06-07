@@ -187,13 +187,13 @@
 								{#if $page.url.pathname.includes(link.href)}
 									<a
 										href={link.href}
-										class="text-foreground block rounded-md bg-gray-900 px-3 py-2 text-base font-medium"
+										class="text-foreground dark:text-foreground rounded-md bg-zinc-100 px-3 py-2 text-sm font-medium dark:bg-zinc-700"
 										aria-current="page">{link.name}</a
 									>
 								{:else}
 									<a
 										href={link.href}
-										class="hover:text-foreground text-muted-foreground block rounded-md px-3 py-2 text-base font-medium hover:bg-gray-700"
+										class="hover:text-foreground dark:hover:text-foreground dark:text-muted-foreground rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-zinc-100 dark:hover:bg-gray-700"
 										>{link.name}</a
 									>
 								{/if}

@@ -57,7 +57,7 @@
 					>
 					<div class="mt-2">
 						<div
-							class="flex rounded-md bg-white/5 ring-1 ring-white/10 ring-inset focus-within:ring-2 focus-within:ring-emerald-500 focus-within:ring-inset"
+							class="ring-foreground/10 focus-within:ring-ring flex rounded-md bg-white/5 shadow-2xs ring-1 ring-inset focus-within:ring-2 focus-within:ring-inset"
 						>
 							<input
 								type="text"
@@ -65,7 +65,7 @@
 								id="username"
 								autocomplete="username"
 								value={form?.username ?? username}
-								class="text-foreground flex-1 border-0 bg-transparent py-1.5 pl-2 focus:ring-0 sm:text-sm sm:leading-6"
+								class="text-foreground flex-1 rounded-md border-0 bg-transparent py-1.5 pl-2 shadow-2xs ring-1 ring-inset focus:ring-0 focus:outline-0 sm:text-sm sm:leading-6"
 								minlength="3"
 								required
 							/>
@@ -76,10 +76,10 @@
 		</div>
 	</div>
 
-	<div class="mt-6 flex items-center gap-x-6">
+	<div class="mt-2 flex items-center gap-x-6">
 		<button
 			type="submit"
-			class="text-foreground rounded-md bg-emerald-500 px-3 py-2 text-sm font-semibold shadow-sm hover:bg-emerald-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500"
+			class="text-background bg-clash-500 hover:bg-clash-400 rounded-md px-3 py-2 text-sm font-semibold shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500"
 			disabled={isLoading}
 			>{#if isLoading}
 				<LucideLoader2 class="h-6 w-6 animate-spin" />
