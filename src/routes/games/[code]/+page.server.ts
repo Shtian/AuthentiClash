@@ -1,5 +1,5 @@
 import { error, fail, redirect } from '@sveltejs/kit';
-import type { PageServerLoad } from './$types';
+import type { Actions, PageServerLoad } from './$types';
 import { updateParticipationNicknameImage } from '$lib/supabase/participation';
 import { generateImage } from '$lib/ai/image-generator';
 import { PARTICIPANT_AVATARS_BUCKET, uploadParticipantImage } from '$lib/supabase/storage';
@@ -109,7 +109,7 @@ export const actions = {
 	},
 	generateParticipantImage: async ({ request, locals: { safeGetSession, supabase } }) => {
 		const session = await safeGetSession();
-		if (!session) {
+		if (!session || !session.user) {
 			return fail(401, {
 				message: 'No login session found. Please login and try again.'
 			});
@@ -158,4 +158,4 @@ export const actions = {
 			message: 'Your participation image has been generated!'
 		};
 	}
-};
+} satisfies Actions;

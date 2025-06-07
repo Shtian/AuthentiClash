@@ -1,4 +1,4 @@
-import { fail, redirect } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import {
 	getActiveGamesByUserId,
@@ -14,13 +14,13 @@ export const load: PageServerLoad = async ({ locals: { safeGetSession }, url }) 
 		redirect(303, '/auth/login');
 	}
 	const userId = session.user.id;
-	if (!userId) return fail(401, { message: 'User not found' });
+	if (!userId) return error(401, { message: 'User not found' });
 
 	const filter = url.searchParams.get('filter');
 	const gamesByFilter = await getGamesByFilter(filter, userId);
 
 	if (gamesByFilter.type === 'error') {
-		return fail(500, { message: gamesByFilter.error.message });
+		return error(500, { message: gamesByFilter.error.message });
 	}
 	const participatingGames = sortParticipationAndFindUserRank(gamesByFilter.data, userId);
 

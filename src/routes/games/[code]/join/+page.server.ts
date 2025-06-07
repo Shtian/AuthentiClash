@@ -1,5 +1,5 @@
 import { error, fail, redirect } from '@sveltejs/kit';
-import type { PageServerLoad } from './$types';
+import type { Actions, PageServerLoad } from './$types';
 import { getUsername } from '$lib/supabase/profiles';
 import { joinGame } from '$lib/supabase/participation';
 import { getAllClasses } from '$lib/supabase/classes';
@@ -38,7 +38,8 @@ export const load: PageServerLoad = async ({ params, locals: { safeGetSession } 
 		gameId: res.data.id,
 		gameName: res.data.name,
 		aiEnabled: res.data.ai_enabled,
-		classes
+		classes,
+		title: 'Join Game'
 	};
 };
 
@@ -103,4 +104,4 @@ export const actions = {
 			joinedGame: true
 		};
 	}
-};
+} satisfies Actions;

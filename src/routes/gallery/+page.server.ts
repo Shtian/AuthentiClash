@@ -1,4 +1,4 @@
-import { fail, redirect } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals: { safeGetSession, supabase } }) => {
@@ -8,17 +8,17 @@ export const load: PageServerLoad = async ({ locals: { safeGetSession, supabase 
 	}
 
 	const userId = session.user.id;
-	if (!userId) return fail(401, { message: 'User not found' });
+	if (!userId) return error(401, { message: 'User not found' });
 
-	const { data: games, error } = await supabase
+	const { data: games, error: gamesError } = await supabase
 		.from('games')
 		.select(
 			'id, creator, code, end_at, name, participation ( profile_id, score, total_score, nickname, nickname_image_url )'
 		)
 		.eq('participation.profile_id', session.user.id);
 
-	if (error) {
-		return fail(500, { message: error });
+	if (gamesError) {
+		return error(500, { message: gamesError.message });
 	}
 
 	return {

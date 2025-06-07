@@ -1,6 +1,7 @@
 import { fail, redirect } from '@sveltejs/kit';
+import type { Actions, PageServerLoad } from './$types';
 
-export const load = async ({ locals: { supabase, safeGetSession } }) => {
+export const load: PageServerLoad = async ({ locals: { supabase, safeGetSession } }) => {
 	const session = await safeGetSession();
 
 	if (!session || !session.user) {
@@ -13,7 +14,7 @@ export const load = async ({ locals: { supabase, safeGetSession } }) => {
 		.eq('id', session.user.id)
 		.single();
 
-	return { session, profile };
+	return { session: session.session, profile, title: 'Account' };
 };
 
 export const actions = {
@@ -22,9 +23,11 @@ export const actions = {
 		const username = formData.get('username') as string;
 
 		const session = await safeGetSession();
-
+		if (!session?.user?.id) {
+			return fail(401, { message: 'User not found' });
+		}
 		const { error } = await supabase.from('profiles').upsert({
-			id: session?.user.id,
+			id: session?.user?.id,
 			username,
 			updated_at: new Date()
 		});
@@ -43,4 +46,4 @@ export const actions = {
 			message: 'Your username has been updated!'
 		};
 	}
-};
+} satisfies Actions;

@@ -1,7 +1,7 @@
 import { kebabCase } from '$lib/utils/casing.js';
 import { generateUniqueSentence } from '$lib/utils/word-generator/generator.js';
 import { fail, redirect } from '@sveltejs/kit';
-import type { PageServerLoad } from '../$types';
+import type { Actions, PageServerLoad } from '../$types';
 import { beginGameLogWithAI } from '$lib/supabase/gameLog';
 
 export const load: PageServerLoad = async function get() {
@@ -22,7 +22,7 @@ export const actions = {
 
 		const session = await safeGetSession();
 
-		if (!session) {
+		if (!session || !session.user) {
 			return fail(401, {
 				name,
 				endDate,
@@ -61,8 +61,8 @@ export const actions = {
 		const [gameData] = data;
 		const { code, id } = gameData;
 
-		await beginGameLogWithAI(id, commentatorPersonality);
+		await beginGameLogWithAI(id, commentatorPersonality as string);
 
 		redirect(303, `/games/${code}/join`);
 	}
-};
+} satisfies Actions;
