@@ -1,11 +1,12 @@
 <script lang="ts">
-	import { fade, scale, slide } from 'svelte/transition';
+	import { fade, slide } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
 	import { page } from '$app/stores';
 	import type { Session } from '@supabase/supabase-js';
 	import { clickOutside } from '$lib/utils/clickOutside';
 	import logo from '$lib/assets/authenticlash_logo.svg';
 	import ThemeToggle from './ThemeToggle.svelte';
+	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
 	interface Props {
 		session?: Session | null;
 	}
@@ -20,7 +21,6 @@
 	];
 
 	let isMainMenuOpen = $state(false);
-	let isUserMenuOpen = $state(false);
 	const isLoggedIn = !!session?.user;
 
 	async function sha256(message: string) {
@@ -115,17 +115,9 @@
 					<!-- Profile dropdown -->
 					<ThemeToggle />
 					<div class="relative ml-3">
-						<div>
-							<button
-								type="button"
+						<DropdownMenu.Root>
+							<DropdownMenu.Trigger
 								class="relative flex rounded-full text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-none"
-								id="user-menu-button"
-								aria-expanded="false"
-								aria-haspopup="true"
-								onclick={(e) => {
-									isUserMenuOpen = !isUserMenuOpen;
-									e.stopPropagation();
-								}}
 							>
 								<span class="absolute -inset-1.5"></span>
 								<span class="sr-only">Open user menu</span>
@@ -157,46 +149,22 @@
 										{/await}
 									{/if}
 								</div>
-							</button>
-						</div>
-						{#if isUserMenuOpen}
-							<div
-								in:scale={{ duration: 200, easing: quintOut, start: 0.95, opacity: 0 }}
-								out:scale={{ duration: 150, easing: quintOut, start: 1, opacity: 0 }}
-								class="ring-opacity-5 absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black focus:outline-none"
-								role="menu"
-								aria-orientation="vertical"
-								aria-labelledby="user-menu-button"
-								tabindex="-1"
-								use:clickOutside={() => (isUserMenuOpen = false)}
-							>
+							</DropdownMenu.Trigger>
+							<DropdownMenu.Content align="end">
 								{#if isLoggedIn}
-									<a
-										href="/account"
-										class="block px-4 py-2 text-sm text-gray-700"
-										role="menuitem"
-										onclick={() => (isUserMenuOpen = false)}
-										tabindex="-1">Account</a
-									>
-									<a
-										data-sveltekit-reload
-										href="/auth/logout"
-										class="block px-4 py-2 text-sm text-gray-700"
-										role="menuitem"
-										onclick={() => (isUserMenuOpen = false)}
-										tabindex="-1">Sign out</a
-									>
+									<DropdownMenu.Item>
+										<a href="/account" class="w-full">Account</a>
+									</DropdownMenu.Item>
+									<DropdownMenu.Item>
+										<a data-sveltekit-reload href="/auth/logout" class="w-full">Sign out</a>
+									</DropdownMenu.Item>
 								{:else}
-									<a
-										href="/auth/login"
-										class="block px-4 py-2 text-sm text-gray-700"
-										role="menuitem"
-										onclick={() => (isUserMenuOpen = false)}
-										tabindex="-1">Login</a
-									>
+									<DropdownMenu.Item>
+										<a href="/auth/login" class="w-full">Login</a>
+									</DropdownMenu.Item>
 								{/if}
-							</div>
-						{/if}
+							</DropdownMenu.Content>
+						</DropdownMenu.Root>
 					</div>
 				</div>
 			</div>
