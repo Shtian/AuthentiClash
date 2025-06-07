@@ -16,6 +16,12 @@ export async function generateImage(username: string): Promise<string | undefine
 			response_format: 'url',
 			prompt
 		});
+
+		if (!image.data) {
+			console.error('No image data returned from OpenAI');
+			return undefined;
+		}
+
 		console.debug('Revised image prompt: ', image.data[0]?.revised_prompt);
 		console.debug('Image URL: ', image.data[0]?.url);
 		return image.data[0].url;
