@@ -303,7 +303,7 @@
 			<p class="text-foreground">Final scores:</p>
 		{/if}
 		<GameHighScore {players} currentPlayerId={data.session?.user.id} aiEnabled={data.aiEnabled} />
-		<h3 class="mt-12 mb-6 text-lg">Events:</h3>
+		<h2 class="mt-6 text-center text-2xl font-bold">📣 Events</h2>
 		<GameLogs logs={data.logs} />
 	</div>
 </main>
