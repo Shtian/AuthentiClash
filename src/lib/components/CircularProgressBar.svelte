@@ -52,7 +52,6 @@
 			y="50"
 			font-size="18"
 			text-anchor="middle"
-			fill="white"
 			alignment-baseline="middle"
 			>{#if textType === 'count'}
 				{currentNum.toFixed(0)} / {total}
