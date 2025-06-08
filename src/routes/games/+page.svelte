@@ -1,24 +1,29 @@
 <script lang="ts">
 	import GameList from './GameList.svelte';
-	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
+	import Tabs from '$lib/components/Tabs.svelte';
 
 	const { data } = $props();
 
 	const games = $derived(data.participatingGames || []);
 
-	function tabSelected(e: Event) {
-		const eventTarget: HTMLSelectElement = e.target as HTMLSelectElement;
-		const tabname = eventTarget.value;
-		const url = new URL($page.url);
-		const currentFilter = url.searchParams.get('filter');
-		if (currentFilter === null && tabname === '') return;
-		if (currentFilter !== null && tabname === '') goto('/games');
-		if (currentFilter !== tabname) {
-			url.searchParams.set('filter', tabname);
-			goto(url);
+	const tabs = $derived([
+		{
+			name: 'Active',
+			url: '/games',
+			isActive: page.url.searchParams.get('filter') === null
+		},
+		{
+			name: 'Ended',
+			url: '/games?filter=ended',
+			isActive: page.url.searchParams.get('filter') === 'ended'
+		},
+		{
+			name: 'Created',
+			url: '/games?filter=created',
+			isActive: page.url.searchParams.get('filter') === 'created'
 		}
-	}
+	]);
 </script>
 
 <main>
@@ -32,57 +37,17 @@
 					>New game</a
 				>
 			</div>
-			<div class="sm:hidden">
-				<label for="tabs" class="sr-only">Select a tab</label>
-				<select
-					id="tabs"
-					name="tabs"
-					class="text-foreground block w-full rounded-md border-none bg-white/5 py-2 pr-10 pl-3 text-base shadow-sm ring-1 ring-white/10 ring-inset focus:ring-2 focus:ring-indigo-500 focus:ring-inset sm:text-sm"
-					onchange={tabSelected}
-				>
-					<option selected={$page.url.searchParams.get('filter') === null} value="">Active</option>
-					<option selected={$page.url.searchParams.get('filter') === 'ended'} value="ended"
-						>Ended</option
-					>
-					<option selected={$page.url.searchParams.get('filter') === 'created'} value="created"
-						>Created</option
-					>
-				</select>
-			</div>
-			<div class="hidden sm:block">
-				<nav class="border-foreground/10 flex border-b py-4">
-					<ul
-						role="list"
-						class="flex min-w-full flex-none gap-x-6 px-2 text-sm leading-6 font-semibold"
-					>
-						<a
-							href="/games"
-							class={`transition-colors ${$page.url.searchParams.get('filter') === null ? 'text-clash-400 dark:text-clash-200' : 'hover:text-clash-400'}`}
-							>Active</a
-						>
-						<a
-							href="/games?filter=ended"
-							class={`transition-colors ${$page.url.searchParams.get('filter') === 'ended' ? 'text-clash-400 dark:text-clash-200' : 'hover:text-clash-400'}`}
-							data-sveltekit-preload-data="hover">Ended</a
-						>
-						<a
-							href="/games?filter=created"
-							class={`transition-colors ${$page.url.searchParams.get('filter') === 'created' ? 'text-clash-400 dark:text-clash-200' : 'hover:text-clash-400'}`}
-							data-sveltekit-preload-data="hover">Created</a
-						>
-					</ul>
-				</nav>
-			</div>
+			<Tabs {tabs} />
 		</div>
 		{#if games.length}
 			<GameList gamesWithParticipation={games} />
 		{:else}
 			<p class="text-foreground mt-6">
-				{#if $page.url.searchParams.get('filter') === null}
+				{#if page.url.searchParams.get('filter') === null}
 					No active games
-				{:else if $page.url.searchParams.get('filter') === 'ended'}
+				{:else if page.url.searchParams.get('filter') === 'ended'}
 					No ended games
-				{:else if $page.url.searchParams.get('filter') === 'created'}
+				{:else if page.url.searchParams.get('filter') === 'created'}
 					You have not created any games
 				{/if}
 			</p>
