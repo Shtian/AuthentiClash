@@ -75,14 +75,6 @@
 	},
 	"packageManager": "pnpm@9.12.0+sha512.4abf725084d7bcbafbd728bfc7bee61f2f791f977fd87542b3579dcb23504d170d46337945e4c66485cd12d588a0c0e570ed9c477e7ccdd8507cf05f3f92eaca",
 	"pnpm": {
-		"overrides": {
-			"svelte@<4.2.19": ">=4.2.19",
-			"cookie@<0.7.0": ">=0.7.0",
-			"cross-spawn@>=7.0.0 <7.0.5": ">=7.0.5",
-			"@babel/runtime@<7.26.10": ">=7.26.10",
-			"@babel/helpers@<7.26.10": ">=7.26.10",
-			"@supabase/auth-js@<2.69.1": ">=2.69.1"
-		},
 		"onlyBuiltDependencies": [
 			"esbuild"
 		]
