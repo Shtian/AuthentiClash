@@ -307,38 +307,3 @@
 		<GameLogs logs={data.logs} />
 	</div>
 </main>
-
-<style lang="postcss">
-	@property --a {
-		syntax: '<angle>';
-		initial-value: 0deg;
-		inherits: false;
-	}
-
-	.ability-button.active::before {
-		content: '';
-		position: absolute;
-		inset: -2px;
-		border: solid 4px;
-		border-image: conic-gradient(
-				from var(--a),
-				transparent,
-				transparent,
-				rgb(252 211 77),
-				transparent,
-				transparent,
-				rgb(252 211 77),
-				transparent,
-				transparent
-			)
-			1;
-		filter: blur(1px);
-		animation: gradientRotation 4s linear infinite;
-	}
-
-	@keyframes gradientRotation {
-		to {
-			--a: 1turn;
-		}
-	}
-</style>
