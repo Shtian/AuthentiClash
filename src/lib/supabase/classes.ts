@@ -1,12 +1,13 @@
 import { supabaseServerClient, type SupabaseResponse } from './supabaseClient';
 
-type Class = {
+export type Class = {
 	id: number;
 	name: string;
 	description: string;
 	abilities: Ability[];
 };
-type Ability = {
+
+export type Ability = {
 	id: number;
 	name: string;
 	description: string;
