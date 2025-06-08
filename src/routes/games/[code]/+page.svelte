@@ -122,12 +122,14 @@
 <header>
 	<div class="mx-auto flex max-w-7xl flex-col gap-y-2 sm:px-6 lg:px-8">
 		<div class="flex flex-row gap-2">
-			<h1 class="tracking-tigh text-foreground text-3xl leading-tight font-bold">
+			<h1
+				class="to-clash-600 tracking-tigh bg-linear-to-br from-purple-600 bg-clip-text text-5xl leading-tight font-bold text-transparent"
+			>
 				{data.gameName}
 			</h1>
 			<button
 				type="submit"
-				class="hover:text-clash-400 focus-visible:outline-clash-500 text-foreground relative inline-flex items-center gap-x-2 self-center rounded-md bg-transparent px-2 py-2 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
+				class="hover:text-foreground text-muted-foreground focus-visible:outline-clash-500 relative inline-flex items-center gap-x-2 self-center rounded-md bg-transparent px-2 py-2 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
 				onclick={copyUrl}
 			>
 				<Copy />
@@ -274,7 +276,7 @@
 							<Button
 								type="submit"
 								size="lg"
-								class="bg-clash-600 hover:bg-clash-200 dark:bg-clash-500 dark:hover:bg-clash-400 text-foreground w-full"
+								class="bg-clash-500 hover:bg-clash-400 dark:bg-clash-500 dark:hover:bg-clash-400 w-full text-white"
 								disabled={isLoading}
 							>
 								{#if isLoading}
