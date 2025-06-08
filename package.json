@@ -22,14 +22,14 @@
 	"devDependencies": {
 		"@eslint/js": "^9.17.0",
 		"@internationalized/date": "^3.8.2",
-		"@lucide/svelte": "^0.511.0",
+		"@lucide/svelte": "^0.513.0",
 		"@playwright/test": "^1.47.2",
 		"@stylistic/eslint-plugin-js": "^2.12.1",
 		"@sveltejs/adapter-vercel": "^5.7.2",
 		"@sveltejs/kit": "^2.21.2",
 		"@sveltejs/vite-plugin-svelte": "^5.1.0",
 		"@tailwindcss/postcss": "^4.1.8",
-		"@tailwindcss/vite": "^4.0.0",
+		"@tailwindcss/vite": "^4.1.8",
 		"@types/d3": "^7.4.3",
 		"@typescript-eslint/eslint-plugin": "^8.18.2",
 		"@typescript-eslint/parser": "^8.18.2",
@@ -40,16 +40,17 @@
 		"eslint-plugin-n": "^17.15.1",
 		"eslint-plugin-svelte": "^3.9.1",
 		"globals": "^15.14.0",
-		"lucide-svelte": "^0.359.0",
+		"lucide-svelte": "^0.513.0",
 		"postcss": "^8.4.47",
 		"prettier": "^3.4.2",
 		"prettier-plugin-svelte": "^3.4.0",
 		"prettier-plugin-tailwindcss": "^0.6.11",
 		"svelte": "^5.33.14",
 		"svelte-check": "^4.2.1",
+		"svelte-eslint-parser": "^1.2.0",
 		"tailwind-merge": "^3.3.0",
 		"tailwind-variants": "^1.0.0",
-		"tailwindcss": "^4.0.0",
+		"tailwindcss": "^4.1.8",
 		"tailwindcss-animate": "^1.0.7",
 		"tslib": "^2.7.0",
 		"tw-animate-css": "^1.3.4",
@@ -61,26 +62,22 @@
 	"dependencies": {
 		"@changesets/changelog-github": "^0.5.0",
 		"@changesets/cli": "^2.27.11",
-		"@sentry/sveltekit": "^8.47.0",
+		"@sentry/sveltekit": "^9.27.0",
 		"@supabase/ssr": "^0.6.1",
-		"@supabase/supabase-js": "^2.45.4",
+		"@supabase/supabase-js": "^2.50.0",
 		"@tailwindcss/forms": "^0.5.9",
 		"d3": "^7.9.0",
+		"mode-watcher": "0.5.1",
 		"openai": "^5.0.1",
 		"sharp": "^0.33.5"
 	},
 	"engines": {
 		"node": ">=20"
 	},
-	"packageManager": "pnpm@9.12.0+sha512.4abf725084d7bcbafbd728bfc7bee61f2f791f977fd87542b3579dcb23504d170d46337945e4c66485cd12d588a0c0e570ed9c477e7ccdd8507cf05f3f92eaca",
 	"pnpm": {
-		"overrides": {
-			"svelte@<4.2.19": ">=4.2.19",
-			"cookie@<0.7.0": ">=0.7.0",
-			"cross-spawn@>=7.0.0 <7.0.5": ">=7.0.5"
-		},
 		"onlyBuiltDependencies": [
 			"esbuild"
 		]
-	}
+	},
+	"packageManager": "pnpm@10.11.1+sha512.e519b9f7639869dc8d5c3c5dfef73b3f091094b0a006d7317353c72b124e80e1afd429732e28705ad6bfa1ee879c1fce46c128ccebd3192101f43dd67c667912"
 }

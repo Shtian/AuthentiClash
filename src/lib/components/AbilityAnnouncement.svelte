@@ -5,7 +5,7 @@
 </script>
 
 <Collapsible.Root class="mb-4 space-y-2 rounded-md border p-4">
-	<p class="text-sm text-gray-400"><time datetime="2024-12-09">2024-12-09</time></p>
+	<p class="text-muted-foreground text-sm"><time datetime="2024-12-09">2024-12-09</time></p>
 	<h4 class="inline-flex items-center gap-x-2 font-semibold">
 		<Info class=" size-4" />New Feature: Classes and Abilities!
 	</h4>

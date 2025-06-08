@@ -55,19 +55,21 @@
 
 <form method="POST" action="?/create" use:enhance={handleSubmit}>
 	<div class="space-y-12">
-		<div class="border-b border-white/10 pb-12">
-			<h2 class="text-base leading-7 font-semibold text-white">Create an AuthentiClash game! ⚔️</h2>
-			<p class="mt-1 text-sm leading-6 text-gray-400">
+		<div class="border-foreground/10 border-b pb-12">
+			<h2 class="text-foreground text-base leading-7 font-semibold">
+				Create an AuthentiClash game! ⚔️
+			</h2>
+			<p class="text-muted-foreground mt-1 text-sm leading-6">
 				You will get a shareable code after the game has been created.
 			</p>
 			<div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
 				<div class="col-span-4 sm:col-span-6">
-					<label for="game-name" class="block text-sm leading-6 font-medium text-white"
+					<label for="game-name" class="text-foreground block text-sm leading-6 font-medium"
 						>Game name</label
 					>
 					<div class="mt-2">
 						<div
-							class="focus-within:ring-clash-500 flex rounded-md bg-white/5 ring-1 ring-white/10 ring-inset focus-within:ring-2 focus-within:ring-inset"
+							class="hover:bg-muted ring-foreground/10 focus-within:ring-ring flex rounded-md bg-white/5 shadow-2xs ring-1 ring-inset focus-within:ring-2"
 						>
 							<input
 								type="text"
@@ -77,20 +79,22 @@
 								value={name}
 								required
 								minlength="3"
-								class="flex-1 border-0 bg-transparent py-1.5 pl-2 text-white focus:ring-0 sm:text-sm sm:leading-6"
+								class="text-foreground flex-1 border-0 bg-transparent py-1.5 pl-2 focus:outline-0 sm:text-sm sm:leading-6"
 							/>
 						</div>
 					</div>
 				</div>
 
 				<div class="col-span-6">
-					<label for="2fa-cooldown" class="block text-sm leading-6 font-medium text-white"
+					<label for="2fa-cooldown" class="text-foreground block text-sm leading-6 font-medium"
 						>2FA Entry Cooldown (0-24h)</label
 					>
-					<div class="text-xs text-gray-400">Limit how often players can enter 2FA values</div>
+					<div class="text-muted-foreground text-xs">
+						Limit how often players can enter 2FA values
+					</div>
 					<div class="mt-2 max-w-12">
 						<div
-							class="focus-within:ring-clash-500 flex rounded-md bg-white/5 ring-1 ring-white/10 ring-inset focus-within:ring-2 focus-within:ring-inset"
+							class="focus-within:ring-ring ring-foreground/10 hover:bg-muted flex rounded-md bg-white/5 shadow-2xs ring-1 ring-inset focus-within:ring-2 focus-within:ring-inset"
 						>
 							<input
 								type="number"
@@ -100,13 +104,13 @@
 								required
 								min="0"
 								max="24"
-								class="flex-1 border-0 bg-transparent py-1.5 pl-2 text-white sm:text-sm sm:leading-6"
+								class="text-foreground flex-1 border-0 bg-transparent py-1.5 pl-2 focus:outline-0 sm:text-sm sm:leading-6"
 							/>
 						</div>
 					</div>
 				</div>
 				<div class="col-span-4 sm:col-span-3">
-					<label for="end-date" class="block text-sm leading-6 font-medium text-white"
+					<label for="end-date" class="text-foreground block text-sm leading-6 font-medium"
 						>End date</label
 					>
 					<div class="w-fu mt-2">
@@ -136,12 +140,12 @@
 					</div>
 				</div>
 				<div class="col-span-4 sm:col-span-3">
-					<label for="game-name" class="block text-sm leading-6 font-medium text-white"
+					<label for="game-name" class="text-foreground block text-sm leading-6 font-medium"
 						>End time (UTC)</label
 					>
 					<div class="mt-2">
 						<div
-							class="focus-within:ring-clash-500 flex rounded-md bg-white/5 ring-1 ring-white/10 ring-inset focus-within:ring-2 focus-within:ring-inset"
+							class="focus-within:ring-ring ring-foreground/10 hover:bg-muted flex rounded-md bg-white/5 shadow-2xs ring-1 ring-inset focus-within:ring-[3px]"
 						>
 							<input
 								type="time"
@@ -149,7 +153,7 @@
 								id="end-time"
 								value={endTime}
 								required
-								class="flex-1 border-0 bg-transparent py-1.5 pl-2 text-white focus:ring-0 sm:text-sm sm:leading-6"
+								class="text-foreground flex-1 border-0 bg-transparent py-1.5 pl-2 focus:outline-0 sm:text-sm sm:leading-6"
 							/>
 						</div>
 					</div>
@@ -157,10 +161,10 @@
 				<div class="col-span-6">
 					<label
 						for="commentator-personality"
-						class="block text-sm leading-6 font-medium text-white"
+						class="text-foreground block text-sm leading-6 font-medium"
 						>AI commentator personality prompt</label
 					>
-					<p class="text-sm text-gray-400">
+					<p class="text-muted-foreground text-sm">
 						Use a prompt that describes the personality of the commentator, or choose a pre-defined
 						personality below.
 					</p>
@@ -171,7 +175,7 @@
 							bind:value={commentatorPersonality}
 							maxlength={512}
 							required
-							class="flex-1 resize-none border-0 bg-white/5 px-2 py-1.5 text-white focus:ring-0 sm:text-sm sm:leading-6"
+							class="text-foreground ring-foreground/10 hover:bg-muted flex-1 resize-none border-0 px-2 py-1.5 shadow-2xs ring-1 ring-inset focus:ring-[3px] focus:outline-0 sm:text-sm sm:leading-6"
 						/>
 					</div>
 					<div class="mt-2 flex flex-wrap gap-2">
@@ -179,7 +183,7 @@
 							<Button
 								type="button"
 								variant="outline"
-								class="h-auto px-2 py-1 text-xs text-gray-300"
+								class="text-muted-foreground h-auto px-2 py-1 text-xs"
 								onclick={() => (commentatorPersonality = personality.prompt)}
 							>
 								{personality.name}
@@ -194,7 +198,7 @@
 	<div class="mt-6 flex items-center gap-x-6">
 		<button
 			type="submit"
-			class="bg-clash-500 hover:bg-clash-400 focus-visible:outline-clash-500 rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+			class="bg-clash-400 hover:bg-clash-300 focus-visible:outline-clash-500 text-background rounded-md px-3 py-2 text-sm font-semibold shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2"
 			disabled={isLoading}>{isLoading ? 'Creating...' : 'Create'}</button
 		>
 	</div>

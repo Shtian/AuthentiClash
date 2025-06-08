@@ -1,11 +1,12 @@
 <script lang="ts">
-	import { fade, scale, slide } from 'svelte/transition';
+	import { fade, slide } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
 	import { page } from '$app/stores';
 	import type { Session } from '@supabase/supabase-js';
 	import { clickOutside } from '$lib/utils/clickOutside';
 	import logo from '$lib/assets/authenticlash_logo.svg';
-
+	import ThemeToggle from './ThemeToggle.svelte';
+	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
 	interface Props {
 		session?: Session | null;
 	}
@@ -20,7 +21,6 @@
 	];
 
 	let isMainMenuOpen = $state(false);
-	let isUserMenuOpen = $state(false);
 	const isLoggedIn = !!session?.user;
 
 	async function sha256(message: string) {
@@ -36,14 +36,14 @@
 </script>
 
 <header>
-	<nav class="">
+	<nav class="border-foreground/10 border-b">
 		<div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
 			<div class="relative flex h-16 items-center justify-between">
 				<div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
 					<!-- Mobile menu button-->
 					<button
 						type="button"
-						class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:ring-2 focus:ring-white focus:outline-none focus:ring-inset"
+						class="hover:text-foreground text-muted-foreground relative inline-flex items-center justify-center rounded-md p-2 hover:bg-gray-700 focus:ring-2 focus:ring-white focus:outline-none focus:ring-inset"
 						aria-controls="mobile-menu"
 						aria-expanded="false"
 						onclick={(e) => {
@@ -85,7 +85,7 @@
 				</div>
 				<div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
 					<a href="/" class="flex shrink-0 items-center">
-						<img class="h-8 w-auto" src={logo} alt="AuthentiClash logo" />
+						<img class="h-8 w-auto invert dark:invert-0" src={logo} alt="AuthentiClash logo" />
 					</a>
 					<div class="hidden sm:ml-6 sm:block">
 						{#if isLoggedIn}
@@ -94,13 +94,13 @@
 									{#if $page.url.pathname.includes(link.href)}
 										<a
 											href={link.href}
-											class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
+											class="text-foreground dark:text-foreground rounded-md bg-zinc-100 px-3 py-2 text-sm font-medium dark:bg-zinc-700"
 											aria-current="page">{link.name}</a
 										>
 									{:else}
 										<a
 											href={link.href}
-											class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+											class="hover:text-foreground dark:hover:text-foreground dark:text-muted-foreground rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-zinc-100 dark:hover:bg-gray-700"
 											>{link.name}</a
 										>
 									{/if}
@@ -113,18 +113,11 @@
 					class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
 				>
 					<!-- Profile dropdown -->
+					<ThemeToggle />
 					<div class="relative ml-3">
-						<div>
-							<button
-								type="button"
+						<DropdownMenu.Root>
+							<DropdownMenu.Trigger
 								class="relative flex rounded-full text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-none"
-								id="user-menu-button"
-								aria-expanded="false"
-								aria-haspopup="true"
-								onclick={(e) => {
-									isUserMenuOpen = !isUserMenuOpen;
-									e.stopPropagation();
-								}}
 							>
 								<span class="absolute -inset-1.5"></span>
 								<span class="sr-only">Open user menu</span>
@@ -135,7 +128,7 @@
 										viewBox="0 0 24 24"
 										stroke-width="1.5"
 										stroke="currentColor"
-										class="absolute inset-0 h-8 w-8 text-gray-400"
+										class="text-muted-foreground absolute inset-0 h-8 w-8"
 									>
 										<path
 											stroke-linecap="round"
@@ -156,46 +149,22 @@
 										{/await}
 									{/if}
 								</div>
-							</button>
-						</div>
-						{#if isUserMenuOpen}
-							<div
-								in:scale={{ duration: 200, easing: quintOut, start: 0.95, opacity: 0 }}
-								out:scale={{ duration: 150, easing: quintOut, start: 1, opacity: 0 }}
-								class="ring-opacity-5 absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black focus:outline-none"
-								role="menu"
-								aria-orientation="vertical"
-								aria-labelledby="user-menu-button"
-								tabindex="-1"
-								use:clickOutside={() => (isUserMenuOpen = false)}
-							>
+							</DropdownMenu.Trigger>
+							<DropdownMenu.Content align="end">
 								{#if isLoggedIn}
-									<a
-										href="/account"
-										class="block px-4 py-2 text-sm text-gray-700"
-										role="menuitem"
-										onclick={() => (isUserMenuOpen = false)}
-										tabindex="-1">Account</a
-									>
-									<a
-										data-sveltekit-reload
-										href="/auth/logout"
-										class="block px-4 py-2 text-sm text-gray-700"
-										role="menuitem"
-										onclick={() => (isUserMenuOpen = false)}
-										tabindex="-1">Sign out</a
-									>
+									<DropdownMenu.Item>
+										<a href="/account" class="w-full">Account</a>
+									</DropdownMenu.Item>
+									<DropdownMenu.Item>
+										<a data-sveltekit-reload href="/auth/logout" class="w-full">Sign out</a>
+									</DropdownMenu.Item>
 								{:else}
-									<a
-										href="/auth/login"
-										class="block px-4 py-2 text-sm text-gray-700"
-										role="menuitem"
-										onclick={() => (isUserMenuOpen = false)}
-										tabindex="-1">Login</a
-									>
+									<DropdownMenu.Item>
+										<a href="/auth/login" class="w-full">Login</a>
+									</DropdownMenu.Item>
 								{/if}
-							</div>
-						{/if}
+							</DropdownMenu.Content>
+						</DropdownMenu.Root>
 					</div>
 				</div>
 			</div>
@@ -218,13 +187,13 @@
 								{#if $page.url.pathname.includes(link.href)}
 									<a
 										href={link.href}
-										class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white"
+										class="text-foreground dark:text-foreground rounded-md bg-zinc-100 px-3 py-2 text-sm font-medium dark:bg-zinc-700"
 										aria-current="page">{link.name}</a
 									>
 								{:else}
 									<a
 										href={link.href}
-										class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+										class="hover:text-foreground dark:hover:text-foreground dark:text-muted-foreground rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-zinc-100 dark:hover:bg-gray-700"
 										>{link.name}</a
 									>
 								{/if}

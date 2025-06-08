@@ -115,19 +115,21 @@
 <header>
 	<div class="mx-auto flex max-w-7xl flex-col gap-y-2 sm:px-6 lg:px-8">
 		<div class="flex flex-row gap-2">
-			<h1 class="tracking-tigh text-3xl leading-tight font-bold text-white">{data.gameName}</h1>
+			<h1 class="tracking-tigh text-foreground text-3xl leading-tight font-bold">
+				{data.gameName}
+			</h1>
 			<button
 				type="submit"
-				class="hover:text-clash-400 focus-visible:outline-clash-500 relative inline-flex items-center gap-x-2 self-center rounded-md bg-transparent px-2 py-2 text-sm font-semibold text-white transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
+				class="hover:text-clash-400 focus-visible:outline-clash-500 text-foreground relative inline-flex items-center gap-x-2 self-center rounded-md bg-transparent px-2 py-2 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
 				onclick={copyUrl}
 			>
 				<Copy />
 				{#if urlIsRecentlyCopied}
-					<span class="absolute -bottom-3.5 text-sm text-white" in:fade out:fade>Copied!</span>
+					<span class="text-foreground absolute -bottom-3.5 text-sm" in:fade out:fade>Copied!</span>
 				{/if}
 			</button>
 		</div>
-		<p class="text-sm text-pretty text-gray-300 tabular-nums" title={data.endsAt}>
+		<p class="text-muted-foreground text-sm text-pretty tabular-nums" title={data.endsAt}>
 			Ends in: {timeLeftText}
 		</p>
 		{#if data.aiEnabled}
@@ -156,8 +158,10 @@
 
 				<div class="mt-4 grid grid-cols-12 gap-x-6 gap-y-8">
 					<div class="col-span-12 sm:col-span-4">
-						<label for="2fa-score" class="block leading-6 font-medium text-white">2FA value</label>
-						<p class="text-sm text-gray-400">Between 1 and 99</p>
+						<label for="2fa-score" class="text-foreground block leading-6 font-medium"
+							>2FA value</label
+						>
+						<p class="text-muted-foreground text-sm">Between 1 and 99</p>
 						<div class="mt-4">
 							<input
 								type="number"
@@ -166,14 +170,14 @@
 								required
 								min="1"
 								max="99"
-								class="bg-foreground/5 focus:border-b-clash-500 size-16 flex-1 rounded-t-md border-b-2 p-2.5 text-4xl text-white tabular-nums transition-colors focus:outline-none"
+								class="ring-foreground/10 hover:bg-muted focus:border-b-clash-500 text-foreground size-16 flex-1 rounded-t-md border-b-2 p-2.5 text-4xl tabular-nums shadow-2xs ring-1 transition-colors focus:outline-none"
 							/>
 						</div>
 					</div>
 					{#if data.class}
 						<div class="col-span-12 sm:col-span-8">
-							<p class="leading-6 text-white">Use class ability</p>
-							<p class="text-sm text-gray-400">
+							<p class="text-foreground leading-6">Use class ability</p>
+							<p class="text-muted-foreground text-sm">
 								Active abilities can only be used <strong>once</strong> per game
 							</p>
 							{#each data.class.abilities as ability (ability.id)}
@@ -210,7 +214,7 @@
 									{/if}
 									<div class="flex flex-col justify-center">
 										<p>{ability.name}</p>
-										<p class=" text-sm text-gray-400">{ability.description}</p>
+										<p class=" text-muted-foreground text-sm">{ability.description}</p>
 									</div>
 								</div>
 							{/each}
@@ -236,7 +240,7 @@
 				</div>
 			</form>
 		{:else}
-			<p class="text-white">Final scores:</p>
+			<p class="text-foreground">Final scores:</p>
 		{/if}
 		<GameHighScore {players} currentPlayerId={data.session?.user.id} aiEnabled={data.aiEnabled} />
 		<h3 class="mt-12 mb-6 text-lg">Events:</h3>

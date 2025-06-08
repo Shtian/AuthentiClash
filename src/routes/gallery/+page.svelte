@@ -21,8 +21,10 @@
 <div class="lg:py-10">
 	<div class="mx-auto max-w-7xl px-6 lg:px-8">
 		<div class="mx-auto max-w-2xl lg:mx-0">
-			<h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">Gallery of Legends</h2>
-			<p class="mt-6 text-lg leading-8 text-white">
+			<h2 class="text-foreground text-3xl font-bold tracking-tight sm:text-4xl">
+				Gallery of Legends
+			</h2>
+			<p class="text-foreground mt-6 text-lg leading-8">
 				Your previous achievements are eternalized in the Gallery of Legends. Gaze upon your scores
 				and marvel at your own greatness.
 			</p>
@@ -45,14 +47,14 @@
 						{:else}
 							<CircleUser class="mx-auto h-24 w-24 text-gray-600" />
 						{/if}
-						<h3 class="mt-6 text-base leading-7 font-semibold tracking-tight text-gray-300">
+						<h3 class="text-foreground mt-6 text-base leading-7 font-semibold tracking-tight">
 							<a href={`/games/${game.code}`}
 								>{game.participation.nickname.replace(/\(.*\)/, '').trim()}</a
 							>
 						</h3>
 						<Popover.Root>
 							<Popover.Trigger
-								><p class="text-sm leading-6 text-gray-300">
+								><p class="text-muted-foreground text-sm leading-6">
 									Score: {game.participation.total_score}
 								</p>
 							</Popover.Trigger>
@@ -65,14 +67,16 @@
 			</ul>
 		{:else}
 			<div class="mx-auto max-w-7xl py-6 text-center sm:px-6 lg:px-8 lg:py-10">
-				<RocketIcon class="mx-auto h-12 w-12 text-gray-400" />
-				<h3 class="mt-2 text-sm font-semibold text-white">No past games found</h3>
-				<p class="mt-1 text-sm text-white">Get started by creating a new AuthentiClash session.</p>
+				<RocketIcon class="text-muted-foreground mx-auto h-12 w-12" />
+				<h3 class="text-foreground mt-2 text-sm font-semibold">No past games found</h3>
+				<p class="text-foreground mt-1 text-sm">
+					Get started by creating a new AuthentiClash session.
+				</p>
 				<div class="mt-6">
 					<a
 						href="/games/create"
 						type="button"
-						class="bg-clash-600 hover:bg-clash-500 focus-visible:outline-clash-600 inline-flex items-center rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+						class="bg-clash-600 hover:bg-clash-500 focus-visible:outline-clash-600 text-foreground inline-flex items-center rounded-md px-3 py-2 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
 					>
 						<svg
 							class="mr-1.5 -ml-0.5 h-5 w-5"

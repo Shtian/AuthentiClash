@@ -39,7 +39,7 @@
 						</div>
 						<div class="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
 							<div>
-								<p class="text-sm text-white">
+								<p class="text-foreground text-sm">
 									{activity.player.username} unlocked
 									<img
 										src={activity.badge.image}
@@ -69,7 +69,7 @@
 		aria-label="Pagination"
 	>
 		<div class="hidden sm:block">
-			<p class="text-sm text-white">
+			<p class="text-foreground text-sm">
 				Showing
 				<span class="font-medium">{startIndex}</span>
 				to
@@ -83,13 +83,13 @@
 			<a
 				class:pointer-events-none={currentPage === 0}
 				href="/badges/activity?limit={pageSize}&skip={Math.max((currentPage - 1) * pageSize, 0)}"
-				class="none bg-clash-500 hover:bg-clash-400 relative inline-flex items-center rounded-md px-3 py-2 text-sm font-semibold text-white focus-visible:outline-offset-0"
+				class="none bg-clash-500 hover:bg-clash-400 text-foreground relative inline-flex items-center rounded-md px-3 py-2 text-sm font-semibold focus-visible:outline-offset-0"
 				>Previous</a
 			>
 			<a
 				class:pointer-events-none={currentPage === totalPages - 1}
 				href="/badges/activity?limit={pageSize}&skip={(currentPage + 1) * pageSize}"
-				class="bg-clash-500 hover:bg-clash-400 relative ml-3 inline-flex items-center rounded-md px-3 py-2 text-sm font-semibold text-white focus-visible:outline-offset-0"
+				class="bg-clash-500 hover:bg-clash-400 text-foreground relative ml-3 inline-flex items-center rounded-md px-3 py-2 text-sm font-semibold focus-visible:outline-offset-0"
 				>Next</a
 			>
 		</div>

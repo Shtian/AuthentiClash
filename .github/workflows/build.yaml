@@ -14,16 +14,30 @@ env:
   PUBLIC_ENV: ci
 jobs:
   build:
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v3
         with:
-          version: 8
+          version: 10
       - uses: actions/setup-node@v4
         with:
-          node-version: 20.x
+          node-version: 22.x
           cache: 'pnpm'
 
-      - run: pnpm i
-      - run: pnpm run lint && pnpm run build
+      - name: Install dependencies
+        run: pnpm i --frozen-lockfile
+
+      - name: Generate TypeScript configuration
+        run: pnpm svelte-kit sync
+
+      - name: Run linting
+        run: pnpm run lint
+
+      - name: Type check
+        run: pnpm check
+
+      - name: Build
+        run: pnpm run build

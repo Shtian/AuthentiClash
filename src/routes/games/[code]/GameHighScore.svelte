@@ -63,29 +63,34 @@
 			<table class="min-w-full divide-y divide-gray-700">
 				<thead>
 					<tr>
-						<th scope="col" class="py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-white">
+						<th
+							scope="col"
+							class="text-foreground py-3.5 pr-3 pl-4 text-left text-sm font-semibold"
+						>
 							Rank
 						</th>
-						<th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-white">
+						<th scope="col" class="text-foreground px-3 py-3.5 text-left text-sm font-semibold">
 							Name
 						</th>
-						<th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-white">
+						<th scope="col" class="text-foreground px-3 py-3.5 text-left text-sm font-semibold">
 							Score
 						</th>
-						<th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-white"> </th>
+						<th scope="col" class="text-foreground px-3 py-3.5 text-left text-sm font-semibold">
+						</th>
 					</tr>
 				</thead>
 				<tbody class="divide-y divide-gray-800">
 					{#each players.sort((a, b) => b.totalScore - a.totalScore) as player, i (player.profileId)}
 						<tr
-							class:bg-clash-800={player.profileId === currentPlayerId}
+							class:dark:bg-clash-900={player.profileId === currentPlayerId}
+							class:bg-clash-50={player.profileId === currentPlayerId}
 							animate:flip={{ duration: 300 }}
 						>
-							<td class="py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-white">
+							<td class="text-foreground py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap">
 								{getRankEmoji(i + 1)}
 							</td>
 							<td
-								class="flex max-w-[20ch] items-center gap-x-2 truncate px-3 py-4 text-sm text-gray-300 sm:max-w-max"
+								class="text-muted-foreground flex max-w-[20ch] items-center gap-x-2 truncate px-3 py-4 text-sm sm:max-w-max"
 								>{#if player.nicknameImageUrl}
 									<Popover.Root>
 										<Popover.Trigger class="shrink-0 ">
@@ -111,7 +116,7 @@
 										</Popover.Content>
 									</Popover.Root>
 								{:else if isLoading && player.profileId === currentPlayerId}
-									<Loader2 class="size-6 animate-spin text-gray-300"></Loader2>
+									<Loader2 class="text-muted-foreground size-6 animate-spin"></Loader2>
 								{:else if aiEnabled && player.profileId === currentPlayerId}
 									<form
 										method="post"
@@ -124,7 +129,7 @@
 										<button
 											type="submit"
 											title="Generate participant image "
-											class="text-gray-300 transition-colors hover:text-white"
+											class="hover:text-foreground text-muted-foreground transition-colors"
 										>
 											<span class="sr-only">Generate participant image</span>
 											<Sparkles class="size-6" />
@@ -159,14 +164,15 @@
 								{/if}{player.nickname}</td
 							>
 							<td
-								class="px-3 py-4 text-sm whitespace-nowrap text-gray-300"
+								class="text-muted-foreground px-3 py-4 text-sm whitespace-nowrap"
 								title={player.score.join(' → ')}
 								>{player.totalScore}
 							</td>
-							<td class="text-sm whitespace-nowrap text-gray-300">
+							<td class="text-muted-foreground text-sm whitespace-nowrap">
 								<Popover.Root>
 									<Popover.Trigger
-										><span class="sr-only">Show scores</span><LineChart class="size-6 text-gray-300"
+										><span class="sr-only">Show scores</span><LineChart
+											class="text-muted-foreground size-6"
 										></LineChart></Popover.Trigger
 									>
 									<Popover.Content
@@ -181,12 +187,14 @@
 						</tr>
 					{:else}
 						<tr>
-							<td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-2">
+							<td
+								class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-foreground sm:pl-2"
+							>
 								-
 							</td>
-							<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">-</td>
+							<td class="whitespace-nowrap px-3 py-4 text-sm text-muted-foreground">-</td>
 							<td class="whitespace">
-								<span class="text-sm text-gray-300">No scores yet</span>
+								<span class="text-sm text-muted-foreground">No scores yet</span>
 							</td>
 						</tr>
 					{/each}
