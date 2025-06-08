@@ -79,8 +79,8 @@ importers:
         specifier: ^8.18.2
         version: 8.18.2(eslint@9.17.0(jiti@2.4.2))(typescript@5.6.2)
       bits-ui:
-        specifier: ^2.4.1
-        version: 2.4.1(@internationalized/date@3.8.2)(svelte@5.33.14)
+        specifier: ^2.5.0
+        version: 2.5.0(@internationalized/date@3.8.2)(svelte@5.33.14)
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -1669,8 +1669,8 @@ packages:
   bindings@1.5.0:
     resolution: {integrity: sha512-p2q/t/mhvuOj/UeLlV6566GD/guowlr0hHxClI0W9m7MWYkL1F0hLo+0Aexs9HSPCtR1SXQ0TD3MMKrXZajbiQ==}
 
-  bits-ui@2.4.1:
-    resolution: {integrity: sha512-Z0qZkPgtxP5dkEOyZqCK2PQ1oFXsD0AlfFMtsrMLJqaYtjUBoQGosHVKEH03M9q4G8kxVnG74Zb0F9pS0X4+6w==}
+  bits-ui@2.5.0:
+    resolution: {integrity: sha512-PbjylA1UWd4A/c5AYqie/EVxQ1/8uugmJKLg9whLoBBHbfPEBGhK09dCPrahK9kA6DRHhMmij0XXIUGIfrmNow==}
     engines: {node: '>=20', pnpm: '>=8.7.0'}
     peerDependencies:
       '@internationalized/date': ^3.8.1
@@ -5126,7 +5126,7 @@ snapshots:
     dependencies:
       file-uri-to-path: 1.0.0
 
-  bits-ui@2.4.1(@internationalized/date@3.8.2)(svelte@5.33.14):
+  bits-ui@2.5.0(@internationalized/date@3.8.2)(svelte@5.33.14):
     dependencies:
       '@floating-ui/core': 1.7.1
       '@floating-ui/dom': 1.7.1
