@@ -30,6 +30,9 @@ jobs:
       - name: Install dependencies
         run: pnpm i --frozen-lockfile
 
+      - name: Generate TypeScript configuration
+        run: pnpm svelte-kit sync
+
       - name: Run linting
         run: pnpm run lint
 
