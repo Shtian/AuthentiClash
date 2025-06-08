@@ -4,14 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-overrides:
-  svelte@<4.2.19: '>=4.2.19'
-  cookie@<0.7.0: '>=0.7.0'
-  cross-spawn@>=7.0.0 <7.0.5: '>=7.0.5'
-  '@babel/runtime@<7.26.10': '>=7.26.10'
-  '@babel/helpers@<7.26.10': '>=7.26.10'
-  '@supabase/auth-js@<2.69.1': '>=2.69.1'
-
 importers:
 
   .:
@@ -1116,7 +1108,7 @@ packages:
     resolution: {integrity: sha512-STK5DyXC0JtYkU9khVee9fArphtUJejms0vhEacCzK9DbEmw4MDGHMignZUgAzsVEbDpplYhTD29WDqsFiU2XA==}
     engines: {node: '>=18'}
     peerDependencies:
-      svelte: '>=4.2.19'
+      svelte: 3.x || 4.x || 5.x
 
   '@sentry/sveltekit@9.27.0':
     resolution: {integrity: sha512-xwJlVAndXtUFaEJnp92/Av0lqBhx9WEZb1gmrc8cFZfHNsVKhWQ8ij9cQcsk3gIV4UhG+basc7IJ2Wm05ajVZA==}
@@ -1181,7 +1173,7 @@ packages:
     hasBin: true
     peerDependencies:
       '@sveltejs/vite-plugin-svelte': ^3.0.0 || ^4.0.0-next.1 || ^5.0.0
-      svelte: '>=4.2.19'
+      svelte: ^4.0.0 || ^5.0.0-next.0
       vite: ^5.0.3 || ^6.0.0
 
   '@sveltejs/vite-plugin-svelte-inspector@4.0.1':
@@ -1773,8 +1765,8 @@ packages:
   convert-source-map@2.0.0:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
 
-  cookie@0.7.1:
-    resolution: {integrity: sha512-6DnInpx7SJ2AK3+CTUE/ZM0vWTUboZCegxhC2xiIydHR9jNuTAASBrfEpHhiGOZw/nX51bHt6YQl8jsGo4y/0w==}
+  cookie@0.6.0:
+    resolution: {integrity: sha512-U71cyTamuh1CRNCfpGY6to28lxvNwPG4Guz/EVjgf3Jmzv0vlDp1atT9eS5dDjMYHucpHbWns6Lwf3BKz6svdw==}
     engines: {node: '>= 0.6'}
 
   cookie@1.0.2:
@@ -2060,7 +2052,7 @@ packages:
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: ^8.57.1 || ^9.0.0
-      svelte: '>=4.2.19'
+      svelte: ^3.37.0 || ^4.0.0 || ^5.0.0
     peerDependenciesMeta:
       svelte:
         optional: true
@@ -2512,7 +2504,7 @@ packages:
   lucide-svelte@0.359.0:
     resolution: {integrity: sha512-75CzrB26QbMSmXywosx8Yt6XvvN+OSmLG5TaVOAEaEwkZ4kBcT1yLBzbBPe2aXMu9fFi/HwOiOYCkavKaEKujQ==}
     peerDependencies:
-      svelte: '>=4.2.19'
+      svelte: ^3 || ^4 || ^5.0.0-next.42
 
   magic-string@0.30.17:
     resolution: {integrity: sha512-sNPKHvyjVf7gyjwS4xGTaW/mCnF8wnjtifKBEhxfZ7E/S8tQ0rssrwGNn6q8JH/ohItJfSQp9mBtQYuTlH5QnA==}
@@ -2571,7 +2563,7 @@ packages:
   mode-watcher@0.5.1:
     resolution: {integrity: sha512-adEC6T7TMX/kzQlaO/MtiQOSFekZfQu4MC+lXyoceQG+U5sKpJWZ4yKXqw846ExIuWJgedkOIPqAYYRk/xHm+w==}
     peerDependencies:
-      svelte: '>=4.2.19'
+      svelte: ^4.0.0 || ^5.0.0-next.1
 
   module-details-from-path@1.0.3:
     resolution: {integrity: sha512-ySViT69/76t8VhE1xXHK6Ch4NcDd26gx0MzKXLO+F7NOtnqH68d9zF94nT8ZWSxXh8ELOERsnJO/sWt1xZYw5A==}
@@ -2815,7 +2807,7 @@ packages:
     resolution: {integrity: sha512-pn1ra/0mPObzqoIQn/vUTR3ZZI6UuZ0sHqMK5x2jMLGrs53h0sXhkVuDcrlssHwIMk7FYrMjHBPoUSyyEEDlBQ==}
     peerDependencies:
       prettier: ^3.0.0
-      svelte: '>=4.2.19'
+      svelte: ^3.2.0 || ^4.0.0-next.0 || ^5.0.0-next.0
 
   prettier-plugin-tailwindcss@0.6.12:
     resolution: {integrity: sha512-OuTQKoqNwV7RnxTPwXWzOFXy6Jc4z8oeRZYGuMpRyG3WbuR3jjXdQFK8qFBMBx8UHWdHrddARz2fgUenild6aw==}
@@ -3074,14 +3066,14 @@ packages:
     engines: {node: '>= 18.0.0'}
     hasBin: true
     peerDependencies:
-      svelte: '>=4.2.19'
+      svelte: ^4.0.0 || ^5.0.0-next.0
       typescript: '>=5.0.0'
 
   svelte-eslint-parser@1.2.0:
     resolution: {integrity: sha512-mbPtajIeuiyU80BEyGvwAktBeTX7KCr5/0l+uRGLq1dafwRNrjfM5kHGJScEBlPG3ipu6dJqfW/k0/fujvIEVw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
-      svelte: '>=4.2.19'
+      svelte: ^3.37.0 || ^4.0.0 || ^5.0.0
     peerDependenciesMeta:
       svelte:
         optional: true
@@ -4544,7 +4536,7 @@ snapshots:
       '@sveltejs/vite-plugin-svelte': 5.1.0(svelte@5.33.14)(vite@6.3.5(@types/node@22.7.4)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.5.1))
       '@types/cookie': 0.6.0
       acorn: 8.14.1
-      cookie: 0.7.1
+      cookie: 0.6.0
       devalue: 5.1.1
       esm-env: 1.2.2
       kleur: 4.1.5
@@ -5234,7 +5226,7 @@ snapshots:
 
   convert-source-map@2.0.0: {}
 
-  cookie@0.7.1: {}
+  cookie@0.6.0: {}
 
   cookie@1.0.2: {}
 
