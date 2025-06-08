@@ -1,6 +1,6 @@
 <script lang="ts">
 	import InlineMessage from '$lib/components/InlineMessage.svelte';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { fade } from 'svelte/transition';
 	import { formatTimeDelta, timeUntilCooldownEnds } from '$lib/utils/dateUtils.js';
 	import GameHighScore from './GameHighScore.svelte';
@@ -16,7 +16,7 @@
 		Sparkles
 	} from 'lucide-svelte';
 	import Cooldown from './Cooldown.svelte';
-	import Button from '$lib/components/Button.svelte';
+	import { Button } from '$lib/components/ui/button';
 	import { onDestroy } from 'svelte';
 	import { toast } from '$lib/stores/ToastStore';
 	import { enhance } from '$app/forms';
@@ -26,6 +26,9 @@
 	import GameLogs from './GameLogs.svelte';
 	import type { Participation } from '$lib/supabase/participation';
 	import type { PageData } from './$types';
+	import { Checkbox } from '$lib/components/ui/checkbox';
+	import { Badge } from '$lib/components/ui/badge';
+	import type { Ability } from '$lib/supabase/classes';
 
 	const { data }: { data: PageData } = $props();
 	let isLoading = $state(false);
@@ -73,6 +76,10 @@
 		clearInterval(timer);
 	});
 
+	const isAbilityPassive = (ability: Ability) => {
+		return ability.description.startsWith('(Passive)');
+	};
+
 	const handleNewScore: SubmitFunction = () => {
 		isLoading = true;
 		return async ({ result, update }) => {
@@ -108,8 +115,8 @@
 	};
 </script>
 
-{#if $page.error}
-	<InlineMessage msgType="error">{$page.error.message}</InlineMessage>
+{#if page.error}
+	<InlineMessage msgType="error">{page.error.message}</InlineMessage>
 {/if}
 
 <header>
@@ -156,87 +163,138 @@
 				<input type="hidden" name="game-id" id="game-id" value={data.gameId} />
 				<input type="hidden" name="ability-id" id="ability-id" value={abilityIdUsed} />
 
-				<div class="mt-4 grid grid-cols-12 gap-x-6 gap-y-8">
-					<div class="col-span-12 sm:col-span-4">
-						<label for="2fa-score" class="text-foreground block leading-6 font-medium"
-							>2FA value</label
+				<div class="mt-4 space-y-6">
+					<div class="space-y-6">
+						<label
+							for="2fa-score"
+							class="text-foreground block text-center text-2xl leading-6 font-medium"
+							>Enter 2FA Code</label
 						>
-						<p class="text-muted-foreground text-sm">Between 1 and 99</p>
-						<div class="mt-4">
-							<input
-								type="number"
-								name="2fa-score"
-								id="2fa-score"
-								required
-								min="1"
-								max="99"
-								class="ring-foreground/10 hover:bg-muted focus:border-b-clash-500 text-foreground size-16 flex-1 rounded-t-md border-b-2 p-2.5 text-4xl tabular-nums shadow-2xs ring-1 transition-colors focus:outline-none"
-							/>
-						</div>
+						<p class="text-muted-foreground text-center text-sm">
+							Input your two-digit authentication code
+						</p>
+						<input
+							type="number"
+							name="2fa-score"
+							id="2fa-score"
+							required
+							placeholder="00"
+							min="10"
+							max="99"
+							autocomplete="off"
+							class="ring-offset-background file:text-foreground placeholder:text-muted-foreground focus-visible:ring-ring text-foreground hover:bg-foreground/5 flex h-16 w-full rounded-md border px-3 py-2 text-center text-3xl font-bold tracking-widest shadow-2xs file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 dark:border-zinc-600 dark:bg-zinc-800/50"
+						/>
 					</div>
 					{#if data.class}
-						<div class="col-span-12 sm:col-span-8">
-							<p class="text-foreground leading-6">Use class ability</p>
-							<p class="text-muted-foreground text-sm">
-								Active abilities can only be used <strong>once</strong> per game
-							</p>
-							{#each data.class.abilities as ability (ability.id)}
-								<div class="mt-4 flex gap-4">
-									{#if ability.description.startsWith('(Passive)')}
-										<Shield class="size-12" />
-									{:else}
-										<button
-											type="button"
-											class="ability-button relative flex size-16 shrink-0 items-center border transition-colors"
-											class:active={!hasUsedAbility && abilityIdUsed === ability.id}
-											class:grayscale={hasUsedAbility}
-											class:text-gray={hasUsedAbility}
-											class:cursor-not-allowed={hasUsedAbility}
-											disabled={hasUsedAbility}
-											onclick={() => {
-												if (abilityIdUsed === ability.id) {
-													abilityIdUsed = null;
-												} else {
-													abilityIdUsed = ability.id;
-												}
-											}}
-										>
-											{#if ability.id === ABILITIES.CRIMSON_REAP}
-												<Skull class="m-auto size-12" />
-											{:else if ability.id === ABILITIES.CUTPURSE}
-												<HandCoins class="m-auto size-12" />
-											{:else if ability.id === ABILITIES.INFERNAL_RAGE}
-												<Flame class="m-auto size-12" />
-											{:else if ability.id === ABILITIES.PROTECTORS_OATH}
-												<HandHeart class="m-auto size-12" />
+						{#each data.class.abilities as ability (ability.id)}
+							<div
+								class={`rounded-lg border shadow-2xs transition-all duration-300 dark:bg-zinc-800/50 ${
+									!hasUsedAbility && abilityIdUsed === ability.id
+										? 'border-clash-500 shadow-clash-500/25 ring-clash-500/50 dark:border-clash-500 shadow-lg ring-2'
+										: 'border-foreground/10 dark:border-zinc-600'
+								}`}
+							>
+								<div class="p-4">
+									<div class="flex items-start space-x-3">
+										<div class="mt-1 flex-shrink-0">
+											<div
+												class="to-clash-600 flex size-12 items-center justify-center rounded-lg bg-gradient-to-br from-purple-600 text-white"
+												class:grayscale={hasUsedAbility}
+											>
+												{#if isAbilityPassive(ability)}
+													<Shield class="m-auto size-8" />
+												{:else if ability.id === ABILITIES.CRIMSON_REAP}
+													<Skull class="m-auto size-8" />
+												{:else if ability.id === ABILITIES.CUTPURSE}
+													<HandCoins class="m-auto size-8" />
+												{:else if ability.id === ABILITIES.INFERNAL_RAGE}
+													<Flame class="m-auto size-8" />
+												{:else if ability.id === ABILITIES.PROTECTORS_OATH}
+													<HandHeart class="m-auto size-8" />
+												{/if}
+											</div>
+										</div>
+										<div class="min-w-0 flex-1">
+											<div class="mb-2 flex items-center justify-between">
+												<div class="flex items-center gap-2">
+													<h3 class="text-foreground font-semibold">{ability.name}</h3>
+													<Badge
+														variant="secondary"
+														class={`text-xs ${
+															isAbilityPassive(ability)
+																? 'border-purple-600/30 bg-purple-600/20 text-purple-400'
+																: 'border-emerald-600/30 bg-emerald-600/20 text-emerald-400'
+														}`}
+													>
+														{#if isAbilityPassive(ability)}
+															Passive
+														{:else}
+															Active
+														{/if}</Badge
+													>
+												</div>
+												{#if !isAbilityPassive(ability)}
+													<div class="flex items-center space-x-2">
+														<Checkbox
+															id="ability-toggle"
+															checked={!hasUsedAbility && abilityIdUsed === ability.id}
+															onCheckedChange={() => {
+																if (abilityIdUsed === ability.id) {
+																	abilityIdUsed = null;
+																} else {
+																	abilityIdUsed = ability.id;
+																}
+															}}
+															disabled={hasUsedAbility}
+															class="peer border-zinc-500 disabled:cursor-not-allowed"
+														/>
+														<label
+															for="ability-toggle"
+															class="text-foreground peer-disabled:text-muted-foreground text-sm font-medium peer-disabled:cursor-not-allowed"
+															>Activate</label
+														>
+													</div>
+												{/if}
+											</div>
+											<p class="text-foreground text-sm leading-relaxed">
+												{ability.description}
+											</p>
+											{#if hasUsedAbility}
+												<p class="mt-2 text-xs font-medium text-red-400">⚠️ Ability already used</p>
 											{/if}
-										</button>
-									{/if}
-									<div class="flex flex-col justify-center">
-										<p>{ability.name}</p>
-										<p class=" text-muted-foreground text-sm">{ability.description}</p>
+										</div>
 									</div>
 								</div>
-							{/each}
-						</div>
+							</div>
+						{/each}
 						<input type="hidden" name="ability-id" id="ability-id" bind:value={abilityIdUsed} />
 					{/if}
-					<div class="col-span-6 max-w-28 sm:col-span-3">
+					<div class="col-span-6 sm:col-span-3">
 						{#if cooldownRemaining <= 0}
-							<Button type="submit" disabled={isLoading}>
+							<Button
+								type="submit"
+								size="lg"
+								class="bg-clash-600 hover:bg-clash-200 dark:bg-clash-500 dark:hover:bg-clash-400 text-foreground w-full"
+								disabled={isLoading}
+							>
 								{#if isLoading}
-									<LucideLoader2 class="h-6 w-6 animate-spin" />
+									<LucideLoader2 class="size-6 animate-spin" />
 								{:else}
 									{data.currentPlayer ? 'Add Score' : 'Join Game'}
 								{/if}
 							</Button>
 						{:else}
-							<Button type="submit" disabled>
-								<Clock class="mr-2 h-4 w-4 shrink-0" />
+							<Button type="submit" size="lg" class="w-full" disabled>
+								<Clock class="mr-2 size-4 shrink-0" />
 								<Cooldown bind:delta={cooldownRemaining}></Cooldown>
 							</Button>
 						{/if}
 					</div>
+					{#if !hasUsedAbility && abilityIdUsed}
+						<div class="text-center text-xs text-slate-500">
+							✨ Active ability will be used with this attack
+						</div>
+					{/if}
 				</div>
 			</form>
 		{:else}
