@@ -4,7 +4,7 @@
 	import type { Snippet } from 'svelte';
 
 	const buttonVariants = tv({
-		base: 'inline-flex whitespace-nowrap justify-center items-center rounded-md text-sm font-semibold shadow-sm bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500 transition-colors disabled:pointer-events-none disabled:opacity-50',
+		base: 'inline-flex whitespace-nowrap justify-center items-center rounded-md text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500 transition-colors disabled:pointer-events-none disabled:opacity-50',
 		variants: {
 			variant: {
 				default: 'bg-clash-500 text-background dark:text-foreground hover:bg-clash-400'
