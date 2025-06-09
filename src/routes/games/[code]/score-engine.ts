@@ -115,6 +115,8 @@ const runAbilityCalculations = async (
 			return runInfernalRageAbility(score, userParticipation);
 		case ABILITIES.PROTECTORS_OATH:
 			return runProtectorsOathAbility(score, userParticipation);
+		case ABILITIES.FINAL_WAGER:
+			return runFinalWagerAbility(score, userParticipation);
 		default:
 			return {
 				type: 'error',
@@ -282,6 +284,40 @@ const runCrimsonReapAbility = async (
 	return {
 		type: 'success',
 		data: { newScore: score, message: `Crimson Reap dealt ${totalDamage} damage! ☠️` },
+		error: null
+	};
+};
+
+/**
+ * Final Wager: 50% chance to gain +50 pts, otherwise lose 50 pts.
+ */
+const runFinalWagerAbility = async (
+	score: number,
+	userParticipation: Participation
+): Promise<Response<Success>> => {
+	const newScore = Math.random() < 0.5 ? score + 50 : score - 50;
+
+	const updateParticipationRes = await updateParticipationScore(newScore, userParticipation, true);
+
+	if (updateParticipationRes.type === 'error') {
+		console.error('Error updating score: ', JSON.stringify(updateParticipationRes));
+		return {
+			type: 'error',
+			error: { message: 'Oh no, something went wrong. 🙏' },
+			data: null
+		};
+	}
+
+	const scoreDiff = newScore - score;
+	const message =
+		scoreDiff > 0
+			? `${userParticipation.nickname} activated Final Wager and gained 50 points, making their score ${newScore}! 💰`
+			: `${userParticipation.nickname} activated Final Wager and lost 50 points, making their score ${newScore}! 😱`;
+	await addGameLogWithAI(userParticipation.gameId, message);
+
+	return {
+		type: 'success',
+		data: { newScore, message },
 		error: null
 	};
 };
