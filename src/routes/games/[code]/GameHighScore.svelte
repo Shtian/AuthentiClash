@@ -67,7 +67,7 @@
 	};
 </script>
 
-<section class="mx-4 flow-root space-y-8 sm:mx-0 md:space-y-9">
+<section class="flow-root space-y-8 md:space-y-9">
 	<h2 class="text-center text-2xl font-bold">🏆 Leaderboard</h2>
 	<div class="inline-block min-w-full space-y-2 align-middle">
 		{#each players.sort((a, b) => b.totalScore - a.totalScore) as player, i (player.profileId)}
