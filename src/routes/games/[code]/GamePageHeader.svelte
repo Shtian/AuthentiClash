@@ -24,7 +24,7 @@
 	};
 </script>
 
-<header class="mx-4 max-w-7xl space-y-4 sm:mx-0">
+<header class="max-w-7xl">
 	<div class="grid gap-y-2 sm:grid-cols-[1fr_auto]">
 		<div class="flex flex-row items-center gap-2">
 			<h1

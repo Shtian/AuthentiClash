@@ -16,7 +16,7 @@
 	});
 </script>
 
-<div class="px-4 sm:px-0">
+<div>
 	<h2 class="mt-6 mb-4 text-center text-2xl font-bold">📣 Events</h2>
 	<ul role="list" class="space-y-6">
 		{#each logs as log, index (log.id)}
