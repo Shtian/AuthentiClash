@@ -122,6 +122,22 @@
 	--color-clash-950: #02090e;
 }
 
+@layer reset {
+	h1,
+	h2,
+	h3,
+	h4,
+	h5 {
+		@apply text-balance;
+	}
+
+	p,
+	li,
+	figcaption {
+		@apply text-pretty;
+	}
+}
+
 @layer base {
 	* {
 		@apply border-border outline-ring/50;
