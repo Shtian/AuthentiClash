@@ -16,7 +16,8 @@
 	});
 </script>
 
-<div class="mx-auto max-w-[1200px] px-6">
+<div class="px-4 sm:px-0">
+	<h2 class="mt-6 mb-4 text-center text-2xl font-bold">📣 Events</h2>
 	<ul role="list" class="space-y-6">
 		{#each logs as log, index (log.id)}
 			<li class="relative flex gap-x-4">
@@ -41,7 +42,9 @@
 			</li>
 		{:else}
 			<li>
-				<p class="flex-auto py-0.5 text-xs/5 text-muted-foreground">No logs found for this game</p>
+				<p class="text-center flex-auto py-0.5 text-xs/5 text-muted-foreground">
+					No logs found for this game
+				</p>
 			</li>
 		{/each}
 	</ul>

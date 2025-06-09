@@ -27,7 +27,7 @@
 </script>
 
 <main>
-	<div class="mx-auto max-w-7xl sm:px-6 lg:px-8 lg:py-10">
+	<div class="mx-auto max-w-2xl sm:px-6 lg:px-8 lg:py-10">
 		<div class="heading mx-auto mb-6 max-w-2xl lg:mx-0">
 			<div class="mb-6 flex place-content-between items-center">
 				<h2 class="text-foreground text-3xl font-bold tracking-tight sm:text-4xl">Games</h2>

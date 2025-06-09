@@ -63,9 +63,7 @@
 <Toast />
 <Header {session} />
 <div class="mx-auto min-h-full max-w-6xl px-4 pt-8 sm:px-6 lg:pt-16">
-	<div class="mx-auto max-w-6xl">
-		{@render children?.()}
-	</div>
+	{@render children?.()}
 </div>
 <Footer />
 

@@ -19,7 +19,7 @@
 </script>
 
 <div class="lg:py-10">
-	<div class="mx-auto max-w-7xl px-6 lg:px-8">
+	<div class="mx-auto max-w-2xl px-6 lg:px-8">
 		<div class="mx-auto max-w-2xl lg:mx-0">
 			<h2 class="text-foreground text-3xl font-bold tracking-tight sm:text-4xl">
 				Gallery of Legends
