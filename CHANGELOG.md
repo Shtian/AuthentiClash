@@ -1,5 +1,19 @@
 # authenticlash
 
+## 0.21.0
+
+### Minor Changes
+
+- [#119](https://github.com/Shtian/AuthentiClash/pull/119) [`012b6bb`](https://github.com/Shtian/AuthentiClash/commit/012b6bbdb9363bb1e8f839dfe14b69fa2af0fae3) Thanks [@Shtian](https://github.com/Shtian)! - Game page redesign
+
+- [#115](https://github.com/Shtian/AuthentiClash/pull/115) [`1936f71`](https://github.com/Shtian/AuthentiClash/commit/1936f71cc7f675fb4d3b82231106b6be0f51eb97) Thanks [@Shtian](https://github.com/Shtian)! - Change AI game events to use Response API from OpenAI
+
+- [#118](https://github.com/Shtian/AuthentiClash/pull/118) [`da6edbb`](https://github.com/Shtian/AuthentiClash/commit/da6edbb4cfd5979385ded8ecf20d873d2523d217) Thanks [@Shtian](https://github.com/Shtian)! - Add theme support
+
+### Patch Changes
+
+- [#117](https://github.com/Shtian/AuthentiClash/pull/117) [`27d4705`](https://github.com/Shtian/AuthentiClash/commit/27d4705f31de894490c1eb757da71b46593dd576) Thanks [@Shtian](https://github.com/Shtian)! - Move auth to use new supabase/ssr package and fix all type errors
+
 ## 0.20.1
 
 ### Patch Changes
