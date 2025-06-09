@@ -1,4 +1,5 @@
 import { ABILITIES, PROTECTORS_OATH_PERCENTAGE } from '$lib/classes/abilities';
+import { CLASSES } from '$lib/classes/classes';
 import { classMitigation, giveOtherPlayerScore } from '$lib/supabase/abilities/attacks';
 import { addGameLogWithAI } from '$lib/supabase/gameLog';
 import {
@@ -42,7 +43,11 @@ const tryUpdateParticipationScore = async (
 		};
 	}
 	const userParticipation = res.data;
-	const updateParticipationRes = await updateParticipationScore(score, userParticipation);
+	const scoreAfterPassives = runPassiveAbilities(score, userParticipation);
+	const updateParticipationRes = await updateParticipationScore(
+		scoreAfterPassives,
+		userParticipation
+	);
 
 	if (updateParticipationRes.type === 'error') {
 		console.error('Error updating score: ', JSON.stringify(updateParticipationRes.error));
@@ -53,9 +58,16 @@ const tryUpdateParticipationScore = async (
 		};
 	}
 
+	const scoreDiff = Math.abs(scoreAfterPassives - score);
+	const scoreText =
+		scoreDiff === 0
+			? ''
+			: scoreAfterPassives > score
+				? `. Increased by ${scoreDiff} through passive abilities`
+				: `. Decreased by ${scoreDiff} through passive abilities`;
 	const gameLogRes = await addGameLogWithAI(
 		gameId,
-		`${userParticipation.nickname} scored ${score}`
+		`${userParticipation.nickname} scored ${scoreAfterPassives}${scoreText}`
 	);
 	const message =
 		gameLogRes.type === 'success' && gameLogRes.data
@@ -64,7 +76,7 @@ const tryUpdateParticipationScore = async (
 
 	return {
 		type: 'success',
-		data: { newScore: score, message },
+		data: { newScore: scoreAfterPassives, message },
 		error: null
 	};
 };
@@ -103,6 +115,8 @@ const runAbilityCalculations = async (
 			return runInfernalRageAbility(score, userParticipation);
 		case ABILITIES.PROTECTORS_OATH:
 			return runProtectorsOathAbility(score, userParticipation);
+		case ABILITIES.FINAL_WAGER:
+			return runFinalWagerAbility(score, userParticipation);
 		default:
 			return {
 				type: 'error',
@@ -275,6 +289,40 @@ const runCrimsonReapAbility = async (
 };
 
 /**
+ * Final Wager: 50% chance to gain +50 pts, otherwise lose 50 pts.
+ */
+const runFinalWagerAbility = async (
+	score: number,
+	userParticipation: Participation
+): Promise<Response<Success>> => {
+	const newScore = Math.random() < 0.5 ? score + 50 : score - 50;
+
+	const updateParticipationRes = await updateParticipationScore(newScore, userParticipation, true);
+
+	if (updateParticipationRes.type === 'error') {
+		console.error('Error updating score: ', JSON.stringify(updateParticipationRes));
+		return {
+			type: 'error',
+			error: { message: 'Oh no, something went wrong. 🙏' },
+			data: null
+		};
+	}
+
+	const scoreDiff = newScore - score;
+	const message =
+		scoreDiff > 0
+			? `${userParticipation.nickname} activated Final Wager and gained 50 points, making their score ${newScore}! 💰`
+			: `${userParticipation.nickname} activated Final Wager and lost 50 points, making their score ${newScore}! 😱`;
+	await addGameLogWithAI(userParticipation.gameId, message);
+
+	return {
+		type: 'success',
+		data: { newScore, message },
+		error: null
+	};
+};
+
+/**
  * Infernal Rage: Multiplies the score by 2 (max 99).
  */
 const runInfernalRageAbility = async (
@@ -368,3 +416,17 @@ const runProtectorsOathAbility = async (
 		error: null
 	};
 };
+
+function runPassiveAbilities(score: number, userParticipation: Participation) {
+	if (userParticipation.classId === CLASSES.DICEBLADE) {
+		// 33% chance to gain +10 pts, otherwise lose 5 pts.
+		const random = Math.random();
+		if (random < 0.33) {
+			return score + 10;
+		} else {
+			return score - 5;
+		}
+	}
+
+	return score;
+}

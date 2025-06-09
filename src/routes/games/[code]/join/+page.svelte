@@ -127,11 +127,12 @@
 										id={classChoice.id.toString()}
 										aria-required="true"
 									/>
-									<Label for={classChoice.id.toString()}
-										><p class="text-lg font-bold">{classChoice.name}</p>
+									<Label for={classChoice.id.toString()} class="flex flex-col items-start"
+										><p class="block text-lg font-bold">{classChoice.name}</p>
 										{#each classChoice.abilities as ability (ability.id)}
 											<p class="text-muted-foreground text-xs">
-												{ability.name}: {ability.description}
+												<strong class="text-foreground">{ability.name}:</strong>
+												{ability.description}
 											</p>
 										{/each}
 									</Label>
