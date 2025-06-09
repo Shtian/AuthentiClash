@@ -1,5 +1,15 @@
 # authenticlash
 
+## 0.22.0
+
+### Minor Changes
+
+- [#126](https://github.com/Shtian/AuthentiClash/pull/126) [`640a09f`](https://github.com/Shtian/AuthentiClash/commit/640a09fb3a824ca067623747b4ee8816f6cbc437) Thanks [@Shtian](https://github.com/Shtian)! - Add Diceblade class
+
+### Patch Changes
+
+- [#124](https://github.com/Shtian/AuthentiClash/pull/124) [`903b0e2`](https://github.com/Shtian/AuthentiClash/commit/903b0e2e180f01a7d53d5ceae112795053fd6909) Thanks [@Shtian](https://github.com/Shtian)! - Set consistent game page margins
+
 ## 0.21.2
 
 ### Patch Changes
