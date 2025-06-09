@@ -68,7 +68,7 @@
 </script>
 
 <header>
-	<div class="mx-auto flex max-w-7xl flex-col gap-y-2 sm:px-6 lg:px-8">
+	<div class="mx-auto flex max-w-2xl flex-col gap-y-2 sm:px-6 lg:px-8">
 		<h1 class="tracking-tigh text-foreground text-3xl leading-tight font-bold">
 			Joining {data.gameName}
 		</h1>
@@ -79,7 +79,7 @@
 </header>
 
 <main>
-	<div class="mx-auto mt-5 max-w-7xl py-5 sm:px-6 lg:px-8">
+	<div class="mx-auto mt-5 max-w-2xl py-5 sm:px-6 lg:px-8">
 		<form method="POST" action="?/joinGame" use:enhance={handleNewPlayer}>
 			<input type="hidden" name="game-id" id="game-id" value={data.gameId} />
 			<div class="col-span-3">

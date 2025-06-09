@@ -32,7 +32,7 @@
 </script>
 
 <li
-	class="flex flex-col gap-y-4 rounded-lg p-4 shadow-sm"
+	class="border-foreground/10 dark:bg-foreground/10 flex flex-col gap-y-4 rounded-lg border p-4 shadow-sm"
 	onmouseover={() => markBadgeAsSeen()}
 	onfocus={() => markBadgeAsSeen()}
 >

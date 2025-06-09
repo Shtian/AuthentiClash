@@ -19,8 +19,8 @@
 </script>
 
 <div class="lg:py-10">
-	<div class="mx-auto max-w-2xl px-6 lg:px-8">
-		<div class="mx-auto max-w-2xl lg:mx-0">
+	<div class="mx-auto max-w-7xl px-6 lg:px-8">
+		<div class="mx-auto max-w-7xl lg:mx-0">
 			<h2 class="text-foreground text-3xl font-bold tracking-tight sm:text-4xl">
 				Gallery of Legends
 			</h2>
@@ -32,7 +32,7 @@
 		{#if games.length}
 			<ul
 				role="list"
-				class="mx-auto mt-20 grid max-w-2xl grid-cols-2 gap-x-8 gap-y-16 text-center sm:grid-cols-3 md:grid-cols-4"
+				class="mx-auto mt-20 grid max-w-7xl grid-cols-2 gap-x-8 gap-y-16 text-center sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5"
 			>
 				{#each games as game (game.code)}
 					<li>
