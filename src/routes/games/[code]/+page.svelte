@@ -161,7 +161,7 @@
 										<div class="mt-1 flex-shrink-0">
 											<div
 												class="to-clash-600 flex size-12 items-center justify-center rounded-lg bg-gradient-to-br from-purple-600 text-white"
-												class:grayscale={hasUsedAbility}
+												class:grayscale={hasUsedAbility && !isAbilityPassive(ability)}
 											>
 												{#if ability.id === ABILITIES.DIVINE_AEGIS}
 													<Shield class="m-auto size-8" />
@@ -225,7 +225,7 @@
 											<p class="text-foreground text-sm leading-relaxed">
 												{ability.description}
 											</p>
-											{#if hasUsedAbility}
+											{#if hasUsedAbility && !isAbilityPassive(ability)}
 												<p class="mt-2 text-xs font-medium text-red-400">⚠️ Ability already used</p>
 											{/if}
 										</div>
