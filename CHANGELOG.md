@@ -1,5 +1,11 @@
 # authenticlash
 
+## 0.21.2
+
+### Patch Changes
+
+- [#122](https://github.com/Shtian/AuthentiClash/pull/122) [`f3eb0cc`](https://github.com/Shtian/AuthentiClash/commit/f3eb0cc53b65bbb6e3f2fd1537af5c1d1e00ab83) Thanks [@Shtian](https://github.com/Shtian)! - Minor visual tweaks
+
 ## 0.21.1
 
 ### Patch Changes
