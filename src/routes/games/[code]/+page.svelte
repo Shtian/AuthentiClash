@@ -3,7 +3,17 @@
 	import { page } from '$app/state';
 	import { formatTimeDelta, timeUntilCooldownEnds } from '$lib/utils/dateUtils.js';
 	import GameHighScore from './GameHighScore.svelte';
-	import { Clock, Flame, HandCoins, HandHeart, LucideLoader2, Shield, Skull } from 'lucide-svelte';
+	import {
+		Clock,
+		Crosshair,
+		Dices,
+		Flame,
+		HandCoins,
+		HandHeart,
+		LucideLoader2,
+		Shield,
+		Skull
+	} from 'lucide-svelte';
 	import Cooldown from './Cooldown.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { onDestroy } from 'svelte';
@@ -153,7 +163,7 @@
 												class="to-clash-600 flex size-12 items-center justify-center rounded-lg bg-gradient-to-br from-purple-600 text-white"
 												class:grayscale={hasUsedAbility}
 											>
-												{#if isAbilityPassive(ability)}
+												{#if ability.id === ABILITIES.DIVINE_AEGIS}
 													<Shield class="m-auto size-8" />
 												{:else if ability.id === ABILITIES.CRIMSON_REAP}
 													<Skull class="m-auto size-8" />
@@ -163,6 +173,10 @@
 													<Flame class="m-auto size-8" />
 												{:else if ability.id === ABILITIES.PROTECTORS_OATH}
 													<HandHeart class="m-auto size-8" />
+												{:else if ability.id === ABILITIES.FINAL_WAGER}
+													<Crosshair class="m-auto size-8" />
+												{:else if ability.id === ABILITIES.FATEFUL_FLICK}
+													<Dices class="m-auto size-8" />
 												{/if}
 											</div>
 										</div>
