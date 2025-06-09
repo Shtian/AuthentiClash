@@ -32,7 +32,7 @@
 	let commentatorPersonality = $state<string>('');
 
 	const endTime: string = form?.endTime?.toString() ?? '12:00';
-	const cooldown: string = form?.cooldown?.toString() ?? '4';
+	const cooldown: string = form?.cooldown?.toString() ?? '16';
 	let isLoading = $state(false);
 
 	const handleSubmit: SubmitFunction = () => {
@@ -54,7 +54,7 @@
 </script>
 
 <form method="POST" action="?/create" use:enhance={handleSubmit}>
-	<div class="space-y-12">
+	<div class="mx-auto max-w-2xl space-y-12">
 		<div class="border-foreground/10 border-b pb-12">
 			<h2 class="text-foreground text-base leading-7 font-semibold">
 				Create an AuthentiClash game! ⚔️
@@ -195,10 +195,10 @@
 		</div>
 	</div>
 
-	<div class="mt-6 flex items-center gap-x-6">
+	<div class="mx-auto mt-6 flex max-w-2xl items-center gap-x-6">
 		<button
 			type="submit"
-			class="bg-clash-400 hover:bg-clash-300 focus-visible:outline-clash-500 text-background rounded-md px-3 py-2 text-sm font-semibold shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2"
+			class="bg-clash-400 hover:bg-clash-300 focus-visible:outline-clash-500 text-foreground rounded-md px-3 py-2 text-sm font-semibold shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2"
 			disabled={isLoading}>{isLoading ? 'Creating...' : 'Create'}</button
 		>
 	</div>
