@@ -1,27 +1,15 @@
 <script lang="ts">
 	import InlineMessage from '$lib/components/InlineMessage.svelte';
 	import { page } from '$app/state';
-	import { fade } from 'svelte/transition';
 	import { formatTimeDelta, timeUntilCooldownEnds } from '$lib/utils/dateUtils.js';
 	import GameHighScore from './GameHighScore.svelte';
-	import {
-		Clock,
-		Copy,
-		Flame,
-		HandCoins,
-		HandHeart,
-		LucideLoader2,
-		Shield,
-		Skull,
-		Sparkles
-	} from 'lucide-svelte';
+	import { Clock, Flame, HandCoins, HandHeart, LucideLoader2, Shield, Skull } from 'lucide-svelte';
 	import Cooldown from './Cooldown.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { onDestroy } from 'svelte';
 	import { toast } from '$lib/stores/ToastStore';
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
-	import * as Popover from '$lib/components/ui/popover';
 	import { ABILITIES } from '$lib/classes/abilities';
 	import GameLogs from './GameLogs.svelte';
 	import type { Participation } from '$lib/supabase/participation';
@@ -29,6 +17,9 @@
 	import { Checkbox } from '$lib/components/ui/checkbox';
 	import { Badge } from '$lib/components/ui/badge';
 	import type { Ability } from '$lib/supabase/classes';
+	import GamePageHeader from './GamePageHeader.svelte';
+	import { quintOut } from 'svelte/easing';
+	import { fly } from 'svelte/transition';
 
 	const { data }: { data: PageData } = $props();
 	let isLoading = $state(false);
@@ -42,15 +33,6 @@
 	let cooldownRemaining = $state(
 		timeUntilCooldownEnds(data.currentPlayer?.updatedAt, data.cooldownHours)
 	);
-
-	let urlIsRecentlyCopied = $state(false);
-	const copyUrl = () => {
-		navigator.clipboard.writeText(`https://www.authenticlash.app${window.location.pathname}/join`);
-		urlIsRecentlyCopied = true;
-		window.setTimeout(() => {
-			urlIsRecentlyCopied = false;
-		}, 3000);
-	};
 
 	const millisecondsToEnd = new Date(data.endsAt).getTime();
 	let millisecondsNow = new Date().getTime();
@@ -119,57 +101,25 @@
 	<InlineMessage msgType="error">{page.error.message}</InlineMessage>
 {/if}
 
-<header>
-	<div class="mx-auto flex max-w-7xl flex-col gap-y-2 sm:px-6 lg:px-8">
-		<div class="flex flex-row gap-2">
-			<h1
-				class="to-clash-600 tracking-tigh bg-linear-to-br from-purple-600 bg-clip-text text-5xl leading-tight font-bold text-transparent"
-			>
-				{data.gameName}
-			</h1>
-			<button
-				type="submit"
-				class="hover:text-foreground text-muted-foreground focus-visible:outline-clash-500 relative inline-flex items-center gap-x-2 self-center rounded-md bg-transparent px-2 py-2 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
-				onclick={copyUrl}
-			>
-				<Copy />
-				{#if urlIsRecentlyCopied}
-					<span class="text-foreground absolute -bottom-3.5 text-sm" in:fade out:fade>Copied!</span>
-				{/if}
-			</button>
-		</div>
-		<p class="text-muted-foreground text-sm text-pretty tabular-nums" title={data.endsAt}>
-			Ends in: {timeLeftText}
-		</p>
-		{#if data.aiEnabled}
-			<Popover.Root>
-				<Popover.Trigger class="w-max">
-					<div class="rounded-md px-1.5 py-0.5 text-xs font-medium ring-1">
-						<Sparkles class="inline size-4" /> AI enabled
-					</div>
-				</Popover.Trigger>
-				<Popover.Content class="text-sm text-pretty">
-					AI features have been enabled for this game:
-					<ul class="ml-4 list-disc">
-						<li>Click the sparkles on your row to generate an epic avatar!</li>
-					</ul>
-				</Popover.Content>
-			</Popover.Root>
-		{/if}
-	</div>
-</header>
 <main>
-	<div class="mx-auto mt-5 max-w-7xl py-5 sm:px-6 lg:px-8">
+	<GamePageHeader
+		gameName={data.gameName}
+		endsAt={data.endsAt}
+		aiEnabled={data.aiEnabled}
+		{timeLeftText}
+		hasEnded={timeLeft <= 0}
+	/>
+	<div
+		class="mx-auto mt-6 grid max-w-7xl grid-cols-1 gap-x-4 gap-y-12 py-5 md:mt-12 md:grid-cols-2 md:gap-8"
+	>
 		{#if timeLeft > 0}
 			<form method="POST" action="?/updateScore" use:enhance={handleNewScore}>
 				<input type="hidden" name="game-id" id="game-id" value={data.gameId} />
 				<input type="hidden" name="ability-id" id="ability-id" value={abilityIdUsed} />
 
-				<div class="mt-4 space-y-6">
-					<div class="space-y-6">
-						<label
-							for="2fa-score"
-							class="text-foreground block text-center text-2xl leading-6 font-medium"
+				<div class="space-y-6">
+					<div class="space-y-2">
+						<label for="2fa-score" class="block text-center text-2xl font-bold"
 							>Enter 2FA Code</label
 						>
 						<p class="text-muted-foreground text-center text-sm">
@@ -271,7 +221,7 @@
 						{/each}
 						<input type="hidden" name="ability-id" id="ability-id" bind:value={abilityIdUsed} />
 					{/if}
-					<div class="col-span-6 sm:col-span-3">
+					<div class="relative col-span-6 sm:col-span-3">
 						{#if cooldownRemaining <= 0}
 							<Button
 								type="submit"
@@ -291,19 +241,23 @@
 								<Cooldown bind:delta={cooldownRemaining}></Cooldown>
 							</Button>
 						{/if}
+						{#if !hasUsedAbility && abilityIdUsed}
+							<div
+								transition:fly={{ duration: 300, easing: quintOut, y: -20 }}
+								class="absolute right-0 -bottom-6 left-0 text-center text-xs text-slate-500"
+							>
+								✨ Active ability will be used with this attack
+							</div>
+						{/if}
 					</div>
-					{#if !hasUsedAbility && abilityIdUsed}
-						<div class="text-center text-xs text-slate-500">
-							✨ Active ability will be used with this attack
-						</div>
-					{/if}
 				</div>
 			</form>
-		{:else}
-			<p class="text-foreground">Final scores:</p>
 		{/if}
 		<GameHighScore {players} currentPlayerId={data.session?.user.id} aiEnabled={data.aiEnabled} />
-		<h2 class="mt-6 text-center text-2xl font-bold">📣 Events</h2>
-		<GameLogs logs={data.logs} />
+		<div class="flex justify-center md:col-span-2">
+			<div class="w-full max-w-lg">
+				<GameLogs logs={data.logs} />
+			</div>
+		</div>
 	</div>
 </main>
