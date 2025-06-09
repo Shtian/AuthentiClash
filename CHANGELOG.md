@@ -1,5 +1,11 @@
 # authenticlash
 
+## 0.21.1
+
+### Patch Changes
+
+- [#120](https://github.com/Shtian/AuthentiClash/pull/120) [`063968d`](https://github.com/Shtian/AuthentiClash/commit/063968d6ca2ea5253f51641b4ca715bd169d8d52) Thanks [@Shtian](https://github.com/Shtian)! - fix prod release
+
 ## 0.21.0
 
 ### Minor Changes
