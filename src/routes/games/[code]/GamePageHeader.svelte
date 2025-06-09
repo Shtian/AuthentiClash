@@ -59,7 +59,7 @@
 	{#if aiEnabled}
 		<Popover.Root>
 			<Popover.Trigger class="w-max">
-				<Badge variant="outline">
+				<Badge variant="outline" class="cursor-pointer">
 					<Sparkles class="inline size-4" />AI Enabled
 				</Badge>
 			</Popover.Trigger>

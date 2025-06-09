@@ -252,6 +252,13 @@
 					</div>
 				</div>
 			</form>
+		{:else}
+			<div class="flex flex-col items-center gap-2">
+				<h2 class="text-foreground text-2xl font-bold">Enter 2FA Code</h2>
+				<p class="text-muted-foreground text-center text-sm">
+					Game has ended. You can still view the game logs and high scores.
+				</p>
+			</div>
 		{/if}
 		<GameHighScore {players} currentPlayerId={data.session?.user.id} aiEnabled={data.aiEnabled} />
 		<div class="flex justify-center md:col-span-2">
