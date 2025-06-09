@@ -20,7 +20,7 @@
 	});
 </script>
 
-<div class="mx-auto flow-root max-w-[1200px] px-6 lg:px-8 lg:py-10">
+<div class="mx-auto flow-root max-w-2xl px-6 lg:px-8 lg:py-10">
 	<ul role="list" class="-mb-8">
 		{#each badgeActivity as activity, index (activity.awarded_on.toISOString())}
 			<li>

@@ -62,10 +62,8 @@
 <ModeWatcher />
 <Toast />
 <Header {session} />
-<div class="mx-auto min-h-full max-w-7xl px-4 pt-8 sm:px-6 lg:pt-16">
-	<div class="mx-auto max-w-2xl">
-		{@render children?.()}
-	</div>
+<div class="mx-auto min-h-full max-w-6xl px-4 pt-8 sm:px-6 lg:pt-16">
+	{@render children?.()}
 </div>
 <Footer />
 

@@ -53,7 +53,7 @@
 
 	<!-- Y-Axis and Grid Lines -->
 	<g transform="translate({marginLeft},0)">
-		{#each yScale.ticks(2) as tick (tick)}
+		{#each yScale.ticks(5) as tick (tick)}
 			{#if tick !== 0}
 				<line
 					stroke="currentColor"
