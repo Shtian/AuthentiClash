@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { applyAction, enhance } from '$app/forms';
-	import { Calendar as CalendarIcon } from 'lucide-svelte';
+	import { Calendar as CalendarIcon, Sparkles } from 'lucide-svelte';
 	import {
 		type DateValue,
 		DateFormatter,
@@ -18,6 +18,7 @@
 	import { Textarea } from '$lib/components/ui/textarea/index.js';
 	import { predefinedPersonalityPrompts } from './personalities';
 	import { predefinedBackgroundPrompts } from './backgrounds';
+	import { Badge } from '$lib/components/ui/badge';
 
 	const df = new DateFormatter('en-US', {
 		dateStyle: 'long'
@@ -195,7 +196,11 @@
 				</div>
 				<div class="col-span-6">
 					<label for="background-prompt" class="text-foreground block text-sm leading-6 font-medium"
-						>AI avatar background prompt</label
+						>AI avatar background prompt<Badge
+							variant="secondary"
+							class="dark:bg-clash-400 bg-clash-200 ml-2 text-xs"
+							><Sparkles class="size-3" />New</Badge
+						></label
 					>
 					<p class="text-muted-foreground text-sm">
 						Use a prompt that describes the background theme for AI-generated avatars, or choose a
