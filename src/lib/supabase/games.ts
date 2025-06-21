@@ -8,6 +8,9 @@ export type Game = {
 	name: string;
 	cooldown_hours: number;
 	ai_enabled: boolean;
+	background_prompt?: string;
+	creator: string;
+	is_active: boolean;
 	participation: Participation[];
 };
 
@@ -17,7 +20,7 @@ export type EndedActiveGame = {
 };
 
 const GAME_SELECT_QUERY =
-	'id, code, creator, end_at, is_active, name, cooldown_hours, ai_enabled, participation ( id, score, total_score, profile_id, updated_at, nickname_image_url, nickname, ability_used, class_id )';
+	'id, code, creator, end_at, is_active, name, cooldown_hours, ai_enabled, background_prompt, participation ( id, score, total_score, profile_id, updated_at, nickname_image_url, nickname, ability_used, class_id )';
 
 export const getGame = async (code: string): Promise<SupabaseResponse<Game | null>> => {
 	const { data: game, error } = await supabaseServerClient
@@ -224,6 +227,29 @@ export const getGameCommentatorPersonality = async (
 	return successResponse;
 };
 
+export const getGameBackgroundPrompt = async (
+	gameId: string
+): Promise<SupabaseResponse<string>> => {
+	const { data, error } = await supabaseServerClient
+		.from('games')
+		.select('background_prompt')
+		.eq('id', gameId)
+		.single();
+
+	if (error !== null) {
+		console.error('Error getting game background prompt:', error.message);
+		const r: SupabaseResponse<string> = { type: 'error', data: null, error };
+		return r;
+	}
+
+	const successResponse: SupabaseResponse<string> = {
+		type: 'success',
+		data: data.background_prompt || '',
+		error: null
+	};
+	return successResponse;
+};
+
 const mapToGame = (data: any): Game => {
 	return {
 		id: data.id as number,
@@ -232,6 +258,9 @@ const mapToGame = (data: any): Game => {
 		ai_enabled: data.ai_enabled as boolean,
 		name: data.name as string,
 		cooldown_hours: data.cooldown_hours as number,
+		background_prompt: data.background_prompt as string | undefined,
+		creator: data.creator as string,
+		is_active: data.is_active as boolean,
 		participation: data.participation.map(mapToParticipation)
 	};
 };

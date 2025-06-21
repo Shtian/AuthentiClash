@@ -4,9 +4,12 @@ import backdrops from './backdrops.json';
 
 const openaiClient = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || OPENAI_API_KEY });
 
-export async function generateImage(username: string): Promise<string | undefined> {
+export async function generateImage(
+	username: string,
+	backgroundPrompt?: string
+): Promise<string | undefined> {
 	try {
-		const prompt = createImagePrompt(username);
+		const prompt = createImagePrompt(username, backgroundPrompt);
 		console.debug('Generating image with prompt: ', prompt);
 		const image = await openaiClient.images.generate({
 			quality: 'standard',
@@ -31,9 +34,12 @@ export async function generateImage(username: string): Promise<string | undefine
 	}
 }
 
-function createImagePrompt(username: string) {
+function createImagePrompt(username: string, backgroundPrompt?: string) {
 	const nameStrippedOfParentheses = username.replace(/\(.*\)/, '').trim();
 	const [descriptor, creature = nameStrippedOfParentheses] = nameStrippedOfParentheses.split(' ');
-	const backdrop = backdrops[Math.floor(Math.random() * backdrops.length)];
+
+	// Use provided background prompt if available, otherwise use random backdrop
+	const backdrop = backgroundPrompt || backdrops[Math.floor(Math.random() * backdrops.length)];
+
 	return `Create an image of a ${descriptor} ${creature}, with the background theme of "${backdrop}".`;
 }

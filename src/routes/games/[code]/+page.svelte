@@ -274,7 +274,12 @@
 				</p>
 			</div>
 		{/if}
-		<GameHighScore {players} currentPlayerId={data.session?.user.id} aiEnabled={data.aiEnabled} />
+		<GameHighScore
+			{players}
+			currentPlayerId={data.session?.user.id}
+			aiEnabled={data.aiEnabled}
+			gameId={data.gameId}
+		/>
 		<div class="flex justify-center md:col-span-2">
 			<div class="w-full max-w-lg">
 				<GameLogs logs={data.logs} />

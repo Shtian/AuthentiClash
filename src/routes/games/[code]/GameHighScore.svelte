@@ -14,9 +14,10 @@
 		players?: Participation[];
 		aiEnabled?: boolean;
 		currentPlayerId?: string;
+		gameId?: number;
 	}
 
-	const { players = [], aiEnabled = false, currentPlayerId = '' }: Props = $props();
+	const { players = [], aiEnabled = false, currentPlayerId = '', gameId }: Props = $props();
 
 	let isLoading = $state(false);
 
@@ -121,6 +122,7 @@
 						>
 							<input type="hidden" name="participation-id" value={player.id} />
 							<input type="hidden" name="nickname" value={player.nickname} />
+							<input type="hidden" name="game-id" value={gameId} />
 							<button
 								type="submit"
 								title="Generate participant image "
