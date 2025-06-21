@@ -1,5 +1,11 @@
 # authenticlash
 
+## 0.23.0
+
+### Minor Changes
+
+- [#127](https://github.com/Shtian/AuthentiClash/pull/127) [`5a2c765`](https://github.com/Shtian/AuthentiClash/commit/5a2c7659296ac59ecdcbf2c264ae20e2a7aebdbe) Thanks [@Shtian](https://github.com/Shtian)! - add background prompt for games
+
 ## 0.22.0
 
 ### Minor Changes
