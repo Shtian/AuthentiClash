@@ -4,7 +4,7 @@ import { updateParticipationNicknameImage } from '$lib/supabase/participation';
 import { generateImage } from '$lib/ai/image-generator';
 import { PARTICIPANT_AVATARS_BUCKET, uploadParticipantImage } from '$lib/supabase/storage';
 import { checkForValueEntryBadge } from '$lib/badges/valueEntryBadges';
-import { getGame } from '$lib/supabase/games';
+import { getGame, getGameBackgroundPrompt } from '$lib/supabase/games';
 import { getClass } from '$lib/supabase/classes';
 import { handleScoreUpdate } from './score-engine';
 import { getGameLogs } from '$lib/supabase/gameLog';
@@ -125,18 +125,16 @@ export const actions = {
 			});
 		}
 
-		// Get the game to access the background prompt
-		const gameRes = await getGame(gameId.toString());
-		if (gameRes.type === 'error' || !gameRes.data) {
-			return fail(500, {
-				message: 'Could not retrieve game information.'
-			});
+		// Get just the background prompt for the game
+		const backgroundPromptRes = await getGameBackgroundPrompt(gameId.toString());
+		if (backgroundPromptRes.type === 'error') {
+			console.error('Error getting background prompt:', backgroundPromptRes.error.message);
+			// Continue with random background if we can't get the prompt
 		}
 
-		const imageUrl = await generateImage(
-			nickname.toString(),
-			gameRes.data.background_prompt || undefined
-		);
+		const backgroundPrompt =
+			backgroundPromptRes.type === 'success' ? backgroundPromptRes.data : undefined;
+		const imageUrl = await generateImage(nickname.toString(), backgroundPrompt || undefined);
 		if (!imageUrl) {
 			return fail(500, {
 				message: 'Oh no, your image could not be generated. Please try again. 🙏'

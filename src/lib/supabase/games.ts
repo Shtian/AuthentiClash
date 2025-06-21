@@ -9,6 +9,8 @@ export type Game = {
 	cooldown_hours: number;
 	ai_enabled: boolean;
 	background_prompt?: string;
+	creator: string;
+	is_active: boolean;
 	participation: Participation[];
 };
 
@@ -225,6 +227,29 @@ export const getGameCommentatorPersonality = async (
 	return successResponse;
 };
 
+export const getGameBackgroundPrompt = async (
+	gameId: string
+): Promise<SupabaseResponse<string>> => {
+	const { data, error } = await supabaseServerClient
+		.from('games')
+		.select('background_prompt')
+		.eq('id', gameId)
+		.single();
+
+	if (error !== null) {
+		console.error('Error getting game background prompt:', error.message);
+		const r: SupabaseResponse<string> = { type: 'error', data: null, error };
+		return r;
+	}
+
+	const successResponse: SupabaseResponse<string> = {
+		type: 'success',
+		data: data.background_prompt || '',
+		error: null
+	};
+	return successResponse;
+};
+
 const mapToGame = (data: any): Game => {
 	return {
 		id: data.id as number,
@@ -234,6 +259,8 @@ const mapToGame = (data: any): Game => {
 		name: data.name as string,
 		cooldown_hours: data.cooldown_hours as number,
 		background_prompt: data.background_prompt as string | undefined,
+		creator: data.creator as string,
+		is_active: data.is_active as boolean,
 		participation: data.participation.map(mapToParticipation)
 	};
 };
