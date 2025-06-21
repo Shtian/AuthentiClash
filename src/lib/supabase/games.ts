@@ -8,6 +8,7 @@ export type Game = {
 	name: string;
 	cooldown_hours: number;
 	ai_enabled: boolean;
+	background_prompt?: string;
 	participation: Participation[];
 };
 
@@ -17,7 +18,7 @@ export type EndedActiveGame = {
 };
 
 const GAME_SELECT_QUERY =
-	'id, code, creator, end_at, is_active, name, cooldown_hours, ai_enabled, participation ( id, score, total_score, profile_id, updated_at, nickname_image_url, nickname, ability_used, class_id )';
+	'id, code, creator, end_at, is_active, name, cooldown_hours, ai_enabled, background_prompt, participation ( id, score, total_score, profile_id, updated_at, nickname_image_url, nickname, ability_used, class_id )';
 
 export const getGame = async (code: string): Promise<SupabaseResponse<Game | null>> => {
 	const { data: game, error } = await supabaseServerClient
@@ -232,6 +233,7 @@ const mapToGame = (data: any): Game => {
 		ai_enabled: data.ai_enabled as boolean,
 		name: data.name as string,
 		cooldown_hours: data.cooldown_hours as number,
+		background_prompt: data.background_prompt as string | undefined,
 		participation: data.participation.map(mapToParticipation)
 	};
 };

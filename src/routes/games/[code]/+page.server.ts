@@ -117,14 +117,26 @@ export const actions = {
 		const formData = await request.formData();
 		const nickname = formData.get('nickname');
 		const participationId = formData.get('participation-id');
+		const gameId = formData.get('game-id');
 
-		if (nickname === null || participationId === null) {
+		if (nickname === null || participationId === null || gameId === null) {
 			return fail(400, {
-				message: 'Invalid nickname or participation id.'
+				message: 'Invalid nickname, participation id, or game id.'
 			});
 		}
 
-		const imageUrl = await generateImage(nickname.toString());
+		// Get the game to access the background prompt
+		const gameRes = await getGame(gameId.toString());
+		if (gameRes.type === 'error' || !gameRes.data) {
+			return fail(500, {
+				message: 'Could not retrieve game information.'
+			});
+		}
+
+		const imageUrl = await generateImage(
+			nickname.toString(),
+			gameRes.data.background_prompt || undefined
+		);
 		if (!imageUrl) {
 			return fail(500, {
 				message: 'Oh no, your image could not be generated. Please try again. 🙏'

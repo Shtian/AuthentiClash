@@ -17,6 +17,7 @@
 	import { toast } from '$lib/stores/ToastStore.js';
 	import { Textarea } from '$lib/components/ui/textarea/index.js';
 	import { predefinedPersonalityPrompts } from './personalities';
+	import { predefinedBackgroundPrompts } from './backgrounds';
 
 	const df = new DateFormatter('en-US', {
 		dateStyle: 'long'
@@ -30,6 +31,7 @@
 	let contentRef = $state<HTMLElement | null>(null);
 
 	let commentatorPersonality = $state<string>('');
+	let backgroundPrompt = $state<string>('');
 
 	const endTime: string = form?.endTime?.toString() ?? '12:00';
 	const cooldown: string = form?.cooldown?.toString() ?? '16';
@@ -187,6 +189,37 @@
 								onclick={() => (commentatorPersonality = personality.prompt)}
 							>
 								{personality.name}
+							</Button>
+						{/each}
+					</div>
+				</div>
+				<div class="col-span-6">
+					<label for="background-prompt" class="text-foreground block text-sm leading-6 font-medium"
+						>AI avatar background prompt</label
+					>
+					<p class="text-muted-foreground text-sm">
+						Use a prompt that describes the background theme for AI-generated avatars, or choose a
+						pre-defined background below. Leave empty for random backgrounds.
+					</p>
+					<div class="mt-2">
+						<Textarea
+							name="background-prompt"
+							id="background-prompt"
+							bind:value={backgroundPrompt}
+							maxlength={512}
+							placeholder="Leave empty for random backgrounds"
+							class="text-foreground ring-foreground/10 hover:bg-muted flex-1 resize-none border-0 px-2 py-1.5 shadow-2xs ring-1 ring-inset focus:ring-[3px] focus:outline-0 sm:text-sm sm:leading-6"
+						/>
+					</div>
+					<div class="mt-2 flex flex-wrap gap-2">
+						{#each predefinedBackgroundPrompts as background (background.name)}
+							<Button
+								type="button"
+								variant="outline"
+								class="text-muted-foreground h-auto px-2 py-1 text-xs"
+								onclick={() => (backgroundPrompt = background.prompt)}
+							>
+								{background.name}
 							</Button>
 						{/each}
 					</div>
