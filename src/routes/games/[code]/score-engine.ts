@@ -15,6 +15,12 @@ export type Response<T> =
 
 type Success = { newScore: number; message: string };
 
+type PassiveAbilityResult = {
+	newScore: number;
+	description: string;
+	modified: boolean;
+};
+
 export const handleScoreUpdate = async (
 	score: number,
 	userId: string,
@@ -43,7 +49,11 @@ const tryUpdateParticipationScore = async (
 		};
 	}
 	const userParticipation = res.data;
-	const scoreAfterPassives = runPassiveAbilities(score, userParticipation);
+	const {
+		newScore: scoreAfterPassives,
+		description,
+		modified
+	} = runPassiveAbilities(score, userParticipation);
 	const updateParticipationRes = await updateParticipationScore(
 		scoreAfterPassives,
 		userParticipation
@@ -58,16 +68,12 @@ const tryUpdateParticipationScore = async (
 		};
 	}
 
-	const scoreDiff = Math.abs(scoreAfterPassives - score);
-	const scoreText =
-		scoreDiff === 0
-			? ''
-			: scoreAfterPassives > score
-				? `. Increased by ${scoreDiff} through passive abilities`
-				: `. Decreased by ${scoreDiff} through passive abilities`;
+	const scoreText = description ? `, ${description}` : '';
 	const gameLogRes = await addGameLogWithAI(
 		gameId,
-		`${userParticipation.nickname} scored ${scoreAfterPassives}${scoreText}`
+		modified
+			? `${userParticipation.nickname} scored ${score}${scoreText}, final score: ${scoreAfterPassives}`
+			: `${userParticipation.nickname} scored ${scoreAfterPassives}`
 	);
 	const message =
 		gameLogRes.type === 'success' && gameLogRes.data
@@ -417,16 +423,31 @@ const runProtectorsOathAbility = async (
 	};
 };
 
-function runPassiveAbilities(score: number, userParticipation: Participation) {
+function runFatefulFlickAbility(score: number): PassiveAbilityResult {
+	// 33% chance to gain +10 pts, otherwise lose 5 pts.
+	const random = Math.random();
+	if (random < 0.33) {
+		return {
+			newScore: score + 10,
+			description: 'Fateful Flick increased score by 10',
+			modified: true
+		};
+	} else {
+		return {
+			newScore: score - 5,
+			description: 'Fateful Flick decreased score by 5',
+			modified: true
+		};
+	}
+}
+
+function runPassiveAbilities(
+	score: number,
+	userParticipation: Participation
+): PassiveAbilityResult {
 	if (userParticipation.classId === CLASSES.DICEBLADE) {
-		// 33% chance to gain +10 pts, otherwise lose 5 pts.
-		const random = Math.random();
-		if (random < 0.33) {
-			return score + 10;
-		} else {
-			return score - 5;
-		}
+		return runFatefulFlickAbility(score);
 	}
 
-	return score;
+	return { newScore: score, description: '', modified: false };
 }
