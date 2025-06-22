@@ -1,5 +1,11 @@
 # authenticlash
 
+## 0.23.1
+
+### Patch Changes
+
+- [#129](https://github.com/Shtian/AuthentiClash/pull/129) [`3456655`](https://github.com/Shtian/AuthentiClash/commit/34566550d676315ae801e0bbeb771e5543ff767d) Thanks [@Shtian](https://github.com/Shtian)! - fix passive score context for commentator
+
 ## 0.23.0
 
 ### Minor Changes
