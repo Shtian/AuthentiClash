@@ -67,7 +67,9 @@ const tryUpdateParticipationScore = async (
 				: `. Decreased by ${scoreDiff} through passive abilities`;
 	const gameLogRes = await addGameLogWithAI(
 		gameId,
-		`${userParticipation.nickname} scored ${scoreAfterPassives}${scoreText}`
+		scoreDiff === 0
+			? `${userParticipation.nickname} scored ${scoreAfterPassives}`
+			: `${userParticipation.nickname} scored ${score}${scoreText}, final score: ${scoreAfterPassives}`
 	);
 	const message =
 		gameLogRes.type === 'success' && gameLogRes.data
