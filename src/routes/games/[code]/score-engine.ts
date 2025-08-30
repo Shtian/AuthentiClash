@@ -165,6 +165,8 @@ const runAbilityCalculations = async (
 			return runProtectorsOathAbility(score, userParticipation);
 		case ABILITIES.FINAL_WAGER:
 			return runFinalWagerAbility(score, userParticipation);
+		case ABILITIES.JUDGMENT:
+			return runJudgmentAbility(score, userParticipation);
 		default:
 			return {
 				type: 'error',
@@ -493,3 +495,62 @@ function runPassiveAbilities(
 
 	return { newScore: score, description: '', modified: false };
 }
+
+/**
+ * Judgment: Gain +10 for each opponent ahead of you (by totalScore), capped at +50.
+ */
+const runJudgmentAbility = async (
+	score: number,
+	userParticipation: Participation
+): Promise<Response<Success>> => {
+	const res = await getGameParticipations(userParticipation.gameId);
+	if (res.type === 'error') {
+		console.error('Error getting participation: ', JSON.stringify(res));
+		return {
+			type: 'error',
+			data: null,
+			error: { message: 'Oh no, something went wrong. Please try again. 🙏' }
+		};
+	}
+
+	const opponentsAhead = res.data.filter(
+		(p) =>
+			p.profileId !== userParticipation.profileId && p.totalScore > userParticipation.totalScore
+	).length;
+
+	const bonus = Math.min(50, opponentsAhead * 10);
+	const newScore = score + bonus;
+
+	const updateParticipationRes = await updateParticipationScore(newScore, userParticipation, true);
+
+	if (updateParticipationRes.type === 'error') {
+		console.error('Error updating score: ', JSON.stringify(updateParticipationRes));
+		return {
+			type: 'error',
+			error: { message: 'Oh no, something went wrong. 🙏' },
+			data: null
+		};
+	}
+
+	const msgBase = `${userParticipation.nickname} invoked Judgment`;
+	const detail =
+		opponentsAhead > 0
+			? `, with ${opponentsAhead} opponent(s) ahead granting +${bonus} points`
+			: ', but no one was ahead — no bonus gained';
+	await addGameLogWithAI(
+		userParticipation.gameId,
+		`${msgBase}${detail}, raising the entry from ${score} to ${newScore}. ⚖️`
+	);
+
+	return {
+		type: 'success',
+		data: {
+			newScore,
+			message:
+				opponentsAhead > 0
+					? `Judgment granted +${bonus} (from ${opponentsAhead} ahead).`
+					: 'Judgment used, but no one was ahead.'
+		},
+		error: null
+	};
+};

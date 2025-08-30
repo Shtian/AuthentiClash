@@ -5,6 +5,7 @@
 	import GameHighScore from './GameHighScore.svelte';
 	import {
 		Clock,
+		Gavel,
 		Crosshair,
 		Dices,
 		Flame,
@@ -175,6 +176,8 @@
 													<Crosshair class="m-auto size-8" />
 												{:else if ability.id === ABILITIES.FATEFUL_FLICK}
 													<Dices class="m-auto size-8" />
+												{:else if ability.id === ABILITIES.JUDGMENT}
+													<Gavel class="m-auto size-8" />
 												{/if}
 											</div>
 										</div>
