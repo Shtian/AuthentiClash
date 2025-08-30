@@ -517,7 +517,8 @@ const runJudgmentAbility = async (
 	const opponentsAhead = res.data.filter(
 		(p) =>
 			p.profileId !== userParticipation.profileId &&
-			p.score && p.score.length > 0 &&
+			p.score &&
+			p.score.length > 0 &&
 			p.totalScore > userParticipation.totalScore
 	).length;
 

@@ -101,7 +101,6 @@ export const actions = {
 			});
 		}
 
-
 		// Count badges unlocked by value thresholds and ability usage (e.g., Judgment Day).
 		const valueBadgeCount = await checkForValueEntryBadge(
 			scoreUpdateRes.data.newScore,
