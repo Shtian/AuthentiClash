@@ -1,5 +1,15 @@
 # authenticlash
 
+## 0.24.0
+
+### Minor Changes
+
+- [#131](https://github.com/Shtian/AuthentiClash/pull/131) [`472159e`](https://github.com/Shtian/AuthentiClash/commit/472159eaaca30d3f639f76ea3b6ddf09c5b088de) Thanks [@Shtian](https://github.com/Shtian)! - new landing page design
+
+- [#133](https://github.com/Shtian/AuthentiClash/pull/133) [`38eb41d`](https://github.com/Shtian/AuthentiClash/commit/38eb41dad1734983614e078e01be7b6599e1110c) Thanks [@Shtian](https://github.com/Shtian)! - use daily cooldowns instead of by hour
+
+- [#134](https://github.com/Shtian/AuthentiClash/pull/134) [`a507f7b`](https://github.com/Shtian/AuthentiClash/commit/a507f7be5e33f0a85b8fe1d9c421ec18525a1aa1) Thanks [@Shtian](https://github.com/Shtian)! - Add Judgement ability for the paladin
+
 ## 0.23.1
 
 ### Patch Changes
