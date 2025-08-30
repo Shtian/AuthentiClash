@@ -15,15 +15,11 @@
 	let visible = $state(false);
 	let featuresVisible = $state(false);
 	let howItWorksVisible = $state(false);
-	let reduceMotion = $state(false);
 
 	let featuresSection: HTMLElement | null = null;
 	let howItWorksSection: HTMLElement | null = null;
 
 	onMount(() => {
-		visible = true;
-		reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
 		// Intersection Observer for scroll animations
 		const observer = new IntersectionObserver(
 			(entries) => {
@@ -44,7 +40,12 @@
 		if (featuresSection) observer.observe(featuresSection);
 		if (howItWorksSection) observer.observe(howItWorksSection);
 
-		return () => observer.disconnect();
+		// Now that preference is known, reveal hero content
+		visible = true;
+
+		return () => {
+			observer.disconnect();
+		};
 	});
 </script>
 
@@ -61,15 +62,15 @@
 	{#if visible}
 		<h1
 			class="to-clash-600 bg-gradient-to-br from-purple-600 bg-clip-text text-5xl font-bold text-transparent md:text-7xl"
-			in:fly={{ y: -20, duration: reduceMotion ? 0 : 1200 }}
+			in:fly={{ y: -20, duration: 1200 }}
 		>
 			AuthentiClash
 		</h1>
 		<div
 			in:fly={{
 				y: -10,
-				duration: reduceMotion ? 0 : 900,
-				delay: reduceMotion ? 0 : 400,
+				duration: 900,
+				delay: 400,
 				opacity: 0
 			}}
 		>
@@ -92,8 +93,8 @@
 		<div
 			in:scale={{
 				start: 0,
-				duration: reduceMotion ? 0 : 200,
-				delay: reduceMotion ? 0 : 900,
+				duration: 200,
+				delay: 900,
 				opacity: 0
 			}}
 		>
@@ -123,7 +124,7 @@
 		{#if featuresVisible}
 			<div
 				class="grid grid-cols-1 gap-4 md:auto-rows-[minmax(0,1fr)] md:grid-cols-6 md:grid-rows-2"
-				in:fly={{ y: 20, duration: reduceMotion ? 0 : 800, delay: reduceMotion ? 0 : 200 }}
+				in:fly={{ y: 20, duration: 800, delay: 200 }}
 			>
 				<!-- Multiplayer Adventures - Large card -->
 				<div
@@ -203,10 +204,7 @@
 		</div>
 
 		{#if howItWorksVisible}
-			<div
-				class="grid gap-8 md:grid-cols-3"
-				in:fly={{ y: 20, duration: reduceMotion ? 0 : 800, delay: reduceMotion ? 0 : 200 }}
-			>
+			<div class="grid gap-8 md:grid-cols-3" in:fly={{ y: 20, duration: 800, delay: 200 }}>
 				<div class="space-y-8 text-center">
 					<div
 						class="to-clash-600 mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-purple-600 text-xl font-bold text-white"

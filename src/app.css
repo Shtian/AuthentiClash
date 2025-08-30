@@ -156,4 +156,15 @@
 	input[type='number'] {
 		-moz-appearance: textfield;
 	}
+
+	/* Respect prefers-reduced-motion globally: disable animations/transitions */
+	@media (prefers-reduced-motion: reduce) {
+		*,
+		*::before,
+		*::after {
+			animation: none !important;
+			transition: none !important;
+			scroll-behavior: auto !important;
+		}
+	}
 }
