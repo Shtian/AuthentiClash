@@ -23,8 +23,9 @@ export const checkForAbilityBadge = async (
 		const me = res.data.find((p) => p.profileId === userId);
 		if (!me) return 0;
 
+		// Only count players with at least one entered score
 		const ahead = res.data.filter(
-			(p) => p.profileId !== userId && p.totalScore > me.totalScore
+			(p) => p.profileId !== userId && p.score && p.score.length > 0 && p.totalScore > me.totalScore
 		).length;
 		if (ahead >= 5) {
 			const unlockRes = await tryUnlockBadge('judgment-day', userId);

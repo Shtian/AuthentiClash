@@ -513,9 +513,12 @@ const runJudgmentAbility = async (
 		};
 	}
 
+	// Only count opponents who have actually entered at least one score.
 	const opponentsAhead = res.data.filter(
 		(p) =>
-			p.profileId !== userParticipation.profileId && p.totalScore > userParticipation.totalScore
+			p.profileId !== userParticipation.profileId &&
+			p.score && p.score.length > 0 &&
+			p.totalScore > userParticipation.totalScore
 	).length;
 
 	const bonus = Math.min(50, opponentsAhead * 10);
