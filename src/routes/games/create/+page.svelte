@@ -35,7 +35,6 @@
 	let backgroundPrompt = $state<string>('');
 
 	const endTime: string = form?.endTime?.toString() ?? '12:00';
-	const cooldown: string = form?.cooldown?.toString() ?? '16';
 	let isLoading = $state(false);
 
 	const handleSubmit: SubmitFunction = () => {
@@ -88,30 +87,6 @@
 					</div>
 				</div>
 
-				<div class="col-span-6">
-					<label for="2fa-cooldown" class="text-foreground block text-sm leading-6 font-medium"
-						>2FA Entry Cooldown (0-24h)</label
-					>
-					<div class="text-muted-foreground text-xs">
-						Limit how often players can enter 2FA values
-					</div>
-					<div class="mt-2 max-w-12">
-						<div
-							class="focus-within:ring-ring ring-foreground/10 hover:bg-muted flex rounded-md bg-white/5 shadow-2xs ring-1 ring-inset focus-within:ring-2 focus-within:ring-inset"
-						>
-							<input
-								type="number"
-								name="2fa-cooldown"
-								id="2fa-cooldown"
-								value={cooldown}
-								required
-								min="0"
-								max="24"
-								class="text-foreground flex-1 border-0 bg-transparent py-1.5 pl-2 focus:outline-0 sm:text-sm sm:leading-6"
-							/>
-						</div>
-					</div>
-				</div>
 				<div class="col-span-4 sm:col-span-3">
 					<label for="end-date" class="text-foreground block text-sm leading-6 font-medium"
 						>End date</label
