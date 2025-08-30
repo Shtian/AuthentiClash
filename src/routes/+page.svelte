@@ -107,7 +107,10 @@
 </section>
 
 <!-- Features Section -->
-<section bind:this={featuresSection} class="features-section bg-muted/30 rounded-md px-4 py-20">
+<section
+	bind:this={featuresSection}
+	class="features-section dark:bg-muted/30 rounded-md px-4 py-20"
+>
 	<div class="mx-auto max-w-7xl">
 		<div class="mb-16 text-center">
 			<h2 class="mb-6 text-4xl font-bold md:text-5xl">Why Choose AuthentiClash?</h2>
@@ -149,8 +152,9 @@
 					</div>
 					<h3 class="mb-3 text-xl font-semibold">Daily Code + Skills</h3>
 					<p class="text-muted-foreground">
-						Enter a two‑digit code every day to build your score. Choose a class and time your
-						once‑per‑game skill—some classes also have a passive skill.
+						Enter a two-digit 2FA code each day to grow your score. No one’s checking, it’s all on
+						the honor system. Pick a class, time your once-per-game skill, and see if you can
+						outsmart the rest.
 					</p>
 				</div>
 
