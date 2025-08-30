@@ -37,7 +37,8 @@
 					}
 				});
 			},
-			{ threshold: 0.1 }
+			// Trigger a bit later so the animation starts deeper in view
+			{ threshold: 0.35, rootMargin: '0px 0px -15% 0px' }
 		);
 
 		featuresSection && observer.observe(featuresSection);
@@ -59,7 +60,7 @@
 <section class=" flex min-h-screen flex-col items-center justify-center px-4 py-20 text-center">
 	{#if visible}
 		<h1
-			class="to-clash-200 from-foreground bg-gradient-to-br bg-clip-text text-5xl font-bold text-transparent md:text-7xl"
+			class="to-clash-600 bg-gradient-to-br from-purple-600 bg-clip-text text-5xl font-bold text-transparent md:text-7xl"
 			in:fly={{ y: -20, duration: reduceMotion ? 0 : 1200 }}
 		>
 			AuthentiClash
@@ -73,25 +74,17 @@
 			}}
 		>
 			<p class="text-muted-foreground mx-auto mt-6 max-w-3xl text-xl md:text-2xl">
-				Log in and create or join a time‑constrained, week‑long game. Pick a class and name, enter a
-				two‑digit code each day, and use your once‑per‑game skill. Compete for the highest
-				accumulated score. Includes badges, AI commentators, AI avatar generation, and a stats
-				overview.
+				Join or create a week-long game. Pick a class, enter a daily two-digit code, and unleash
+				your skill. Climb the leaderboard, earn badges, and enjoy AI avatars, commentators, and
+				stats.
 			</p>
 			<div class="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
 				<a
 					href="/games"
-					class="bg-clash-500 hover:bg-clash-400 focus-visible:outline-clash-500 text-background dark:text-foreground inline-flex items-center gap-x-2 rounded-lg px-6 py-3 text-lg font-semibold shadow-lg transition-all duration-200 hover:shadow-xl focus-visible:outline-2 focus-visible:outline-offset-2"
+					class="to-clash-600 hover:to-clash-500 focus-visible:outline-clash-500 inline-flex items-center gap-x-2 rounded-lg bg-gradient-to-br from-purple-600 px-6 py-3 text-lg font-semibold text-white shadow-lg transition-all duration-200 hover:from-purple-500 hover:shadow-xl focus-visible:outline-2 focus-visible:outline-offset-2"
 				>
 					<Play class="h-5 w-5" />
 					Start Your Adventure
-				</a>
-				<a
-					href="/games/create"
-					class="border-clash-500 text-clash-500 hover:bg-clash-500 hover:text-background dark:hover:text-foreground inline-flex items-center gap-x-2 rounded-lg border px-6 py-3 text-lg font-semibold transition-all duration-200"
-				>
-					Create Game
-					<ArrowRightCircle class="h-5 w-5" />
 				</a>
 			</div>
 		</div>
@@ -114,7 +107,7 @@
 </section>
 
 <!-- Features Section -->
-<section bind:this={featuresSection} class="features-section bg-muted/30 px-4 py-20">
+<section bind:this={featuresSection} class="features-section bg-muted/30 rounded-md px-4 py-20">
 	<div class="mx-auto max-w-7xl">
 		<div class="mb-16 text-center">
 			<h2 class="mb-6 text-4xl font-bold md:text-5xl">Why Choose AuthentiClash?</h2>
@@ -133,8 +126,10 @@
 				<div
 					class="bg-background border-border rounded-xl border p-8 shadow-lg transition-all duration-300 hover:shadow-xl md:col-span-3 md:row-span-2"
 				>
-					<div class="bg-clash-500/10 mb-6 flex h-16 w-16 items-center justify-center rounded-xl">
-						<Users class="text-clash-500 h-8 w-8" />
+					<div
+						class="to-clash-600 mb-6 flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br from-purple-600 text-white"
+					>
+						<Users class="h-8 w-8" />
 					</div>
 					<h3 class="mb-4 text-2xl font-semibold">Time‑Boxed Multiplayer</h3>
 					<p class="text-muted-foreground text-lg leading-relaxed">
@@ -147,8 +142,10 @@
 				<div
 					class="bg-background border-border rounded-xl border p-6 shadow-lg transition-all duration-300 hover:shadow-xl md:col-span-3"
 				>
-					<div class="bg-clash-500/10 mb-4 flex h-12 w-12 items-center justify-center rounded-lg">
-						<Gamepad2 class="text-clash-500 h-6 w-6" />
+					<div
+						class="to-clash-600 mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-purple-600 text-white"
+					>
+						<Gamepad2 class="h-6 w-6" />
 					</div>
 					<h3 class="mb-3 text-xl font-semibold">Daily Code + Skills</h3>
 					<p class="text-muted-foreground">
@@ -161,8 +158,10 @@
 				<div
 					class="bg-background border-border rounded-xl border p-6 shadow-lg transition-all duration-300 hover:shadow-xl md:col-span-2"
 				>
-					<div class="bg-clash-500/10 mb-3 flex h-10 w-10 items-center justify-center rounded-lg">
-						<Trophy class="text-clash-500 h-5 w-5" />
+					<div
+						class="to-clash-600 mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-purple-600 text-white"
+					>
+						<Trophy class="h-5 w-5" />
 					</div>
 					<h3 class="mb-2 text-lg font-semibold">Badges & Leaderboards</h3>
 					<p class="text-muted-foreground text-sm">
@@ -174,8 +173,10 @@
 				<div
 					class="bg-background border-border rounded-xl border p-6 shadow-lg transition-all duration-300 hover:shadow-xl md:col-span-1"
 				>
-					<div class="bg-clash-500/10 mb-3 flex h-10 w-10 items-center justify-center rounded-lg">
-						<Star class="text-clash-500 h-5 w-5" />
+					<div
+						class="to-clash-600 mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-purple-600 text-white"
+					>
+						<Star class="h-5 w-5" />
 					</div>
 					<h3 class="mb-2 text-lg font-semibold">AI Commentary & Avatars</h3>
 					<p class="text-muted-foreground text-sm">
@@ -203,11 +204,8 @@
 				in:fly={{ y: 20, duration: reduceMotion ? 0 : 800, delay: reduceMotion ? 0 : 200 }}
 			>
 				<div class="space-y-8 text-center">
-					<div class="bg-muted/50 flex h-48 items-center justify-center rounded-lg p-4">
-						<div class="text-muted-foreground text-sm">Game Creation Interface</div>
-					</div>
 					<div
-						class="bg-clash-500 text-background mx-auto flex h-16 w-16 items-center justify-center rounded-full text-xl font-bold"
+						class="to-clash-600 mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-purple-600 text-xl font-bold text-white"
 					>
 						1
 					</div>
@@ -219,11 +217,8 @@
 				</div>
 
 				<div class="space-y-8 text-center">
-					<div class="bg-muted/50 flex h-48 items-center justify-center rounded-lg p-4">
-						<div class="text-muted-foreground text-sm">Gameplay Interface</div>
-					</div>
 					<div
-						class="bg-clash-500 text-background mx-auto flex h-16 w-16 items-center justify-center rounded-full text-xl font-bold"
+						class="to-clash-600 mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-purple-600 text-xl font-bold text-white"
 					>
 						2
 					</div>
@@ -235,11 +230,8 @@
 				</div>
 
 				<div class="space-y-8 text-center">
-					<div class="bg-muted/50 flex h-48 items-center justify-center rounded-lg p-4">
-						<div class="text-muted-foreground text-sm">Stats & Achievements</div>
-					</div>
 					<div
-						class="bg-clash-500 text-background mx-auto flex h-16 w-16 items-center justify-center rounded-full text-xl font-bold"
+						class="to-clash-600 mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-purple-600 text-xl font-bold text-white"
 					>
 						3
 					</div>
@@ -255,31 +247,26 @@
 </section>
 
 <!-- CTA Section -->
-<section class="from-clash-500 to-clash-600 bg-gradient-to-r px-4 py-20">
+<section class="to-clash-600 rounded-md bg-gradient-to-r from-purple-600 px-4 py-20">
 	<div class="mx-auto max-w-4xl text-center">
-		<h2 class="text-background mb-6 text-4xl font-bold md:text-5xl">
+		<h2
+			class="text-background mb-6 text-4xl font-bold text-shadow-white/30 text-shadow-xs md:text-5xl"
+		>
 			Ready to Create or Join a Clash?
 		</h2>
-		<p class="text-clash-100 mx-auto mb-8 max-w-2xl text-xl">
+		<p class=" mx-auto mb-8 max-w-2xl text-xl">
 			Pick a class, enter a two‑digit code daily, and compete for the highest weekly score.
 		</p>
 		<div class="flex flex-col justify-center gap-4 sm:flex-row">
 			<a
-				href="/games"
-				class="bg-background text-clash-600 hover:bg-clash-50 inline-flex items-center gap-x-2 rounded-lg px-8 py-4 text-lg font-semibold shadow-lg transition-all duration-200 hover:shadow-xl"
-			>
-				<Play class="h-5 w-5" />
-				Start Playing Now
-			</a>
-			<a
 				href="/games/create"
-				class="border-background text-background hover:bg-background hover:text-clash-600 inline-flex items-center gap-x-2 rounded-lg border-2 px-8 py-4 text-lg font-semibold transition-all duration-200"
+				class="inline-flex items-center gap-x-2 rounded-lg border border-white/30 bg-white/15 px-8 py-4 text-lg font-semibold text-white shadow-lg backdrop-blur-md transition-all duration-200 hover:border-white/40 hover:bg-white/25 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/70"
 			>
-				Create Your Game
+				Start your adventure
 				<ArrowRightCircle class="h-5 w-5" />
 			</a>
 		</div>
-		<div class="text-clash-100 mt-12 flex items-center justify-center gap-8">
+		<div class="mt-12 flex items-center justify-center gap-8">
 			<div class="flex items-center gap-2">
 				<CheckCircle class="h-5 w-5" />
 				<span>Free to Play</span>
