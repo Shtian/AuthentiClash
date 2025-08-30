@@ -8,6 +8,7 @@ import {
 	updateParticipationScore,
 	type Participation
 } from '$lib/supabase/participation';
+import { msUntilNextUtcMidnight, isSameUtcDay } from '$lib/utils/dateUtils';
 
 export type Response<T> =
 	| { type: 'success'; data: T; error: null }
@@ -27,6 +28,47 @@ export const handleScoreUpdate = async (
 	gameId: string,
 	abilityId: string | null
 ): Promise<Response<Success>> => {
+	// Server-side cooldown enforcement
+	const participationRes = await getParticipation(userId, gameId);
+	if (participationRes.type === 'error') {
+		console.error(
+			'Error getting participation for cooldown check: ',
+			JSON.stringify(participationRes.error)
+		);
+		return {
+			type: 'error',
+			data: null,
+			error: { message: 'Oh no, something went wrong. Please try again. 🙏' }
+		};
+	}
+
+	const lastUpdatedISO = participationRes.data.updatedAt as string | null;
+	if (lastUpdatedISO) {
+		const now = new Date();
+		const lastUpdated = new Date(lastUpdatedISO);
+		if (isSameUtcDay(lastUpdated, now)) {
+			const remainingMs = msUntilNextUtcMidnight(now);
+			if (remainingMs > 0) {
+				const totalSeconds = Math.ceil(remainingMs / 1000);
+				const days = Math.floor(totalSeconds / 86400);
+				const hours = Math.floor((totalSeconds % 86400) / 3600);
+				const minutes = Math.floor((totalSeconds % 3600) / 60);
+				const parts: string[] = [];
+				if (days > 0) parts.push(`${days}d`);
+				if (hours > 0 || days > 0) parts.push(`${hours}h`);
+				parts.push(`${minutes}m`);
+				const humanRemaining = parts.join(' ');
+				return {
+					type: 'error',
+					data: null,
+					error: {
+						message: `Nice try, punk. Daily limit reached. Try again in ${humanRemaining}.`
+					}
+				};
+			}
+		}
+	}
+
 	if (!abilityId) {
 		return await tryUpdateParticipationScore(score, userId, gameId);
 	}

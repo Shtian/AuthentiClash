@@ -250,6 +250,28 @@ export const getGameBackgroundPrompt = async (
 	return successResponse;
 };
 
+export const getGameCooldownHoursById = async (
+	gameId: string
+): Promise<SupabaseResponse<number>> => {
+	const { data, error } = await supabaseServerClient
+		.from('games')
+		.select('cooldown_hours')
+		.eq('id', gameId)
+		.single();
+
+	if (error !== null) {
+		const r: SupabaseResponse<number> = { type: 'error', data: null, error };
+		return r;
+	}
+
+	const successResponse: SupabaseResponse<number> = {
+		type: 'success',
+		data: data.cooldown_hours as number,
+		error: null
+	};
+	return successResponse;
+};
+
 const mapToGame = (data: any): Game => {
 	return {
 		id: data.id as number,

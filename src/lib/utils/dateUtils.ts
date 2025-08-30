@@ -57,3 +57,29 @@ export function timeUntilCooldownEnds(lastUpdatedISO: string | null, cooldownHou
 
 	return Math.max(0, remainingTimeMillis);
 }
+
+// Returns true if both dates are on the same UTC calendar day
+export function isSameUtcDay(a: Date, b: Date): boolean {
+	return (
+		a.getUTCFullYear() === b.getUTCFullYear() &&
+		a.getUTCMonth() === b.getUTCMonth() &&
+		a.getUTCDate() === b.getUTCDate()
+	);
+}
+
+// Milliseconds until the next UTC midnight from the given date (default: now)
+export function msUntilNextUtcMidnight(from: Date = new Date()): number {
+	const next = new Date(
+		Date.UTC(from.getUTCFullYear(), from.getUTCMonth(), from.getUTCDate() + 1, 0, 0, 0, 0)
+	);
+	return Math.max(0, next.getTime() - from.getTime());
+}
+
+// Daily cooldown helper: 0 if last update wasn't today (UTC) or null; otherwise ms until next UTC midnight
+export function timeUntilDailyCooldownEnds(lastUpdatedISO: string | null): number {
+	if (!lastUpdatedISO) return 0;
+	const lastUpdated = new Date(lastUpdatedISO);
+	const now = new Date();
+	if (!isSameUtcDay(lastUpdated, now)) return 0;
+	return msUntilNextUtcMidnight(now);
+}

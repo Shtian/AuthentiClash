@@ -1,7 +1,7 @@
 <script lang="ts">
 	import InlineMessage from '$lib/components/InlineMessage.svelte';
 	import { page } from '$app/state';
-	import { formatTimeDelta, timeUntilCooldownEnds } from '$lib/utils/dateUtils.js';
+	import { formatTimeDelta, timeUntilDailyCooldownEnds } from '$lib/utils/dateUtils.js';
 	import GameHighScore from './GameHighScore.svelte';
 	import {
 		Clock,
@@ -40,9 +40,7 @@
 	);
 	const players = $derived(data.players);
 
-	let cooldownRemaining = $state(
-		timeUntilCooldownEnds(data.currentPlayer?.updatedAt, data.cooldownHours)
-	);
+	let cooldownRemaining = $state(timeUntilDailyCooldownEnds(data.currentPlayer?.updatedAt));
 
 	const millisecondsToEnd = new Date(data.endsAt).getTime();
 	let millisecondsNow = new Date().getTime();
@@ -92,7 +90,7 @@
 					duration: 15000
 				});
 				if (result.data) {
-					cooldownRemaining = timeUntilCooldownEnds(new Date().toISOString(), data.cooldownHours);
+					cooldownRemaining = timeUntilDailyCooldownEnds(new Date().toISOString());
 				}
 			}
 			if (result.type === 'failure') {

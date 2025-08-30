@@ -14,7 +14,6 @@ export const actions = {
 	create: async ({ request, locals: { supabase, safeGetSession } }) => {
 		const formData = await request.formData();
 		const name = formData.get('game-name');
-		const cooldown = formData.get('2fa-cooldown');
 		const commentatorPersonality = formData.get('commentator-personality');
 		const backgroundPrompt = formData.get('background-prompt');
 		const endDate = formData.get('end-date');
@@ -28,7 +27,6 @@ export const actions = {
 				name,
 				endDate,
 				endTime,
-				cooldown,
 				message: 'Could not find an active session, please try logging in again. 🙏'
 			});
 		}
@@ -40,7 +38,7 @@ export const actions = {
 			code: generatedId,
 			creator: session.user.id,
 			is_active: true,
-			cooldown_hours: cooldown,
+			cooldown_hours: '24', // trying out a daily cooldown instead of using this field
 			created_at: new Date(),
 			updated_at: new Date(),
 			commentator_personality: commentatorPersonality,
@@ -55,7 +53,6 @@ export const actions = {
 				name,
 				endDate,
 				endTime,
-				cooldown,
 				message: 'Error creating game. Please try again. 🙏'
 			});
 		}
