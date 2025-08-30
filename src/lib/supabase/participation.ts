@@ -75,7 +75,7 @@ export const updateParticipationScore = async (
 	const existingScore = existingParticipation.score || [];
 	const newScore = [...existingScore, score];
 	const newTotalScore = newScore.reduce((acc, curr) => acc + curr, 0);
-	const { data, error } = await supabase
+	const { data, error } = await supabaseServerClient
 		.from('participation')
 		.update({
 			score: newScore,
@@ -107,7 +107,7 @@ export const updateParticipationNicknameImage = async (
 	nicknameImageUrl: string,
 	participationId: string
 ): Promise<SupabaseResponse<Participation>> => {
-	const { data, error } = await supabase
+	const { data, error } = await supabaseServerClient
 		.from('participation')
 		.update({ nickname_image_url: nicknameImageUrl })
 		.eq('id', participationId)
@@ -146,7 +146,7 @@ export const addParticipation = async (
 		created_at: new Date(),
 		updated_at: new Date()
 	};
-	const { data, error } = await supabase
+	const { data, error } = await supabaseServerClient
 		.from('participation')
 		.insert(participationData)
 		.select()
