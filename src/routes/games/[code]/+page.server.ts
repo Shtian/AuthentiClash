@@ -4,6 +4,7 @@ import { updateParticipationNicknameImage } from '$lib/supabase/participation';
 import { generateImage } from '$lib/ai/image-generator';
 import { PARTICIPANT_AVATARS_BUCKET, uploadParticipantImage } from '$lib/supabase/storage';
 import { checkForValueEntryBadge } from '$lib/badges/valueEntryBadges';
+import { checkForAbilityBadge } from '$lib/badges/abilityBadges';
 import { getGame, getGameBackgroundPrompt } from '$lib/supabase/games';
 import { getClass } from '$lib/supabase/classes';
 import { handleScoreUpdate } from './score-engine';
@@ -100,7 +101,18 @@ export const actions = {
 			});
 		}
 
-		const badgeRes = await checkForValueEntryBadge(scoreUpdateRes.data.newScore, session.user.id);
+
+		// Count badges unlocked by value thresholds and ability usage (e.g., Judgment Day).
+		const valueBadgeCount = await checkForValueEntryBadge(
+			scoreUpdateRes.data.newScore,
+			session.user.id
+		);
+		const abilityBadgeCount = await checkForAbilityBadge(
+			abilityId,
+			session.user.id,
+			game_id!.toString()
+		);
+		const badgeRes = valueBadgeCount + abilityBadgeCount;
 
 		return {
 			message: scoreUpdateRes.data.message,
