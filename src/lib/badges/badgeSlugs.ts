@@ -25,4 +25,5 @@ export type BadgeSlug =
 	| 'lean-mean-authenticlash-machine'
 	| 'wouldnt-stick-out-in-a-crowd-of-one'
 	| 'lucky-in-love'
+	| 'judgment-day'
 	| 'literally-cant-believe-it';

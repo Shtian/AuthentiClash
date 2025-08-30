@@ -1,9 +1,14 @@
 import { error, fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
-import { updateParticipationNicknameImage } from '$lib/supabase/participation';
+import {
+	updateParticipationNicknameImage,
+	getGameParticipations,
+	type Participation
+} from '$lib/supabase/participation';
 import { generateImage } from '$lib/ai/image-generator';
 import { PARTICIPANT_AVATARS_BUCKET, uploadParticipantImage } from '$lib/supabase/storage';
 import { checkForValueEntryBadge } from '$lib/badges/valueEntryBadges';
+import { checkForAbilityBadge } from '$lib/badges/abilityBadges';
 import { getGame, getGameBackgroundPrompt } from '$lib/supabase/games';
 import { getClass } from '$lib/supabase/classes';
 import { handleScoreUpdate } from './score-engine';
@@ -84,6 +89,17 @@ export const actions = {
 			});
 		}
 
+		// Capture pre-ability participation state for consistent badge evaluation
+		let preParticipations: Participation[] | undefined;
+		let mePre: Participation | undefined;
+		if (abilityId) {
+			const preRes = await getGameParticipations(game_id!.toString());
+			if (preRes.type === 'success') {
+				preParticipations = preRes.data;
+				mePre = preParticipations.find((p) => p.profileId === session.user!.id);
+			}
+		}
+
 		const scoreUpdateRes = await handleScoreUpdate(
 			score,
 			session.user.id,
@@ -100,7 +116,18 @@ export const actions = {
 			});
 		}
 
-		const badgeRes = await checkForValueEntryBadge(scoreUpdateRes.data.newScore, session.user.id);
+		// Count badges unlocked by value thresholds and ability usage (e.g., Judgment Day).
+		const valueBadgeCount = await checkForValueEntryBadge(
+			scoreUpdateRes.data.newScore,
+			session.user.id
+		);
+		const abilityBadgeCount = await checkForAbilityBadge(
+			abilityId,
+			session.user.id,
+			game_id!.toString(),
+			{ preParticipation: mePre, preParticipations }
+		);
+		const badgeRes = valueBadgeCount + abilityBadgeCount;
 
 		return {
 			message: scoreUpdateRes.data.message,
