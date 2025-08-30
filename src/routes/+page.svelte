@@ -41,8 +41,8 @@
 			{ threshold: 0.35, rootMargin: '0px 0px -15% 0px' }
 		);
 
-		featuresSection && observer.observe(featuresSection);
-		howItWorksSection && observer.observe(howItWorksSection);
+		if (featuresSection) observer.observe(featuresSection);
+		if (howItWorksSection) observer.observe(howItWorksSection);
 
 		return () => observer.disconnect();
 	});
