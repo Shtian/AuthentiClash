@@ -8,4 +8,4 @@ VALUES (
   'judgment-day',
   'https://mzuhtoiuhpkczppcdwza.supabase.co/storage/v1/object/public/badges/judgment-day.webp',
   28
-);
+)
