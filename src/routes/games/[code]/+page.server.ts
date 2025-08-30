@@ -1,6 +1,10 @@
 import { error, fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
-import { updateParticipationNicknameImage } from '$lib/supabase/participation';
+import {
+	updateParticipationNicknameImage,
+	getGameParticipations,
+	type Participation
+} from '$lib/supabase/participation';
 import { generateImage } from '$lib/ai/image-generator';
 import { PARTICIPANT_AVATARS_BUCKET, uploadParticipantImage } from '$lib/supabase/storage';
 import { checkForValueEntryBadge } from '$lib/badges/valueEntryBadges';
@@ -85,6 +89,17 @@ export const actions = {
 			});
 		}
 
+		// Capture pre-ability participation state for consistent badge evaluation
+		let preParticipations: Participation[] | undefined;
+		let mePre: Participation | undefined;
+		if (abilityId) {
+			const preRes = await getGameParticipations(game_id!.toString());
+			if (preRes.type === 'success') {
+				preParticipations = preRes.data;
+				mePre = preParticipations.find((p) => p.profileId === session.user!.id);
+			}
+		}
+
 		const scoreUpdateRes = await handleScoreUpdate(
 			score,
 			session.user.id,
@@ -109,7 +124,8 @@ export const actions = {
 		const abilityBadgeCount = await checkForAbilityBadge(
 			abilityId,
 			session.user.id,
-			game_id!.toString()
+			game_id!.toString(),
+			{ preParticipation: mePre, preParticipations }
 		);
 		const badgeRes = valueBadgeCount + abilityBadgeCount;
 
