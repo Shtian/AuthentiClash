@@ -1,5 +1,13 @@
 # authenticlash
 
+## 0.26.0
+
+### Minor Changes
+
+- [#138](https://github.com/Shtian/AuthentiClash/pull/138) [`c1458cd`](https://github.com/Shtian/AuthentiClash/commit/c1458cdcda3562f3a0bbdaf0b957a426d9272911) Thanks [@Shtian](https://github.com/Shtian)! - Use gpt-image-1 for image generation of end game images
+
+- [#139](https://github.com/Shtian/AuthentiClash/pull/139) [`800b22d`](https://github.com/Shtian/AuthentiClash/commit/800b22d262587743885d858ce53815269aaf4425) Thanks [@Shtian](https://github.com/Shtian)! - Use gpt-5-nano for commentator
+
 ## 0.25.0
 
 ### Minor Changes
