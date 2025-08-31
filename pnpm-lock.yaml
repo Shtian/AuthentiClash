@@ -33,8 +33,8 @@ importers:
         specifier: 0.5.1
         version: 0.5.1(svelte@5.33.14)
       openai:
-        specifier: ^5.0.1
-        version: 5.0.1(ws@8.18.2)
+        specifier: ^5.16.0
+        version: 5.16.0(ws@8.18.2)
       sharp:
         specifier: ^0.33.5
         version: 0.33.5
@@ -2620,8 +2620,8 @@ packages:
     resolution: {integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==}
     engines: {node: '>=0.10.0'}
 
-  openai@5.0.1:
-    resolution: {integrity: sha512-Do6vxhbDv7cXhji/4ct1lrpZYMAOmjYbhyA9LJTuG7OfpbWMpuS+EIXkRT7R+XxpRB1OZhU/op4FU3p3uxU6gw==}
+  openai@5.16.0:
+    resolution: {integrity: sha512-hoEH8ZNvg1HXjU9mp88L/ZH8O082Z8r6FHCXGiWAzVRrEv443aI57qhch4snu07yQydj+AUAWLenAiBXhu89Tw==}
     hasBin: true
     peerDependencies:
       ws: ^8.18.0
@@ -6042,7 +6042,7 @@ snapshots:
 
   normalize-path@3.0.0: {}
 
-  openai@5.0.1(ws@8.18.2):
+  openai@5.16.0(ws@8.18.2):
     optionalDependencies:
       ws: 8.18.2
 
