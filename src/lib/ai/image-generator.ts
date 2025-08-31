@@ -65,6 +65,32 @@ export async function generateEndgameImage(
 	}
 }
 
+export async function generateEndgameImageB64(
+	winnerName: string,
+	competitors: string[],
+	backgroundPrompt?: string
+): Promise<string | undefined> {
+	try {
+		const prompt = createEndgameImagePrompt(winnerName, competitors, backgroundPrompt);
+		console.debug('Generating endgame image with gpt-image-1, prompt: ', prompt);
+		const image = await openaiClient.images.generate({
+			model: 'gpt-image-1',
+			size: '1024x1024',
+			prompt
+		});
+
+		const b64 = image.data?.[0]?.b64_json;
+		if (!b64) {
+			console.error('No b64 image data returned from OpenAI for endgame image');
+			return undefined;
+		}
+		return b64;
+	} catch (error) {
+		console.error('Error generating endgame image with gpt-image-1: ', error);
+		return undefined;
+	}
+}
+
 function createImagePrompt(username: string, backgroundPrompt?: string) {
 	const nameStrippedOfParentheses = username.replace(/\(.*\)/, '').trim();
 	const [descriptor, creature = nameStrippedOfParentheses] = nameStrippedOfParentheses.split(' ');

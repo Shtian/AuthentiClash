@@ -5,12 +5,12 @@ import {
 	getGameParticipations,
 	type Participation
 } from '$lib/supabase/participation';
-import { generateImage, generateEndgameImage } from '$lib/ai/image-generator';
+import { generateImage, generateEndgameImageB64 } from '$lib/ai/image-generator';
 import {
-	PARTICIPANT_AVATARS_BUCKET,
-	uploadParticipantImage,
-	GAME_IMAGES_BUCKET,
-	uploadGameImage
+    PARTICIPANT_AVATARS_BUCKET,
+    uploadParticipantImage,
+    GAME_IMAGES_BUCKET,
+    uploadGameImageFromBase64
 } from '$lib/supabase/storage';
 import { checkForValueEntryBadge } from '$lib/badges/valueEntryBadges';
 import { checkForAbilityBadge } from '$lib/badges/abilityBadges';
@@ -232,12 +232,12 @@ export const actions = {
 		const competitors = players.slice(1).map((p) => p.nickname);
 		const backgroundPrompt = bgPromptRes.type === 'success' ? bgPromptRes.data : undefined;
 
-		const imageUrl = await generateEndgameImage(winner.nickname, competitors, backgroundPrompt);
-		if (!imageUrl) {
+		const b64 = await generateEndgameImageB64(winner.nickname, competitors, backgroundPrompt);
+		if (!b64) {
 			return fail(500, { message: 'Could not generate endgame image. Please try again.' });
 		}
 
-		const uploadRes = await uploadGameImage(imageUrl, gameId.toString());
+		const uploadRes = await uploadGameImageFromBase64(b64, gameId.toString());
 		if (uploadRes.type === 'error' || !uploadRes.data?.fullPath) {
 			return fail(500, { message: 'Could not upload endgame image. Please try again.' });
 		}
