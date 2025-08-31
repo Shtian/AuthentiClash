@@ -485,15 +485,43 @@ function runFatefulFlickAbility(score: number): PassiveAbilityResult {
 	}
 }
 
+function runBerserkersReprisalPassive(
+	score: number,
+	userParticipation: Participation
+): PassiveAbilityResult {
+	// Barbarian passive: Berserker's Reprisal
+	// - Gain a Rage stack each time you score a negative value (tracked implicitly via history)
+	// - Max 3 stacks. Positive scores get a tiered boost based on stacks: 1=+15%, 2=+20%, 3=+25%
+	// - Stacks are NOT consumed; no cooldown; negatives are unaffected.
+	const history = userParticipation.score || [];
+	const priorNegatives = history.filter((v) => v < 0).length;
+	const stacks = Math.min(3, priorNegatives);
+
+	if (stacks > 0 && score > 0) {
+		const pct = stacks === 1 ? 0.15 : stacks === 2 ? 0.2 : 0.25;
+		const boosted = Math.round(score * (1 + pct));
+		return {
+			newScore: boosted,
+			description: `Berserker's Reprisal +${Math.round(pct * 100)}% (stacks: ${stacks})`,
+			modified: true
+		};
+	}
+
+	return { newScore: score, description: '', modified: false };
+}
+
 function runPassiveAbilities(
 	score: number,
 	userParticipation: Participation
 ): PassiveAbilityResult {
-	if (userParticipation.classId === CLASSES.DICEBLADE) {
-		return runFatefulFlickAbility(score);
+	switch (userParticipation.classId) {
+		case CLASSES.DICEBLADE:
+			return runFatefulFlickAbility(score);
+		case CLASSES.BARBARIAN:
+			return runBerserkersReprisalPassive(score, userParticipation);
+		default:
+			return { newScore: score, description: '', modified: false };
 	}
-
-	return { newScore: score, description: '', modified: false };
 }
 
 /**

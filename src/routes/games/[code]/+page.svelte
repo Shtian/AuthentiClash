@@ -9,6 +9,7 @@
 		Crosshair,
 		Dices,
 		Flame,
+		Axe,
 		HandCoins,
 		HandHeart,
 		LucideLoader2,
@@ -198,6 +199,8 @@
 													<Dices class="m-auto size-8" />
 												{:else if ability.id === ABILITIES.JUDGMENT}
 													<Gavel class="m-auto size-8" />
+												{:else if ability.name === "Berserker's Reprisal"}
+													<Axe class="m-auto size-8" />
 												{/if}
 											</div>
 										</div>
