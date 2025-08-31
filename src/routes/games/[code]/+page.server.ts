@@ -7,10 +7,10 @@ import {
 } from '$lib/supabase/participation';
 import { generateImage, generateEndgameImageB64 } from '$lib/ai/image-generator';
 import {
-    PARTICIPANT_AVATARS_BUCKET,
-    uploadParticipantImage,
-    GAME_IMAGES_BUCKET,
-    uploadGameImageFromBase64
+	PARTICIPANT_AVATARS_BUCKET,
+	uploadParticipantImage,
+	GAME_IMAGES_BUCKET,
+	uploadGameImageFromBase64
 } from '$lib/supabase/storage';
 import { checkForValueEntryBadge } from '$lib/badges/valueEntryBadges';
 import { checkForAbilityBadge } from '$lib/badges/abilityBadges';

@@ -103,10 +103,7 @@ export const uploadGameImage = async (imageUrl: string, gameId: string | number)
 	} as const;
 };
 
-export const uploadGameImageFromBase64 = async (
-	base64: string,
-	gameId: string | number
-) => {
+export const uploadGameImageFromBase64 = async (base64: string, gameId: string | number) => {
 	const originalImage = Buffer.from(base64, 'base64');
 
 	const thumbnail = await sharp(originalImage)
