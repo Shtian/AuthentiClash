@@ -30,6 +30,7 @@
 - Linting: ESLint with Svelte/TypeScript presets (`eslint.config.mjs`). Run `pnpm lint` before pushing.
 - SvelteKit routing: use `+page.svelte`, `+layout.svelte`, `+page.server.ts`, etc.
 - Filenames: use `kebab-case` for files; `PascalCase.svelte` for components.
+- Use tabs instead of spaces.
 
 ## Testing Guidelines
 
