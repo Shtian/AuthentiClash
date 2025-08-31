@@ -13,7 +13,8 @@
 		HandHeart,
 		LucideLoader2,
 		Shield,
-		Skull
+		Skull,
+		Sparkles
 	} from 'lucide-svelte';
 	import Cooldown from './Cooldown.svelte';
 	import { Button } from '$lib/components/ui/button';
@@ -34,6 +35,8 @@
 
 	const { data }: { data: PageData } = $props();
 	let isLoading = $state(false);
+	let isGeneratingEndgame = $state(false);
+	let endgameImageUrl = $state<string | null>((data as any).endgameImageUrl ?? null);
 	let abilityIdUsed: number | null = $state(null);
 	const hasUsedAbility = $derived(
 		data.players?.find((x: Participation) => x.profileId === data.session?.user.id)?.abilityUsed !==
@@ -101,6 +104,23 @@
 				});
 			}
 			isLoading = false;
+			await update();
+		};
+	};
+
+	const handleGenerateEndgameImage: SubmitFunction = () => {
+		isGeneratingEndgame = true;
+		endgameImageUrl = null;
+		toast.send({ message: 'Generating epic endgame image ⏳', type: 'info' });
+		return async ({ result, update }) => {
+			if (result.type === 'success') {
+				endgameImageUrl = result.data?.imageUrl ?? null;
+				toast.send({ message: result.data?.message ?? 'Image generated!', type: 'success' });
+			}
+			if (result.type === 'failure') {
+				toast.send({ message: result.data?.message ?? 'Failed to generate image', type: 'error' });
+			}
+			isGeneratingEndgame = false;
 			await update();
 		};
 	};
@@ -273,6 +293,48 @@
 				<p class="text-muted-foreground text-center text-sm">
 					Game has ended. You can still view the game logs and high scores.
 				</p>
+
+				{#if data.aiEnabled}
+					{#if !isGeneratingEndgame && !endgameImageUrl}
+						<form
+							method="post"
+							action="?/generateEndgameImage"
+							use:enhance={handleGenerateEndgameImage}
+							class="mt-4"
+						>
+							<input type="hidden" name="game-id" value={data.gameId} />
+							<Button
+								type="submit"
+								size="lg"
+								class="bg-clash-500 hover:bg-clash-400 text-white"
+								disabled={isGeneratingEndgame}
+							>
+								<Sparkles class="size-6"></Sparkles> Generate epic image
+							</Button>
+						</form>
+					{/if}
+					{#if isGeneratingEndgame}
+						<div class="mt-6 w-full max-w-sm">
+							<div
+								class="bg-foreground/10 aspect-square w-full animate-pulse rounded-lg dark:bg-zinc-700/50"
+							></div>
+							<p class="text-muted-foreground mt-2 text-center text-sm">
+								Preparing something epic...
+							</p>
+						</div>
+					{:else if endgameImageUrl}
+						<div class="mt-6 w-full max-w-sm">
+							<a href={endgameImageUrl} target="_blank" rel="noreferrer">
+								<img
+									src={endgameImageUrl.replace('.webp', '-512.webp')}
+									alt="Endgame image"
+									class="w-full rounded-lg shadow"
+								/>
+							</a>
+							<p class="text-muted-foreground mt-2 text-center text-sm">Click to view full size.</p>
+						</div>
+					{/if}
+				{/if}
 			</div>
 		{/if}
 		<GameHighScore

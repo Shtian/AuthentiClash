@@ -5,11 +5,16 @@ import {
 	getGameParticipations,
 	type Participation
 } from '$lib/supabase/participation';
-import { generateImage } from '$lib/ai/image-generator';
-import { PARTICIPANT_AVATARS_BUCKET, uploadParticipantImage } from '$lib/supabase/storage';
+import { generateImage, generateEndgameImage } from '$lib/ai/image-generator';
+import {
+	PARTICIPANT_AVATARS_BUCKET,
+	uploadParticipantImage,
+	GAME_IMAGES_BUCKET,
+	uploadGameImage
+} from '$lib/supabase/storage';
 import { checkForValueEntryBadge } from '$lib/badges/valueEntryBadges';
 import { checkForAbilityBadge } from '$lib/badges/abilityBadges';
-import { getGame, getGameBackgroundPrompt } from '$lib/supabase/games';
+import { getGame, getGameBackgroundPrompt, setGameEndgameImageUrl } from '$lib/supabase/games';
 import { getClass } from '$lib/supabase/classes';
 import { handleScoreUpdate } from './score-engine';
 import { getGameLogs } from '$lib/supabase/gameLog';
@@ -49,6 +54,7 @@ export const load: PageServerLoad = async ({ params, locals: { safeGetSession } 
 		class: classResponse.data,
 		title: res.data.name,
 		aiEnabled: res.data.ai_enabled,
+		endgameImageUrl: res.data.endgame_image_url,
 		logs: gameLogs.data || [],
 		description: 'A new game has begun! Enter your score and see what happens'
 	};
@@ -193,6 +199,63 @@ export const actions = {
 
 		return {
 			message: 'Your participation image has been generated!'
+		};
+	},
+	generateEndgameImage: async ({ request, locals: { safeGetSession, supabase } }) => {
+		const session = await safeGetSession();
+		if (!session || !session.user) {
+			return fail(401, { message: 'No login session found. Please login and try again.' });
+		}
+
+		const formData = await request.formData();
+		const gameId = formData.get('game-id');
+		if (!gameId) {
+			return fail(400, { message: 'Invalid game id.' });
+		}
+
+		const [playersRes, bgPromptRes] = await Promise.all([
+			getGameParticipations(gameId.toString()),
+			getGameBackgroundPrompt(gameId.toString())
+		]);
+
+		if (playersRes.type === 'error') {
+			console.error('Error loading players for endgame image:', playersRes.error.message);
+			return fail(500, { message: 'Could not load players for image generation.' });
+		}
+
+		const players = (playersRes.data || []).slice().sort((a, b) => b.totalScore - a.totalScore);
+		if (players.length === 0) {
+			return fail(400, { message: 'No players found for this game.' });
+		}
+
+		const winner = players[0];
+		const competitors = players.slice(1).map((p) => p.nickname);
+		const backgroundPrompt = bgPromptRes.type === 'success' ? bgPromptRes.data : undefined;
+
+		const imageUrl = await generateEndgameImage(winner.nickname, competitors, backgroundPrompt);
+		if (!imageUrl) {
+			return fail(500, { message: 'Could not generate endgame image. Please try again.' });
+		}
+
+		const uploadRes = await uploadGameImage(imageUrl, gameId.toString());
+		if (uploadRes.type === 'error' || !uploadRes.data?.fullPath) {
+			return fail(500, { message: 'Could not upload endgame image. Please try again.' });
+		}
+
+		const { data } = supabase.storage
+			.from(GAME_IMAGES_BUCKET)
+			.getPublicUrl(uploadRes.data.fullPath);
+
+		// Persist on the game for later refreshes
+		const updateRes = await setGameEndgameImageUrl(gameId.toString(), data.publicUrl);
+		if (updateRes.type === 'error') {
+			console.error('Failed to persist endgame image url:', updateRes.error.message);
+			// Non-fatal: still return the image URL to the client
+		}
+
+		return {
+			message: 'Endgame image generated!',
+			imageUrl: data.publicUrl
 		};
 	}
 } satisfies Actions;

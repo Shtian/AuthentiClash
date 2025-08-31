@@ -9,6 +9,7 @@ export type Game = {
 	cooldown_hours: number;
 	ai_enabled: boolean;
 	background_prompt?: string;
+	endgame_image_url?: string;
 	creator: string;
 	is_active: boolean;
 	participation: Participation[];
@@ -20,7 +21,7 @@ export type EndedActiveGame = {
 };
 
 const GAME_SELECT_QUERY =
-	'id, code, creator, end_at, is_active, name, cooldown_hours, ai_enabled, background_prompt, participation ( id, score, total_score, profile_id, updated_at, nickname_image_url, nickname, ability_used, class_id )';
+	'id, code, creator, end_at, is_active, name, cooldown_hours, ai_enabled, background_prompt, endgame_image_url, participation ( id, score, total_score, profile_id, updated_at, nickname_image_url, nickname, ability_used, class_id )';
 
 export const getGame = async (code: string): Promise<SupabaseResponse<Game | null>> => {
 	const { data: game, error } = await supabaseServerClient
@@ -250,6 +251,23 @@ export const getGameBackgroundPrompt = async (
 	return successResponse;
 };
 
+export const setGameEndgameImageUrl = async (
+	gameId: string,
+	url: string
+): Promise<SupabaseResponse<boolean>> => {
+	const { error } = await supabaseServerClient
+		.from('games')
+		.update({ endgame_image_url: url })
+		.eq('id', gameId);
+
+	if (error !== null) {
+		const r: SupabaseResponse<boolean> = { type: 'error', data: null, error };
+		return r;
+	}
+
+	return { type: 'success', data: true, error: null };
+};
+
 export const getGameCooldownHoursById = async (
 	gameId: string
 ): Promise<SupabaseResponse<number>> => {
@@ -281,6 +299,7 @@ const mapToGame = (data: any): Game => {
 		name: data.name as string,
 		cooldown_hours: data.cooldown_hours as number,
 		background_prompt: data.background_prompt as string | undefined,
+		endgame_image_url: data.endgame_image_url as string | undefined,
 		creator: data.creator as string,
 		is_active: data.is_active as boolean,
 		participation: data.participation.map(mapToParticipation)
