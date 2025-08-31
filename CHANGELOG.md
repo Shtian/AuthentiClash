@@ -1,5 +1,11 @@
 # authenticlash
 
+## 0.26.1
+
+### Patch Changes
+
+- [#142](https://github.com/Shtian/AuthentiClash/pull/142) [`408f35f`](https://github.com/Shtian/AuthentiClash/commit/408f35f602f347b0f51eb7fd7da4010339847d35) Thanks [@Shtian](https://github.com/Shtian)! - Set max timeout back to 60, max for hobby tier
+
 ## 0.26.0
 
 ### Minor Changes
