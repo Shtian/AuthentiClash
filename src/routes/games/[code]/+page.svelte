@@ -31,7 +31,7 @@
 	import type { Ability } from '$lib/supabase/classes';
 	import GamePageHeader from './GamePageHeader.svelte';
 	import { quintOut } from 'svelte/easing';
-	import { fly, fade } from 'svelte/transition';
+	import { fly, fade, scale } from 'svelte/transition';
 
 	const { data }: { data: PageData } = $props();
 	let isLoading = $state(false);
@@ -330,14 +330,18 @@
 						</div>
 					{:else if endgameImageUrl}
 						<div class="mt-6 w-full max-w-sm" in:fade={{ duration: 150, delay: 155 }}>
-							<a href={endgameImageUrl} target="_blank" rel="noreferrer">
-								<img
-									src={endgameImageUrl.replace('.webp', '-512.webp')}
-									alt="Endgame scene"
-									class="w-full rounded-lg shadow"
-								/>
-							</a>
-							<p class="text-muted-foreground mt-2 text-center text-sm">Click to view full size.</p>
+							<div in:scale={{ start: 0.95, duration: 150, easing: quintOut, delay: 155 }}>
+								<a href={endgameImageUrl} target="_blank" rel="noreferrer">
+									<img
+										src={endgameImageUrl.replace('.webp', '-512.webp')}
+										alt="Endgame scene"
+										class="w-full rounded-lg shadow"
+									/>
+								</a>
+								<p class="text-muted-foreground mt-2 text-center text-sm">
+									Click to view full size.
+								</p>
+							</div>
 						</div>
 					{/if}
 				{/if}
