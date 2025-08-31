@@ -1,5 +1,15 @@
 # authenticlash
 
+## 0.25.0
+
+### Minor Changes
+
+- [#137](https://github.com/Shtian/AuthentiClash/pull/137) [`8b69101`](https://github.com/Shtian/AuthentiClash/commit/8b691015d6363bacd1fdec3a8e7bd837149f5f32) Thanks [@Shtian](https://github.com/Shtian)! - Add engame image feature
+
+### Patch Changes
+
+- [#135](https://github.com/Shtian/AuthentiClash/pull/135) [`ec5752c`](https://github.com/Shtian/AuthentiClash/commit/ec5752cc07bc398f5659aa922f15a751a90a5f64) Thanks [@Shtian](https://github.com/Shtian)! - Fix game filter tabs on mobile
+
 ## 0.24.0
 
 ### Minor Changes
