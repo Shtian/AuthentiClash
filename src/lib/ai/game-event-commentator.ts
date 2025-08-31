@@ -2,6 +2,7 @@ import { OPENAI_API_KEY } from '$env/static/private';
 import OpenAI from 'openai';
 
 const openaiClient = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || OPENAI_API_KEY });
+const COMMENTATOR_MODEL = 'gpt-5-nano';
 
 type CommentatorEventResponse =
 	| {
@@ -26,7 +27,7 @@ export async function setupNewCommentator(
 		const baseSystemPrompt = `You are a commentator for a game called AuthentiClash. Users sign up and enter their 2FA codes ranging from 10-99, where 10 is the worst and 99 is the best. Highest accumulated score at the end of the game wins. The users can choose a class and use a class ability once per game. Keep it short and concise in a few sentences max. You will be given plain text events and repeat them as with the personality: ${personalityPromptToUse}`;
 
 		const response = await openaiClient.responses.create({
-			model: 'gpt-5-nano',
+			model: COMMENTATOR_MODEL,
 			input: [
 				{
 					role: 'system',
@@ -61,7 +62,7 @@ export async function generateCommentatorEventV2(
 ): Promise<CommentatorEventResponse> {
 	try {
 		const response = await openaiClient.responses.create({
-			model: 'gpt-4.1-mini',
+			model: COMMENTATOR_MODEL,
 			input: [{ role: 'user', content: event }],
 			previous_response_id: previousEventId
 		});
