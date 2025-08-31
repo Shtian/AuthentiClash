@@ -31,7 +31,7 @@
 	import type { Ability } from '$lib/supabase/classes';
 	import GamePageHeader from './GamePageHeader.svelte';
 	import { quintOut } from 'svelte/easing';
-	import { fly } from 'svelte/transition';
+	import { fly, fade } from 'svelte/transition';
 
 	const { data }: { data: PageData } = $props();
 	let isLoading = $state(false);
@@ -301,6 +301,8 @@
 							action="?/generateEndgameImage"
 							use:enhance={handleGenerateEndgameImage}
 							class="mt-4"
+							in:fade={{ duration: 150 }}
+							out:fade={{ duration: 150 }}
 						>
 							<input type="hidden" name="game-id" value={data.gameId} />
 							<Button
@@ -314,7 +316,11 @@
 						</form>
 					{/if}
 					{#if isGeneratingEndgame}
-						<div class="mt-6 w-full max-w-sm">
+						<div
+							class="mt-6 w-full max-w-sm"
+							in:fade={{ duration: 150, delay: 155 }}
+							out:fade={{ duration: 150 }}
+						>
 							<div
 								class="bg-foreground/10 aspect-square w-full animate-pulse rounded-lg dark:bg-zinc-700/50"
 							></div>
@@ -323,11 +329,11 @@
 							</p>
 						</div>
 					{:else if endgameImageUrl}
-						<div class="mt-6 w-full max-w-sm">
+						<div class="mt-6 w-full max-w-sm" in:fade={{ duration: 150, delay: 155 }}>
 							<a href={endgameImageUrl} target="_blank" rel="noreferrer">
 								<img
 									src={endgameImageUrl.replace('.webp', '-512.webp')}
-									alt="Endgame image"
+									alt="Endgame scene"
 									class="w-full rounded-lg shadow"
 								/>
 							</a>
