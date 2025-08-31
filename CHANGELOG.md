@@ -1,5 +1,15 @@
 # authenticlash
 
+## 0.27.0
+
+### Minor Changes
+
+- [#146](https://github.com/Shtian/AuthentiClash/pull/146) [`03297c3`](https://github.com/Shtian/AuthentiClash/commit/03297c3fa5bb40548976ef642422addb2d7b6fdb) Thanks [@Shtian](https://github.com/Shtian)! - Add barbarian passive ability
+
+### Patch Changes
+
+- [#144](https://github.com/Shtian/AuthentiClash/pull/144) [`91da0c5`](https://github.com/Shtian/AuthentiClash/commit/91da0c5ae42bb3d345581f4a01dc4855b1446dd7) Thanks [@Shtian](https://github.com/Shtian)! - Tune descriptors to be more visual
+
 ## 0.26.1
 
 ### Patch Changes
