@@ -2,7 +2,7 @@ import { OPENAI_API_KEY } from '$env/static/private';
 import OpenAI from 'openai';
 
 const openaiClient = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || OPENAI_API_KEY });
-const COMMENTATOR_MODEL = 'gpt-5-nano';
+const COMMENTATOR_MODEL = 'gpt-5-mini';
 
 type CommentatorEventResponse =
 	| {
