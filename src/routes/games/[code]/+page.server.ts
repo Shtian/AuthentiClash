@@ -10,7 +10,7 @@ import {
 	PARTICIPANT_AVATARS_BUCKET,
 	uploadParticipantImage,
 	GAME_IMAGES_BUCKET,
-	uploadGameImageFromBase64
+	uploadGameImage
 } from '$lib/supabase/storage';
 import { checkForValueEntryBadge } from '$lib/badges/valueEntryBadges';
 import { checkForAbilityBadge } from '$lib/badges/abilityBadges';
@@ -167,15 +167,15 @@ export const actions = {
 
 		const backgroundPrompt =
 			backgroundPromptRes.type === 'success' ? backgroundPromptRes.data : undefined;
-		const imageUrl = await generateImage(nickname.toString(), backgroundPrompt || undefined);
-		if (!imageUrl) {
+		const b64 = await generateImage(nickname.toString(), backgroundPrompt || undefined);
+		if (!b64) {
 			return fail(500, {
 				message: 'Oh no, your image could not be generated. Please try again. 🙏'
 			});
 		}
 
 		const uploadRes = await uploadParticipantImage(
-			imageUrl,
+			b64,
 			session.user.id,
 			participationId.toString()
 		);
@@ -237,7 +237,7 @@ export const actions = {
 			return fail(500, { message: 'Could not generate endgame image. Please try again.' });
 		}
 
-		const uploadRes = await uploadGameImageFromBase64(b64, gameId.toString());
+		const uploadRes = await uploadGameImage(b64, gameId.toString());
 		if (uploadRes.type === 'error' || !uploadRes.data?.fullPath) {
 			return fail(500, { message: 'Could not upload endgame image. Please try again.' });
 		}

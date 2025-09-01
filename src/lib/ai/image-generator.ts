@@ -10,26 +10,21 @@ export async function generateImage(
 ): Promise<string | undefined> {
 	try {
 		const prompt = createImagePrompt(username, backgroundPrompt);
-		console.debug('Generating image with prompt: ', prompt);
+		console.debug('Generating image with gpt-image-1, prompt: ', prompt);
 		const image = await openaiClient.images.generate({
-			quality: 'standard',
-			model: 'dall-e-3',
+			model: 'gpt-image-1',
 			size: '1024x1024',
-			n: 1,
-			response_format: 'url',
 			prompt
 		});
 
-		if (!image.data) {
-			console.error('No image data returned from OpenAI');
+		const b64 = image.data?.[0]?.b64_json;
+		if (!b64) {
+			console.error('No b64 image data returned from OpenAI');
 			return undefined;
 		}
-
-		console.debug('Revised image prompt: ', image.data[0]?.revised_prompt);
-		console.debug('Image URL: ', image.data[0]?.url);
-		return image.data[0].url;
+		return b64;
 	} catch (error) {
-		console.error('Error generating image: ', error);
+		console.error('Error generating image with gpt-image-1: ', error);
 		return undefined;
 	}
 }
