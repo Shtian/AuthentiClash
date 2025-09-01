@@ -1,5 +1,15 @@
 # authenticlash
 
+## 0.27.1
+
+### Patch Changes
+
+- [#147](https://github.com/Shtian/AuthentiClash/pull/147) [`8448618`](https://github.com/Shtian/AuthentiClash/commit/8448618b92401b04fca815e7891044beadc65d51) Thanks [@Shtian](https://github.com/Shtian)! - use gpt-5-mini for commentator
+
+- [#149](https://github.com/Shtian/AuthentiClash/pull/149) [`6c96cf9`](https://github.com/Shtian/AuthentiClash/commit/6c96cf92a0c1f35d7eda35421956a201db0a3502) Thanks [@Shtian](https://github.com/Shtian)! - refactor: consolidate participant and game image upload helpers
+
+- [#149](https://github.com/Shtian/AuthentiClash/pull/149) [`6c96cf9`](https://github.com/Shtian/AuthentiClash/commit/6c96cf92a0c1f35d7eda35421956a201db0a3502) Thanks [@Shtian](https://github.com/Shtian)! - use gpt-image-1 for avatar generation
+
 ## 0.27.0
 
 ### Minor Changes
