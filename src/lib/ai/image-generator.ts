@@ -10,7 +10,7 @@ export async function generateImage(
 ): Promise<string | undefined> {
 	try {
 		const prompt = createImagePrompt(username, backgroundPrompt);
-		console.debug('Generating image with gpt-image-1, prompt: ', prompt);
+		console.log('Generating image with gpt-image-1, prompt: ', prompt);
 		const image = await openaiClient.images.generate({
 			model: 'gpt-image-1',
 			size: '1024x1024',
@@ -36,7 +36,7 @@ export async function generateEndgameImage(
 ): Promise<string | undefined> {
 	try {
 		const prompt = createEndgameImagePrompt(winnerName, competitors, backgroundPrompt);
-		console.debug('Generating endgame image with prompt: ', prompt);
+		console.log('Generating endgame image with prompt: ', prompt);
 		const image = await openaiClient.images.generate({
 			quality: 'standard',
 			model: 'dall-e-3',
@@ -51,8 +51,8 @@ export async function generateEndgameImage(
 			return undefined;
 		}
 
-		console.debug('Endgame revised image prompt: ', image.data[0]?.revised_prompt);
-		console.debug('Endgame image URL: ', image.data[0]?.url);
+		console.log('Endgame revised image prompt: ', image.data[0]?.revised_prompt);
+		console.log('Endgame image URL: ', image.data[0]?.url);
 		return image.data[0].url;
 	} catch (error) {
 		console.error('Error generating endgame image: ', error);
@@ -67,7 +67,7 @@ export async function generateEndgameImageB64(
 ): Promise<string | undefined> {
 	try {
 		const prompt = createEndgameImagePrompt(winnerName, competitors, backgroundPrompt);
-		console.debug('Generating endgame image with gpt-image-1, prompt: ', prompt);
+		console.log('Generating endgame image with gpt-image-1, prompt: ', prompt);
 		const image = await openaiClient.images.generate({
 			model: 'gpt-image-1',
 			size: '1024x1024',

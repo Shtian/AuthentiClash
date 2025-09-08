@@ -52,3 +52,13 @@ This will create 10 users with email logins as well as 10 games with a random am
 ### Troubleshooting
 
 If you run into issues with foreign key constraints on profile_id, you can try going to the profile page of a logged in user and hitting save first, then try creating a game again.
+
+## Logging with Sentry
+
+Logs from `console.log`, `console.warn`, and `console.error` are forwarded to Sentry. Custom log messages can be sent with the `Sentry.logger` API:
+
+```ts
+import * as Sentry from '@sentry/sveltekit';
+
+Sentry.logger.info('User triggered test log', { log_source: 'sentry_test' });
+```
