@@ -145,7 +145,7 @@
 		{#if timeLeft > 0}
 			<form method="POST" action="?/updateScore" use:enhance={handleNewScore}>
 				<input type="hidden" name="game-id" id="game-id" value={data.gameId} />
-				<input type="hidden" name="ability-id" id="ability-id" value={abilityIdUsed} />
+				<input type="hidden" name="ability-id" id="ability-id" bind:value={abilityIdUsed} />
 
 				<div class="space-y-6">
 					<div class="space-y-2">
@@ -257,7 +257,6 @@
 								</div>
 							</div>
 						{/each}
-						<input type="hidden" name="ability-id" id="ability-id" bind:value={abilityIdUsed} />
 					{/if}
 					<div class="relative col-span-6 sm:col-span-3">
 						{#if cooldownRemaining <= 0}
