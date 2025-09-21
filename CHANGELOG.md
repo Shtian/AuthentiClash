@@ -1,5 +1,16 @@
 # authenticlash
 
+## 0.27.2
+
+### Patch Changes
+
+- [#151](https://github.com/Shtian/AuthentiClash/pull/151) [`06c5ed5`](https://github.com/Shtian/AuthentiClash/commit/06c5ed5c17471ce9493c13966668ad5518c1c015) Thanks [@Shtian](https://github.com/Shtian)! - feat: enable Sentry logging
+  fix: capture AI image generator logs in Sentry
+
+- [#153](https://github.com/Shtian/AuthentiClash/pull/153) [`c8bb475`](https://github.com/Shtian/AuthentiClash/commit/c8bb475db84f6ea9532602bfa93c2c327e08e2fc) Thanks [@Shtian](https://github.com/Shtian)! - Revert commentator back to gpt-4.1-mini
+
+- [#150](https://github.com/Shtian/AuthentiClash/pull/150) [`4f4f3e6`](https://github.com/Shtian/AuthentiClash/commit/4f4f3e6da59338c7ae992f2eb295f4216d45b80d) Thanks [@Shtian](https://github.com/Shtian)! - remove redundant ability id
+
 ## 0.27.1
 
 ### Patch Changes
