@@ -1,9 +1,10 @@
-import { OPENAI_API_KEY } from '$env/static/private';
+import { FAL_KEY, OPENAI_API_KEY } from '$env/static/private';
 import OpenAI from 'openai';
 import backdrops from './backdrops.json';
 import { fal } from '@fal-ai/client';
 
 const openaiClient = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || OPENAI_API_KEY });
+fal.config({ credentials: process.env.FAL_KEY || FAL_KEY });
 
 export async function generateImageFal(
 	username: string,
@@ -18,9 +19,11 @@ export async function generateImageFal(
 		},
 		logs: true
 	});
+	console.log('Avatar gen prompt:', prompt);
 	console.log(result.data.images[0]);
 	console.log(result.requestId);
-	return 'complete';
+	const [{ url: falCdnUrl }] = result.data.images;
+	return falCdnUrl;
 }
 
 export async function generateImage(
