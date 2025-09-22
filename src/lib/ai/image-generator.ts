@@ -1,8 +1,27 @@
 import { OPENAI_API_KEY } from '$env/static/private';
 import OpenAI from 'openai';
 import backdrops from './backdrops.json';
+import { fal } from '@fal-ai/client';
 
 const openaiClient = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || OPENAI_API_KEY });
+
+export async function generateImageFal(
+	username: string,
+	backgroundPrompt?: string
+): Promise<string | undefined> {
+	const prompt = createImagePrompt(username, backgroundPrompt);
+	const result = await fal.subscribe('fal-ai/flux/dev', {
+		input: {
+			prompt,
+			image_size: 'square_hd',
+			num_images: 1
+		},
+		logs: true
+	});
+	console.log(result.data.images[0]);
+	console.log(result.requestId);
+	return 'complete';
+}
 
 export async function generateImage(
 	username: string,
