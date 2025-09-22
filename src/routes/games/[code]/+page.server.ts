@@ -8,7 +8,6 @@ import {
 import { generateEndgameImageB64, generateImageFal } from '$lib/ai/image-generator';
 import {
 	PARTICIPANT_AVATARS_BUCKET,
-	uploadParticipantImage,
 	GAME_IMAGES_BUCKET,
 	uploadGameImage,
 	uploadParticipantImageFromUrl
