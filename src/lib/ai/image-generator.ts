@@ -10,21 +10,33 @@ export async function generateImageFal(
 	username: string,
 	backgroundPrompt?: string
 ): Promise<string | undefined> {
-	const prompt = createImagePrompt(username, backgroundPrompt);
-	const result = await fal.subscribe('fal-ai/flux/dev', {
-		input: {
-			prompt,
-			image_size: 'square_hd',
-			num_images: 1,
-			enable_safety_checker: false
-		},
-		logs: true
-	});
-	console.log('Avatar gen prompt:', prompt);
-	console.log(result.data.images[0]);
-	console.log(result.requestId);
-	const [{ url: falCdnUrl }] = result.data.images;
-	return falCdnUrl;
+	try {
+		const prompt = createImagePrompt(username, backgroundPrompt);
+		const result = await fal.subscribe('fal-ai/flux/dev', {
+			input: {
+				prompt,
+				image_size: 'square_hd',
+				num_images: 1,
+				enable_safety_checker: false
+			},
+			logs: true
+		});
+
+		console.log('Avatar gen prompt:', prompt);
+		console.log('Avatar result', result.data);
+		console.log('Avatar request id', result.requestId);
+
+		const falCdnUrl = result.data.images?.[0]?.url;
+		if (!falCdnUrl) {
+			console.error('No URL in fal-ai response');
+			return undefined;
+		}
+
+		return falCdnUrl;
+	} catch (error) {
+		console.error('Error generating image with fal-ai: ', error);
+		return undefined;
+	}
 }
 
 export async function generateImage(
@@ -90,7 +102,6 @@ export async function generateEndgameImageFal(
 ): Promise<string | undefined> {
 	try {
 		const prompt = createEndgameImagePrompt(winnerName, competitors, backgroundPrompt);
-
 		const result = await fal.subscribe('fal-ai/flux/dev', {
 			input: {
 				prompt,
@@ -100,8 +111,17 @@ export async function generateEndgameImageFal(
 			},
 			logs: true
 		});
-		console.log('Endgame image prompt:', prompt);
-		const [{ url: falCdnUrl }] = result.data.images;
+
+		console.log('Endgame image gen prompt:', prompt);
+		console.log('Endgame image result', result.data);
+		console.log('Endgame image request id', result.requestId);
+
+		const falCdnUrl = result.data.images?.[0]?.url;
+		if (!falCdnUrl) {
+			console.error('No URL in fal-ai response for endgame image');
+			return undefined;
+		}
+
 		return falCdnUrl;
 	} catch (error) {
 		console.error('Error generating endgame image with fal:', error);
