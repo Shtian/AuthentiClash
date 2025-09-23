@@ -4,6 +4,7 @@ env:
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
   SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
   OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+  FAL_KEY: ${{ secrets.FAL_KEY }}
 on:
   push:
     # Pattern matched against refs/tags/*
