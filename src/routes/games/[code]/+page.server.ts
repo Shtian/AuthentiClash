@@ -5,12 +5,12 @@ import {
 	getGameParticipations,
 	type Participation
 } from '$lib/supabase/participation';
-import { generateImage, generateEndgameImageB64 } from '$lib/ai/image-generator';
+import { generateEndgameImageFal, generateImageFal } from '$lib/ai/image-generator';
 import {
 	PARTICIPANT_AVATARS_BUCKET,
-	uploadParticipantImage,
 	GAME_IMAGES_BUCKET,
-	uploadGameImage
+	uploadGameImageFromUrl,
+	uploadParticipantImageFromUrl
 } from '$lib/supabase/storage';
 import { checkForValueEntryBadge } from '$lib/badges/valueEntryBadges';
 import { checkForAbilityBadge } from '$lib/badges/abilityBadges';
@@ -167,15 +167,15 @@ export const actions = {
 
 		const backgroundPrompt =
 			backgroundPromptRes.type === 'success' ? backgroundPromptRes.data : undefined;
-		const b64 = await generateImage(nickname.toString(), backgroundPrompt || undefined);
-		if (!b64) {
+		const url = await generateImageFal(nickname.toString(), backgroundPrompt || undefined);
+		if (!url) {
 			return fail(500, {
 				message: 'Oh no, your image could not be generated. Please try again. 🙏'
 			});
 		}
 
-		const uploadRes = await uploadParticipantImage(
-			b64,
+		const uploadRes = await uploadParticipantImageFromUrl(
+			url,
 			session.user.id,
 			participationId.toString()
 		);
@@ -232,12 +232,12 @@ export const actions = {
 		const competitors = players.slice(1).map((p) => p.nickname);
 		const backgroundPrompt = bgPromptRes.type === 'success' ? bgPromptRes.data : undefined;
 
-		const b64 = await generateEndgameImageB64(winner.nickname, competitors, backgroundPrompt);
-		if (!b64) {
+		const imageUrl = await generateEndgameImageFal(winner.nickname, competitors, backgroundPrompt);
+		if (!imageUrl) {
 			return fail(500, { message: 'Could not generate endgame image. Please try again.' });
 		}
 
-		const uploadRes = await uploadGameImage(b64, gameId.toString());
+		const uploadRes = await uploadGameImageFromUrl(imageUrl, gameId.toString());
 		if (uploadRes.type === 'error' || !uploadRes.data?.fullPath) {
 			return fail(500, { message: 'Could not upload endgame image. Please try again.' });
 		}

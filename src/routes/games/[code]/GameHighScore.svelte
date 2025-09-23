@@ -97,7 +97,12 @@
 								/>
 							</Popover.Trigger>
 							<Popover.Content>
-								<a href={player.nicknameImageUrl} class="mt-6 underline hover:no-underline">
+								<a
+									href={player.nicknameImageUrl}
+									target="_blank"
+									rel="noreferrer"
+									class="mt-6 underline hover:no-underline"
+								>
 									<img
 										src={`${player.nicknameImageUrl.replace('.webp', '-512.webp')}`}
 										width={256}
