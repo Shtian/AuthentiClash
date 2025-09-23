@@ -82,28 +82,27 @@ export async function generateEndgameImage(
 	}
 }
 
-export async function generateEndgameImageB64(
+export async function generateEndgameImageFal(
 	winnerName: string,
 	competitors: string[],
 	backgroundPrompt?: string
 ): Promise<string | undefined> {
 	try {
 		const prompt = createEndgameImagePrompt(winnerName, competitors, backgroundPrompt);
-		console.log('Generating endgame image with gpt-image-1, prompt: ', prompt);
-		const image = await openaiClient.images.generate({
-			model: 'gpt-image-1',
-			size: '1024x1024',
-			prompt
-		});
 
-		const b64 = image.data?.[0]?.b64_json;
-		if (!b64) {
-			console.error('No b64 image data returned from OpenAI for endgame image');
-			return undefined;
-		}
-		return b64;
+		const result = await fal.subscribe('fal-ai/flux/dev', {
+			input: {
+				prompt,
+				image_size: 'square_hd',
+				num_images: 1
+			},
+			logs: true
+		});
+		console.log('Endgame image prompt:', prompt);
+		const [{ url: falCdnUrl }] = result.data.images;
+		return falCdnUrl;
 	} catch (error) {
-		console.error('Error generating endgame image with gpt-image-1: ', error);
+		console.error('Error generating endgame image with fal:', error);
 		return undefined;
 	}
 }
