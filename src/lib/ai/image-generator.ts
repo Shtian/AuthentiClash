@@ -15,7 +15,8 @@ export async function generateImageFal(
 		input: {
 			prompt,
 			image_size: 'square_hd',
-			num_images: 1
+			num_images: 1,
+			enable_safety_checker: false
 		},
 		logs: true
 	});
@@ -94,7 +95,8 @@ export async function generateEndgameImageFal(
 			input: {
 				prompt,
 				image_size: 'square_hd',
-				num_images: 1
+				num_images: 1,
+				enable_safety_checker: false
 			},
 			logs: true
 		});
