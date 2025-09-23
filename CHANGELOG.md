@@ -1,5 +1,11 @@
 # authenticlash
 
+## 0.28.0
+
+### Minor Changes
+
+- [#155](https://github.com/Shtian/AuthentiClash/pull/155) [`a8a3252`](https://github.com/Shtian/AuthentiClash/commit/a8a3252b9745bc73a7c3615248001ccab7379e27) Thanks [@Shtian](https://github.com/Shtian)! - Use fal-ai for image generation
+
 ## 0.27.2
 
 ### Patch Changes
