@@ -13,11 +13,13 @@ Built with SvelteKit, Supabase, and deployed on Vercel.
 ### Initial Setup
 
 1. Start Supabase locally:
+
    ```bash
    supabase start
    ```
 
 2. Create `.env` file with credentials from `supabase status`:
+
    ```
    PUBLIC_SUPABASE_URL={API URL}
    PUBLIC_SUPABASE_ANON_KEY={anon key}
@@ -26,6 +28,7 @@ Built with SvelteKit, Supabase, and deployed on Vercel.
    ```
 
 3. Run migrations and install dependencies:
+
    ```bash
    supabase migration up
    pnpm install
@@ -53,11 +56,13 @@ Built with SvelteKit, Supabase, and deployed on Vercel.
 ### Running Single Tests
 
 For unit tests, use Vitest filtering:
+
 ```bash
 pnpm test:unit <test-name-pattern>
 ```
 
 For integration tests, use Playwright filtering:
+
 ```bash
 pnpm test:integration -g "<test-name-pattern>"
 ```
@@ -67,6 +72,7 @@ pnpm test:integration -g "<test-name-pattern>"
 ### Core Game Logic
 
 **Score Engine** (`src/routes/games/[code]/score-engine.ts`):
+
 - Central scoring logic for the game
 - Enforces daily cooldown (one score entry per UTC day)
 - Handles active abilities (one-time use per game)
@@ -74,6 +80,7 @@ pnpm test:integration -g "<test-name-pattern>"
 - All score modifications go through `handleScoreUpdate()`
 
 **Abilities System**:
+
 - Active abilities (in `ABILITIES` const) - one-time powerful effects:
   - CUTPURSE: Steal 20-40 points from top player
   - CRIMSON_REAP: Deal 10-20 damage to 5 random players
@@ -87,6 +94,7 @@ pnpm test:integration -g "<test-name-pattern>"
 - Mitigation: Divine Aegis reduces incoming damage by 75%
 
 **Class System** (`src/lib/classes/classes.ts`, `src/lib/classes/abilities.ts`):
+
 - Each class has unique active and/or passive abilities
 - Class definitions in `src/lib/classes/classes.ts`
 - Ability constants in `src/lib/classes/abilities.ts`
@@ -95,6 +103,7 @@ pnpm test:integration -g "<test-name-pattern>"
 ### Data Layer
 
 **Supabase Integration**:
+
 - Client initialization in `src/lib/supabase/supabaseClient.ts`
 - Two clients: `supabase` (anon key) and `supabaseServerClient` (service key)
 - Domain modules in `src/lib/supabase/`:
@@ -106,15 +115,17 @@ pnpm test:integration -g "<test-name-pattern>"
   - `storage.ts` - File storage operations
 
 **Response Pattern**: All Supabase operations use discriminated unions:
+
 ```typescript
 type SupabaseResponse<T> =
-  | { type: 'success'; data: T; error: null }
-  | { type: 'error'; data: null; error: PostgrestError | Error };
+	| { type: 'success'; data: T; error: null }
+	| { type: 'error'; data: null; error: PostgrestError | Error };
 ```
 
 ### Authentication & Authorization
 
 **Auth Flow** (`src/hooks.server.ts`):
+
 - Two sequential hooks: `supabase` (session setup) → `authGuard` (route protection)
 - Protected routes: `/games`, `/badges`, `/account`, `/gallery`, `/stats`
 - `safeGetSession()` validates JWT tokens, not just session cookies
@@ -125,18 +136,21 @@ type SupabaseResponse<T> =
 ### AI Features
 
 **Game Commentary** (`src/lib/ai/game-event-commentator.ts`):
+
 - Uses OpenAI Responses API with `gpt-4.1-mini` model
 - Stateful conversations via `previous_response_id`
 - Personality-driven commentary based on game events
 - Each game has a commentator with unique personality
 
 **Image Generation** (`src/lib/ai/image-generator.ts`):
+
 - Uses Fal AI for generating game-related images
 - Character portraits, backgrounds, etc.
 
 ### Badge System
 
 **Badge Architecture** (`src/lib/badges/`):
+
 - Badge definitions split by category:
   - `valueEntryBadges.ts` - Score-based badges
   - `gameRankingBadges.ts` - Placement-based badges
@@ -148,12 +162,14 @@ type SupabaseResponse<T> =
 ### UI Components
 
 **Component Structure**:
+
 - Reusable UI components in `src/lib/components/ui/` (shadcn-svelte style)
 - App-specific components in `src/lib/components/`
 - Uses bits-ui for headless component primitives
 - Tailwind CSS v4 for styling
 
 **State Management**:
+
 - Svelte 5 runes for reactive state
 - Stores in `src/lib/stores/`:
   - `ToastStore.ts` - Toast notifications
@@ -216,3 +232,4 @@ supabase/
 - Use Changesets for versioning
 - Add changeset for user-visible changes: `pnpm dlx changeset`
 - CI automatically handles versioning and releases on merge to main
+- this codebase uses changesets, remember to add a changeset to the pull request
