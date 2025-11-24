@@ -249,7 +249,7 @@ Create a new file in `.changeset/` with format `<descriptive-name>.md`:
 
 ```markdown
 ---
-"authenticlash": minor
+'authenticlash': minor
 ---
 
 Description of the change. This will appear in the changelog.
@@ -265,8 +265,10 @@ Example changeset file:
 
 ```markdown
 ---
-"authenticlash": minor
+'authenticlash': minor
 ---
 
 Add configurable image generation provider with IMAGE_GENERATOR env variable.
 ```
+
+- Run lint before pushing commits to origin
