@@ -5,12 +5,12 @@ import {
 	getGameParticipations,
 	type Participation
 } from '$lib/supabase/participation';
-import { generateEndgameImageFal, generateImageFal } from '$lib/ai/image-generator';
+import { generateAvatarImage, generateVictoryImage } from '$lib/ai/image-generator';
 import {
 	PARTICIPANT_AVATARS_BUCKET,
 	GAME_IMAGES_BUCKET,
-	uploadGameImageFromUrl,
-	uploadParticipantImageFromUrl
+	uploadAvatarImage,
+	uploadVictoryImage
 } from '$lib/supabase/storage';
 import { checkForValueEntryBadge } from '$lib/badges/valueEntryBadges';
 import { checkForAbilityBadge } from '$lib/badges/abilityBadges';
@@ -167,15 +167,15 @@ export const actions = {
 
 		const backgroundPrompt =
 			backgroundPromptRes.type === 'success' ? backgroundPromptRes.data : undefined;
-		const url = await generateImageFal(nickname.toString(), backgroundPrompt || undefined);
-		if (!url) {
+		const imageData = await generateAvatarImage(nickname.toString(), backgroundPrompt || undefined);
+		if (!imageData) {
 			return fail(500, {
 				message: 'Oh no, your image could not be generated. Please try again. 🙏'
 			});
 		}
 
-		const uploadRes = await uploadParticipantImageFromUrl(
-			url,
+		const uploadRes = await uploadAvatarImage(
+			imageData,
 			session.user.id,
 			participationId.toString()
 		);
@@ -232,12 +232,12 @@ export const actions = {
 		const competitors = players.slice(1).map((p) => p.nickname);
 		const backgroundPrompt = bgPromptRes.type === 'success' ? bgPromptRes.data : undefined;
 
-		const imageUrl = await generateEndgameImageFal(winner.nickname, competitors, backgroundPrompt);
-		if (!imageUrl) {
+		const imageData = await generateVictoryImage(winner.nickname, competitors, backgroundPrompt);
+		if (!imageData) {
 			return fail(500, { message: 'Could not generate endgame image. Please try again.' });
 		}
 
-		const uploadRes = await uploadGameImageFromUrl(imageUrl, gameId.toString());
+		const uploadRes = await uploadVictoryImage(imageData, gameId.toString());
 		if (uploadRes.type === 'error' || !uploadRes.data?.fullPath) {
 			return fail(500, { message: 'Could not upload endgame image. Please try again.' });
 		}

@@ -121,6 +121,12 @@ export const uploadParticipantImageFromUrl = async (
 	} as const;
 };
 
+export const uploadGameImage = async (base64: string, gameId: string | number) =>
+	uploadImageFromBase64(base64, {
+		bucket: GAME_IMAGES_BUCKET,
+		baseName: `endgame-${gameId}`
+	});
+
 export const uploadGameImageFromUrl = async (url: string, gameId: string | number) => {
 	const baseName = `endgame-${gameId}`;
 	const originalImageRes = await fetch(url);
@@ -167,4 +173,25 @@ export const uploadGameImageFromUrl = async (url: string, gameId: string | numbe
 		},
 		error: null
 	} as const;
+};
+
+// Wrapper functions that dispatch to the correct upload method based on IMAGE_GENERATOR
+const imageGenerator = (process.env.IMAGE_GENERATOR || 'openai').toLowerCase();
+
+export const uploadAvatarImage = async (
+	imageData: string,
+	userId: string,
+	participationId: string
+) => {
+	if (imageGenerator === 'fal') {
+		return uploadParticipantImageFromUrl(imageData, userId, participationId);
+	}
+	return uploadParticipantImage(imageData, userId, participationId);
+};
+
+export const uploadVictoryImage = async (imageData: string, gameId: string | number) => {
+	if (imageGenerator === 'fal') {
+		return uploadGameImageFromUrl(imageData, gameId);
+	}
+	return uploadGameImage(imageData, gameId);
 };
