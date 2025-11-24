@@ -66,37 +66,6 @@ export async function generateImage(
 	}
 }
 
-export async function generateEndgameImage(
-	winnerName: string,
-	competitors: string[],
-	backgroundPrompt?: string
-): Promise<string | undefined> {
-	try {
-		const prompt = createEndgameImagePrompt(winnerName, competitors, backgroundPrompt);
-		console.log('Generating endgame image with prompt: ', prompt);
-		const image = await openaiClient.images.generate({
-			quality: 'standard',
-			model: 'dall-e-3',
-			size: '1024x1024',
-			n: 1,
-			response_format: 'url',
-			prompt
-		});
-
-		if (!image.data) {
-			console.error('No image data returned from OpenAI for endgame image');
-			return undefined;
-		}
-
-		console.log('Endgame revised image prompt: ', image.data[0]?.revised_prompt);
-		console.log('Endgame image URL: ', image.data[0]?.url);
-		return image.data[0].url;
-	} catch (error) {
-		console.error('Error generating endgame image: ', error);
-		return undefined;
-	}
-}
-
 export async function generateEndgameImageFal(
 	winnerName: string,
 	competitors: string[],
