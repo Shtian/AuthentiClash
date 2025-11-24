@@ -230,6 +230,43 @@ supabase/
 ## Changesets & Releases
 
 - Use Changesets for versioning
-- Add changeset for user-visible changes: `pnpm dlx changeset`
+- **Always add a changeset for user-visible changes** (features, fixes, breaking changes)
 - CI automatically handles versioning and releases on merge to main
-- this codebase uses changesets, remember to add a changeset to the pull request
+
+### Adding a Changeset
+
+**Method 1: Interactive CLI** (when working locally with a TTY):
+
+```bash
+pnpm changeset
+```
+
+Follow the prompts to select bump type (patch/minor/major) and write summary.
+
+**Method 2: Manual Creation** (recommended for automated environments):
+
+Create a new file in `.changeset/` with format `<descriptive-name>.md`:
+
+```markdown
+---
+"authenticlash": minor
+---
+
+Description of the change. This will appear in the changelog.
+```
+
+Bump types:
+
+- `patch` - Bug fixes and minor tweaks (0.28.0 → 0.28.1)
+- `minor` - New features, non-breaking changes (0.28.0 → 0.29.0)
+- `major` - Breaking changes (0.28.0 → 1.0.0)
+
+Example changeset file:
+
+```markdown
+---
+"authenticlash": minor
+---
+
+Add configurable image generation provider with IMAGE_GENERATOR env variable.
+```
