@@ -1,5 +1,11 @@
 # authenticlash
 
+## 0.29.0
+
+### Minor Changes
+
+- [#158](https://github.com/Shtian/AuthentiClash/pull/158) [`4d20333`](https://github.com/Shtian/AuthentiClash/commit/4d203337c25df017ee3f41c0cfe49be840058efc) Thanks [@Shtian](https://github.com/Shtian)! - Add configurable image generation provider with environment variable control. Switches default from Fal AI back to OpenAI gpt-image-1 while keeping both providers available. Set IMAGE_GENERATOR=openai (default) or IMAGE_GENERATOR=fal to switch between providers without code changes.
+
 ## 0.28.0
 
 ### Minor Changes
