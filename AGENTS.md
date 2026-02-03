@@ -7,6 +7,7 @@ AuthentiClash is a SvelteKit + Supabase multiplayer experience that layers AI-dr
 - Secrets: copy `.env.example` to `.env`, fill Supabase keys, and never commit credentials or database dumps.
 
 ## Deep Dives
+
 - [Project structure & architecture](docs/agents/project-structure.md)
 - [Tooling & commands](docs/agents/tooling-and-commands.md)
 - [Coding conventions](docs/agents/coding-conventions.md)
