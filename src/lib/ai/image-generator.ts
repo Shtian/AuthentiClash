@@ -6,7 +6,9 @@ import { fal } from '@fal-ai/client';
 const openaiClient = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || OPENAI_API_KEY });
 fal.config({ credentials: process.env.FAL_KEY || FAL_KEY });
 
-const openaiImageModel: 'gpt-image-1-mini' | 'gpt-image-1' = 'gpt-image-1-mini';
+const openaiImageModel = 'gpt-image-1.5';
+type ImagesGenerateModel = Parameters<(typeof openaiClient)['images']['generate']>[0]['model'];
+const openaiImageModelForApi = openaiImageModel as unknown as ImagesGenerateModel; // SDK types lag behind
 
 export async function generateImageFal(
 	username: string,
@@ -49,7 +51,7 @@ export async function generateImage(
 		const prompt = createImagePrompt(username, backgroundPrompt);
 		console.log(`Generating image with ${openaiImageModel}, prompt: `, prompt);
 		const image = await openaiClient.images.generate({
-			model: openaiImageModel,
+			model: openaiImageModelForApi,
 			size: '1024x1024',
 			prompt
 		});
@@ -61,7 +63,7 @@ export async function generateImage(
 		}
 		return b64;
 	} catch (error) {
-		console.error('Error generating image with gpt-image-1: ', error);
+		console.error(`Error generating image with ${openaiImageModel}: `, error);
 		return undefined;
 	}
 }
@@ -109,7 +111,7 @@ export async function generateEndgameImageB64(
 		const prompt = createEndgameImagePrompt(winnerName, competitors, backgroundPrompt);
 		console.log(`Generating image with ${openaiImageModel}, prompt: `, prompt);
 		const image = await openaiClient.images.generate({
-			model: openaiImageModel,
+			model: openaiImageModelForApi,
 			size: '1024x1024',
 			prompt
 		});
@@ -121,7 +123,7 @@ export async function generateEndgameImageB64(
 		}
 		return b64;
 	} catch (error) {
-		console.error('Error generating endgame image with gpt-image-1: ', error);
+		console.error(`Error generating endgame image with ${openaiImageModel}: `, error);
 		return undefined;
 	}
 }
