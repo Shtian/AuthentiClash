@@ -1,5 +1,11 @@
 # authenticlash
 
+## 0.29.1
+
+### Patch Changes
+
+- [#161](https://github.com/Shtian/AuthentiClash/pull/161) [`8b76a6d`](https://github.com/Shtian/AuthentiClash/commit/8b76a6d89a5471f7d58e6f63ce015f30338d983a) Thanks [@Shtian](https://github.com/Shtian)! - Switch avatar and victory image generation to `gpt-image-1.5`, including a temporary OpenAI SDK shim so we can call the newer model even though the typings lag.
+
 ## 0.29.0
 
 ### Minor Changes
