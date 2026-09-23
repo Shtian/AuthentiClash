@@ -19,3 +19,6 @@ yarn.lock
 # Supabase
 supabase/.branches
 supabase/.temp
+
+# Claude Code skills and agents
+/.claude
