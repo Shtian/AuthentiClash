@@ -4,10 +4,8 @@ import ts from 'typescript-eslint';
 import svelte from 'eslint-plugin-svelte';
 import prettier from 'eslint-config-prettier';
 import node from 'eslint-plugin-n';
-import stylistic from '@stylistic/eslint-plugin-js';
+import stylistic from '@stylistic/eslint-plugin';
 import globals from 'globals';
-import svelteParser from 'svelte-eslint-parser';
-import tsParser from '@typescript-eslint/parser';
 
 export default [
 	{
@@ -21,9 +19,8 @@ export default [
 	{
 		files: ['**/*.svelte', '*.svelte'],
 		languageOptions: {
-			parser: svelteParser,
 			parserOptions: {
-				parser: tsParser
+				parser: ts.parser
 			}
 		}
 	},
@@ -73,6 +70,7 @@ export default [
 			'object-shorthand': ['error', 'always'],
 			'prefer-arrow-callback': 'error',
 			'svelte/no-inner-declarations': 'off',
+			'svelte/no-navigation-without-resolve': 'off',
 			'n/prefer-global/process': ['off'],
 			'n/prefer-node-protocol': 'error'
 		}
