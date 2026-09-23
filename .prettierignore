@@ -22,3 +22,4 @@ supabase/.temp
 
 # Claude Code skills and agents
 /.claude
+/.verify
