@@ -21,7 +21,7 @@
 	},
 	"devDependencies": {
 		"@eslint/js": "^10.0.1",
-		"@internationalized/date": "^3.8.2",
+		"@internationalized/date": "^3.12.4",
 		"@lucide/svelte": "^1.47.0",
 		"@playwright/test": "^1.47.2",
 		"@stylistic/eslint-plugin": "^5.10.0",
@@ -31,7 +31,7 @@
 		"@tailwindcss/vite": "^4.3.3",
 		"@types/d3": "^7.4.3",
 		"@types/node": "^22.20.4",
-		"bits-ui": "^2.5.0",
+		"bits-ui": "^2.19.3",
 		"clsx": "^2.1.1",
 		"eslint": "^10.11.0",
 		"eslint-config-prettier": "^10.1.8",
