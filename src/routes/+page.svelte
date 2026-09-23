@@ -10,7 +10,7 @@
 		Star,
 		Play,
 		CheckCircle
-	} from 'lucide-svelte';
+	} from '@lucide/svelte';
 
 	let visible = $state(false);
 	let featuresVisible = $state(false);

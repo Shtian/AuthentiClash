@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { RocketIcon } from 'lucide-svelte';
+	import { RocketIcon } from '@lucide/svelte';
 	import StatsCard from './StatsCard.svelte';
 	import StatsNumber from './StatsNumber.svelte';
 	import ScoreGraph from '$lib/components/ScoreGraph.svelte';

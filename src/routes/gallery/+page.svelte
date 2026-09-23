@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { CircleUser, RocketIcon } from 'lucide-svelte';
+	import { CircleUser, RocketIcon } from '@lucide/svelte';
 	import * as Popover from '$lib/components/ui/popover';
 
 	const { data } = $props();

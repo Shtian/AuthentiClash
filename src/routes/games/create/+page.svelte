@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { applyAction, enhance } from '$app/forms';
-	import { Calendar as CalendarIcon, Sparkles } from 'lucide-svelte';
+	import { Calendar as CalendarIcon, Sparkles } from '@lucide/svelte';
 	import {
 		type DateValue,
 		DateFormatter,

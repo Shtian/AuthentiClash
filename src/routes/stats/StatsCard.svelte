@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { CircleHelp } from 'lucide-svelte';
+	import { CircleHelp } from '@lucide/svelte';
 	import * as Popover from '$lib/components/ui/popover';
 	import type { Snippet } from 'svelte';
 
