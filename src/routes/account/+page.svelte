@@ -3,7 +3,7 @@
 	import { enhance } from '$app/forms';
 	import { toast } from '$lib/stores/ToastStore.js';
 	import type { SubmitFunction } from '@sveltejs/kit';
-	import { LucideLoader2 } from 'lucide-svelte';
+	import { LucideLoader2 } from '@lucide/svelte';
 
 	const { data, form } = $props();
 	const session = $state(data.session);

@@ -6,7 +6,7 @@
 	import { formatTimeDelta } from '$lib/utils/dateUtils';
 	import { generateNickName } from '$lib/utils/word-generator/generator';
 	import type { SubmitFunction } from '@sveltejs/kit';
-	import { LucideLoader2, Shuffle } from 'lucide-svelte';
+	import { LucideLoader2, Shuffle } from '@lucide/svelte';
 	import * as RadioGroup from '$lib/components/ui/radio-group/index.js';
 	import { Label } from '$lib/components/ui/label/index.js';
 

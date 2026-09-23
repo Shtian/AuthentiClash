@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ChevronDown, Info } from 'lucide-svelte';
+	import { ChevronDown, Info } from '@lucide/svelte';
 	import * as Collapsible from '$lib/components/ui/collapsible';
 	import { buttonVariants } from '$lib/components/ui/button';
 </script>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { NotebookText } from 'lucide-svelte';
+	import { NotebookText } from '@lucide/svelte';
 	import { VERSION } from '../../version';
 </script>
 

@@ -16,7 +16,7 @@
 		Shield,
 		Skull,
 		Sparkles
-	} from 'lucide-svelte';
+	} from '@lucide/svelte';
 	import Cooldown from './Cooldown.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { onDestroy } from 'svelte';

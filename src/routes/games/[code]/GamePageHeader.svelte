@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Badge } from '$lib/components/ui/badge';
 	import * as Popover from '$lib/components/ui/popover';
-	import { Clock, Copy, Sparkles } from 'lucide-svelte';
+	import { Clock, Copy, Sparkles } from '@lucide/svelte';
 	import { fade } from 'svelte/transition';
 
 	interface Props {

@@ -2,7 +2,7 @@
 	import { enhance } from '$app/forms';
 	import { toast } from '$lib/stores/ToastStore';
 	import type { SubmitFunction } from '@sveltejs/kit';
-	import { Loader2, Sparkles, TrendingUp } from 'lucide-svelte';
+	import { Loader2, Sparkles, TrendingUp } from '@lucide/svelte';
 	import { flip } from 'svelte/animate';
 	import * as Popover from '$lib/components/ui/popover';
 	import ScoreGraph from '$lib/components/ScoreGraph.svelte';
