@@ -63,9 +63,6 @@ importers:
       '@sveltejs/vite-plugin-svelte':
         specifier: ^5.1.0
         version: 5.1.0(svelte@5.57.1(@typescript-eslint/types@8.70.1))(vite@6.3.5(@types/node@22.7.4)(jiti@2.7.0)(lightningcss@1.32.0)(yaml@2.5.1))
-      '@tailwindcss/postcss':
-        specifier: ^4.3.3
-        version: 4.3.3
       '@tailwindcss/vite':
         specifier: ^4.3.3
         version: 4.3.3(vite@6.3.5(@types/node@22.7.4)(jiti@2.7.0)(lightningcss@1.32.0)(yaml@2.5.1))
@@ -96,9 +93,6 @@ importers:
       lucide-svelte:
         specifier: ^0.513.0
         version: 0.513.0(svelte@5.57.1(@typescript-eslint/types@8.70.1))
-      postcss:
-        specifier: ^8.5.28
-        version: 8.5.28
       prettier:
         specifier: ^3.9.9
         version: 3.9.9
@@ -140,10 +134,6 @@ importers:
         version: 3.2.2(@types/node@22.7.4)(jiti@2.7.0)(lightningcss@1.32.0)(yaml@2.5.1)
 
 packages:
-
-  '@alloc/quick-lru@5.2.0':
-    resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
-    engines: {node: '>=10'}
 
   '@ampproject/remapping@2.3.0':
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
@@ -1325,9 +1315,6 @@ packages:
   '@tailwindcss/oxide@4.3.3':
     resolution: {integrity: sha512-krXjAikiaFSPaK/FkAQT5UTx3VormQaiZ5hBFlJZ9UFQGB/rwg1MZIhHAG9smMQRTdyJxP6Qt5MwMtdyU5FWrA==}
     engines: {node: '>= 20'}
-
-  '@tailwindcss/postcss@4.3.3':
-    resolution: {integrity: sha512-JTSZZGQi1AyKirbLN3azmjVzef92tcX7h+iSqPdaeStyFpGpDlKvvpxeOE8njhbUanbRwr3z8DyzhICWnMtQeg==}
 
   '@tailwindcss/vite@4.3.3':
     resolution: {integrity: sha512-yYU8cogLeSh/ms2jh8Fj7jaba/EWa7Ja6GoUqYZaraEuCI5YS6ms6ObZgjjedm+jm6XZjdNRWBpPP6Z86oOxcw==}
@@ -3418,8 +3405,6 @@ packages:
 
 snapshots:
 
-  '@alloc/quick-lru@5.2.0': {}
-
   '@ampproject/remapping@2.3.0':
     dependencies:
       '@jridgewell/gen-mapping': 0.3.5
@@ -4718,14 +4703,6 @@ snapshots:
       '@tailwindcss/oxide-wasm32-wasi': 4.3.3
       '@tailwindcss/oxide-win32-arm64-msvc': 4.3.3
       '@tailwindcss/oxide-win32-x64-msvc': 4.3.3
-
-  '@tailwindcss/postcss@4.3.3':
-    dependencies:
-      '@alloc/quick-lru': 5.2.0
-      '@tailwindcss/node': 4.3.3
-      '@tailwindcss/oxide': 4.3.3
-      postcss: 8.5.28
-      tailwindcss: 4.3.3
 
   '@tailwindcss/vite@4.3.3(vite@6.3.5(@types/node@22.7.4)(jiti@2.7.0)(lightningcss@1.32.0)(yaml@2.5.1))':
     dependencies:
