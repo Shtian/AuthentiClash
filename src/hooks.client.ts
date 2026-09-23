@@ -8,13 +8,13 @@ Sentry.init({
 	replaysOnErrorSampleRate: 1.0,
 	integrations: [
 		Sentry.replayIntegration(),
-		(Sentry as any).consoleLoggingIntegration?.({
+		Sentry.consoleLoggingIntegration({
 			levels: ['log', 'warn', 'error']
 		})
 	],
 	environment: PUBLIC_ENV,
 	enableLogs: true
-} as any);
+});
 
 // If you have a custom error handler, pass it to `handleErrorWithSentry`
 export const handleError = Sentry.handleErrorWithSentry();

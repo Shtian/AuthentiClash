@@ -7,7 +7,13 @@ export default defineConfig({
 	plugins: [
 		tailwindcss(),
 		sentrySvelteKit({
-			sourceMapsUploadOptions: { org: 'stian-haga', project: 'authenticlash' }
+			sourceMapsUploadOptions: {
+				org: 'stian-haga',
+				project: 'authenticlash',
+				sourcemaps: {
+					filesToDeleteAfterUpload: ['./.vercel/output/**/*.map', './.svelte-kit/**/*.map']
+				}
+			}
 		}),
 		sveltekit()
 	],
