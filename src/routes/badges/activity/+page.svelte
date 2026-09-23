@@ -32,14 +32,14 @@
 					<div class="relative flex space-x-3">
 						<div>
 							<span
-								class="bg-background flex h-8 w-8 items-center justify-center overflow-hidden rounded-full ring-8 ring-[hsl(var(--background))]"
+								class="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-background ring-8 ring-[hsl(var(--background))]"
 							>
 								<img src={activity.player.avatar_url} alt="Player avatar" />
 							</span>
 						</div>
 						<div class="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
 							<div>
-								<p class="text-foreground text-sm">
+								<p class="text-sm text-foreground">
 									{activity.player.username} unlocked
 									<img
 										src={activity.badge.image}
@@ -69,7 +69,7 @@
 		aria-label="Pagination"
 	>
 		<div class="hidden sm:block">
-			<p class="text-foreground text-sm">
+			<p class="text-sm text-foreground">
 				Showing
 				<span class="font-medium">{startIndex}</span>
 				to
@@ -83,13 +83,13 @@
 			<a
 				class:pointer-events-none={currentPage === 0}
 				href="/badges/activity?limit={pageSize}&skip={Math.max((currentPage - 1) * pageSize, 0)}"
-				class="none bg-clash-500 hover:bg-clash-400 text-foreground relative inline-flex items-center rounded-md px-3 py-2 text-sm font-semibold focus-visible:outline-offset-0"
+				class="none relative inline-flex items-center rounded-md bg-clash-500 px-3 py-2 text-sm font-semibold text-foreground hover:bg-clash-400 focus-visible:outline-offset-0"
 				>Previous</a
 			>
 			<a
 				class:pointer-events-none={currentPage === totalPages - 1}
 				href="/badges/activity?limit={pageSize}&skip={(currentPage + 1) * pageSize}"
-				class="bg-clash-500 hover:bg-clash-400 text-foreground relative ml-3 inline-flex items-center rounded-md px-3 py-2 text-sm font-semibold focus-visible:outline-offset-0"
+				class="relative ml-3 inline-flex items-center rounded-md bg-clash-500 px-3 py-2 text-sm font-semibold text-foreground hover:bg-clash-400 focus-visible:outline-offset-0"
 				>Next</a
 			>
 		</div>

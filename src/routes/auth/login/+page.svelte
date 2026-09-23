@@ -75,7 +75,7 @@
 							autocomplete="email"
 							bind:value={email}
 							required
-							class="focus-visible:ring-ring ring-foreground/10 block w-full rounded-md border-0 bg-white/5 py-1.5 pl-2 shadow-sm ring-1 ring-inset focus-visible:ring-2 focus-visible:outline-0 sm:text-sm sm:leading-6"
+							class="block w-full rounded-md border-0 bg-white/5 py-1.5 pl-2 shadow-sm ring-1 ring-foreground/10 ring-inset focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-0 sm:text-sm sm:leading-6"
 						/>
 					</div>
 				</div>
@@ -86,7 +86,7 @@
 						<div class="text-sm">
 							<a
 								href={`/auth/forgot${getEmailParam(email)}`}
-								class="text-clash-400 hover:text-clash-300 font-semibold">Forgot password?</a
+								class="font-semibold text-clash-400 hover:text-clash-300">Forgot password?</a
 							>
 						</div>
 					</div>
@@ -98,7 +98,7 @@
 							autocomplete="current-password"
 							bind:value={password}
 							required
-							class="focus-visible:ring-ring ring-foreground/10 block w-full rounded-md border-0 bg-white/5 py-1.5 pl-2 shadow-sm ring-1 ring-inset focus-visible:ring-2 focus-visible:outline-0 sm:text-sm sm:leading-6"
+							class="block w-full rounded-md border-0 bg-white/5 py-1.5 pl-2 shadow-sm ring-1 ring-foreground/10 ring-inset focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-0 sm:text-sm sm:leading-6"
 						/>
 					</div>
 				</div>
@@ -107,17 +107,17 @@
 					<button
 						type="submit"
 						disabled={loading}
-						class="bg-clash-500 hover:bg-clash-400 focus-visible:outline-clash-500 text-background dark:text-foreground flex w-full justify-center rounded-md px-3 py-1.5 text-sm leading-6 font-semibold shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2"
+						class="flex w-full justify-center rounded-md bg-clash-500 px-3 py-1.5 text-sm leading-6 font-semibold text-background shadow-sm hover:bg-clash-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500 dark:text-foreground"
 						>{loading ? 'Signing in...' : 'Sign in'}</button
 					>
 				</div>
 			</form>
 			<hr class="my-4" />
 			<AuthProviders {supabase} />
-			<p class="text-muted-foreground mt-10 text-center text-sm">
+			<p class="mt-10 text-center text-sm text-muted-foreground">
 				Not a member?
 				<button
-					class="text-clash-400 hover:text-clash-300 leading-6 font-semibold"
+					class="leading-6 font-semibold text-clash-400 hover:text-clash-300"
 					onclick={() => {
 						showRegister = true;
 						error = '';
@@ -146,7 +146,7 @@
 							autocomplete="email"
 							bind:value={email}
 							required
-							class="focus-visible:ring-ring ring-foreground/10 block w-full rounded-md border-0 bg-white/5 py-1.5 pl-2 shadow-sm ring-1 ring-inset focus-visible:ring-2 focus-visible:outline-0 sm:text-sm sm:leading-6"
+							class="block w-full rounded-md border-0 bg-white/5 py-1.5 pl-2 shadow-sm ring-1 ring-foreground/10 ring-inset focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-0 sm:text-sm sm:leading-6"
 						/>
 					</div>
 				</div>
@@ -164,7 +164,7 @@
 							bind:value={password}
 							required
 							minlength="6"
-							class="focus:ring-ring ring-foreground/10 block w-full rounded-md border-0 bg-white/5 py-1.5 pl-2 shadow-sm ring-1 ring-inset focus:ring-2 focus:outline-none sm:text-sm sm:leading-6"
+							class="block w-full rounded-md border-0 bg-white/5 py-1.5 pl-2 shadow-sm ring-1 ring-foreground/10 ring-inset focus:ring-2 focus:ring-ring focus:outline-none sm:text-sm sm:leading-6"
 						/>
 					</div>
 				</div>
@@ -173,15 +173,15 @@
 					<button
 						type="submit"
 						disabled={loading}
-						class="bg-clash-500 hover:bg-clash-400 focus-visible:outline-clash-500 text-background dark:text-foreground flex w-full justify-center rounded-md px-3 py-1.5 text-sm leading-6 font-semibold shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2"
+						class="flex w-full justify-center rounded-md bg-clash-500 px-3 py-1.5 text-sm leading-6 font-semibold text-background shadow-sm hover:bg-clash-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500 dark:text-foreground"
 						>{loading ? 'Signing up...' : 'Sign up'}</button
 					>
 				</div>
 			</form>
-			<p class="text-muted-foreground mt-10 text-center text-sm">
+			<p class="mt-10 text-center text-sm text-muted-foreground">
 				Already a member?
 				<button
-					class="text-clash-400 hover:text-clash-300 leading-6 font-semibold"
+					class="leading-6 font-semibold text-clash-400 hover:text-clash-300"
 					onclick={() => {
 						showRegister = false;
 						error = '';

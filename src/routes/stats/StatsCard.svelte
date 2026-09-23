@@ -29,7 +29,7 @@
 <div
 	class={`col-span-12 ${colClass} flex flex-col gap-4 rounded-lg border border-gray-700 p-6 shadow-sm`}
 >
-	<h2 class="text-muted-foreground flex place-content-between text-xl">
+	<h2 class="flex place-content-between text-xl text-muted-foreground">
 		<span>{title}</span>
 		{#if helptext}
 			<Popover.Root>

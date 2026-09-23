@@ -19,7 +19,7 @@
 		<select
 			id="tabs"
 			name="tabs"
-			class="text-foreground block w-full rounded-md border-none bg-white/5 py-2 pr-10 pl-3 text-base shadow-sm ring-1 ring-white/10 ring-inset focus:ring-2 focus:ring-indigo-500 focus:ring-inset sm:text-sm"
+			class="block w-full rounded-md border-none bg-white/5 py-2 pr-10 pl-3 text-base text-foreground shadow-sm ring-1 ring-white/10 ring-inset focus:ring-2 focus:ring-indigo-500 focus:ring-inset sm:text-sm"
 			on:change={(e) => goto((e.target as HTMLSelectElement).value)}
 		>
 			{#each tabs as { name, url, isActive } (name)}
@@ -31,7 +31,7 @@
 		<nav class="flex border-b border-white/10 py-4">
 			<ul
 				role="list"
-				class="text-foreground flex min-w-full flex-none gap-x-6 px-2 text-sm leading-6 font-semibold"
+				class="flex min-w-full flex-none gap-x-6 px-2 text-sm leading-6 font-semibold text-foreground"
 			>
 				{#each tabs as { name, url, isActive } (name)}
 					<a

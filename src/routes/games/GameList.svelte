@@ -20,42 +20,42 @@
 <div class="mt-6 flow-root">
 	<div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
 		<div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-			<table class="divide-foreground/70 min-w-full divide-y">
+			<table class="min-w-full divide-y divide-foreground/70">
 				<thead>
 					<tr>
 						<th
 							scope="col"
-							class="text-foreground py-3.5 pr-3 pl-4 text-left text-sm font-semibold"
+							class="py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-foreground"
 						>
 							Game
 						</th>
-						<th scope="col" class="text-foreground py-3.5 pr-3 text-left text-sm font-semibold">
+						<th scope="col" class="py-3.5 pr-3 text-left text-sm font-semibold text-foreground">
 							Your Rank
 						</th>
-						<th scope="col" class="text-foreground py-3.5 pr-3 text-left text-sm font-semibold">
+						<th scope="col" class="py-3.5 pr-3 text-left text-sm font-semibold text-foreground">
 							Status
 						</th>
 					</tr>
 				</thead>
-				<tbody class="divide-foreground/10 divide-y">
+				<tbody class="divide-y divide-foreground/10">
 					{#each gamesWithParticipation as game (game.id)}
 						<tr
 							onclick={() => {
 								goto(`/games/${game.code}`);
 							}}
-							class="group hover:bg-clash-50 cursor-pointer transition-colors dark:hover:bg-gray-800"
+							class="group cursor-pointer transition-colors hover:bg-clash-50 dark:hover:bg-gray-800"
 						>
 							<td
-								class="text-foreground py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap group-hover:underline"
+								class="py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-foreground group-hover:underline"
 							>
 								{game.name}
 							</td>
 							<td
-								class="text-foreground py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap sm:pl-0"
+								class="py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-foreground sm:pl-0"
 								>{game.userRank === 0 ? 'No entries' : `#${game.userRank} (${game.totalScore})`}</td
 							>
 							<td
-								class="text-foreground py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap sm:pl-0"
+								class="py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-foreground sm:pl-0"
 							>
 								<Badge
 									title={game.endAtString}
