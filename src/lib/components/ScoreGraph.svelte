@@ -22,18 +22,20 @@
 		marginBottom = 30,
 		marginLeft = 40
 	}: Props = $props();
-	const scores: number[] = allScores.slice(limit * -1);
+	const scores = $derived(allScores.slice(limit * -1));
 
 	let path: SVGPathElement | undefined = $state(undefined);
 	let pathLength = 0;
 
-	const xScale = d3.scaleLinear([1, scores.length], [marginLeft, width - marginRight]);
-	const yScale = d3.scaleLinear([0, 100], [height - marginBottom, marginTop]);
-	const line = d3
-		.line<number>()
-		.curve(d3.curveMonotoneX)
-		.x((_, i) => xScale(i + 1))
-		.y((d) => yScale(d));
+	const xScale = $derived(d3.scaleLinear([1, scores.length], [marginLeft, width - marginRight]));
+	const yScale = $derived(d3.scaleLinear([0, 100], [height - marginBottom, marginTop]));
+	const line = $derived(
+		d3
+			.line<number>()
+			.curve(d3.curveMonotoneX)
+			.x((_, i) => xScale(i + 1))
+			.y((d) => yScale(d))
+	);
 
 	onMount(() => {
 		if (path) {

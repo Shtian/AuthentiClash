@@ -7,7 +7,7 @@
 
 	const { duration }: Props = $props();
 	const progress = tweened(0, {
-		duration
+		duration: () => duration
 	});
 
 	progress.set(100);

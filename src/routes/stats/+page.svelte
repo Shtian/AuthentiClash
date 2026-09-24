@@ -5,7 +5,6 @@
 	import ScoreGraph from '$lib/components/ScoreGraph.svelte';
 
 	const { data } = $props();
-	const stats = data?.stats;
 	const {
 		numberOfGames = 0,
 		allScores = [],
@@ -15,7 +14,7 @@
 		median2FAscore = 0,
 		wins = 0,
 		losses = 0
-	} = stats ?? {};
+	} = $derived(data?.stats ?? {});
 </script>
 
 <div class="mx-auto max-w-[1200px] px-6 lg:px-8 lg:py-10">

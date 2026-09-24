@@ -11,16 +11,16 @@
 
 	const { count, total, width = 100, strokeWidth = 10, textType = 'count' }: Props = $props();
 
-	const progress = (count / total) * 100;
+	const progress = $derived((count / total) * 100);
 	const animationProgres = tweened(0, { duration: 500 });
 	animationProgres.set(100);
 	const currentPercentage = $derived(($animationProgres * progress) / 100);
 	const currentNum = $derived(($animationProgres * count) / 100);
 
-	const cx = width / 2;
-	const cy = width / 2;
-	const radius = (width - strokeWidth) / 2;
-	const circumference = 2 * Math.PI * radius;
+	const cx = $derived(width / 2);
+	const cy = $derived(width / 2);
+	const radius = $derived((width - strokeWidth) / 2);
+	const circumference = $derived(2 * Math.PI * radius);
 	const dashoffset = $derived(circumference - (circumference * currentPercentage) / 100);
 </script>
 

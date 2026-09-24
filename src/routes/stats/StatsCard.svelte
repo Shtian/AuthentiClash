@@ -12,18 +12,12 @@
 
 	const { title, cols = 'half', helptext = '', children }: Props = $props();
 
-	let colClass = $state('sm:col-span-6');
-	switch (cols) {
-		case 'half':
-			colClass = 'sm:col-span-6';
-			break;
-		case 'full':
-			colClass = 'sm:col-span-12';
-			break;
-		case 'single':
-			colClass = 'sm:col-span-1';
-			break;
-	}
+	const colClasses = {
+		half: 'sm:col-span-6',
+		full: 'sm:col-span-12',
+		single: 'sm:col-span-1'
+	};
+	const colClass = $derived(colClasses[cols]);
 </script>
 
 <div

@@ -6,11 +6,11 @@
 	import { LucideLoader2 } from '@lucide/svelte';
 
 	const { data, form } = $props();
-	const session = $state(data.session);
-	const profile = $state(data.profile);
+	const session = $derived(data.session);
+	const profile = $derived(data.profile);
 	let isLoading = $state(false);
 
-	const username: string = profile?.username ?? '';
+	const username = $derived(profile?.username ?? '');
 	let profileForm: HTMLFormElement | undefined = $state();
 
 	const handleSubmit: SubmitFunction = () => {

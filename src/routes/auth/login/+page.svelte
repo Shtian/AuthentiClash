@@ -12,16 +12,16 @@
 	}
 
 	const { data, form }: Props = $props();
-	const supabase = $state(data.supabase);
+	const supabase = $derived(data.supabase);
 
 	const animationDuration = 150;
 	let password = $state('');
-	let email = $state(form?.email ?? '');
+	let email = $derived(form?.email ?? '');
 	const success = $state(false);
 	const registeredEmail = $state('');
 	let loading = $state(false);
 	let showRegister = $state(false);
-	let error = $state<string | undefined>(form?.error);
+	let error = $derived<string | undefined>(form?.error);
 
 	function getEmailParam(email: string) {
 		return email ? `?email=${encodeURIComponent(email)}` : '';
