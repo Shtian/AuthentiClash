@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { onDestroy } from 'svelte';
 	import Button from '$lib/components/Button.svelte';
 	import { toast } from '$lib/stores/ToastStore';
 	import { capitalize } from '$lib/utils/casing';
@@ -13,21 +14,16 @@
 	const { data } = $props();
 	let isLoading = $state(false);
 
-	// Game timer
-	const millisecondsToEnd = new Date(data.endsAt).getTime();
-	let millisecondsNow = new Date().getTime();
-	let timeLeft = millisecondsToEnd - millisecondsNow;
-	let timeLeftText = $state(timeLeft > 0 ? formatTimeDelta(timeLeft) : 'Game has ended');
+	const millisecondsToEnd = $derived(new Date(data.endsAt).getTime());
+	let millisecondsNow = $state(Date.now());
+	const timeLeft = $derived(millisecondsToEnd - millisecondsNow);
+	const timeLeftText = $derived(timeLeft > 0 ? formatTimeDelta(timeLeft) : 'Game has ended');
+
 	const timer = setInterval(() => {
-		millisecondsNow = new Date().getTime();
-		timeLeft = millisecondsToEnd - millisecondsNow;
-		if (timeLeft <= 0) {
-			clearInterval(timer);
-			timeLeftText = 'Game has ended';
-		} else {
-			timeLeftText = formatTimeDelta(timeLeft);
-		}
+		millisecondsNow = Date.now();
+		if (timeLeft <= 0) clearInterval(timer);
 	}, 1000);
+	onDestroy(() => clearInterval(timer));
 
 	// Nickname generation
 	let recentRefresh = $state(false);
