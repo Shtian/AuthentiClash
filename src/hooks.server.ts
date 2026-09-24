@@ -14,12 +14,12 @@ Sentry.init({
 	tracesSampleRate: 1,
 	environment: PUBLIC_ENV,
 	integrations: [
-		(Sentry as any).consoleLoggingIntegration?.({
+		Sentry.consoleLoggingIntegration({
 			levels: ['log', 'warn', 'error']
 		})
 	],
 	enableLogs: true
-} as any);
+});
 
 export const handleError = Sentry.handleErrorWithSentry();
 

@@ -30,10 +30,10 @@
 	<div class="mx-auto max-w-2xl sm:px-6 lg:px-8 lg:py-10">
 		<div class="heading mx-auto mb-6 max-w-2xl lg:mx-0">
 			<div class="mb-6 flex place-content-between items-center">
-				<h2 class="text-foreground text-3xl font-bold tracking-tight sm:text-4xl">Games</h2>
+				<h2 class="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">Games</h2>
 				<a
 					href="/games/create"
-					class="bg-clash-500 hover:bg-clash-400 focus-visible:outline-clash-500 text-background dark:text-foreground rounded-md px-3 py-2 text-sm font-semibold shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2"
+					class="rounded-md bg-clash-500 px-3 py-2 text-sm font-semibold text-background shadow-sm hover:bg-clash-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500 dark:text-foreground"
 					>New game</a
 				>
 			</div>
@@ -42,7 +42,7 @@
 		{#if games.length}
 			<GameList gamesWithParticipation={games} />
 		{:else}
-			<p class="text-foreground mt-6">
+			<p class="mt-6 text-foreground">
 				{#if page.url.searchParams.get('filter') === null}
 					No active games
 				{:else if page.url.searchParams.get('filter') === 'ended'}

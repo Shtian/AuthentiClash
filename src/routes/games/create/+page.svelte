@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { applyAction, enhance } from '$app/forms';
-	import { Calendar as CalendarIcon, Sparkles } from 'lucide-svelte';
+	import { Calendar as CalendarIcon, Sparkles } from '@lucide/svelte';
 	import {
 		type DateValue,
 		DateFormatter,
@@ -57,21 +57,21 @@
 
 <form method="POST" action="?/create" use:enhance={handleSubmit}>
 	<div class="mx-auto max-w-2xl space-y-12">
-		<div class="border-foreground/10 border-b pb-12">
-			<h2 class="text-foreground text-base leading-7 font-semibold">
+		<div class="border-b border-foreground/10 pb-12">
+			<h2 class="text-base leading-7 font-semibold text-foreground">
 				Create an AuthentiClash game! ⚔️
 			</h2>
-			<p class="text-muted-foreground mt-1 text-sm leading-6">
+			<p class="mt-1 text-sm leading-6 text-muted-foreground">
 				You will get a shareable code after the game has been created.
 			</p>
 			<div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
 				<div class="col-span-4 sm:col-span-6">
-					<label for="game-name" class="text-foreground block text-sm leading-6 font-medium"
+					<label for="game-name" class="block text-sm leading-6 font-medium text-foreground"
 						>Game name</label
 					>
 					<div class="mt-2">
 						<div
-							class="hover:bg-muted ring-foreground/10 focus-within:ring-ring flex rounded-md bg-white/5 shadow-2xs ring-1 ring-inset focus-within:ring-2"
+							class="flex rounded-md bg-white/5 shadow-2xs ring-1 ring-foreground/10 ring-inset focus-within:ring-2 focus-within:ring-ring hover:bg-muted"
 						>
 							<input
 								type="text"
@@ -81,14 +81,14 @@
 								value={name}
 								required
 								minlength="3"
-								class="text-foreground flex-1 border-0 bg-transparent py-1.5 pl-2 focus:outline-0 sm:text-sm sm:leading-6"
+								class="flex-1 border-0 bg-transparent py-1.5 pl-2 text-foreground focus:outline-0 sm:text-sm sm:leading-6"
 							/>
 						</div>
 					</div>
 				</div>
 
 				<div class="col-span-4 sm:col-span-3">
-					<label for="end-date" class="text-foreground block text-sm leading-6 font-medium"
+					<label for="end-date" class="block text-sm leading-6 font-medium text-foreground"
 						>End date</label
 					>
 					<div class="w-fu mt-2">
@@ -118,12 +118,12 @@
 					</div>
 				</div>
 				<div class="col-span-4 sm:col-span-3">
-					<label for="game-name" class="text-foreground block text-sm leading-6 font-medium"
+					<label for="game-name" class="block text-sm leading-6 font-medium text-foreground"
 						>End time (UTC)</label
 					>
 					<div class="mt-2">
 						<div
-							class="focus-within:ring-ring ring-foreground/10 hover:bg-muted flex rounded-md bg-white/5 shadow-2xs ring-1 ring-inset focus-within:ring-[3px]"
+							class="flex rounded-md bg-white/5 shadow-2xs ring-1 ring-foreground/10 ring-inset focus-within:ring-[3px] focus-within:ring-ring hover:bg-muted"
 						>
 							<input
 								type="time"
@@ -131,7 +131,7 @@
 								id="end-time"
 								value={endTime}
 								required
-								class="text-foreground flex-1 border-0 bg-transparent py-1.5 pl-2 focus:outline-0 sm:text-sm sm:leading-6"
+								class="flex-1 border-0 bg-transparent py-1.5 pl-2 text-foreground focus:outline-0 sm:text-sm sm:leading-6"
 							/>
 						</div>
 					</div>
@@ -139,10 +139,10 @@
 				<div class="col-span-6">
 					<label
 						for="commentator-personality"
-						class="text-foreground block text-sm leading-6 font-medium"
+						class="block text-sm leading-6 font-medium text-foreground"
 						>AI commentator personality prompt</label
 					>
-					<p class="text-muted-foreground text-sm">
+					<p class="text-sm text-muted-foreground">
 						Use a prompt that describes the personality of the commentator, or choose a pre-defined
 						personality below.
 					</p>
@@ -153,7 +153,7 @@
 							bind:value={commentatorPersonality}
 							maxlength={512}
 							required
-							class="text-foreground ring-foreground/10 hover:bg-muted flex-1 resize-none border-0 px-2 py-1.5 shadow-2xs ring-1 ring-inset focus:ring-[3px] focus:outline-0 sm:text-sm sm:leading-6"
+							class="flex-1 resize-none border-0 px-2 py-1.5 text-foreground shadow-2xs ring-1 ring-foreground/10 ring-inset hover:bg-muted focus:ring-[3px] focus:outline-0 sm:text-sm sm:leading-6"
 						/>
 					</div>
 					<div class="mt-2 flex flex-wrap gap-2">
@@ -161,7 +161,7 @@
 							<Button
 								type="button"
 								variant="outline"
-								class="text-muted-foreground h-auto px-2 py-1 text-xs"
+								class="h-auto px-2 py-1 text-xs text-muted-foreground"
 								onclick={() => (commentatorPersonality = personality.prompt)}
 							>
 								{personality.name}
@@ -170,14 +170,14 @@
 					</div>
 				</div>
 				<div class="col-span-6">
-					<label for="background-prompt" class="text-foreground block text-sm leading-6 font-medium"
+					<label for="background-prompt" class="block text-sm leading-6 font-medium text-foreground"
 						>AI avatar background prompt<Badge
 							variant="secondary"
-							class="dark:bg-clash-400 bg-clash-200 ml-2 text-xs"
+							class="ml-2 bg-clash-200 text-xs dark:bg-clash-400"
 							><Sparkles class="size-3" />New</Badge
 						></label
 					>
-					<p class="text-muted-foreground text-sm">
+					<p class="text-sm text-muted-foreground">
 						Use a prompt that describes the background theme for AI-generated avatars, or choose a
 						pre-defined background below. Leave empty for random backgrounds.
 					</p>
@@ -188,7 +188,7 @@
 							bind:value={backgroundPrompt}
 							maxlength={512}
 							placeholder="Leave empty for random backgrounds"
-							class="text-foreground ring-foreground/10 hover:bg-muted flex-1 resize-none border-0 px-2 py-1.5 shadow-2xs ring-1 ring-inset focus:ring-[3px] focus:outline-0 sm:text-sm sm:leading-6"
+							class="flex-1 resize-none border-0 px-2 py-1.5 text-foreground shadow-2xs ring-1 ring-foreground/10 ring-inset hover:bg-muted focus:ring-[3px] focus:outline-0 sm:text-sm sm:leading-6"
 						/>
 					</div>
 					<div class="mt-2 flex flex-wrap gap-2">
@@ -196,7 +196,7 @@
 							<Button
 								type="button"
 								variant="outline"
-								class="text-muted-foreground h-auto px-2 py-1 text-xs"
+								class="h-auto px-2 py-1 text-xs text-muted-foreground"
 								onclick={() => (backgroundPrompt = background.prompt)}
 							>
 								{background.name}
@@ -211,7 +211,7 @@
 	<div class="mx-auto mt-6 flex max-w-2xl items-center gap-x-6">
 		<button
 			type="submit"
-			class="bg-clash-400 hover:bg-clash-300 focus-visible:outline-clash-500 text-foreground rounded-md px-3 py-2 text-sm font-semibold shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2"
+			class="rounded-md bg-clash-400 px-3 py-2 text-sm font-semibold text-foreground shadow-sm hover:bg-clash-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500"
 			disabled={isLoading}>{isLoading ? 'Creating...' : 'Create'}</button
 		>
 	</div>

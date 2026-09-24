@@ -36,14 +36,14 @@
 </script>
 
 <header>
-	<nav class="border-foreground/10 border-b shadow-sm">
+	<nav class="border-b border-foreground/10 shadow-sm">
 		<div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
 			<div class="relative flex h-16 items-center justify-between">
 				<div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
 					<!-- Mobile menu button-->
 					<button
 						type="button"
-						class="hover:text-foreground text-muted-foreground relative inline-flex items-center justify-center rounded-md p-2 hover:bg-gray-700 focus:ring-2 focus:ring-white focus:outline-none focus:ring-inset"
+						class="relative inline-flex items-center justify-center rounded-md p-2 text-muted-foreground hover:bg-gray-700 hover:text-foreground focus:ring-2 focus:ring-white focus:outline-none focus:ring-inset"
 						aria-controls="mobile-menu"
 						aria-expanded="false"
 						onclick={(e) => {
@@ -94,13 +94,13 @@
 									{#if $page.url.pathname.includes(link.href)}
 										<a
 											href={link.href}
-											class="text-foreground dark:text-foreground rounded-md bg-zinc-100 px-3 py-2 text-sm font-medium dark:bg-zinc-700"
+											class="rounded-md bg-zinc-100 px-3 py-2 text-sm font-medium text-foreground dark:bg-zinc-700 dark:text-foreground"
 											aria-current="page">{link.name}</a
 										>
 									{:else}
 										<a
 											href={link.href}
-											class="hover:text-foreground dark:hover:text-foreground dark:text-muted-foreground rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-zinc-100 dark:hover:bg-gray-700"
+											class="rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-zinc-100 hover:text-foreground dark:text-muted-foreground dark:hover:bg-gray-700 dark:hover:text-foreground"
 											>{link.name}</a
 										>
 									{/if}
@@ -128,7 +128,7 @@
 										viewBox="0 0 24 24"
 										stroke-width="1.5"
 										stroke="currentColor"
-										class="text-muted-foreground absolute inset-0 h-8 w-8"
+										class="absolute inset-0 h-8 w-8 text-muted-foreground"
 									>
 										<path
 											stroke-linecap="round"
@@ -187,13 +187,13 @@
 								{#if $page.url.pathname.includes(link.href)}
 									<a
 										href={link.href}
-										class="text-foreground dark:text-foreground rounded-md bg-zinc-100 px-3 py-2 text-sm font-medium dark:bg-zinc-700"
+										class="rounded-md bg-zinc-100 px-3 py-2 text-sm font-medium text-foreground dark:bg-zinc-700 dark:text-foreground"
 										aria-current="page">{link.name}</a
 									>
 								{:else}
 									<a
 										href={link.href}
-										class="hover:text-foreground dark:hover:text-foreground dark:text-muted-foreground rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-zinc-100 dark:hover:bg-gray-700"
+										class="rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-zinc-100 hover:text-foreground dark:text-muted-foreground dark:hover:bg-gray-700 dark:hover:text-foreground"
 										>{link.name}</a
 									>
 								{/if}

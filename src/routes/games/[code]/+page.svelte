@@ -16,7 +16,7 @@
 		Shield,
 		Skull,
 		Sparkles
-	} from 'lucide-svelte';
+	} from '@lucide/svelte';
 	import Cooldown from './Cooldown.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { onDestroy } from 'svelte';
@@ -152,7 +152,7 @@
 						<label for="2fa-score" class="block text-center text-2xl font-bold"
 							>Enter 2FA Code</label
 						>
-						<p class="text-muted-foreground text-center text-sm">
+						<p class="text-center text-sm text-muted-foreground">
 							Input your two-digit authentication code
 						</p>
 						<input
@@ -164,7 +164,7 @@
 							min="10"
 							max="99"
 							autocomplete="off"
-							class="ring-offset-background file:text-foreground placeholder:text-muted-foreground focus-visible:ring-ring text-foreground hover:bg-foreground/5 flex h-16 w-full rounded-md border px-3 py-2 text-center text-3xl font-bold tracking-widest shadow-2xs file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 dark:border-zinc-600 dark:bg-zinc-800/50"
+							class="flex h-16 w-full rounded-md border px-3 py-2 text-center text-3xl font-bold tracking-widest text-foreground shadow-2xs ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground hover:bg-foreground/5 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 dark:border-zinc-600 dark:bg-zinc-800/50"
 						/>
 					</div>
 					{#if data.class}
@@ -172,7 +172,7 @@
 							<div
 								class={`rounded-lg border shadow-2xs transition-all duration-300 dark:bg-zinc-800/50 ${
 									!hasUsedAbility && abilityIdUsed === ability.id
-										? 'border-clash-500 shadow-clash-500/25 ring-clash-500/50 dark:border-clash-500 shadow-lg ring-2'
+										? 'border-clash-500 shadow-lg ring-2 shadow-clash-500/25 ring-clash-500/50 dark:border-clash-500'
 										: 'border-foreground/10 dark:border-zinc-600'
 								}`}
 							>
@@ -180,7 +180,7 @@
 									<div class="flex items-start space-x-3">
 										<div class="mt-1 flex-shrink-0">
 											<div
-												class="to-clash-600 flex size-12 items-center justify-center rounded-lg bg-gradient-to-br from-purple-600 text-white"
+												class="flex size-12 items-center justify-center rounded-lg bg-gradient-to-br from-purple-600 to-clash-600 text-white"
 												class:grayscale={hasUsedAbility && !isAbilityPassive(ability)}
 											>
 												{#if ability.id === ABILITIES.DIVINE_AEGIS}
@@ -207,7 +207,7 @@
 										<div class="min-w-0 flex-1">
 											<div class="mb-2 flex items-center justify-between">
 												<div class="flex items-center gap-2">
-													<h3 class="text-foreground font-semibold">{ability.name}</h3>
+													<h3 class="font-semibold text-foreground">{ability.name}</h3>
 													<Badge
 														variant="secondary"
 														class={`text-xs ${
@@ -240,13 +240,13 @@
 														/>
 														<label
 															for="ability-toggle"
-															class="text-foreground peer-disabled:text-muted-foreground text-sm font-medium peer-disabled:cursor-not-allowed"
+															class="text-sm font-medium text-foreground peer-disabled:cursor-not-allowed peer-disabled:text-muted-foreground"
 															>Activate</label
 														>
 													</div>
 												{/if}
 											</div>
-											<p class="text-foreground text-sm leading-relaxed">
+											<p class="text-sm leading-relaxed text-foreground">
 												{ability.description}
 											</p>
 											{#if hasUsedAbility && !isAbilityPassive(ability)}
@@ -263,7 +263,7 @@
 							<Button
 								type="submit"
 								size="lg"
-								class="bg-clash-500 hover:bg-clash-400 dark:bg-clash-500 dark:hover:bg-clash-400 w-full text-white"
+								class="w-full bg-clash-500 text-white hover:bg-clash-400 dark:bg-clash-500 dark:hover:bg-clash-400"
 								disabled={isLoading}
 							>
 								{#if isLoading}
@@ -291,8 +291,8 @@
 			</form>
 		{:else}
 			<div class="flex flex-col items-center gap-2">
-				<h2 class="text-foreground text-2xl font-bold">Enter 2FA Code</h2>
-				<p class="text-muted-foreground text-center text-sm">
+				<h2 class="text-2xl font-bold text-foreground">Enter 2FA Code</h2>
+				<p class="text-center text-sm text-muted-foreground">
 					Game has ended. You can still view the game logs and high scores.
 				</p>
 
@@ -310,7 +310,7 @@
 							<Button
 								type="submit"
 								size="lg"
-								class="bg-clash-500 hover:bg-clash-400 text-white"
+								class="bg-clash-500 text-white hover:bg-clash-400"
 								disabled={isGeneratingEndgame}
 							>
 								<Sparkles class="size-6"></Sparkles> Generate epic image
@@ -324,9 +324,9 @@
 							out:fade={{ duration: 150 }}
 						>
 							<div
-								class="bg-foreground/10 aspect-square w-full animate-pulse rounded-lg dark:bg-zinc-700/50"
+								class="aspect-square w-full animate-pulse rounded-lg bg-foreground/10 dark:bg-zinc-700/50"
 							></div>
-							<p class="text-muted-foreground mt-2 text-center text-sm">
+							<p class="mt-2 text-center text-sm text-muted-foreground">
 								Preparing something epic...
 							</p>
 						</div>
@@ -340,7 +340,7 @@
 										class="w-full rounded-lg shadow"
 									/>
 								</a>
-								<p class="text-muted-foreground mt-2 text-center text-sm">
+								<p class="mt-2 text-center text-sm text-muted-foreground">
 									Click to view full size.
 								</p>
 							</div>

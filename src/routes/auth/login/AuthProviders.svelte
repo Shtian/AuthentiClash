@@ -32,7 +32,7 @@
 </script>
 
 <button
-	class="bg-clash-500 hover:bg-clash-400 focus-visible:outline-clash-500 text-background dark:text-foreground mt-1 flex w-full justify-center rounded-md px-3 py-1.5 text-sm leading-6 font-semibold shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2"
+	class="mt-1 flex w-full justify-center rounded-md bg-clash-500 px-3 py-1.5 text-sm leading-6 font-semibold text-background shadow-sm hover:bg-clash-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500 dark:text-foreground"
 	onclick={() => oAuthLogin('google')}
 	><img
 		class="mr-3 size-6"
@@ -43,7 +43,7 @@
 	/>Google</button
 >
 <button
-	class="bg-clash-500 hover:bg-clash-400 focus-visible:outline-clash-500 text-background dark:text-foreground mt-2 flex w-full justify-center rounded-md px-3 py-1.5 text-sm leading-6 font-semibold shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2"
+	class="mt-2 flex w-full justify-center rounded-md bg-clash-500 px-3 py-1.5 text-sm leading-6 font-semibold text-background shadow-sm hover:bg-clash-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500 dark:text-foreground"
 	onclick={() => oAuthLogin('github')}
 	><img
 		class="mr-3 size-6"
@@ -54,7 +54,7 @@
 	/>GitHub</button
 >
 <button
-	class="bg-clash-500 hover:bg-clash-400 focus-visible:outline-clash-500 text-background dark:text-foreground mt-2 flex w-full justify-center rounded-md px-3 py-1.5 text-sm leading-6 font-semibold shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2"
+	class="mt-2 flex w-full justify-center rounded-md bg-clash-500 px-3 py-1.5 text-sm leading-6 font-semibold text-background shadow-sm hover:bg-clash-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500 dark:text-foreground"
 	onclick={() => oAuthLogin('discord')}
 	><img
 		class="mr-3 size-6"

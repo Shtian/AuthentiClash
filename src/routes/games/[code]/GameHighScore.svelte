@@ -2,7 +2,7 @@
 	import { enhance } from '$app/forms';
 	import { toast } from '$lib/stores/ToastStore';
 	import type { SubmitFunction } from '@sveltejs/kit';
-	import { Loader2, Sparkles, TrendingUp } from 'lucide-svelte';
+	import { Loader2, Sparkles, TrendingUp } from '@lucide/svelte';
 	import { flip } from 'svelte/animate';
 	import * as Popover from '$lib/components/ui/popover';
 	import ScoreGraph from '$lib/components/ScoreGraph.svelte';
@@ -82,7 +82,7 @@
 			>
 				<div class="w-12 text-center">
 					<span
-						class={`text-shadow-muted-foreground/50  text-xl font-bold text-shadow-2xs ${getRankColor(i + 1)}`}
+						class={`text-xl  font-bold text-shadow-2xs text-shadow-muted-foreground/50 ${getRankColor(i + 1)}`}
 						>#{i + 1}</span
 					>
 				</div>
@@ -117,7 +117,7 @@
 							</Popover.Content>
 						</Popover.Root>
 					{:else if isLoading && player.profileId === currentPlayerId}
-						<Loader2 class="text-muted-foreground size-6 animate-spin"></Loader2>
+						<Loader2 class="size-6 animate-spin text-muted-foreground"></Loader2>
 					{:else if aiEnabled && player.profileId === currentPlayerId}
 						<form
 							method="post"
@@ -131,7 +131,7 @@
 							<button
 								type="submit"
 								title="Generate participant image "
-								class="hover:text-foreground text-muted-foreground transition-colors"
+								class="text-muted-foreground transition-colors hover:text-foreground"
 							>
 								<span class="sr-only">Generate participant image</span>
 								<Sparkles class="size-6" />
@@ -166,13 +166,13 @@
 					{/if}
 				</div>
 				<div class="min-w-0">
-					<div class="text-foreground truncate font-semibold">{getNickname(player)}</div>
-					<div class="text-muted-foreground truncate text-sm">{getUsername(player)}</div>
+					<div class="truncate font-semibold text-foreground">{getNickname(player)}</div>
+					<div class="truncate text-sm text-muted-foreground">{getUsername(player)}</div>
 				</div>
 				<div class="flex items-center space-x-3">
 					<div class="text-right">
-						<div class="text-foreground text-lg font-bold">{player.totalScore}</div>
-						<div class="text-muted-foreground text-xs">points</div>
+						<div class="text-lg font-bold text-foreground">{player.totalScore}</div>
+						<div class="text-xs text-muted-foreground">points</div>
 					</div>
 					<Popover.Root>
 						<Popover.Trigger
@@ -189,10 +189,10 @@
 			</div>
 		{:else}
 			<div>
-				<div class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-foreground sm:pl-2">
+				<div class="py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-foreground sm:pl-2">
 					-
 				</div>
-				<div class="whitespace-nowrap px-3 py-4 text-sm text-muted-foreground">-</div>
+				<div class="px-3 py-4 text-sm whitespace-nowrap text-muted-foreground">-</div>
 				<div class="whitespace">
 					<span class="text-sm text-muted-foreground">No scores yet</span>
 				</div>

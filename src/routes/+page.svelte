@@ -10,7 +10,7 @@
 		Star,
 		Play,
 		CheckCircle
-	} from 'lucide-svelte';
+	} from '@lucide/svelte';
 
 	let visible = $state(false);
 	let featuresVisible = $state(false);
@@ -61,7 +61,7 @@
 <section class=" flex min-h-screen flex-col items-center justify-center px-4 py-20 text-center">
 	{#if visible}
 		<h1
-			class="to-clash-600 bg-gradient-to-br from-purple-600 bg-clip-text text-5xl font-bold text-transparent md:text-7xl"
+			class="bg-gradient-to-br from-purple-600 to-clash-600 bg-clip-text text-5xl font-bold text-transparent md:text-7xl"
 			in:fly={{ y: -20, duration: 1200 }}
 		>
 			AuthentiClash
@@ -74,7 +74,7 @@
 				opacity: 0
 			}}
 		>
-			<p class="text-muted-foreground mx-auto mt-6 max-w-3xl text-xl md:text-2xl">
+			<p class="mx-auto mt-6 max-w-3xl text-xl text-muted-foreground md:text-2xl">
 				Join or create a week-long game. Pick a class, enter a daily two-digit code, and unleash
 				your skill. Climb the leaderboard, earn badges, and enjoy AI avatars, commentators, and
 				stats.
@@ -82,7 +82,7 @@
 			<div class="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
 				<a
 					href="/games"
-					class="to-clash-600 hover:to-clash-500 focus-visible:outline-clash-500 inline-flex items-center gap-x-2 rounded-lg bg-gradient-to-br from-purple-600 px-6 py-3 text-lg font-semibold text-white shadow-lg transition-all duration-200 hover:from-purple-500 hover:shadow-xl focus-visible:outline-2 focus-visible:outline-offset-2"
+					class="inline-flex items-center gap-x-2 rounded-lg bg-gradient-to-br from-purple-600 to-clash-600 px-6 py-3 text-lg font-semibold text-white shadow-lg transition-all duration-200 hover:from-purple-500 hover:to-clash-500 hover:shadow-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500"
 				>
 					<Play class="h-5 w-5" />
 					Start Your Adventure
@@ -110,12 +110,12 @@
 <!-- Features Section -->
 <section
 	bind:this={featuresSection}
-	class="features-section dark:bg-muted/30 rounded-md px-4 py-20"
+	class="features-section rounded-md px-4 py-20 dark:bg-muted/30"
 >
 	<div class="mx-auto max-w-7xl">
 		<div class="mb-16 text-center">
 			<h2 class="mb-6 text-4xl font-bold md:text-5xl">Why Choose AuthentiClash?</h2>
-			<p class="text-muted-foreground mx-auto max-w-3xl text-xl">
+			<p class="mx-auto max-w-3xl text-xl text-muted-foreground">
 				Week‑long, daily‑code competition with classes, skills, badges, AI features, and a stats
 				overview.
 			</p>
@@ -128,15 +128,15 @@
 			>
 				<!-- Multiplayer Adventures - Large card -->
 				<div
-					class="bg-background border-border rounded-xl border p-8 shadow-lg transition-all duration-300 hover:shadow-xl md:col-span-3 md:row-span-2"
+					class="rounded-xl border border-border bg-background p-8 shadow-lg transition-all duration-300 hover:shadow-xl md:col-span-3 md:row-span-2"
 				>
 					<div
-						class="to-clash-600 mb-6 flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br from-purple-600 text-white"
+						class="mb-6 flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br from-purple-600 to-clash-600 text-white"
 					>
 						<Users class="h-8 w-8" />
 					</div>
 					<h3 class="mb-4 text-2xl font-semibold">Time‑Boxed Multiplayer</h3>
-					<p class="text-muted-foreground text-lg leading-relaxed">
+					<p class="text-lg leading-relaxed text-muted-foreground">
 						Create or join a week‑long game and invite friends. Climb the leaderboard by building
 						your accumulated score before time runs out. Review performance in the stats overview.
 					</p>
@@ -144,10 +144,10 @@
 
 				<!-- Dynamic Gameplay - Medium card -->
 				<div
-					class="bg-background border-border rounded-xl border p-6 shadow-lg transition-all duration-300 hover:shadow-xl md:col-span-3"
+					class="rounded-xl border border-border bg-background p-6 shadow-lg transition-all duration-300 hover:shadow-xl md:col-span-3"
 				>
 					<div
-						class="to-clash-600 mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-purple-600 text-white"
+						class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-purple-600 to-clash-600 text-white"
 					>
 						<Gamepad2 class="h-6 w-6" />
 					</div>
@@ -161,30 +161,30 @@
 
 				<!-- Achievement System - Small card -->
 				<div
-					class="bg-background border-border rounded-xl border p-6 shadow-lg transition-all duration-300 hover:shadow-xl md:col-span-2"
+					class="rounded-xl border border-border bg-background p-6 shadow-lg transition-all duration-300 hover:shadow-xl md:col-span-2"
 				>
 					<div
-						class="to-clash-600 mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-purple-600 text-white"
+						class="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-purple-600 to-clash-600 text-white"
 					>
 						<Trophy class="h-5 w-5" />
 					</div>
 					<h3 class="mb-2 text-lg font-semibold">Badges & Leaderboards</h3>
-					<p class="text-muted-foreground text-sm">
+					<p class="text-sm text-muted-foreground">
 						Unlock badges and climb the leaderboard as your weekly score grows.
 					</p>
 				</div>
 
 				<!-- Customizable Experience - Small card -->
 				<div
-					class="bg-background border-border rounded-xl border p-6 shadow-lg transition-all duration-300 hover:shadow-xl md:col-span-1"
+					class="rounded-xl border border-border bg-background p-6 shadow-lg transition-all duration-300 hover:shadow-xl md:col-span-1"
 				>
 					<div
-						class="to-clash-600 mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-purple-600 text-white"
+						class="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-purple-600 to-clash-600 text-white"
 					>
 						<Star class="h-5 w-5" />
 					</div>
 					<h3 class="mb-2 text-lg font-semibold">AI Commentary & Avatars</h3>
-					<p class="text-muted-foreground text-sm">
+					<p class="text-sm text-muted-foreground">
 						Enjoy AI commentators and AI avatar generation for extra flavor.
 					</p>
 				</div>
@@ -198,7 +198,7 @@
 	<div class="mx-auto max-w-7xl">
 		<div class="mb-16 text-center">
 			<h2 class="mb-6 text-4xl font-bold md:text-5xl">How It Works</h2>
-			<p class="text-muted-foreground mx-auto max-w-3xl text-xl">
+			<p class="mx-auto max-w-3xl text-xl text-muted-foreground">
 				Start in minutes—create or join a week‑long game and score daily
 			</p>
 		</div>
@@ -207,7 +207,7 @@
 			<div class="grid gap-8 md:grid-cols-3" in:fly={{ y: 20, duration: 800, delay: 200 }}>
 				<div class="space-y-8 text-center">
 					<div
-						class="to-clash-600 mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-purple-600 text-xl font-bold text-white"
+						class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-purple-600 to-clash-600 text-xl font-bold text-white"
 					>
 						1
 					</div>
@@ -220,12 +220,12 @@
 
 				<div class="space-y-8 text-center">
 					<div
-						class="to-clash-600 mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-purple-600 text-xl font-bold text-white"
+						class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-purple-600 to-clash-600 text-xl font-bold text-white"
 					>
 						2
 					</div>
 					<h3 class="text-xl font-semibold">Pick Class & Play Daily</h3>
-					<p class="text-muted-foreground mb-6">
+					<p class="mb-6 text-muted-foreground">
 						Choose a class (Barbarian, Necromancer, Diceblade, Warden, Paladin, Thief). Enter a
 						two‑digit code every day and time your once‑per‑game skill.
 					</p>
@@ -233,12 +233,12 @@
 
 				<div class="space-y-8 text-center">
 					<div
-						class="to-clash-600 mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-purple-600 text-xl font-bold text-white"
+						class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-purple-600 to-clash-600 text-xl font-bold text-white"
 					>
 						3
 					</div>
 					<h3 class="text-xl font-semibold">Compete & Achieve</h3>
-					<p class="text-muted-foreground mb-6">
+					<p class="mb-6 text-muted-foreground">
 						Highest accumulated score at week’s end wins. Unlock badges and review performance in
 						the stats overview.
 					</p>
@@ -249,10 +249,10 @@
 </section>
 
 <!-- CTA Section -->
-<section class="to-clash-600 rounded-md bg-gradient-to-r from-purple-600 px-4 py-20">
+<section class="rounded-md bg-gradient-to-r from-purple-600 to-clash-600 px-4 py-20">
 	<div class="mx-auto max-w-4xl text-center">
 		<h2
-			class="text-background mb-6 text-4xl font-bold text-shadow-white/30 text-shadow-xs md:text-5xl"
+			class="mb-6 text-4xl font-bold text-background text-shadow-white/30 text-shadow-xs md:text-5xl"
 		>
 			Ready to Create or Join a Clash?
 		</h2>

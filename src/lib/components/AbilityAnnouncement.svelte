@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { ChevronDown, Info } from 'lucide-svelte';
+	import { ChevronDown, Info } from '@lucide/svelte';
 	import * as Collapsible from '$lib/components/ui/collapsible';
 	import { buttonVariants } from '$lib/components/ui/button';
 </script>
 
 <Collapsible.Root class="mb-4 space-y-2 rounded-md border p-4">
-	<p class="text-muted-foreground text-sm"><time datetime="2024-12-09">2024-12-09</time></p>
+	<p class="text-sm text-muted-foreground"><time datetime="2024-12-09">2024-12-09</time></p>
 	<h4 class="inline-flex items-center gap-x-2 font-semibold">
 		<Info class=" size-4" />New Feature: Classes and Abilities!
 	</h4>

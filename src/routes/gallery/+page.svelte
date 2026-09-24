@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { CircleUser, RocketIcon } from 'lucide-svelte';
+	import { CircleUser, RocketIcon } from '@lucide/svelte';
 	import * as Popover from '$lib/components/ui/popover';
 
 	const { data } = $props();
@@ -21,10 +21,10 @@
 <div class="lg:py-10">
 	<div class="mx-auto max-w-7xl px-6 lg:px-8">
 		<div class="mx-auto max-w-7xl lg:mx-0">
-			<h2 class="text-foreground text-3xl font-bold tracking-tight sm:text-4xl">
+			<h2 class="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
 				Gallery of Legends
 			</h2>
-			<p class="text-foreground mt-6 text-lg leading-8">
+			<p class="mt-6 text-lg leading-8 text-foreground">
 				Your previous achievements are eternalized in the Gallery of Legends. Gaze upon your scores
 				and marvel at your own greatness.
 			</p>
@@ -47,14 +47,14 @@
 						{:else}
 							<CircleUser class="mx-auto h-24 w-24 text-gray-600" />
 						{/if}
-						<h3 class="text-foreground mt-6 text-base leading-7 font-semibold tracking-tight">
+						<h3 class="mt-6 text-base leading-7 font-semibold tracking-tight text-foreground">
 							<a href={`/games/${game.code}`}
 								>{game.participation.nickname.replace(/\(.*\)/, '').trim()}</a
 							>
 						</h3>
 						<Popover.Root>
 							<Popover.Trigger
-								><p class="text-muted-foreground text-sm leading-6">
+								><p class="text-sm leading-6 text-muted-foreground">
 									Score: {game.participation.total_score}
 								</p>
 							</Popover.Trigger>
@@ -67,16 +67,16 @@
 			</ul>
 		{:else}
 			<div class="mx-auto max-w-7xl py-6 text-center sm:px-6 lg:px-8 lg:py-10">
-				<RocketIcon class="text-muted-foreground mx-auto h-12 w-12" />
-				<h3 class="text-foreground mt-2 text-sm font-semibold">No past games found</h3>
-				<p class="text-foreground mt-1 text-sm">
+				<RocketIcon class="mx-auto h-12 w-12 text-muted-foreground" />
+				<h3 class="mt-2 text-sm font-semibold text-foreground">No past games found</h3>
+				<p class="mt-1 text-sm text-foreground">
 					Get started by creating a new AuthentiClash session.
 				</p>
 				<div class="mt-6">
 					<a
 						href="/games/create"
 						type="button"
-						class="bg-clash-600 hover:bg-clash-500 focus-visible:outline-clash-600 text-foreground inline-flex items-center rounded-md px-3 py-2 text-sm font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+						class="inline-flex items-center rounded-md bg-clash-600 px-3 py-2 text-sm font-semibold text-foreground shadow-sm hover:bg-clash-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-600"
 					>
 						<svg
 							class="mr-1.5 -ml-0.5 h-5 w-5"

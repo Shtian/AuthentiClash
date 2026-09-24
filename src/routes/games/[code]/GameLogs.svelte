@@ -26,7 +26,7 @@
 						<div class="w-px bg-gray-700"></div>
 					</div>
 				{/if}
-				<div class="bg-background relative flex size-6 flex-none items-center justify-center">
+				<div class="relative flex size-6 flex-none items-center justify-center bg-background">
 					<div class="size-1.5 rounded-full bg-gray-700 ring-1 ring-gray-600"></div>
 				</div>
 				<p class="flex-auto py-0.5 text-xs/5">
@@ -36,13 +36,13 @@
 						{log.text}
 					{/if}
 				</p>
-				<time datetime={log.created_at} class="text-muted-foreground flex-none py-0.5 text-xs/5"
+				<time datetime={log.created_at} class="flex-none py-0.5 text-xs/5 text-muted-foreground"
 					>{dateFormatter.format(new Date(log.created_at))}</time
 				>
 			</li>
 		{:else}
 			<li>
-				<p class="text-center flex-auto py-0.5 text-xs/5 text-muted-foreground">
+				<p class="flex-auto py-0.5 text-center text-xs/5 text-muted-foreground">
 					No logs found for this game
 				</p>
 			</li>

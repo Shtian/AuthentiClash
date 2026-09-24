@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Badge } from '$lib/components/ui/badge';
 	import * as Popover from '$lib/components/ui/popover';
-	import { Clock, Copy, Sparkles } from 'lucide-svelte';
+	import { Clock, Copy, Sparkles } from '@lucide/svelte';
 	import { fade } from 'svelte/transition';
 
 	interface Props {
@@ -28,29 +28,29 @@
 	<div class="grid gap-y-2 sm:grid-cols-[1fr_auto]">
 		<div class="flex flex-row items-center gap-2">
 			<h1
-				class="to-clash-600 tracking-tigh flex flex-col bg-linear-to-br from-purple-600 bg-clip-text text-5xl leading-tight font-bold text-transparent"
+				class="tracking-tigh flex flex-col bg-linear-to-br from-purple-600 to-clash-600 bg-clip-text text-5xl leading-tight font-bold text-transparent"
 			>
 				{gameName}
 			</h1>
 			<button
 				type="submit"
-				class="hover:text-foreground text-muted-foreground focus-visible:outline-clash-500 relative inline-flex items-center gap-x-2 self-center rounded-md bg-transparent px-2 py-2 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
+				class="relative inline-flex items-center gap-x-2 self-center rounded-md bg-transparent px-2 py-2 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clash-500"
 				onclick={copyUrl}
 			>
 				<Copy />
 				{#if urlIsRecentlyCopied}
-					<span class="text-foreground absolute -bottom-3.5 text-sm" in:fade out:fade>Copied!</span>
+					<span class="absolute -bottom-3.5 text-sm text-foreground" in:fade out:fade>Copied!</span>
 				{/if}
 			</button>
 		</div>
 		<div class="flex items-center sm:justify-end">
 			<div
-				class="border-foreground/10 flex h-fit w-fit flex-row items-center gap-2 rounded-md border p-2 shadow-2xs {hasEnded
+				class="flex h-fit w-fit flex-row items-center gap-2 rounded-md border border-foreground/10 p-2 shadow-2xs {hasEnded
 					? 'bg-destructive/20 text-foreground'
 					: 'bg-zinc-50 dark:bg-zinc-800/50'}"
 			>
-				<Clock class="text-muted-foreground inline size-4 shrink-0" />
-				<p class="text-muted-foreground text-sm text-pretty tabular-nums" title={endsAt}>
+				<Clock class="inline size-4 shrink-0 text-muted-foreground" />
+				<p class="text-sm text-pretty text-muted-foreground tabular-nums" title={endsAt}>
 					{timeLeftText}
 				</p>
 			</div>

@@ -2,7 +2,7 @@
 	import Portal from '../Portal.svelte';
 	import { toast } from '$lib/stores/ToastStore';
 	import VisuallyHidden from '../VisuallyHidden.svelte';
-	import { AlertTriangle, CheckCircle2, Info, X } from 'lucide-svelte';
+	import { AlertTriangle, CheckCircle2, Info, X } from '@lucide/svelte';
 	import { fly, fade } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
 	import ToastMessage from '$lib/components/toast/ToastMessage.svelte';
@@ -41,7 +41,7 @@
 					duration={toastContent.duration}
 				/>
 				<button class="ml-4 p-1" onclick={() => toast.remove(toastContent.id)}
-					><X class="hover:text-foreground text-muted-foreground h-4 w-4 transition-colors"
+					><X class="h-4 w-4 text-muted-foreground transition-colors hover:text-foreground"
 					></X><VisuallyHidden>Close message</VisuallyHidden></button
 				>
 				<ToastProgress duration={toastContent.duration} />

@@ -32,7 +32,7 @@
 </script>
 
 <li
-	class="border-foreground/10 dark:bg-foreground/10 flex flex-col gap-y-4 rounded-lg border p-4 shadow-sm"
+	class="flex flex-col gap-y-4 rounded-lg border border-foreground/10 p-4 shadow-sm dark:bg-foreground/10"
 	onmouseover={() => markBadgeAsSeen()}
 	onfocus={() => markBadgeAsSeen()}
 >
@@ -71,7 +71,7 @@
 					{badge.name}
 				{/if}
 			</h2>
-			<p class="text-muted-foreground text-xs text-pretty">
+			<p class="text-xs text-pretty text-muted-foreground">
 				{badge.secret && !badge.unlocked
 					? 'Veiled in secrecy, this trophy beckons to be unveiled by the worthy.'
 					: badge.description}
@@ -81,18 +81,18 @@
 			<span
 				in:fade={{ duration: 150 }}
 				out:fade={{ duration: 150 }}
-				class="bg-clash-400 text-foreground absolute -top-2 -left-2 rounded px-2 py-1 text-xs"
+				class="absolute -top-2 -left-2 rounded bg-clash-400 px-2 py-1 text-xs text-foreground"
 				>NEW</span
 			>
 		{/if}
 	</div>
 	<footer class="flex justify-between">
-		<p class="text-muted-foreground text-xs">
+		<p class="text-xs text-muted-foreground">
 			{badge.globalUnlockPercentage.toFixed(1)}% global unlock rate
 		</p>
 		{#if badge.unlocked}
 			<p
-				class="text-muted-foreground text-xs"
+				class="text-xs text-muted-foreground"
 				title={`Awarded to you on ${badge.awarded_on?.toDateString()}`}
 			>
 				<em>{badge.awarded_on?.toISOString().substring(0, 10)}</em>
