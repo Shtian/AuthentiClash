@@ -1,5 +1,13 @@
 # authenticlash
 
+## 0.29.2
+
+### Patch Changes
+
+- [#171](https://github.com/Shtian/AuthentiClash/pull/171) [`2e08a21`](https://github.com/Shtian/AuthentiClash/commit/2e08a21b8b082b7f90834abe6424c138d6c9cc46) Thanks [@Shtian](https://github.com/Shtian)! - Update dependencies to Svelte 5.57, SvelteKit 2.70, Vite 8, Tailwind CSS 4.3, Sentry 10, Supabase JS 2.117, and OpenAI SDK 7. Some Lucide icons have updated artwork.
+
+- [#182](https://github.com/Shtian/AuthentiClash/pull/182) [`071669c`](https://github.com/Shtian/AuthentiClash/commit/071669cb634397d5ac80d93104d2e2578b9da8e9) Thanks [@Shtian](https://github.com/Shtian)! - Stop the join page countdown when you leave the page, and fix the 39 `state_referenced_locally` warnings from `svelte-check`.
+
 ## 0.29.1
 
 ### Patch Changes
