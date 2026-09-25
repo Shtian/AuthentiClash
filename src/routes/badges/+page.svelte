@@ -8,7 +8,7 @@
 	}
 
 	const { data }: Props = $props();
-	const badges = data.badges || [];
+	const badges = $derived(data.badges || []);
 </script>
 
 <div class="mx-auto max-w-2xl px-6 lg:px-8 lg:py-10">

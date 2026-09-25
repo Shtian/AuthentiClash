@@ -21,7 +21,7 @@
 	];
 
 	let isMainMenuOpen = $state(false);
-	const isLoggedIn = !!session?.user;
+	const isLoggedIn = $derived(!!session?.user);
 
 	async function sha256(message: string) {
 		const msgBuffer = new TextEncoder().encode(message.trim().toLocaleLowerCase());

@@ -12,7 +12,7 @@
 
 	const { message = '', duration, ...others }: Props = $props();
 	const progress = tweened(0, {
-		duration
+		duration: () => duration
 	});
 
 	onMount(async () => {

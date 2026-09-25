@@ -10,8 +10,9 @@
 	const { badge }: Props = $props();
 
 	// Only show custom image if its NOT a secret badge or if the secret badge is unlocked
-	const showBadgeCustomImage =
-		(badge.image && !badge.secret) || (badge.image && badge.unlocked && badge.secret);
+	const showBadgeCustomImage = $derived(
+		(badge.image && !badge.secret) || (badge.image && badge.unlocked && badge.secret)
+	);
 
 	let showBadge = $state(false);
 

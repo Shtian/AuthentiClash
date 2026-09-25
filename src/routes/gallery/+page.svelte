@@ -3,7 +3,7 @@
 	import * as Popover from '$lib/components/ui/popover';
 
 	const { data } = $props();
-	const games =
+	const games = $derived(
 		data.games
 			?.filter((game) => game.participation.length > 0)
 			.sort((a, b) => {
@@ -15,7 +15,8 @@
 					code: game.code,
 					participation
 				};
-			}) || [];
+			}) || []
+	);
 </script>
 
 <div class="lg:py-10">

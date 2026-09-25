@@ -7,7 +7,7 @@
 	}
 
 	const { value, decimals = 0, duration = 300 }: Props = $props();
-	const progress = tweened(0, { duration });
+	const progress = tweened(0, { duration: () => duration });
 	progress.set(100);
 	const currentNum = $derived(($progress * value) / 100);
 </script>

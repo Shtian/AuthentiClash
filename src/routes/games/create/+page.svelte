@@ -26,7 +26,7 @@
 	const { form } = $props();
 
 	const name = '';
-	let endDate = $state<DateValue | undefined>(
+	let endDate = $derived<DateValue | undefined>(
 		form?.endDate ? parseDate(form.endDate.toString()) : today(getLocalTimeZone()).add({ days: 1 })
 	);
 	let contentRef = $state<HTMLElement | null>(null);
@@ -34,7 +34,7 @@
 	let commentatorPersonality = $state<string>('');
 	let backgroundPrompt = $state<string>('');
 
-	const endTime: string = form?.endTime?.toString() ?? '12:00';
+	const endTime = $derived(form?.endTime?.toString() ?? '12:00');
 	let isLoading = $state(false);
 
 	const handleSubmit: SubmitFunction = () => {

@@ -37,7 +37,7 @@
 	const { data }: { data: PageData } = $props();
 	let isLoading = $state(false);
 	let isGeneratingEndgame = $state(false);
-	let endgameImageUrl = $state<string | null>((data as any).endgameImageUrl ?? null);
+	let endgameImageUrl = $derived<string | null>(data.endgameImageUrl ?? null);
 	let abilityIdUsed: number | null = $state(null);
 	const hasUsedAbility = $derived(
 		data.players?.find((x: Participation) => x.profileId === data.session?.user.id)?.abilityUsed !==
@@ -45,26 +45,16 @@
 	);
 	const players = $derived(data.players);
 
-	let cooldownRemaining = $state(timeUntilDailyCooldownEnds(data.currentPlayer?.updatedAt));
+	let cooldownRemaining = $derived(timeUntilDailyCooldownEnds(data.currentPlayer?.updatedAt));
 
-	const millisecondsToEnd = new Date(data.endsAt).getTime();
-	let millisecondsNow = new Date().getTime();
-	let timeLeft = $state(millisecondsToEnd - millisecondsNow);
-	let timeLeftText = $state(
-		millisecondsToEnd - millisecondsNow > 0
-			? formatTimeDelta(millisecondsToEnd - millisecondsNow)
-			: 'Game has ended'
-	);
+	const millisecondsToEnd = $derived(new Date(data.endsAt).getTime());
+	let millisecondsNow = $state(Date.now());
+	const timeLeft = $derived(millisecondsToEnd - millisecondsNow);
+	const timeLeftText = $derived(timeLeft > 0 ? formatTimeDelta(timeLeft) : 'Game has ended');
 
 	const timer = setInterval(() => {
-		millisecondsNow = new Date().getTime();
-		timeLeft = millisecondsToEnd - millisecondsNow;
-		if (timeLeft <= 0) {
-			clearInterval(timer);
-			timeLeftText = 'Game has ended';
-		} else {
-			timeLeftText = formatTimeDelta(timeLeft);
-		}
+		millisecondsNow = Date.now();
+		if (timeLeft <= 0) clearInterval(timer);
 	}, 1000);
 
 	onDestroy(() => {
